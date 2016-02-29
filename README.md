@@ -39,7 +39,7 @@
 }
 
 ```
-![](https://github.com/netyouli/WHC_AutoLayoutExample/tree/master/Gif/a.gif)
+![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/a.gif)
 
 ### StockView容器视图自动横向布局例子(可设置子视图宽度拉伸权重比)
 ```objective-c
@@ -68,7 +68,7 @@ label1.whc_WidthWeight = 2
 // 容器开始布局
 [container whc_StartLayout];
 ```
-![](https://github.com/netyouli/WHC_AutoLayoutExample/tree/master/Gif/c.gif)
+![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/c.gif)
 
 ### StockView容器视图自动垂直布局例子(可设置子视图高度拉伸权重比) 与横向自动布局容器一样只是方向参数为Vertical
 ### StockView容器视图自动横向垂直混合布局例子(可设置子视图宽高拉伸权重比)
@@ -100,4 +100,4 @@ label2.whc_HeightWeight = 2;
 // 容器开始布局
 [container whc_StartLayout];
 ```
-![](https://github.com/netyouli/WHC_AutoLayoutExample/tree/master/Gif/b.gif)
+![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/.gif)
