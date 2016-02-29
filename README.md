@@ -100,4 +100,4 @@ label2.whc_HeightWeight = 2;
 // 容器开始布局
 [container whc_StartLayout];
 ```
-![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/.gif)
+![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/b.gif)
