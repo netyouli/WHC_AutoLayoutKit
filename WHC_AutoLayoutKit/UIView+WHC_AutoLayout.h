@@ -403,12 +403,20 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 @end
 
+/// 容器布局(可设置垂直和横向和即是横向和垂直混合布局方式)
 @interface WHC_LayoutContainer : UIView
 
+/// 混合布局(同时垂直和横向)每行多少列
 @property (nonatomic , assign) NSInteger whc_Column;
+/// 容器内边距
 @property (nonatomic , assign) UIEdgeInsets whc_Edge;
+/// 容器内子控件之间的空隙
 @property (nonatomic , assign) CGFloat whc_Space;
+/// 容器自动布局方向
 @property (nonatomic , assign) WHC_LayoutOrientationOptions whc_Orientation;
 
+/**
+ * 说明：开始进行自动布局
+ */
 - (void)whc_StartLayout;
 @end
