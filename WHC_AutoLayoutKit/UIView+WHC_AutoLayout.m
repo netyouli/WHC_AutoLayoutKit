@@ -10,7 +10,7 @@
  *  qq:712641411
  *  开发作者: 吴海超(WHC)
  *  iOS技术交流群:302157745
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutExample
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
  */
 
 #import "UIView+WHC_AutoLayout.h"
@@ -712,7 +712,8 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                 [view whc_Width:CGRectGetWidth(view.frame)];
             }
             if (view.subviews.count > 0 &&
-                [NSStringFromClass(view.class) isEqualToString:@"UIView"]) {
+                ([NSStringFromClass(view.class) isEqualToString:@"UIView"] ||
+                 [NSStringFromClass(view.class) isEqualToString:@"UIScrollView"])) {
                 [view whc_RunLayoutEngineWithOrientation:orientation];
             }
         }
