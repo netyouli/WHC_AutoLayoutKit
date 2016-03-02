@@ -13,7 +13,7 @@
 ### 对xib或者storyboard智能进行横向和垂直添加约束方法：- (void)whc_AutoXibLayout;
 ### 对xib或者storyboard智能进行横向添加约束方法：- (void)whc_AutoXibHorizontalLayout;
 
-### 一行代码对xib或者storyboard上的所有UI控件自动布局例子
+### 1.一行代码对xib或者storyboard上的所有UI控件自动布局例子
 ```objective-c
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +31,7 @@
 ```
 ![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/d.gif)
 
-### 一行代码对xib或者storyboard上的所有UI控件自动横向布局例子
+### 2.一行代码对xib或者storyboard上的所有UI控件自动横向布局例子
 
 ```objective-c
 - (void)viewDidLoad {
@@ -50,7 +50,7 @@
 ```
 ![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/e.gif)
 
-### 一行代码约束四个方向使用例子
+### 3.一行代码约束四个方向使用例子
 ```objective-c
 /// 自动拉伸宽度与父视图右边间隙为10px, 高度为30px
 [_whcView whc_FrameAutoWidth:WHCWidthAutoRectMake(10, 0, 10, 30)];
@@ -72,7 +72,7 @@
 [view2 whc_RightSpace:10];
 [view2 whc_HeightEqualView:view1];
 ```
-### 一行代码计算UITableViewCell高度例子
+### 4.一行代码计算UITableViewCell高度例子
 
 ```objective-c
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,7 +83,7 @@
 ```
 ![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/a.gif)
 
-### StockView容器视图自动横向布局例子(可设置子视图宽度拉伸权重比)
+### 5.StockView容器视图自动横向布局例子(可设置子视图宽度拉伸权重比)
 ```objective-c
 // 创建容器视图
 container = [WHC_LayoutContainer new];
@@ -112,8 +112,8 @@ label1.whc_WidthWeight = 2
 ```
 ![](https://github.com/netyouli/WHC_AutoLayoutExample/blob/master/Gif/c.gif)
 
-### StockView容器视图自动垂直布局例子(可设置子视图高度拉伸权重比) 与横向自动布局容器一样只是方向参数为Vertical
-### StockView容器视图自动横向垂直混合布局例子(可设置子视图宽高拉伸权重比)
+### 6.StockView容器视图自动垂直布局例子(可设置子视图高度拉伸权重比) 与横向自动布局容器一样只是方向参数为Vertical
+###   StockView容器视图自动横向垂直混合布局例子(可设置子视图宽高拉伸权重比)
 ```objective-c
 // 创建容器视图
 container = [WHC_LayoutContainer new];
