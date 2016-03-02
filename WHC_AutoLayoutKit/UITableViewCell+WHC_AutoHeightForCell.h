@@ -11,7 +11,7 @@
 /*
  *  qq:712641411
  *  开发作者: 吴海超(WHC)
- *  iOS技术交流群:460122071
+ *  iOS技术交流群:302157745
  *  gitHub:https://github.com/netyouli/WHC_AutoLayoutExample
  */
 
