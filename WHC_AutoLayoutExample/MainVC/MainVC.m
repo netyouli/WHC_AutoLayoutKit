@@ -14,6 +14,15 @@
 #import "DemoVC3.h"
 #import "DemoVC4.h"
 #import "DemoVC5.h"
+#import "DemoVC6.h"
+#import "DemoVC7.h"
+
+/*
+ *  qq:712641411
+ *  开发作者: 吴海超(WHC)
+ *  iOS技术交流群:460122071
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutExample
+ */
 
 @interface MainVC () {
     NSArray * _contents;
@@ -31,7 +40,9 @@
                   @"列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局",
                   @"stockView 自动横向布局和横向嵌套布局\nstockView 自动横向布局和横向嵌套布局\nstockView 自动横向布局和横向嵌套布局\nstockView 自动横向布局和横向嵌套布局",
                   @"stockView 自动垂直布局和垂直嵌套布局\nstockView 自动垂直布局和垂直嵌套布局\nstockView 自动垂直布局和垂直嵌套布局\nstockView 自动垂直布局和垂直嵌套布局",
-                  @"stockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局"];
+                  @"stockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局",
+                  @"一行代码智能对Xib上所有控件智能添加约束布局",
+                  @"一行代码智能对Xib上所有控件智能横向布局"];
     [self.tableView registerClass:[MainVCCell class] forCellReuseIdentifier:NSStringFromClass([MainVCCell class])];
 }
 
@@ -44,7 +55,7 @@
     MainVCCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MainVCCell class])];
     cell.backgroundColor = [UIColor whiteColor];
     NSString * content = [_contents objectAtIndex:indexPath.row];
-    NSString * title = [NSString stringWithFormat:@"Demo%ld",(long)indexPath.row];
+    NSString * title = [NSString stringWithFormat:@"Demo%ld",(long)indexPath.row + 1];
     [cell setContent:content title:title];
     return cell;
 }
@@ -83,6 +94,16 @@
             break;
         case 4: {
             DemoVC5 * vc = [DemoVC5 new];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 5: {
+            DemoVC6 * vc = [DemoVC6 new];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 6: {
+            DemoVC7 * vc = [DemoVC7 new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;

@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+/*
+ *  qq:712641411
+ *  开发作者: 吴海超(WHC)
+ *  iOS技术交流群:460122071
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutExample
+ */
+
 @interface UITableViewCell (WHC_AutoHeightForCell)
 /// cell最底部视图
 @property (nonatomic , strong) UIView * whc_CellBottomView;

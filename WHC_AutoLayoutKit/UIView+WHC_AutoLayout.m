@@ -6,6 +6,13 @@
 //  Copyright © 2016年 吴海超. All rights reserved.
 //
 
+/*
+ *  qq:712641411
+ *  开发作者: 吴海超(WHC)
+ *  iOS技术交流群:460122071
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutExample
+ */
+
 #import "UIView+WHC_AutoLayout.h"
 #import <objc/runtime.h>
 
@@ -589,11 +596,156 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     }
 }
 
+#pragma mark - Xib智能布局模块 -
+
+- (void)whc_AutoXibLayout {
+    [self whc_RunLayoutEngineWithOrientation:All];
+}
+
+- (void)whc_AutoXibHorizontalLayout {
+   [self whc_RunLayoutEngineWithOrientation:Horizontal];
+}
+
+- (void)whc_RunLayoutEngineWithOrientation:(WHC_LayoutOrientationOptions)orientation {
+    NSArray  * subViewArray = self.subviews;
+    NSMutableArray  * rowViewArray = [NSMutableArray array];
+    for (NSInteger i = 0; i < subViewArray.count; i++) {
+        UIView * subView = subViewArray[i];
+        if(rowViewArray.count == 0){
+            NSMutableArray * subRowViewArray = [NSMutableArray array];
+            [subRowViewArray addObject:subView];
+            [rowViewArray addObject:subRowViewArray];
+        }else{
+            BOOL isAddSubView = NO;
+            for (NSInteger j = 0; j < rowViewArray.count; j++) {
+                NSMutableArray  * subRowViewArray = rowViewArray[j];
+                BOOL  isAtRow = YES;
+                for (NSInteger w = 0; w < subRowViewArray.count; w++) {
+                    UIView * rowSubView = subRowViewArray[w];
+                    if(CGRectGetMinY(subView.frame) > rowSubView.center.y ||
+                       CGRectGetMaxY(subView.frame) < rowSubView.center.y){
+                        isAtRow = NO;
+                        break;
+                    }
+                }
+                if(isAtRow){
+                    isAddSubView = YES;
+                    [subRowViewArray addObject:subView];
+                    break;
+                }
+            }
+            if(!isAddSubView){
+                NSMutableArray * subRowViewArr = [NSMutableArray array];
+                [subRowViewArr addObject:subView];
+                [rowViewArray addObject:subRowViewArr];
+            }
+        }
+    }
+    
+    NSInteger rowCount = rowViewArray.count;
+    for(NSInteger row = 0; row < rowCount; row++){
+        NSMutableArray  * subRowViewArray = rowViewArray[row];
+        NSInteger columnCount = subRowViewArray.count;
+        for (NSInteger column = 0; column < columnCount; column++) {
+            for (NSInteger j = column + 1; j < columnCount; j++) {
+                UIView  * view1 = subRowViewArray[column];
+                UIView  * view2 = subRowViewArray[j];
+                if(view1.center.x > view2.center.x){
+                    [subRowViewArray exchangeObjectAtIndex:column withObjectAtIndex:j];
+                }
+            }
+        }
+    }
+
+    UIView * frontRowView = nil;
+    UIView * nextRowView = nil;
+    
+    for (NSInteger row = 0; row < rowCount; row++) {
+        NSArray * subRowViewArray = rowViewArray[row];
+        NSInteger columnCount = subRowViewArray.count;
+        for (NSInteger column = 0; column < columnCount; column++) {
+            UIView * view = subRowViewArray[column];
+            UIView * nextColumnView = nil;
+            UIView * frontColumnView = nil;
+            frontRowView = nil;
+            nextRowView = nil;
+            if (row < rowCount - 1) {
+                nextRowView = [self getNextRowView:rowViewArray[row + 1] currentView:view];
+            }
+            if (column < columnCount - 1) {
+                nextColumnView = subRowViewArray[column + 1];
+            }
+            if (row == 0) {
+                [view whc_TopSpace:CGRectGetMinY(view.frame)];
+            }else {
+                frontRowView = [self getFrontRowView:rowViewArray[row - 1] currentView:view];
+                [view whc_TopSpace:CGRectGetMinY(view.frame) - CGRectGetMaxY(frontRowView.frame)
+                      relativeView:frontRowView];
+            }
+            if (column == 0) {
+                [view whc_LeftSpace:CGRectGetMinX(view.frame)];
+            }else {
+                frontColumnView = subRowViewArray[column - 1];
+                [view whc_LeftSpace:CGRectGetMinX(view.frame) - CGRectGetMaxX(frontColumnView.frame)
+                       relativeView:frontColumnView];
+            }
+            if ((orientation == All ||
+                orientation == Vertical) &&
+                ![view isKindOfClass:[UIImageView class]]) {
+                if (nextRowView) {
+                    [view whc_HeightEqualView:nextRowView
+                                        ratio:CGRectGetHeight(view.frame) / CGRectGetHeight(nextRowView.frame)];
+                }else {
+                    [view whc_BottomSpace:CGRectGetHeight(view.superview.frame) - CGRectGetMaxY(view.frame)];
+                }
+            }else {
+                [view whc_Height:CGRectGetHeight(view.frame)];
+            }
+            if (![view isKindOfClass:[UIImageView class]]) {
+                if (nextColumnView) {
+                    [view whc_WidthEqualView:nextColumnView
+                                       ratio:CGRectGetWidth(view.frame) / CGRectGetWidth(nextColumnView.frame)];
+                }else {
+                    [view whc_RightSpace:CGRectGetWidth(view.superview.frame) - CGRectGetMaxX(view.frame)];
+                }
+            }else {
+                [view whc_Width:CGRectGetWidth(view.frame)];
+            }
+            if (view.subviews.count > 0 &&
+                [NSStringFromClass(view.class) isEqualToString:@"UIView"]) {
+                [view whc_RunLayoutEngineWithOrientation:orientation];
+            }
+        }
+    }
+}
+
+- (UIView *)getFrontRowView:(NSArray *)rowViewArray
+                currentView:(UIView *)currentView {
+    if (currentView) {
+        NSInteger columnCount = rowViewArray.count;
+        NSInteger currentViewY = CGRectGetMinY(currentView.frame);
+        for (NSInteger row = 0; row < columnCount; row++) {
+            UIView * view = rowViewArray[row];
+            if (CGRectContainsPoint(currentView.frame, CGPointMake(CGRectGetMinX(view.frame), currentViewY)) ||
+                CGRectContainsPoint(currentView.frame, CGPointMake(view.center.x, currentViewY)) ||
+                CGRectContainsPoint(currentView.frame, CGPointMake(CGRectGetMaxX(view.frame), currentViewY))) {
+                return view;
+            }
+        }
+    }else {
+        return nil;
+    }
+    return rowViewArray[0];
+}
+
+- (UIView *)getNextRowView:(NSArray *)rowViewArray
+               currentView:(UIView *)currentView {
+    return [self getFrontRowView:rowViewArray currentView:currentView];
+}
+
 @end
 
 #pragma mark - UI自动布局容器 -
-
-
 
 @implementation WHC_LayoutContainer
 
@@ -667,6 +819,7 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     NSInteger count = subViews.count;
     if (count == 0) {
         NSLog(@"whc 当前布局没有可用元素");
+        return;
     }
     UIView * relativeView = nil;
     WHC_GOTO:
@@ -678,7 +831,8 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
             [oneView whc_TopSpace:self.whc_Edge.top];
             [oneView whc_BottomSpace:self.whc_Edge.bottom];
             if (secondView) {
-                [oneView whc_WidthEqualView:secondView ratio:oneView.whc_WidthWeight / secondView.whc_WidthWeight];
+                [oneView whc_WidthEqualView:secondView
+                                      ratio:oneView.whc_WidthWeight / secondView.whc_WidthWeight];
             }else {
                 [oneView whc_RightSpace:self.whc_Edge.right];
             }
@@ -693,7 +847,8 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                 [view whc_TopSpace:self.whc_Edge.top];
                 [view whc_BottomSpace:self.whc_Edge.bottom];
                 if (nextView) {
-                    [view whc_WidthEqualView:nextView ratio:view.whc_WidthWeight / nextView.whc_WidthWeight];
+                    [view whc_WidthEqualView:nextView
+                                       ratio:view.whc_WidthWeight / nextView.whc_WidthWeight];
                 }else {
                     [view whc_RightSpace:self.whc_Edge.right];
                 }
@@ -711,7 +866,8 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
             [oneView whc_TopSpace:self.whc_Edge.top];
             [oneView whc_RightSpace:self.whc_Edge.right];
             if (secondView) {
-                [oneView whc_HeightEqualView:secondView ratio:oneView.whc_HeightWeight / secondView.whc_HeightWeight];
+                [oneView whc_HeightEqualView:secondView
+                                       ratio:oneView.whc_HeightWeight / secondView.whc_HeightWeight];
             }else {
                 [oneView whc_BottomSpace:self.whc_Edge.bottom];
             }
@@ -726,7 +882,8 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                 [view whc_TopSpace:self.whc_Space relativeView:relativeView];
                 [view whc_RightSpace:self.whc_Edge.right];
                 if (nextView) {
-                    [view whc_HeightEqualView:nextView ratio:view.whc_HeightWeight / nextView.whc_HeightWeight];
+                    [view whc_HeightEqualView:nextView
+                                        ratio:view.whc_HeightWeight / nextView.whc_HeightWeight];
                 }else {
                     [view whc_BottomSpace:self.whc_Edge.bottom];
                 }

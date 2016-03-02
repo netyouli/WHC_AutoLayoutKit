@@ -108,6 +108,8 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                                         CGFloat width,
                                         CGFloat bottom);
 
+#pragma mark - UI自动布局 -
+
 @interface UIView (WHC_AutoLayout)
 
 /**
@@ -400,10 +402,23 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 - (void)whc_Size:(CGSize)size;
 
+#pragma mark - Xib智能布局模块 -
+
+/**
+ * 说明:对整个Xib上UI控件垂直和横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ */
+
+- (void)whc_AutoXibLayout;
+
+/**
+ * 说明:对整个Xib上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ */
+- (void)whc_AutoXibHorizontalLayout;
 
 @end
 
-/// 容器布局(可设置垂直和横向和即是横向和垂直混合布局方式)
+#pragma mark - UI自动布局容器 -
+/// 容器布局(可设置垂直和横向以及横向和垂直混合布局方式)
 @interface WHC_LayoutContainer : UIView
 
 /// 混合布局(同时垂直和横向)每行多少列

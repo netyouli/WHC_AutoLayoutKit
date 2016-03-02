@@ -21,10 +21,16 @@
 		C3068C001C841D8E00F88455 /* DemoVC3.m in Sources */ = {isa = PBXBuildFile; fileRef = C3068BFF1C841D8E00F88455 /* DemoVC3.m */; };
 		C3068C031C84203500F88455 /* DemoVC4.m in Sources */ = {isa = PBXBuildFile; fileRef = C3068C021C84203500F88455 /* DemoVC4.m */; };
 		C3068C071C8420F200F88455 /* DemoVC5.m in Sources */ = {isa = PBXBuildFile; fileRef = C3068C061C8420F200F88455 /* DemoVC5.m */; };
-		C3068C0C1C8426FA00F88455 /* a.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3068C091C8426FA00F88455 /* a.gif */; };
-		C3068C0D1C8426FA00F88455 /* b.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3068C0A1C8426FA00F88455 /* b.gif */; };
-		C3068C0E1C8426FA00F88455 /* c.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3068C0B1C8426FA00F88455 /* c.gif */; };
 		C3068C101C84271300F88455 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C3068C0F1C84271300F88455 /* README.md */; };
+		C3F378451C852810003E6462 /* DemoVC6.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F378441C852810003E6462 /* DemoVC6.m */; };
+		C3F378471C85283F003E6462 /* DemoVC6.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3F378461C85283F003E6462 /* DemoVC6.xib */; };
+		C3FEAF451C8697F4008E1E97 /* DemoVC7.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEAF431C8697F4008E1E97 /* DemoVC7.m */; };
+		C3FEAF461C8697F4008E1E97 /* DemoVC7.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */; };
+		C3FEAF4B1C86AD37008E1E97 /* a.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF481C86AD37008E1E97 /* a.gif */; };
+		C3FEAF4C1C86AD37008E1E97 /* b.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF491C86AD37008E1E97 /* b.gif */; };
+		C3FEAF4D1C86AD37008E1E97 /* c.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF4A1C86AD37008E1E97 /* c.gif */; };
+		C3FEAF501C86ADAE008E1E97 /* d.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF4E1C86ADAE008E1E97 /* d.gif */; };
+		C3FEAF511C86ADAE008E1E97 /* e.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF4F1C86ADAE008E1E97 /* e.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,10 +61,18 @@
 		C3068C021C84203500F88455 /* DemoVC4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC4.m; sourceTree = "<group>"; };
 		C3068C051C8420F200F88455 /* DemoVC5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoVC5.h; sourceTree = "<group>"; };
 		C3068C061C8420F200F88455 /* DemoVC5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC5.m; sourceTree = "<group>"; };
-		C3068C091C8426FA00F88455 /* a.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = a.gif; sourceTree = "<group>"; };
-		C3068C0A1C8426FA00F88455 /* b.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = b.gif; sourceTree = "<group>"; };
-		C3068C0B1C8426FA00F88455 /* c.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = c.gif; sourceTree = "<group>"; };
 		C3068C0F1C84271300F88455 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C3F378431C852810003E6462 /* DemoVC6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoVC6.h; sourceTree = "<group>"; };
+		C3F378441C852810003E6462 /* DemoVC6.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC6.m; sourceTree = "<group>"; };
+		C3F378461C85283F003E6462 /* DemoVC6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoVC6.xib; sourceTree = "<group>"; };
+		C3FEAF421C8697F4008E1E97 /* DemoVC7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoVC7.h; sourceTree = "<group>"; };
+		C3FEAF431C8697F4008E1E97 /* DemoVC7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC7.m; sourceTree = "<group>"; };
+		C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoVC7.xib; sourceTree = "<group>"; };
+		C3FEAF481C86AD37008E1E97 /* a.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = a.gif; sourceTree = "<group>"; };
+		C3FEAF491C86AD37008E1E97 /* b.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = b.gif; sourceTree = "<group>"; };
+		C3FEAF4A1C86AD37008E1E97 /* c.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = c.gif; sourceTree = "<group>"; };
+		C3FEAF4E1C86ADAE008E1E97 /* d.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = d.gif; sourceTree = "<group>"; };
+		C3FEAF4F1C86ADAE008E1E97 /* e.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = e.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +89,8 @@
 		C3068BC01C8418F000F88455 = {
 			isa = PBXGroup;
 			children = (
+				C3FEAF471C86AD37008E1E97 /* Gif */,
 				C3068C0F1C84271300F88455 /* README.md */,
-				C3068C081C8426FA00F88455 /* Gif */,
 				C3068BE31C84192C00F88455 /* WHC_AutoLayoutKit */,
 				C3068BCB1C8418F000F88455 /* WHC_AutoLayoutExample */,
 				C3068BCA1C8418F000F88455 /* Products */,
@@ -94,13 +108,15 @@
 		C3068BCB1C8418F000F88455 /* WHC_AutoLayoutExample */ = {
 			isa = PBXGroup;
 			children = (
+				C3068BCF1C8418F000F88455 /* AppDelegate.h */,
+				C3068BD01C8418F000F88455 /* AppDelegate.m */,
 				C3068BF11C841B3B00F88455 /* Demo1 */,
 				C3068BF21C841B3B00F88455 /* Demo2 */,
 				C3068BF31C841B3B00F88455 /* Demo3 */,
 				C3068BF41C841B3B00F88455 /* Demo4 */,
 				C3068C041C8420DE00F88455 /* Demo5 */,
-				C3068BD01C8418F000F88455 /* AppDelegate.m */,
-				C3068BCF1C8418F000F88455 /* AppDelegate.h */,
+				C3F378421C8527F8003E6462 /* Demo6 */,
+				C3FEAF411C8697D8008E1E97 /* Demo7 */,
 				C3068BEA1C8419A400F88455 /* MainVC */,
 				C3068BD81C8418F000F88455 /* Assets.xcassets */,
 				C3068BDA1C8418F000F88455 /* LaunchScreen.storyboard */,
@@ -187,12 +203,34 @@
 			path = Demo5;
 			sourceTree = "<group>";
 		};
-		C3068C081C8426FA00F88455 /* Gif */ = {
+		C3F378421C8527F8003E6462 /* Demo6 */ = {
 			isa = PBXGroup;
 			children = (
-				C3068C091C8426FA00F88455 /* a.gif */,
-				C3068C0A1C8426FA00F88455 /* b.gif */,
-				C3068C0B1C8426FA00F88455 /* c.gif */,
+				C3F378431C852810003E6462 /* DemoVC6.h */,
+				C3F378441C852810003E6462 /* DemoVC6.m */,
+				C3F378461C85283F003E6462 /* DemoVC6.xib */,
+			);
+			path = Demo6;
+			sourceTree = "<group>";
+		};
+		C3FEAF411C8697D8008E1E97 /* Demo7 */ = {
+			isa = PBXGroup;
+			children = (
+				C3FEAF421C8697F4008E1E97 /* DemoVC7.h */,
+				C3FEAF431C8697F4008E1E97 /* DemoVC7.m */,
+				C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */,
+			);
+			path = Demo7;
+			sourceTree = "<group>";
+		};
+		C3FEAF471C86AD37008E1E97 /* Gif */ = {
+			isa = PBXGroup;
+			children = (
+				C3FEAF481C86AD37008E1E97 /* a.gif */,
+				C3FEAF491C86AD37008E1E97 /* b.gif */,
+				C3FEAF4A1C86AD37008E1E97 /* c.gif */,
+				C3FEAF4E1C86ADAE008E1E97 /* d.gif */,
+				C3FEAF4F1C86ADAE008E1E97 /* e.gif */,
 			);
 			path = Gif;
 			sourceTree = "<group>";
@@ -254,11 +292,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3068C0C1C8426FA00F88455 /* a.gif in Resources */,
+				C3FEAF4D1C86AD37008E1E97 /* c.gif in Resources */,
+				C3FEAF461C8697F4008E1E97 /* DemoVC7.xib in Resources */,
 				C3068BDC1C8418F000F88455 /* LaunchScreen.storyboard in Resources */,
+				C3FEAF511C86ADAE008E1E97 /* e.gif in Resources */,
+				C3FEAF4B1C86AD37008E1E97 /* a.gif in Resources */,
+				C3FEAF4C1C86AD37008E1E97 /* b.gif in Resources */,
+				C3FEAF501C86ADAE008E1E97 /* d.gif in Resources */,
 				C3068BD91C8418F000F88455 /* Assets.xcassets in Resources */,
-				C3068C0E1C8426FA00F88455 /* c.gif in Resources */,
-				C3068C0D1C8426FA00F88455 /* b.gif in Resources */,
+				C3F378471C85283F003E6462 /* DemoVC6.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3F378451C852810003E6462 /* DemoVC6.m in Sources */,
 				C3068C071C8420F200F88455 /* DemoVC5.m in Sources */,
 				C3068BE81C84192C00F88455 /* UITableViewCell+WHC_AutoHeightForCell.m in Sources */,
 				C3068BF01C8419A400F88455 /* MainVCCell.m in Sources */,
@@ -282,6 +325,7 @@
 				C3068BE91C84192C00F88455 /* UIView+WHC_AutoLayout.m in Sources */,
 				C3068BEF1C8419A400F88455 /* MainVC.m in Sources */,
 				C3068BCE1C8418F000F88455 /* main.m in Sources */,
+				C3FEAF451C8697F4008E1E97 /* DemoVC7.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +466,7 @@
 				C3068BE21C8418F000F88455 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
