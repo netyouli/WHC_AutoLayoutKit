@@ -38,9 +38,9 @@
     self.navigationItem.title = @"自动布局库";
     _contents = @[@"宽度高度自动拉伸布局\n宽度高度自动拉伸布局\n宽度高度自动拉伸布局",
                   @"列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局",
-                  @"stockView 自动横向布局和横向嵌套布局\nstockView 自动横向布局和横向嵌套布局\nstockView 自动横向布局和横向嵌套布局\nstockView 自动横向布局和横向嵌套布局",
-                  @"stockView 自动垂直布局和垂直嵌套布局\nstockView 自动垂直布局和垂直嵌套布局\nstockView 自动垂直布局和垂直嵌套布局\nstockView 自动垂直布局和垂直嵌套布局",
-                  @"stockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstockView 自动垂直横向混合布局和垂直横向混合嵌套布局",
+                  @"stackView 自动横向布局和横向嵌套布局\nstackView 自动横向布局和横向嵌套布局\nstackView 自动横向布局和横向嵌套布局\nstackView 自动横向布局和横向嵌套布局",
+                  @"stackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局",
+                  @"stackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局",
                   @"一行代码智能对Xib上所有控件智能添加约束布局",
                   @"一行代码智能对Xib上所有控件智能横向布局"];
     [self.tableView registerClass:[MainVCCell class] forCellReuseIdentifier:NSStringFromClass([MainVCCell class])];
