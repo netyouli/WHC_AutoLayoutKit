@@ -82,7 +82,7 @@
 ```
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)
 
-### 5.StockView容器视图自动横向布局例子(可设置子视图宽度拉伸权重比)
+### 5.UIStackView容器视图自动横向布局例子(可设置子视图宽度拉伸权重比)
 ```objective-c
 // 创建容器视图
 container = [WHC_LayoutContainer new];
@@ -111,8 +111,8 @@ label1.whc_WidthWeight = 2
 ```
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.gif)
 
-### 6.StockView容器视图自动垂直布局例子(可设置子视图高度拉伸权重比) 与横向自动布局容器一样只是方向参数为Vertical
-###   StockView容器视图自动横向垂直混合布局例子(可设置子视图宽高拉伸权重比)
+### 6.UIStackView容器视图自动垂直布局例子(可设置子视图高度拉伸权重比) 与横向自动布局容器一样只是方向参数为Vertical
+###   UIStackView容器视图自动横向垂直混合布局例子(可设置子视图宽高拉伸权重比)
 ```objective-c
 // 创建容器视图
 container = [WHC_LayoutContainer new];
