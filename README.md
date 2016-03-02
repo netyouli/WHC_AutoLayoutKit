@@ -1,17 +1,20 @@
 # WHC_AutoLayoutKit
 
-## 联系QQ: 712641411
-## 开发作者: 吴海超
-## iOS技术交流群: 302157745
+#### 联系QQ: 712641411
+#### 开发作者: 吴海超
+#### iOS技术交流群: 302157745
 
-## WHC_AutoLayoutKit VERSION ~ 2.0
-## WHC_AutoLayoutKit 致力打造使用最简单功能最强大的自动布局开源库
-## WHC_AutoLayoutKit 借鉴android的相对布局和线性布局
+#### WHC_AutoLayoutKit VERSION ~ 2.0
+#### WHC_AutoLayoutKit 致力打造使用最简单功能最强大的自动布局开源库
+#### WHC_AutoLayoutKit 借鉴android的相对布局和线性布局
 
 ## VERSION ~ 2.0 添加如下功能:
-### 1.一行代码对xib或者storyboard上的所有UI控件智能识别约束关系，并自动添加好相应约束条件
-###   1.1.对xib或者storyboard智能进行横向和垂直添加约束方法：- (void)whc_AutoXibLayout;
-###   1.2.对xib或者storyboard智能进行横向添加约束方法：- (void)whc_AutoXibHorizontalLayout;
+#### 1.一行代码对xib或者storyboard上的所有UI控件智能识别约束关系，并自动添加好相应约束条件
+####   1.1.对xib或者storyboard智能进行横向和垂直添加约束方法：
+####       - (void)whc_AutoXibLayout;
+
+####   1.2.对xib或者storyboard智能进行横向添加约束方法：
+####       - (void)whc_AutoXibHorizontalLayout;
 
 ### 1.一行代码对xib或者storyboard上的所有UI控件自动布局例子
 ```objective-c
