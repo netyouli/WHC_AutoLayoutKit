@@ -711,9 +711,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
             }else {
                 [view whc_Width:CGRectGetWidth(view.frame)];
             }
-            if (view.subviews.count > 0 &&
-                ([NSStringFromClass(view.class) isEqualToString:@"UIView"] ||
-                 [NSStringFromClass(view.class) isEqualToString:@"UIScrollView"])) {
+            if ((view.subviews.count > 0 ||
+                 [view isKindOfClass:[UITableViewCell class]] ||
+                 [NSStringFromClass(view.class) isEqualToString:@"UIView"]) &&
+                ([NSStringFromClass(view.class) isEqualToString:@"UITableViewCellContentView"])) {
                 [view whc_RunLayoutEngineWithOrientation:orientation];
             }
         }
