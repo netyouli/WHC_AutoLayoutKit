@@ -19,6 +19,7 @@
 @interface DemoVC1 () {
     UIView  * view1, * view2, * view3;
     UILabel * lable;
+    UILabel * lable1,*lable2,*lable3;
     CGFloat width , height;
 }
 
@@ -59,13 +60,41 @@
     
     [view3 whc_Y:10 relativeView:view1];
     [view3 whc_RightSpace:10];
-    [view3 whc_BottomSpace:10];
+    [view3 whc_HeightEqualView:view2];
     [view3 whc_LeftSpace:10 relativeView:view1];
     
     [lable whc_LeftSpace:10];
     [lable whc_RightSpace:10 relativeView:view3];
     [lable whc_TopSpace:10 relativeView:view1];
     [lable whc_HeightAuto];
+    
+    lable1 = [UILabel new];
+    lable2 = [UILabel new];
+    lable3 = [UILabel new];
+    
+    lable1.backgroundColor = [UIColor grayColor];
+    lable2.backgroundColor = [UIColor grayColor];
+    lable3.backgroundColor = [UIColor grayColor];
+    
+    [self.view addSubview:lable1];
+    [self.view addSubview:lable2];
+    [self.view addSubview:lable3];
+    
+    [lable1 whc_LeadingSpace:10];
+    [lable1 whc_TopSpace:10 relativeView:view3];
+    [lable1 whc_WidthEqualView:lable2];
+    [lable1 whc_Height:100];
+    
+    [lable2 whc_LeadingSpace:10 relativeView:lable1];
+    [lable2 whc_TopSpaceEqualView:lable1];
+    [lable2 whc_WidthEqualView:lable3];
+    [lable2 whc_HeightEqualView:lable1];
+    
+    [lable3 whc_LeadingSpace:10 relativeView:lable2];
+    [lable3 whc_TopSpaceEqualView:lable2];
+    [lable3 whc_RightSpace:10];
+    [lable3 whc_HeightEqualView:lable2];
+    
 }
 
 - (void)didReceiveMemoryWarning {

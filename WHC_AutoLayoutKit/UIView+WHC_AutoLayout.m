@@ -69,6 +69,30 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 @implementation UIView (WHC_AutoLayout)
 
+- (void)whc_AutoContentSize {
+    if ([self isKindOfClass:[UIScrollView class]]) {
+        [self layoutIfNeeded];
+        NSArray * subViews = self.subviews;
+        CGFloat contentHeight = 0;
+        CGFloat contentWidth = 0;
+        if (subViews.count > 0) {
+            UIView * bottomView = subViews[0];
+            for (int i = 1; i < subViews.count; i++) {
+                UIView * view = subViews[i];
+                if (CGRectGetMaxY(bottomView.frame) < CGRectGetMaxY(view.frame)) {
+                    contentHeight = CGRectGetMaxY(view.frame);
+                }
+                if (CGRectGetMaxX(bottomView.frame) < CGRectGetMaxX(view.frame)) {
+                    contentWidth = CGRectGetMaxX(view.frame);
+                }
+            }
+        }
+        ((UIScrollView *)self).contentSize = CGSizeMake(contentWidth, contentHeight);
+    }else {
+        NSLog(@"whc_AutoContentSize 只对UIScrollview有效");
+    }
+}
+
 - (void)setWhc_WidthWeight:(CGFloat)whc_WidthWeight {
     objc_setAssociatedObject(self,
                              @selector(whc_WidthWeight),
@@ -103,6 +127,8 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 - (void)whc_X:(CGFloat)x {
     [self removeConstraintFromView:self.superview
                          attribute:NSLayoutAttributeCenterX];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeading];
     [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeLeft
                         constant:x];
@@ -111,6 +137,8 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 - (void)whc_X:(CGFloat)x relativeView:(UIView *)relativeView {
     [self removeConstraintFromView:self.superview
                          attribute:NSLayoutAttributeCenterX];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeading];
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeft
                        relatedBy:NSLayoutRelationEqual
@@ -126,6 +154,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 - (void)whc_LeftSpace:(CGFloat)leftSpace relativeView:(UIView *)relativeView {
     [self whc_X:leftSpace relativeView:relativeView];
+}
+
+- (void)whc_LeftSpaceEqualView:(UIView *)view {
+    [self whc_LeadingSpaceEqualView:view];
 }
 
 - (void)whc_RightSpace:(CGFloat)rightSpace {
@@ -151,6 +183,97 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                       multiplier:1
                         constant:0.0 - rightSpace];
 }
+
+- (void)whc_LeadingSpace:(CGFloat)leadingSpace {
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeCenterX];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeft];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeTrailing];
+    [self whc_ConstraintWithItem:self.superview
+                       attribute:NSLayoutAttributeLeading
+                        constant:leadingSpace];
+}
+
+- (void)whc_LeadingSpace:(CGFloat)leadingSpace
+            relativeView:(UIView *)relativeView {
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeCenterX];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeft];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeTrailing];
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeLeading
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:relativeView
+                       attribute:NSLayoutAttributeTrailing
+                      multiplier:1
+                        constant:leadingSpace];
+}
+
+- (void)whc_LeadingSpaceEqualView:(UIView *)view {
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeCenterX];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeft];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeTrailing];
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeLeading
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:view
+                       attribute:NSLayoutAttributeLeading
+                      multiplier:1
+                        constant:0];
+}
+
+- (void)whc_TrailingSpace:(CGFloat)trailingSpace {
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeCenterX];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeft];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeading];
+    [self whc_ConstraintWithItem:self.superview
+                       attribute:NSLayoutAttributeTrailing
+                        constant:0.0 - trailingSpace];
+}
+
+- (void)whc_TrailingSpace:(CGFloat)trailingSpace
+             relativeView:(UIView *)relativeView {
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeCenterX];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeft];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeading];
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeTrailing
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:relativeView
+                       attribute:NSLayoutAttributeLeading
+                      multiplier:1
+                        constant:0.0 - trailingSpace];
+}
+
+- (void)whc_TrailingSpaceEqualView:(UIView *)view {
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeCenterX];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeft];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeading];
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeTrailing
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:view
+                       attribute:NSLayoutAttributeTrailing
+                      multiplier:1
+                        constant:0];
+}
+
 
 - (void)whc_Y:(CGFloat)y {
     [self removeConstraintFromView:self.superview
@@ -182,6 +305,20 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 - (void)whc_TopSpace:(CGFloat)topSpace relativeView:(UIView *)relativeView {
     [self whc_Y:topSpace relativeView:relativeView];
+}
+
+- (void)whc_TopSpaceEqualView:(UIView *)view {
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeCenterY];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeBaseline];
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeTop
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:view
+                       attribute:NSLayoutAttributeTop
+                      multiplier:1
+                        constant:0];
 }
 
 - (void)whc_BottomSpace:(CGFloat)bottomSpace {
@@ -321,6 +458,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 - (void)whc_CenterX:(CGFloat)centerX {
     [self removeConstraintFromView:self.superview
                          attribute:NSLayoutAttributeLeft];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeading];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeTrailing];
     [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeCenterX
                         constant:centerX];
@@ -329,6 +470,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 - (void)whc_CenterX:(CGFloat)centerX relativeView:(UIView *)relativeView {
     [self removeConstraintFromView:self.superview
                          attribute:NSLayoutAttributeLeft];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeLeading];
+    [self removeConstraintFromView:self.superview
+                         attribute:NSLayoutAttributeTrailing];
     [self whc_ConstraintWithItem:relativeView
                        attribute:NSLayoutAttributeCenterX
                         constant:centerX];
@@ -599,14 +744,23 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 #pragma mark - Xib智能布局模块 -
 
 - (void)whc_AutoXibLayout {
-    [self whc_RunLayoutEngineWithOrientation:All];
+    [self whc_RunLayoutEngineWithOrientation:All layoutType:DefaultType];
+}
+
+- (void)whc_AutoXibLayoutType:(WHC_LayoutTypeOptions)type {
+    [self whc_RunLayoutEngineWithOrientation:All layoutType:type];
 }
 
 - (void)whc_AutoXibHorizontalLayout {
-   [self whc_RunLayoutEngineWithOrientation:Horizontal];
+   [self whc_RunLayoutEngineWithOrientation:Horizontal layoutType:DefaultType];
 }
 
-- (void)whc_RunLayoutEngineWithOrientation:(WHC_LayoutOrientationOptions)orientation {
+- (void)whc_AutoXibHorizontalLayoutType:(WHC_LayoutTypeOptions)type {
+    [self whc_RunLayoutEngineWithOrientation:Horizontal layoutType:type];
+}
+
+- (void)whc_RunLayoutEngineWithOrientation:(WHC_LayoutOrientationOptions)orientation
+                                layoutType:(WHC_LayoutTypeOptions)layoutType {
     NSArray  * subViewArray = self.subviews;
     NSMutableArray  * rowViewArray = [NSMutableArray array];
     for (NSInteger i = 0; i < subViewArray.count; i++) {
@@ -665,10 +819,12 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
         NSInteger columnCount = subRowViewArray.count;
         for (NSInteger column = 0; column < columnCount; column++) {
             UIView * view = subRowViewArray[column];
+            CGFloat superWidthHalf = CGRectGetWidth(view.superview.frame) / 2;
             UIView * nextColumnView = nil;
             UIView * frontColumnView = nil;
             frontRowView = nil;
             nextRowView = nil;
+            BOOL canFitWidthOrHeight = [self canFitWidthOrHeightWithView:view];
             if (row < rowCount - 1) {
                 nextRowView = [self getNextRowView:rowViewArray[row + 1] currentView:view];
             }
@@ -683,43 +839,87 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                       relativeView:frontRowView];
             }
             if (column == 0) {
-                [view whc_LeftSpace:CGRectGetMinX(view.frame)];
+                if (!canFitWidthOrHeight && layoutType == LeftRightType) {
+                    if (view.center.x == superWidthHalf) {
+                        [view whc_CenterX:0];
+                    } else if (view.center.x > superWidthHalf) {
+                        if (nextColumnView) {
+                            [view whc_TrailingSpace:CGRectGetMinX(nextColumnView.frame) - CGRectGetMaxX(view.frame) relativeView:nextColumnView];
+                        }else {
+                            [view whc_TrailingSpace:CGRectGetWidth(view.superview.frame) - CGRectGetMaxX(view.frame)];
+                        }
+                    }
+                }else {
+                    [view whc_LeftSpace:CGRectGetMinX(view.frame)];
+                }
             }else {
                 frontColumnView = subRowViewArray[column - 1];
-                [view whc_LeftSpace:CGRectGetMinX(view.frame) - CGRectGetMaxX(frontColumnView.frame)
-                       relativeView:frontColumnView];
-            }
-            if ((orientation == All ||
-                orientation == Vertical) &&
-                ![view isKindOfClass:[UIImageView class]]) {
-                if (nextRowView) {
-                    [view whc_HeightEqualView:nextRowView
-                                        ratio:CGRectGetHeight(view.frame) / CGRectGetHeight(nextRowView.frame)];
+                if (!canFitWidthOrHeight && layoutType == LeftRightType) {
+                    if (view.center.x == superWidthHalf) {
+                        [view whc_CenterX:0];
+                    }else if (view.center.x > superWidthHalf) {
+                        if (nextColumnView) {
+                            [view whc_TrailingSpace:CGRectGetMinX(nextColumnView.frame) - CGRectGetMaxX(view.frame) relativeView:nextColumnView];
+                        }else {
+                            [view whc_TrailingSpace:CGRectGetWidth(view.superview.frame) - CGRectGetMaxX(view.frame)];
+                        }
+                    }
                 }else {
-                    [view whc_BottomSpace:CGRectGetHeight(view.superview.frame) - CGRectGetMaxY(view.frame)];
+                    [view whc_LeftSpace:CGRectGetMinX(view.frame) - CGRectGetMaxX(frontColumnView.frame)
+                           relativeView:frontColumnView];
                 }
-            }else {
-                [view whc_Height:CGRectGetHeight(view.frame)];
             }
-            if (![view isKindOfClass:[UIImageView class]]) {
-                if (nextColumnView) {
-                    [view whc_WidthEqualView:nextColumnView
-                                       ratio:CGRectGetWidth(view.frame) / CGRectGetWidth(nextColumnView.frame)];
+            if (orientation == All ||
+                orientation == Vertical) {
+                if (canFitWidthOrHeight) {
+                    if (nextRowView) {
+                        [view whc_HeightEqualView:nextRowView
+                                            ratio:CGRectGetHeight(view.frame) / CGRectGetHeight(nextRowView.frame)];
+                    }else {
+                        [view whc_BottomSpace:CGRectGetHeight(view.superview.frame) - CGRectGetMaxY(view.frame)];
+                    }
                 }else {
-                    [view whc_RightSpace:CGRectGetWidth(view.superview.frame) - CGRectGetMaxX(view.frame)];
+                    [view whc_Height:CGRectGetHeight(view.frame)];
                 }
+                goto WHC_FIT_WIDTH;
             }else {
-                [view whc_Width:CGRectGetWidth(view.frame)];
+            WHC_FIT_WIDTH:
+                if (canFitWidthOrHeight) {
+                    if (nextColumnView) {
+                        [view whc_WidthEqualView:nextColumnView
+                                           ratio:CGRectGetWidth(view.frame) / CGRectGetWidth(nextColumnView.frame)];
+                    }else {
+                        [view whc_RightSpace:CGRectGetWidth(view.superview.frame) - CGRectGetMaxX(view.frame)];
+                    }
+                }else {
+                    [view whc_Width:CGRectGetWidth(view.frame)];
+                }
             }
-            if ((view.subviews.count > 0 ||
-                 [view isKindOfClass:[UITableViewCell class]] ||
-                 [NSStringFromClass(view.class) isEqualToString:@"UIView"]) &&
-                ([NSStringFromClass(view.class) isEqualToString:@"UITableViewCellContentView"])) {
-                [view whc_RunLayoutEngineWithOrientation:orientation];
+            if ([view isKindOfClass:[UITableViewCell class]] ||
+                (view.subviews.count > 0 && ([NSStringFromClass(view.class) isEqualToString:@"UIView"] ||
+                                             [NSStringFromClass(view.class) isEqualToString:@"UIScrollView"])) ||
+                [NSStringFromClass(view.class) isEqualToString:@"UITableViewCellContentView"]) {
+                [view whc_RunLayoutEngineWithOrientation:orientation layoutType:layoutType];
+                if ([NSStringFromClass(view.class) isEqualToString:@"UIScrollView"]) {
+                    
+                }
             }
         }
     }
 }
+
+- (BOOL)canFitWidthOrHeightWithView:(UIView *) view {
+    if ([view isKindOfClass:[UIImageView class]] ||
+        (([view isKindOfClass:[UIButton class]] &&
+          (((UIButton *)view).layer.cornerRadius == CGRectGetWidth(view.frame) / 2 ||
+           ((UIButton *)view).layer.cornerRadius == CGRectGetHeight(view.frame) / 2 ||
+           CGRectGetWidth(view.frame) == CGRectGetHeight(view.frame) ||
+           [((UIButton *)view) backgroundImageForState:UIControlStateNormal])))) {
+              return NO;
+          }
+    return YES;
+}
+
 
 - (UIView *)getFrontRowView:(NSArray *)rowViewArray
                 currentView:(UIView *)currentView {
@@ -747,7 +947,7 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 @end
 
-#pragma mark - UI自动布局容器 -
+#pragma mark - UI自动布局StackView容器 -
 
 @implementation WHC_LayoutContainer
 

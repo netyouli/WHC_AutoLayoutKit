@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
 
-
+/// 布局方向
 typedef NS_OPTIONS(NSUInteger, WHC_LayoutOrientationOptions) {
     /// 垂直布局
     Vertical = 1 << 0,
@@ -24,6 +24,14 @@ typedef NS_OPTIONS(NSUInteger, WHC_LayoutOrientationOptions) {
     Horizontal = 1 << 1,
     /// 垂直布局和横向布局
     All = 1 << 2
+};
+
+/// 布局类型
+typedef NS_OPTIONS(NSUInteger, WHC_LayoutTypeOptions) {
+    /// 默认类型
+    DefaultType = 1 << 0,
+    /// 左右类型
+    LeftRightType = 1 << 1,
 };
 
 /**
@@ -121,6 +129,11 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 @interface UIView (WHC_AutoLayout)
 
 /**
+ * 说明: 自动调整UiScrollview的ContentSize
+ */
+- (void)whc_AutoContentSize;
+
+/**
  * 说明: 控件横向和垂直布局宽度或者高度权重比例
  */
 @property (nonatomic , assign)CGFloat whc_WidthWeight;
@@ -156,6 +169,11 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 - (void)whc_LeftSpace:(CGFloat)leftSpace relativeView:(UIView *)relativeView;
 
 /**
+ * 说明：设置左对齐边距与某视图左对齐边距相等
+ */
+- (void)whc_LeftSpaceEqualView:(UIView *)view;
+
+/**
  * 说明:设置右边距(默认相对父视图)
  * @param rightSpace: 右边距
  */
@@ -169,6 +187,48 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
  */
 
 - (void)whc_RightSpace:(CGFloat)rightSpace relativeView:(UIView *)relativeView;
+
+/**
+ * 说明: 设置左对齐(默认相对父视图)
+ * @param leadingSpace 左边距
+ */
+
+- (void)whc_LeadingSpace:(CGFloat)leadingSpace;
+
+/**
+ * 说明：设置左对齐
+ * @param leadingSpace 左边距
+ * @param relativeView 相对视图
+ */
+
+- (void)whc_LeadingSpace:(CGFloat)leadingSpace
+            relativeView:(UIView *)relativeView;
+
+/**
+ * 说明：设置左对齐边距与某视图左对齐边距相等
+ */
+- (void)whc_LeadingSpaceEqualView:(UIView *)view;
+
+/**
+ * 说明: 设置右对齐(默认相对父视图)
+ * @param trailingSpace 右边距
+ */
+
+- (void)whc_TrailingSpace:(CGFloat)trailingSpace;
+
+/**
+ * 说明：设置右对齐
+ * @param trailingSpace 右边距
+ * @param relativeView 相对视图
+ */
+- (void)whc_TrailingSpace:(CGFloat)trailingSpace
+             relativeView:(UIView *)relativeView;
+
+
+/**
+ * 说明：设置右对齐边距与某视图右对齐边距相等
+ */
+- (void)whc_TrailingSpaceEqualView:(UIView *)view;
 
 /**
  * 说明:设置y坐标(默认相对父视图)
@@ -200,10 +260,19 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 - (void)whc_TopSpace:(CGFloat)topSpace relativeView:(UIView *)relativeView;
 
+
+/**
+ * 说明：设置顶边距与某视图顶边距相等
+ */
+
+- (void)whc_TopSpaceEqualView:(UIView *)view;
+
 /**
  * 说明:设置底边距(默认相对父视图)
  * @param bottomSpace: 底边距边距
  */
+
+
 
 - (void)whc_BottomSpace:(CGFloat)bottomSpace;
 
@@ -418,10 +487,14 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 - (void)whc_AutoXibLayout;
 
+- (void)whc_AutoXibLayoutType:(WHC_LayoutTypeOptions)type;
+
 /**
  * 说明:对整个Xib上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
  */
 - (void)whc_AutoXibHorizontalLayout;
+
+- (void)whc_AutoXibHorizontalLayoutType:(WHC_LayoutTypeOptions)type;
 
 @end
 
