@@ -22,6 +22,8 @@
 @property (nonatomic , strong) NSArray * whc_CellBottomViews;
 /// cell最底部视图与cell底部的间隙
 @property (nonatomic , assign) CGFloat  whc_CellBottomOffset;
+/// cell中包含的UITableView
+@property (nonatomic , strong) UITableView * whc_CellTableView;
 
 /// 自动计算cell高度
 + (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;

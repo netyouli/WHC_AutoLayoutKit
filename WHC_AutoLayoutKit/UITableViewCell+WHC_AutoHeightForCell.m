@@ -14,6 +14,7 @@
  */
 
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
+#import "UIView+WHC_AutoLayout.h"
 #import <objc/runtime.h>
 
 @implementation UITableViewCell (WHC_AutoHeightForCell)
@@ -54,6 +55,17 @@
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (UITableView *)whc_CellTableView {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setWhc_CellTableView:(UITableView *)whc_CellTableView {
+    objc_setAssociatedObject(self,
+                             @selector(whc_CellTableView),
+                             whc_CellTableView,
+                             OBJC_ASSOCIATION_RETAIN);
+}
+
 + (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView {
     NSAssert(indexPath, @"indexPath = nil");
     NSAssert(tableView, @"tableView = nil");
@@ -72,6 +84,9 @@
     }
     UITableViewCell * cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:indexPath];
     NSAssert(cell, @"cell = nil");
+    if (cell.whc_CellTableView) {
+        [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
+    }
     cell.frame = CGRectMake(0, 0, screenWidth, CGRectGetHeight(cell.frame));
     cell.contentView.frame = CGRectMake(0, 0, screenWidth, CGRectGetHeight(cell.contentView.frame));
     [cell layoutIfNeeded];

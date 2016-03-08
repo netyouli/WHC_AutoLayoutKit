@@ -80,6 +80,7 @@
     [self.view addSubview:lable2];
     [self.view addSubview:lable3];
     
+    
     [lable1 whc_LeadingSpace:10];
     [lable1 whc_TopSpace:10 relativeView:view3];
     [lable1 whc_WidthEqualView:lable2];
@@ -95,6 +96,17 @@
     [lable3 whc_RightSpace:10];
     [lable3 whc_HeightEqualView:lable2];
     
+    [lable removeFromSuperview];
+ 
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.view addSubview:lable];
+    [lable whc_LeftSpace:10];
+    [lable whc_RightSpace:10 relativeView:view3];
+    [lable whc_TopSpace:10 relativeView:view1];
+    [lable whc_HeightAuto];
 }
 
 - (void)didReceiveMemoryWarning {

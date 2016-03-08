@@ -346,8 +346,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 }
 
 - (void)whc_Width:(CGFloat)width{
-    [self removeConstraintFromView:self
-                         attribute:NSLayoutAttributeWidth];
     [self removeConstraintFromView:self.superview
                                  attribute:NSLayoutAttributeRight];
     [self whc_ConstraintWithItem:self
@@ -404,8 +402,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 }
 
 - (void)whc_Height:(CGFloat)height{
-    [self removeConstraintFromView:self
-                         attribute:NSLayoutAttributeHeight];
     [self removeConstraintFromView:self.superview
                                  attribute:NSLayoutAttributeBottom];
     [self whc_ConstraintWithItem:nil
@@ -441,7 +437,9 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     [self removeConstraintFromView:self.superview
                          attribute:NSLayoutAttributeBottom];
     if ([self isKindOfClass:[UILabel class]]) {
-        ((UILabel *)self).numberOfLines = 0;
+        if (((UILabel *)self).numberOfLines != 0) {
+            ((UILabel *)self).numberOfLines = 0;
+        }
         [self whc_ConstraintWithItem:self
                            attribute:NSLayoutAttributeHeight
                            relatedBy:NSLayoutRelationGreaterThanOrEqual
@@ -685,7 +683,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                                              attribute:toAttribute
                                             multiplier:multiplier
                                               constant:constant];
-    
     [superView addConstraint:constraint];
 }
 
@@ -703,7 +700,7 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                        attribute:(NSLayoutAttribute)attribute
                           toView:(UIView *)toView
                      toAttribute:(NSLayoutAttribute)toAttribute {
-    NSAssert(view, @"视图不能为nil");
+    if(view == nil) return;
     UIView * constraintView = view;
     NSArray * constraintArray = [constraintView constraints];
     if (toView == nil) {
@@ -712,7 +709,15 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
             case NSLayoutAttributeHeight:
                 for (NSLayoutConstraint * constraint in constraintArray) {
                     if (constraint.firstAttribute == attribute) {
-                        [constraintView removeConstraint:constraint];
+                        if (attribute == NSLayoutAttributeWidth) {
+                            [constraintView removeConstraint:constraint];
+                        }else {
+                            if (![NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]){
+                                [constraintView removeConstraint:constraint];
+                            }else {
+                                continue;
+                            }
+                        }
                         break;
                     }
                 }
@@ -733,7 +738,7 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                 toView != nil) {
                 if (constraint.secondItem == toView &&
                     constraint.secondAttribute == toAttribute ) {
-                    [toView removeConstraint:constraint];
+                    [constraintView removeConstraint:constraint];
                     break;
                 }
             }
@@ -765,7 +770,7 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     NSMutableArray  * rowViewArray = [NSMutableArray array];
     for (NSInteger i = 0; i < subViewArray.count; i++) {
         UIView * subView = subViewArray[i];
-        if(rowViewArray.count == 0){
+        if(rowViewArray.count == 0) {
             NSMutableArray * subRowViewArray = [NSMutableArray array];
             [subRowViewArray addObject:subView];
             [rowViewArray addObject:subRowViewArray];
@@ -782,13 +787,13 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                         break;
                     }
                 }
-                if(isAtRow){
+                if(isAtRow) {
                     isAddSubView = YES;
                     [subRowViewArray addObject:subView];
                     break;
                 }
             }
-            if(!isAddSubView){
+            if(!isAddSubView) {
                 NSMutableArray * subRowViewArr = [NSMutableArray array];
                 [subRowViewArr addObject:subView];
                 [rowViewArray addObject:subRowViewArr];
@@ -900,9 +905,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                                              [NSStringFromClass(view.class) isEqualToString:@"UIScrollView"])) ||
                 [NSStringFromClass(view.class) isEqualToString:@"UITableViewCellContentView"]) {
                 [view whc_RunLayoutEngineWithOrientation:orientation layoutType:layoutType];
-                if ([NSStringFromClass(view.class) isEqualToString:@"UIScrollView"]) {
-                    
-                }
             }
         }
     }
