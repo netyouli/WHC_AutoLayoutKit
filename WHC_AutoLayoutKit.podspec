@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/netyouli/WHC_AutoLayoutKit.git", :tag => "2.0.0"}
 
-  s.source_files  = 'WHC_AutoLayoutExample', 'WHC_AutoLayoutExample/WHC_AutoLayoutKit/**/*.{h,m}'
+  s.source_files  = "WHC_AutoLayoutKit/*.{h,m}"
 
   # s.public_header_files = "Classes/**/*.h"
 
