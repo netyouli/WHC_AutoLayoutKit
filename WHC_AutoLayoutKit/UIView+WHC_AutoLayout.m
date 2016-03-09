@@ -16,6 +16,11 @@
 #import "UIView+WHC_AutoLayout.h"
 #import <objc/runtime.h>
 
+typedef NS_OPTIONS(NSUInteger, WHCNibType) {
+    XIB = 1 << 0,
+    SB = 1 << 1
+};
+
 WHCRect WHCRectMake(CGFloat left ,
                     CGFloat top ,
                     CGFloat width,
@@ -749,24 +754,56 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 #pragma mark - Xib智能布局模块 -
 
 - (void)whc_AutoXibLayout {
-    [self whc_RunLayoutEngineWithOrientation:All layoutType:DefaultType];
+    [self whc_AutoXibLayoutType:DefaultType];
 }
 
 - (void)whc_AutoXibLayoutType:(WHC_LayoutTypeOptions)type {
-    [self whc_RunLayoutEngineWithOrientation:All layoutType:type];
+    [self whc_RunLayoutEngineWithOrientation:All layoutType:type nibType:XIB];
 }
 
 - (void)whc_AutoXibHorizontalLayout {
-   [self whc_RunLayoutEngineWithOrientation:Horizontal layoutType:DefaultType];
+    [self whc_AutoXibHorizontalLayoutType:DefaultType];
 }
 
 - (void)whc_AutoXibHorizontalLayoutType:(WHC_LayoutTypeOptions)type {
-    [self whc_RunLayoutEngineWithOrientation:Horizontal layoutType:type];
+    [self whc_RunLayoutEngineWithOrientation:Horizontal layoutType:type nibType:XIB];
+}
+
+- (void)whc_AutoSBLayout {
+    [self whc_AutoSBLayoutType:DefaultType];
+}
+
+- (void)whc_AutoSBLayoutType:(WHC_LayoutTypeOptions)type {
+    CGRect initRect = self.bounds;
+    self.bounds = CGRectMake(0, 0, 375, 667);
+    [self whc_RunLayoutEngineWithOrientation:All layoutType:type nibType:SB];
+    self.bounds = initRect;
+}
+
+- (void)whc_AutoSBHorizontalLayout {
+    [self whc_AutoSBHorizontalLayoutType:DefaultType];
+}
+
+- (void)whc_AutoSBHorizontalLayoutType:(WHC_LayoutTypeOptions)type {
+    CGRect initRect = self.bounds;
+    self.bounds = CGRectMake(0, 0, 375, 667);
+    [self whc_RunLayoutEngineWithOrientation:Horizontal layoutType:type nibType:SB];
+    self.bounds = initRect;
 }
 
 - (void)whc_RunLayoutEngineWithOrientation:(WHC_LayoutOrientationOptions)orientation
-                                layoutType:(WHC_LayoutTypeOptions)layoutType {
-    NSArray  * subViewArray = self.subviews;
+                                layoutType:(WHC_LayoutTypeOptions)layoutType
+                                   nibType:(WHCNibType)nibType {
+    NSMutableArray  * subViewArray = [NSMutableArray array];
+    if (nibType == SB) {
+        for (NSObject * view in self.subviews) {
+            if (![NSStringFromClass(view.class) isEqualToString:@"_UILayoutGuide"]) {
+                [subViewArray addObject:view];
+            }
+        }
+    }else {
+        [subViewArray addObjectsFromArray:self.subviews];
+    }
     NSMutableArray  * rowViewArray = [NSMutableArray array];
     for (NSInteger i = 0; i < subViewArray.count; i++) {
         UIView * subView = subViewArray[i];
@@ -904,7 +941,7 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                 (view.subviews.count > 0 && ([NSStringFromClass(view.class) isEqualToString:@"UIView"] ||
                                              [NSStringFromClass(view.class) isEqualToString:@"UIScrollView"])) ||
                 [NSStringFromClass(view.class) isEqualToString:@"UITableViewCellContentView"]) {
-                [view whc_RunLayoutEngineWithOrientation:orientation layoutType:layoutType];
+                [view whc_RunLayoutEngineWithOrientation:orientation layoutType:layoutType nibType:nibType];
             }
         }
     }

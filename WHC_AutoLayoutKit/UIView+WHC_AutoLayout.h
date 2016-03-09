@@ -482,19 +482,52 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 #pragma mark - Xib智能布局模块 -
 
 /**
- * 说明:对整个Xib上UI控件垂直和横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ * 说明:对整个Xib(使用3.5寸xib)上UI控件垂直和横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
  */
 
 - (void)whc_AutoXibLayout;
 
+/**
+ * 说明:对整个Xib(使用3.5寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ */
+
 - (void)whc_AutoXibLayoutType:(WHC_LayoutTypeOptions)type;
 
 /**
- * 说明:对整个Xib上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ * 说明:对整个storyboard(使用4.7寸xib)上UI控件垂直和横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
  */
+
+- (void)whc_AutoSBLayout;
+
+/**
+ * 说明:对整个storyboard(使用4.7寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ */
+
+- (void)whc_AutoSBLayoutType:(WHC_LayoutTypeOptions)type;
+
+/**
+ * 说明:对整个Xib(使用3.5寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ */
+
 - (void)whc_AutoXibHorizontalLayout;
 
+/**
+ * 说明:对整个Xib(使用3.5寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ */
+
 - (void)whc_AutoXibHorizontalLayoutType:(WHC_LayoutTypeOptions)type;
+
+/**
+ * 说明:对整个storyboard(使用4.7寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ */
+
+- (void)whc_AutoSBHorizontalLayout;
+
+/**
+ * 说明:对整个storyboard(使用4.7寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
+ */
+
+- (void)whc_AutoSBHorizontalLayoutType:(WHC_LayoutTypeOptions)type;
 
 @end
 
