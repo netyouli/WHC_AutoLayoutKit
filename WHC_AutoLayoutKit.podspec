@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   s.name         = "WHC_AutoLayoutKit"
   s.version      = "2.0.0"
-  s.summary      = "一行代码搞定xib和storyboard自动布局、以后xib和storyboard可以不手动添加约束了，最简单的UIStackView自定义，支持Cell和Tableview高度自适应，Label和ScrollView内容自适应，致力于做最简单易用的AutoLayout库。The most easy way for autoLayout. Based Runtime."
+  s.summary      = "一行代码搞定xib和storyboard自动布局，最简单的UIStackView自定义，支持Cell和Tableview高度自适应，Label和ScrollView内容自适应，致力于做最简单易用的AutoLayout库。The most easy way for autoLayout. Based Runtime."
 
   s.homepage     = "https://github.com/netyouli/WHC_AutoLayoutKit"
 
