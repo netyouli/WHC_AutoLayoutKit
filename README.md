@@ -6,7 +6,8 @@
 
 ##### WHC_AutoLayoutKit 致力打造使用最简单功能最强大的自动布局开源库
 ##### WHC_AutoLayoutKit 借鉴android的相对布局和线性布局
-##### WHC_AutoLayoutKit pod集成： pod 'WHC_AutoLayoutKit', '~> 2.0.0'
+##### pod集成： pod 'WHC_AutoLayoutKit', '~> 2.0.0'
+
 ## VERSION ~ 2.0 (最低能支持iOS6)添加如下功能:
 ##### 1.一行代码对xib或者storyboard上的所有UI控件智能识别约束关系，并自动添加好相应约束条件
 ##### 2.masonary拥有的功能WHC_AutoLayoutKit都有,同时包含一行代码计算Cell高度使用比masonary更方便快捷
