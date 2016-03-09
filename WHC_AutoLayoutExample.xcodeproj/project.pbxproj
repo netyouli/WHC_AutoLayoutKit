@@ -24,6 +24,7 @@
 		C3068C101C84271300F88455 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C3068C0F1C84271300F88455 /* README.md */; };
 		C3F378451C852810003E6462 /* DemoVC6.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F378441C852810003E6462 /* DemoVC6.m */; };
 		C3F378471C85283F003E6462 /* DemoVC6.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3F378461C85283F003E6462 /* DemoVC6.xib */; };
+		C3F812311C8FCC6A003821AD /* WHC_AutoLayoutKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = C3F812301C8FCC6A003821AD /* WHC_AutoLayoutKit.podspec */; };
 		C3FEAF451C8697F4008E1E97 /* DemoVC7.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEAF431C8697F4008E1E97 /* DemoVC7.m */; };
 		C3FEAF461C8697F4008E1E97 /* DemoVC7.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */; };
 		C3FEAF4B1C86AD37008E1E97 /* a.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF481C86AD37008E1E97 /* a.gif */; };
@@ -65,6 +66,7 @@
 		C3F378431C852810003E6462 /* DemoVC6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoVC6.h; sourceTree = "<group>"; };
 		C3F378441C852810003E6462 /* DemoVC6.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC6.m; sourceTree = "<group>"; };
 		C3F378461C85283F003E6462 /* DemoVC6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoVC6.xib; sourceTree = "<group>"; };
+		C3F812301C8FCC6A003821AD /* WHC_AutoLayoutKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WHC_AutoLayoutKit.podspec; sourceTree = "<group>"; };
 		C3FEAF421C8697F4008E1E97 /* DemoVC7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoVC7.h; sourceTree = "<group>"; };
 		C3FEAF431C8697F4008E1E97 /* DemoVC7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC7.m; sourceTree = "<group>"; };
 		C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoVC7.xib; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		C3068BC01C8418F000F88455 = {
 			isa = PBXGroup;
 			children = (
+				C3F812301C8FCC6A003821AD /* WHC_AutoLayoutKit.podspec */,
 				C3FEAF471C86AD37008E1E97 /* Gif */,
 				C3068C0F1C84271300F88455 /* README.md */,
 				C3068BE31C84192C00F88455 /* WHC_AutoLayoutKit */,
@@ -293,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3FEAF4D1C86AD37008E1E97 /* c.gif in Resources */,
+				C3F812311C8FCC6A003821AD /* WHC_AutoLayoutKit.podspec in Resources */,
 				C3FEAF461C8697F4008E1E97 /* DemoVC7.xib in Resources */,
 				C3068BDC1C8418F000F88455 /* LaunchScreen.storyboard in Resources */,
 				C3FEAF511C86ADAE008E1E97 /* e.gif in Resources */,
