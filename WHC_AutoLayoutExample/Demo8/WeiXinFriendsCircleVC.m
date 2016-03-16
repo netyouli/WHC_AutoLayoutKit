@@ -205,7 +205,7 @@ static  NSInteger kDefaultOnePageDataCount = 10;
     _lastAnswerLabel = commentLabel;
     CGRect answerRc = [commentLabel convertRect:commentLabel.bounds toView:self.view];
     CGRect sendRc = _sendView.frame;
-    CGFloat diffY = CGRectGetMaxY(answerRc) - CGRectGetMinY(sendRc) + CGRectGetHeight(sendRc);
+    CGFloat diffY = CGRectGetMaxY(answerRc) - CGRectGetMinY(sendRc);
     [_friendTableView setContentOffset:CGPointMake(0, _friendTableView.contentOffset.y + diffY) animated:YES];
 }
 
