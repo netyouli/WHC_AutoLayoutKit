@@ -16,7 +16,7 @@
 #import "DemoVC5.h"
 #import "DemoVC6.h"
 #import "DemoVC7.h"
-
+#import "WeiXinFriendsCircleVC.h"
 /*
  *  qq:712641411
  *  开发作者: 吴海超(WHC)
@@ -26,6 +26,7 @@
 
 @interface MainVC () {
     NSArray * _contents;
+    BOOL      _initPush;
 }
 
 @end
@@ -42,8 +43,18 @@
                   @"stackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局",
                   @"stackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局",
                   @"一行代码智能对Xib上所有控件智能添加约束布局",
-                  @"一行代码智能对Xib上所有控件智能横向布局"];
+                  @"一行代码智能对Xib上所有控件智能横向布局",
+                  @"微信朋友圈演示"];
     [self.tableView registerClass:[MainVCCell class] forCellReuseIdentifier:NSStringFromClass([MainVCCell class])];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_initPush) {
+        _initPush = YES;
+        WeiXinFriendsCircleVC * vc = [WeiXinFriendsCircleVC new];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,6 +115,11 @@
             break;
         case 6: {
             DemoVC7 * vc = [DemoVC7 new];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 7: {
+            WeiXinFriendsCircleVC * vc = [WeiXinFriendsCircleVC new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;

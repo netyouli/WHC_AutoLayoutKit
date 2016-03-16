@@ -136,12 +136,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 - (void)whc_AutoContentSize;
 
 /**
- * 说明: 控件横向和垂直布局宽度或者高度权重比例
- */
-@property (nonatomic , assign)CGFloat whc_WidthWeight;
-@property (nonatomic , assign)CGFloat whc_HeightWeight;
-
-/**
  * 说明:设置x坐标(默认相对父视图)
  * @param x: 左边距
  */
@@ -151,10 +145,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明: 设置x坐标
  * @param x: 左边距
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_X:(CGFloat)x relativeView:(UIView *)relativeView;
+- (void)whc_X:(CGFloat)x toView:(UIView *)toView;
 
 /**
  * 说明:设置左边距(默认相对父视图)
@@ -166,9 +160,9 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置左边距
  * @param leftSpace: 左边距
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
-- (void)whc_LeftSpace:(CGFloat)leftSpace relativeView:(UIView *)relativeView;
+- (void)whc_LeftSpace:(CGFloat)leftSpace toView:(UIView *)toView;
 
 /**
  * 说明：设置左对齐边距与某视图左对齐边距相等
@@ -185,10 +179,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置右边距
  * @param rightSpace: 右边距
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_RightSpace:(CGFloat)rightSpace relativeView:(UIView *)relativeView;
+- (void)whc_RightSpace:(CGFloat)rightSpace toView:(UIView *)toView;
 
 /**
  * 说明: 设置左对齐(默认相对父视图)
@@ -200,11 +194,11 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明：设置左对齐
  * @param leadingSpace 左边距
- * @param relativeView 相对视图
+ * @param toView 相对视图
  */
 
 - (void)whc_LeadingSpace:(CGFloat)leadingSpace
-            relativeView:(UIView *)relativeView;
+            toView:(UIView *)toView;
 
 /**
  * 说明：设置左对齐边距与某视图左对齐边距相等
@@ -221,10 +215,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明：设置右对齐
  * @param trailingSpace 右边距
- * @param relativeView 相对视图
+ * @param toView 相对视图
  */
 - (void)whc_TrailingSpace:(CGFloat)trailingSpace
-             relativeView:(UIView *)relativeView;
+             toView:(UIView *)toView;
 
 
 /**
@@ -242,10 +236,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置y坐标
  * @param y: 顶边距
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_Y:(CGFloat)y relativeView:(UIView *)relativeView;
+- (void)whc_Y:(CGFloat)y toView:(UIView *)toView;
 
 /**
  * 说明:设置顶边距(默认相对父视图)
@@ -257,10 +251,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置顶边距
  * @param topSpace: 顶边距
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_TopSpace:(CGFloat)topSpace relativeView:(UIView *)relativeView;
+- (void)whc_TopSpace:(CGFloat)topSpace toView:(UIView *)toView;
 
 
 /**
@@ -281,10 +275,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置底边距
  * @param bottomSpace: 底边距边距
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_BottomSpace:(CGFloat)bottomSpace relativeView:(UIView *)relativeView;
+- (void)whc_BottomSpace:(CGFloat)bottomSpace toView:(UIView *)toView;
 
 /**
  * 说明:设置宽度
@@ -350,10 +344,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置中心x与相对视图中心的偏移 centerX = 0 与相对视图中心x重合
  * @param centerX: 中心x坐标偏移
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_CenterX:(CGFloat)centerX relativeView:(UIView *)relativeView;
+- (void)whc_CenterX:(CGFloat)centerX toView:(UIView *)toView;
 
 /**
  * 说明:设置中心y与父视图中心的偏移 centerY = 0 与父视图中心y重合
@@ -365,10 +359,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置中心y与相对视图中心的偏移 centerY = 0 与相对视图中心y重合
  * @param centerY: 中心y坐标偏移
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_CenterY:(CGFloat)centerY relativeView:(UIView *)relativeView;
+- (void)whc_CenterY:(CGFloat)centerY toView:(UIView *)toView;
 
 /**
  * 说明:设置文字基线与底部偏移(默认相对父视图)
@@ -380,10 +374,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置文字基线与底部偏移
  * @param lineSpace: 底部偏移
- * @param relativeView: 相对视图
+ * @param toView: 相对视图
  */
 
-- (void)whc_BaseLineSpace:(CGFloat)lineSpace relativeView:(UIView *)relativeView;
+- (void)whc_BaseLineSpace:(CGFloat)lineSpace toView:(UIView *)toView;
 /**
  * 说明:设置xy(左顶边距,默认相对父视图)
  * @param xy: 左边距和顶边距
@@ -394,10 +388,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置xy(左顶边距,默认相对父视图)
  * @param xy: 左边距和顶边距
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_XY:(CGPoint)xy relativeView:(UIView *)relativeView;
+- (void)whc_XY:(CGPoint)xy toView:(UIView *)toView;
 
 /**
  * 说明:设置中心偏移(默认相对父视图)center = CGPointZero 与父视图中心重合
@@ -409,10 +403,10 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置中心偏移(默认相对父视图)center = CGPointZero 与父视图中心重合
  * @param center: 中心偏移xy
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_Center:(CGPoint)center relativeView:(UIView *)relativeView;
+- (void)whc_Center:(CGPoint)center toView:(UIView *)toView;
 
 /**
  * 说明:设置视图显示区域(默认相对父视图,宽度高度固定)
@@ -433,12 +427,12 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
  * @param frame: 视图显示区域
  */
 
-- (void)whc_Frame:(WHCRect)frame relativeView:(UIView *)relativeView;
+- (void)whc_Frame:(WHCRect)frame toView:(UIView *)toView;
 
 /**
  * 说明:设置视图显示区域(默认相对父视图,横竖屏仅仅宽度自动收缩)
  * @param frame: 视图显示区域
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
 - (void)whc_FrameAutoWidth:(WHCWidthAutoRect)frame;
@@ -453,26 +447,26 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 /**
  * 说明:设置视图显示区域(横竖屏宽高可自动收缩)
  * @param frame: 视图显示区域
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_FrameAuto:(WHCAutoRect)frame relativeView:(UIView *)relativeView;
+- (void)whc_FrameAuto:(WHCAutoRect)frame toView:(UIView *)toView;
 
 /**
  * 说明:设置视图显示区域(横竖屏宽高可自动收缩)
  * @param frame: 视图显示区域
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_FrameAutoWidth:(WHCWidthAutoRect)frame relativeView:(UIView *)relativeView;
+- (void)whc_FrameAutoWidth:(WHCWidthAutoRect)frame toView:(UIView *)toView;
 
 /**
  * 说明:设置视图显示区域(横竖屏高度可自动收缩)
  * @param frame: 视图显示区域
- * @param relativeView: 设置相对参考视图
+ * @param toView: 设置相对参考视图
  */
 
-- (void)whc_FrameAutoHeight:(WHCHeightAutoRect)frame relativeView:(UIView *)relativeView;
+- (void)whc_FrameAutoHeight:(WHCHeightAutoRect)frame toView:(UIView *)toView;
 
 /**
  * 说明:设置视图显示宽高
@@ -531,23 +525,37 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 - (void)whc_AutoSBHorizontalLayoutType:(WHC_LayoutTypeOptions)type;
 
-@end
-
-#pragma mark - UI自动布局容器 -
-/// 容器布局(可设置垂直和横向以及横向和垂直混合布局方式)
-@interface WHC_LayoutContainer : UIView
-
-/// 混合布局(同时垂直和横向)每行多少列
-@property (nonatomic , assign) NSInteger whc_Column;
-/// 容器内边距
-@property (nonatomic , assign) UIEdgeInsets whc_Edge;
-/// 容器内子控件之间的空隙
-@property (nonatomic , assign) CGFloat whc_Space;
-/// 容器自动布局方向
-@property (nonatomic , assign) WHC_LayoutOrientationOptions whc_Orientation;
+#pragma mark - 自动加边线模块 -
 
 /**
- * 说明：开始进行自动布局
+ * 说明: 对视图底部加线
+ * @param value: 线宽
+ * @param color: 线的颜色
  */
-- (void)whc_StartLayout;
+
+- (void)whc_BottomLine:(CGFloat)value lineColor:(UIColor *)color;
+
+/**
+ * 说明: 对视图顶部加线
+ * @param value: 线宽
+ * @param color: 线的颜色
+ */
+
+- (void)whc_TopLine:(CGFloat)value lineColor:(UIColor *)color;
+
+/**
+ * 说明: 对视图左边加线
+ * @param value: 线宽
+ * @param color: 线的颜色
+ */
+
+- (void)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color;
+
+/**
+ * 说明: 对视图右边加线
+ * @param value: 线宽
+ * @param color: 线的颜色
+ */
+
+- (void)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color;
 @end

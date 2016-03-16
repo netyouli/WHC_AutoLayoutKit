@@ -55,16 +55,16 @@
         
         _image.textAlignment = NSTextAlignmentCenter;
         [_image whc_LeftSpace:10];
-        [_image whc_TopSpace:10 relativeView:_title];
+        [_image whc_TopSpace:10 toView:_title];
         [_image whc_Size:CGSizeMake(40, 40)];
         
-        [_content whc_TopSpace:10 relativeView:_title];
-        [_content whc_LeftSpace:10 relativeView:_image];
+        [_content whc_TopSpace:10 toView:_title];
+        [_content whc_LeftSpace:10 toView:_image];
         [_content whc_RightSpace:10];
         [_content whc_HeightAuto];
         
         _tableView.scrollEnabled = NO;
-        [_tableView whc_TopSpace:10 relativeView:_content];
+        [_tableView whc_TopSpace:10 toView:_content];
         [_tableView whc_LeftSpace:10];
         [_tableView whc_RightSpace:10];
         self.whc_CellBottomOffset = 10;
@@ -87,8 +87,8 @@
         _other.text = content;
         if (![self.contentView.subviews containsObject:_other]) {
             [self.contentView addSubview:_other];
-            [_other whc_TopSpace:10 relativeView:_tableView];
-            [_other whc_LeftSpace:10 relativeView:_image];
+            [_other whc_TopSpace:10 toView:_tableView];
+            [_other whc_LeftSpace:10 toView:_image];
             [_other whc_RightSpace:10];
             [_other whc_HeightAuto];
         }

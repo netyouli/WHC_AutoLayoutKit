@@ -25,8 +25,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    UINavigationController * rootNC = [[UINavigationController alloc] initWithRootViewController:[MainVC new]];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    [UINavigationBar appearance].barTintColor = [UIColor colorWithWhite:0.1 alpha:1];
+    [UINavigationBar appearance].barStyle = UIBarStyleBlack;
+    [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    _window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MainVC new]];
+    _window.rootViewController = rootNC;
     [_window makeKeyAndVisible];
     return YES;
 }

@@ -53,19 +53,19 @@
     [view1 whc_WidthEqualView:view2];
     [view1 whc_Height:150];
     
-    [view2 whc_LeftSpace:10 relativeView:view1];
+    [view2 whc_LeftSpace:10 toView:view1];
     [view2 whc_TopSpace:74];
     [view2 whc_RightSpace:10];
     [view2 whc_HeightEqualView:view1];
     
-    [view3 whc_Y:10 relativeView:view1];
+    [view3 whc_Y:10 toView:view1];
     [view3 whc_RightSpace:10];
     [view3 whc_HeightEqualView:view2];
-    [view3 whc_LeftSpace:10 relativeView:view1];
+    [view3 whc_LeftSpace:10 toView:view1];
     
     [lable whc_LeftSpace:10];
-    [lable whc_RightSpace:10 relativeView:view3];
-    [lable whc_TopSpace:10 relativeView:view1];
+    [lable whc_RightSpace:10 toView:view3];
+    [lable whc_TopSpace:10 toView:view1];
     [lable whc_HeightAuto];
     
     lable1 = [UILabel new];
@@ -82,16 +82,16 @@
     
     
     [lable1 whc_LeadingSpace:10];
-    [lable1 whc_TopSpace:10 relativeView:view3];
+    [lable1 whc_TopSpace:10 toView:view3];
     [lable1 whc_WidthEqualView:lable2];
     [lable1 whc_Height:100];
     
-    [lable2 whc_LeadingSpace:10 relativeView:lable1];
+    [lable2 whc_LeadingSpace:10 toView:lable1];
     [lable2 whc_TopSpaceEqualView:lable1];
     [lable2 whc_WidthEqualView:lable3];
     [lable2 whc_HeightEqualView:lable1];
     
-    [lable3 whc_LeadingSpace:10 relativeView:lable2];
+    [lable3 whc_LeadingSpace:10 toView:lable2];
     [lable3 whc_TopSpaceEqualView:lable2];
     [lable3 whc_RightSpace:10];
     [lable3 whc_HeightEqualView:lable2];
@@ -104,8 +104,8 @@
     [super viewDidAppear:animated];
     [self.view addSubview:lable];
     [lable whc_LeftSpace:10];
-    [lable whc_RightSpace:10 relativeView:view3];
-    [lable whc_TopSpace:10 relativeView:view1];
+    [lable whc_RightSpace:10 toView:view3];
+    [lable whc_TopSpace:10 toView:view1];
     [lable whc_HeightAuto];
 }
 

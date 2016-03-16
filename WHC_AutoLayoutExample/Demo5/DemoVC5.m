@@ -8,9 +8,10 @@
 
 #import "DemoVC5.h"
 #import "UIView+WHC_AutoLayout.h"
+#import "WHC_StackView.h"
 
 @interface DemoVC5 (){
-    WHC_LayoutContainer * container1, *container2;
+    WHC_StackView * stackView1, *stackView2;
 }
 
 @end
@@ -23,24 +24,24 @@
     self.navigationItem.title = @"StockView 垂直横向混合自动布局";
     self.view.backgroundColor = [UIColor whiteColor];
     // 创建容器视图12
-    container1 = [WHC_LayoutContainer new];
-    container2 = [WHC_LayoutContainer new];
+    stackView1 = [WHC_StackView new];
+    stackView2 = [WHC_StackView new];
     
-    container1.backgroundColor = [UIColor orangeColor];
-    container2.backgroundColor = [UIColor magentaColor];
+    stackView1.backgroundColor = [UIColor orangeColor];
+    stackView2.backgroundColor = [UIColor magentaColor];
     
-    [self.view addSubview:container2];
-    [self.view addSubview:container1];
+    [self.view addSubview:stackView2];
+    [self.view addSubview:stackView1];
     
     // 容器视图1布局
-    [container1 whc_FrameAutoWidth:WHCWidthAutoRectMake(0, 64, 0, 150)];
-    [container1 whc_HeightEqualView:container2];
+    [stackView1 whc_FrameAutoWidth:WHCWidthAutoRectMake(0, 64, 0, 150)];
+    [stackView1 whc_HeightEqualView:stackView2];
     
     // 容器视图1配置
-    container1.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
-    container1.whc_Orientation = All;// 自动横向垂直混合布局
-    container1.whc_Space = 10;
-    container1.whc_Column = 2; // 每行2列
+    stackView1.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
+    stackView1.whc_Orientation = All;// 自动横向垂直混合布局
+    stackView1.whc_Space = 10;
+    stackView1.whc_Column = 2; // 每行2列
     
     UILabel * lable1 = [UILabel new];
     UILabel * lable2 = [UILabel new];
@@ -53,39 +54,39 @@
     lable4.backgroundColor = [UIColor yellowColor];
     
     // 添加到容器视图
-    [container1 addSubview:lable1];
-    [container1 addSubview:lable2];
-    [container1 addSubview:lable3];
-    [container1 addSubview:lable4];
+    [stackView1 addSubview:lable1];
+    [stackView1 addSubview:lable2];
+    [stackView1 addSubview:lable3];
+    [stackView1 addSubview:lable4];
     
     // 容器视图2布局
-    [container2 whc_LeftSpace:0];
-    [container2 whc_TopSpace:10 relativeView:container1];
-    [container2 whc_RightSpace:0];
-    [container2 whc_BottomSpace:10];
+    [stackView2 whc_LeftSpace:0];
+    [stackView2 whc_TopSpace:10 toView:stackView1];
+    [stackView2 whc_RightSpace:0];
+    [stackView2 whc_BottomSpace:10];
     
     // 容器视图2配置
-    container2.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
-    container2.whc_Orientation = All;// 自动横向垂直混合布局
-    container2.whc_Space = 10;
-    container2.whc_Column = 2; // 每行2列
+    stackView2.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
+    stackView2.whc_Orientation = All;// 自动横向垂直混合布局
+    stackView2.whc_Space = 10;
+    stackView2.whc_Column = 2; // 每行2列
     
     // 创建容器视图2的子容器视图（容器嵌套使用）
-    WHC_LayoutContainer * subContainer21 = [WHC_LayoutContainer new];
-    WHC_LayoutContainer * subContainer22 = [WHC_LayoutContainer new];
+    WHC_StackView * substackView21 = [WHC_StackView new];
+    WHC_StackView * substackView22 = [WHC_StackView new];
     
-    subContainer21.backgroundColor = [UIColor orangeColor];
-    subContainer22.backgroundColor = [UIColor orangeColor];
+    substackView21.backgroundColor = [UIColor orangeColor];
+    substackView22.backgroundColor = [UIColor orangeColor];
     
     // 添加容器2视图子容器
-    [container2 addSubview:subContainer21];
-    [container2 addSubview:subContainer22];
+    [stackView2 addSubview:substackView21];
+    [stackView2 addSubview:substackView22];
     
     // 容器2视图子容器21配置
-    subContainer21.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
-    subContainer21.whc_Orientation = All;// 自动横向垂直混合布局
-    subContainer21.whc_Space = 10;
-    subContainer21.whc_Column = 3; // 每行3列
+    substackView21.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
+    substackView21.whc_Orientation = All;// 自动横向垂直混合布局
+    substackView21.whc_Space = 10;
+    substackView21.whc_Column = 3; // 每行3列
     
     UIView * sublable211 = [UIView new];
     UIView * sublable212 = [UIView new];
@@ -98,16 +99,16 @@
     sublable214.backgroundColor = [UIColor grayColor];
     
     // 添加子元素到容器视图
-    [subContainer21 addSubview:sublable211];
-    [subContainer21 addSubview:sublable212];
-    [subContainer21 addSubview:sublable213];
-    [subContainer21 addSubview:sublable214];
+    [substackView21 addSubview:sublable211];
+    [substackView21 addSubview:sublable212];
+    [substackView21 addSubview:sublable213];
+    [substackView21 addSubview:sublable214];
     
     // 容器2视图子容器22配置
-    subContainer22.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
-    subContainer22.whc_Orientation = All;// 自动横向垂直混合布局
-    subContainer22.whc_Space = 10;
-    subContainer22.whc_Column = 3; // 每行3列
+    substackView22.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
+    substackView22.whc_Orientation = All;// 自动横向垂直混合布局
+    substackView22.whc_Space = 10;
+    substackView22.whc_Column = 3; // 每行3列
     
     UIView * sublable221 = [UIView new];
     UIView * sublable222 = [UIView new];
@@ -119,14 +120,14 @@
     sublable223.backgroundColor = [UIColor grayColor];
     sublable224.backgroundColor = [UIColor grayColor];
     
-    [subContainer22 addSubview:sublable221];
-    [subContainer22 addSubview:sublable222];
-    [subContainer22 addSubview:sublable223];
-    [subContainer22 addSubview:sublable224];
+    [substackView22 addSubview:sublable221];
+    [substackView22 addSubview:sublable222];
+    [substackView22 addSubview:sublable223];
+    [substackView22 addSubview:sublable224];
     
     // 开始对容器进行自动布局
-    [container1 whc_StartLayout];
-    [container2 whc_StartLayout];
+    [stackView1 whc_StartLayout];
+    [stackView2 whc_StartLayout];
 }
 
 - (void)didReceiveMemoryWarning {
