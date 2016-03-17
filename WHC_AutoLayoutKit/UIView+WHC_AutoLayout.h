@@ -126,9 +126,175 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                                         CGFloat width,
                                         CGFloat bottom);
 
+typedef UIView * (^LeftSpace)(CGFloat value);
+typedef UIView * (^LeftSpaceToView)(CGFloat value , UIView * toView);
+typedef UIView * (^LeftSpaceEqualView)(UIView * view);
+
+typedef UIView * (^LeadingSpace)(CGFloat value);
+typedef UIView * (^LeadingSpaceToView)(CGFloat value , UIView * toView);
+typedef UIView * (^LeadingSpaceEqualView)(UIView * view);
+
+typedef UIView * (^TrailingSpace)(CGFloat value);
+typedef UIView * (^TrailingSpaceToView)(CGFloat value , UIView * toView);
+typedef UIView * (^TrailingSpaceEqualView)(UIView * view);
+
+typedef UIView * (^BaseLineSpace)(CGFloat value);
+typedef UIView * (^BaseLineSpaceToView)(CGFloat value , UIView * toView);
+typedef UIView * (^BaseLineSpaceEqualView)(UIView * view);
+
+typedef UIView * (^RightSpace)(CGFloat value);
+typedef UIView * (^RightSpaceToView)(CGFloat value , UIView * toView);
+typedef UIView * (^RightSpaceEqualView)(UIView * view);
+
+typedef UIView * (^TopSpace)(CGFloat value);
+typedef UIView * (^TopSpaceToView)(CGFloat value , UIView * toView);
+typedef UIView * (^TopSpaceEqualView)(UIView * view);
+
+typedef UIView * (^BottomSpace)(CGFloat value);
+typedef UIView * (^BottomSpaceToView)(CGFloat value , UIView * toView);
+typedef UIView * (^BottomSpaceEqualView)(UIView * view);
+
+typedef UIView * (^Width)(CGFloat value);
+typedef UIView * (^WidthAuto)();
+typedef UIView * (^WidthEqualView)(UIView * view);
+typedef UIView * (^WidthEqualViewRatio)(UIView * view, CGFloat ratio);
+
+typedef UIView * (^Height)(CGFloat value);
+typedef UIView * (^HeightAuto)();
+typedef UIView * (^HeightEqualView)(UIView * view);
+typedef UIView * (^HeightEqualViewRatio)(UIView * view, CGFloat ratio);
+
+typedef UIView * (^CenterX)(CGFloat value);
+typedef UIView * (^CenterXToView)(CGFloat value, UIView * toView);
+
+typedef UIView * (^CenterY)(CGFloat value);
+typedef UIView * (^CenterYToView)(CGFloat value, UIView * toView);
+
+typedef UIView * (^Center)(CGPoint center);
+typedef UIView * (^CenterToView)(CGPoint center, UIView * toView);
+
+typedef UIView * (^Frame)(WHCRect frame);
+typedef UIView * (^FrameToView)(WHCRect frame , UIView * toView);
+
+typedef UIView * (^FrameAutoWidth)(WHCWidthAutoRect frame);
+typedef UIView * (^FrameAutoWidthToView)(WHCWidthAutoRect frame ,UIView * toView);
+
+typedef UIView * (^FrameAutoHeight)(WHCHeightAutoRect frame);
+typedef UIView * (^FrameAutoHeightToView)(WHCHeightAutoRect frame,UIView * toView);
+
+typedef UIView * (^FrameAuto)(WHCAutoRect frame);
+typedef UIView * (^FrameAutoToView)(WHCAutoRect frame, UIView * toView);
+
+typedef UIView * (^size)(CGSize size);
+
 #pragma mark - UI自动布局 -
 
 @interface UIView (WHC_AutoLayout)
+
+#pragma mark - api version ~ 2.0 -
+
+/// 与父视图左边间距(CGFloat value)
+@property (nonatomic ,copy , readonly)LeftSpace whc_LeftSpace;
+/// 与相对视图toView左边间距(CGFloat value,UIView * toView)
+@property (nonatomic ,copy , readonly)LeftSpaceToView whc_LeftSpaceToView;
+/// 与视图view左边间距相等(UIView * view)
+@property (nonatomic ,copy , readonly)LeftSpaceEqualView whc_LeftSpaceEqualView;
+
+/// 与父视图左边间距(CGFloat value)
+@property (nonatomic ,copy , readonly)LeadingSpace whc_LeadingSpace;
+/// 与相对视图toView左边间距(CGFloat value,UIView * toView)
+@property (nonatomic ,copy , readonly)LeadingSpaceToView whc_LeadingSpaceToView;
+/// 与视图view左边间距相等(UIView * view)
+@property (nonatomic ,copy , readonly)LeadingSpaceEqualView whc_LeadingSpaceEqualView;
+
+/// 与父视图右边间距(CGFloat value)
+@property (nonatomic ,copy , readonly)TrailingSpace whc_TrailingSpace;
+/// 与相对视图toView右边间距(CGFloat value,UIView * toView)
+@property (nonatomic ,copy , readonly)TrailingSpaceToView whc_TrailingSpaceToView;
+/// 与视图view右边间距相等(UIView * view)
+@property (nonatomic ,copy , readonly)TrailingSpaceEqualView whc_TrailingSpaceEqualView;
+
+/// 与父视图底边间距Y(CGFloat value)
+@property (nonatomic ,copy , readonly)BaseLineSpace whc_BaseLineSpace;
+/// 与相对视图toView底边间距Y(CGFloat value,UIView * toView)
+@property (nonatomic ,copy , readonly)BaseLineSpaceToView whc_BaseLineSpaceToView;
+/// 与视图view底边间距Y相等(UIView * view)
+@property (nonatomic ,copy , readonly)BaseLineSpaceEqualView whc_BaseLineSpaceEqualView;
+
+/// 与父视图右边间距(CGFloat value)
+@property (nonatomic ,copy , readonly)RightSpace whc_RightSpace;
+/// 与相对视图toView右边间距(CGFloat value,UIView * toView)
+@property (nonatomic ,copy , readonly)RightSpaceToView whc_RightSpaceToView;
+
+/// 与父视图顶边间距(CGFloat value)
+@property (nonatomic ,copy , readonly)TopSpace whc_TopSpace;
+/// 与相对视图toView顶边间距(CGFloat value,UIView * toView)
+@property (nonatomic ,copy , readonly)TopSpaceToView whc_TopSpaceToView;
+/// 与视图view顶边间距相等(UIView * view)
+@property (nonatomic ,copy , readonly)TopSpaceEqualView whc_TopSpaceEqualView;
+
+/// 与父视图底边间距(CGFloat value)
+@property (nonatomic ,copy , readonly)BottomSpace whc_BottomSpace;
+/// 与相对视图toView底边间距(CGFloat value,UIView * toView)
+@property (nonatomic ,copy , readonly)BottomSpaceToView whc_BottomSpaceToView;
+
+/// 宽度(CGFloat value)
+@property (nonatomic ,copy , readonly)Width whc_Width;
+/// 宽度自动()
+@property (nonatomic ,copy , readonly)WidthAuto whc_widthAuto;
+/// 宽度等于视图view(UIView * view)
+@property (nonatomic ,copy , readonly)WidthEqualView whc_WidthEqualView;
+/// 宽度等于视图view 参照比例Ratio(UIView * view ,CGFloat ratio)
+@property (nonatomic ,copy , readonly)WidthEqualViewRatio whc_WidthEqualViewRatio;
+
+/// 高度(CGFloat value)
+@property (nonatomic ,copy , readonly)Height whc_Height;
+/// 高度自动()
+@property (nonatomic ,copy , readonly)HeightAuto whc_heightAuto;
+/// 高度等于视图view(UIView * view)
+@property (nonatomic ,copy , readonly)HeightEqualView whc_HeightEqualView;
+/// 高度等于视图view 参照比例Ratio(UIView * view ,CGFloat ratio)
+@property (nonatomic ,copy , readonly)HeightEqualViewRatio whc_HeightEqualViewRatio;
+
+/// 中心X与父视图偏移(CGFloat value)
+@property (nonatomic ,copy , readonly)CenterX whc_CenterX;
+/// 中心X与视图view偏移(CGFloat value , UIView * toView)
+@property (nonatomic ,copy , readonly)CenterXToView whc_CenterXToView;
+
+/// 中心Y与父视图偏移(CGFloat value)
+@property (nonatomic ,copy , readonly)CenterY whc_CenterY;
+/// 中心Y与视图view偏移(CGFloat value , UIView * toView)
+@property (nonatomic ,copy , readonly)CenterYToView whc_CenterYToView;
+
+/// 中心与父视图偏移(CGFloat value)
+@property (nonatomic ,copy , readonly)Center whc_Center;
+/// 中心与视图view偏移(CGFloat value , UIView * toView)
+@property (nonatomic ,copy , readonly)CenterToView whc_CenterToView;
+
+/// 普通frame设置(WHC_Rect frame)
+@property (nonatomic ,copy , readonly)Frame whc_Frame;
+/// 普通frame设置相对toView(WHC_Rect frame , UIView * toView)
+@property (nonatomic ,copy , readonly)FrameToView whc_FrameToView;
+
+/// frame设置自动宽度(WHCWidthAutoRect frame)
+@property (nonatomic ,copy , readonly)FrameAutoWidth whc_FrameAutoWidth;
+/// frame设置自动宽度相对toView(WHCWidthAutoRect frame, UIView * toView)
+@property (nonatomic ,copy , readonly)FrameAutoWidthToView whc_FrameAutoWidthToView;
+
+/// frame设置自动高度(WHCHeightAutoRect frame)
+@property (nonatomic ,copy , readonly)FrameAutoHeight whc_FrameAutoHeight;
+/// frame设置自动高度相对toView(WHCHeightAutoRect frame, UIView * toView)
+@property (nonatomic ,copy , readonly)FrameAutoHeightToView whc_FrameAutoHeightToView;
+
+/// frame设置自动高宽度(WHCAutoRect frame)
+@property (nonatomic ,copy , readonly)FrameAuto whc_FrameAuto;
+/// frame设置自动高宽度相对toView(WHCAutoRect frame, UIView * toView)
+@property (nonatomic ,copy , readonly)FrameAutoToView whc_FrameAutoToView;
+
+/// size设置(Size size)
+@property (nonatomic ,copy , readonly)size whc_Size;
+
+#pragma mark - api version ~ 1.0 -
 
 /**
  * 说明: 自动调整UiScrollview的ContentSize
@@ -365,19 +531,26 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 - (void)whc_CenterY:(CGFloat)centerY toView:(UIView *)toView;
 
 /**
- * 说明:设置文字基线与底部偏移(默认相对父视图)
+ * 说明:设置Y坐标与底部偏移(默认相对父视图)
  * @param lineSpace: 底部偏移
  */
 
 - (void)whc_BaseLineSpace:(CGFloat)lineSpace;
 
 /**
- * 说明:设置文字基线与底部偏移
+ * 说明:设置Y坐标与底部偏移
  * @param lineSpace: 底部偏移
  * @param toView: 相对视图
  */
 
 - (void)whc_BaseLineSpace:(CGFloat)lineSpace toView:(UIView *)toView;
+
+/**
+ * 说明:设置Y坐标相等
+ * @param view: 相对视图
+ */
+
+- (void)whc_BaseLineSpaceEqualView:(UIView *)view;
 /**
  * 说明:设置xy(左顶边距,默认相对父视图)
  * @param xy: 左边距和顶边距

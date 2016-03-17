@@ -12,6 +12,11 @@
 ##### 1.一行代码对xib或者storyboard上的所有UI控件智能识别约束关系，并自动添加好相应约束条件
 ##### 2.masonary拥有的功能WHC_AutoLayoutKit都有,同时包含一行代码计算Cell高度使用比masonary更方便快捷
 ##### 3.拥有UIStackView(WHC_StackView)功能使用更简单直接
+##### 4.新增api 2.0 兼容masonary用户使用习惯一行代码进行布局
+```objective-c
+/// 一行代码对视图进行约束适配
+view.whc_LeftSpace(10).whc_TopSpace(10).whc_RightSpaceToView(10,view1).whc_Height(100);
+```
 
 ### 1.WHC_AutoLayoutKit实战高仿滚动流畅微信朋友圈列表demo8
 

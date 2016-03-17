@@ -82,6 +82,347 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 @implementation UIView (WHC_AutoLayout)
 
+#pragma mark - api version 2.0 -
+- (LeftSpace)whc_LeftSpace {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space) {
+        [weakSelf whc_LeftSpace:space];
+        return weakSelf;
+    };
+}
+
+- (LeftSpaceToView)whc_LeftSpaceToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space, UIView * toView) {
+        [weakSelf whc_LeftSpace:space toView:toView];
+        return weakSelf;
+    };
+}
+
+- (LeftSpaceEqualView)whc_LeftSpaceEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view) {
+        [weakSelf whc_LeftSpaceEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (LeadingSpace)whc_LeadingSpace {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space) {
+        [weakSelf whc_LeadingSpace:space];
+        return weakSelf;
+    };
+}
+
+- (LeadingSpaceToView)whc_LeadingSpaceToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value , UIView * toView) {
+        [weakSelf whc_LeadingSpace:value toView:toView];
+        return weakSelf;
+    };
+}
+
+- (LeadingSpaceEqualView)whc_LeadingSpaceEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view) {
+        [weakSelf whc_LeadingSpaceEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (TrailingSpace)whc_TrailingSpace {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space) {
+        [weakSelf whc_TrailingSpace:space];
+        return weakSelf;
+    };
+}
+
+- (TrailingSpaceToView)whc_TrailingSpaceToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value , UIView * toView) {
+        [weakSelf whc_TrailingSpace:value toView:toView];
+        return weakSelf;
+    };
+}
+
+- (TrailingSpaceEqualView)whc_TrailingSpaceEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view) {
+        [weakSelf whc_TrailingSpaceEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (BaseLineSpace)whc_BaseLineSpace {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space) {
+        [weakSelf whc_BaseLineSpace:space];
+        return weakSelf;
+    };
+}
+
+- (BaseLineSpaceToView)whc_BaseLineSpaceToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value , UIView * toView) {
+        [weakSelf whc_BaseLineSpace:value toView:toView];
+        return weakSelf;
+    };
+}
+
+- (BaseLineSpaceEqualView)whc_BaseLineSpaceEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view) {
+        [weakSelf whc_BaseLineSpaceEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (RightSpace)whc_RightSpace {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space) {
+        [weakSelf whc_RightSpace:space];
+        return weakSelf;
+    };
+}
+
+- (RightSpaceToView)whc_RightSpaceToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value , UIView * toView) {
+        [weakSelf whc_RightSpace:value toView:toView];
+        return weakSelf;
+    };
+}
+
+
+- (TopSpace)whc_TopSpace {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space) {
+        [weakSelf whc_TopSpace:space];
+        return weakSelf;
+    };
+}
+
+- (TopSpaceToView)whc_TopSpaceToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value , UIView * toView) {
+        [weakSelf whc_TopSpace:value toView:toView];
+        return weakSelf;
+    };
+}
+
+- (TopSpaceEqualView)whc_TopSpaceEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view) {
+        [weakSelf whc_TopSpaceEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (BottomSpace)whc_BottomSpace {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space) {
+        [weakSelf whc_BottomSpace:space];
+        return weakSelf;
+    };
+}
+
+- (BottomSpaceToView)whc_BottomSpaceToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value , UIView * toView) {
+        [weakSelf whc_BottomSpace:value toView:toView];
+        return weakSelf;
+    };
+}
+
+
+- (Width)whc_Width {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value) {
+        [weakSelf whc_Width:value];
+        return weakSelf;
+    };
+}
+
+- (WidthAuto)whc_widthAuto {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [weakSelf whc_WidthAuto];
+        return weakSelf;
+    };
+}
+
+- (WidthEqualView)whc_WidthEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view) {
+        [weakSelf whc_WidthEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (WidthEqualViewRatio)whc_WidthEqualViewRatio {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view , CGFloat value) {
+        [weakSelf whc_WidthEqualView:view ratio:value];
+        return weakSelf;
+    };
+}
+
+
+- (Height)whc_Height {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value) {
+        [weakSelf whc_Height:value];
+        return weakSelf;
+    };
+}
+
+- (HeightAuto)whc_heightAuto {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [weakSelf whc_HeightAuto];
+        return weakSelf;
+    };
+}
+
+- (HeightEqualView)whc_HeightEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view) {
+        [weakSelf whc_HeightEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (HeightEqualViewRatio)whc_HeightEqualViewRatio {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view , CGFloat value) {
+        [weakSelf whc_HeightEqualView:view ratio:value];
+        return weakSelf;
+    };
+}
+
+- (CenterX)whc_CenterX {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value) {
+        [weakSelf whc_CenterX:value];
+        return weakSelf;
+    };
+}
+
+- (CenterXToView)whc_CenterXToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value,UIView * toView) {
+        [weakSelf whc_CenterX:value toView:toView];
+        return weakSelf;
+    };
+}
+
+- (CenterY)whc_CenterY {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value) {
+        [weakSelf whc_CenterY:value];
+        return weakSelf;
+    };
+}
+
+- (CenterYToView)whc_CenterYToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value,UIView * toView) {
+        [weakSelf whc_CenterY:value toView:toView];
+        return weakSelf;
+    };
+}
+
+- (Center)whc_Center {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGPoint center) {
+        [weakSelf whc_Center:center];
+        return weakSelf;
+    };
+}
+
+- (CenterToView)whc_CenterToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGPoint center,UIView * toView) {
+        [weakSelf whc_Center:center toView:toView];
+        return weakSelf;
+    };
+}
+
+- (Frame)whc_Frame {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHCRect frame) {
+        [weakSelf whc_Frame:frame];
+        return weakSelf;
+    };
+}
+
+- (FrameToView)whc_FrameToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHCRect frame , UIView * toView) {
+        [weakSelf whc_Frame:frame toView:toView];
+        return weakSelf;
+    };
+}
+
+- (FrameAutoWidth)whc_FrameAutoWidth {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHCWidthAutoRect frame) {
+        [weakSelf whc_FrameAutoWidth:frame];
+        return weakSelf;
+    };
+}
+
+- (FrameAutoWidthToView)whc_FrameAutoWidthToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHCWidthAutoRect frame , UIView * toView) {
+        [weakSelf whc_FrameAutoWidth:frame toView:toView];
+        return weakSelf;
+    };
+}
+
+- (FrameAutoHeight)whc_FrameAutoHeight {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHCHeightAutoRect frame) {
+        [weakSelf whc_FrameAutoHeight:frame];
+        return weakSelf;
+    };
+}
+
+- (FrameAutoHeightToView)whc_FrameAutoHeightToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHCHeightAutoRect frame , UIView * toView) {
+        [weakSelf whc_FrameAutoHeight:frame toView:toView];
+        return weakSelf;
+    };
+}
+
+- (FrameAuto)whc_FrameAuto {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHCAutoRect frame) {
+        [weakSelf whc_FrameAuto:frame];
+        return weakSelf;
+    };
+}
+
+- (FrameAutoToView)whc_FrameAutoToView {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHCAutoRect frame , UIView * toView) {
+        [weakSelf whc_FrameAuto:frame toView:toView];
+        return weakSelf;
+    };
+}
+
+- (size)whc_Size {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGSize size) {
+        [weakSelf whc_Size:size];
+        return weakSelf;
+    };
+}
+
+#pragma mark - api version 1.0 -
 - (void)whc_AutoContentSize {
     if ([self isKindOfClass:[UIScrollView class]]) {
         [self layoutIfNeeded];
@@ -364,6 +705,12 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     [self whc_ConstraintWithItem:toView
                        attribute:NSLayoutAttributeLastBaseline
                         constant:0.0 - lineSpace];
+}
+
+- (void)whc_BaseLineSpaceEqualView:(UIView *)view {
+    [self whc_ConstraintWithItem:view
+                       attribute:NSLayoutAttributeLastBaseline
+                        constant:0];
 }
 
 - (void)whc_XY:(CGPoint)xy {
@@ -684,7 +1031,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                             default:
                                 break;
                         }
-                        
                     }
                 }
                     break;
