@@ -37,8 +37,10 @@
 
 /// 缓存cell高度字典
 @property (nonatomic , strong) NSMutableDictionary * whc_CacheHeightDictionary;
-/// cell宽度
-@property (nonatomic , strong) NSNumber * whc_CellWidth;
+
+- (void)screenWillChange:(NSNotification *)notification;
+
+- (void)monitorScreenOrientation;
 
 - (NSMutableDictionary *)whc_CacheHeightDictionary;
 @end
@@ -65,7 +67,7 @@
 
 /// 缓存cell高度字典
 @property (nonatomic , strong) NSMutableDictionary * whc_CacheHeightDictionary;
-/// cell宽度
-@property (nonatomic , strong) NSNumber * whc_CellWidth;
+
+- (void)monitorScreenOrientation;
 
 @end

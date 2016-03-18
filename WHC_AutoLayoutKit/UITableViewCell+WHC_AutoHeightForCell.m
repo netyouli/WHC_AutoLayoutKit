@@ -74,11 +74,13 @@
     if (tableView.whc_CacheHeightDictionary == nil) {
         tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
     }
-    CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
-    if (screenWidth != tableView.whc_CellWidth.floatValue) {
-        [tableView.whc_CacheHeightDictionary removeAllObjects];
-        tableView.whc_CellWidth = @(screenWidth);
-    }
+    [tableView monitorScreenOrientation];
+//    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+//    if (orientation != [tableView screenOrientation]) {
+//        [tableView.whc_CacheHeightDictionary removeAllObjects];
+//        [tableView saveScreenOrientation];
+//    }
+//    UIApplicationDidChangeStatusBarOrientationNotification
     NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
     NSNumber * cacheHeightValue = [tableView.whc_CacheHeightDictionary objectForKey:cacheHeightKey];
     if (cacheHeightValue != nil) {
@@ -89,7 +91,8 @@
     if (cell.whc_CellTableView) {
         [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
     }
-    [tableView layoutIfNeeded];
+    CGFloat tableViewWidth = CGRectGetWidth(tableView.frame);
+    if (tableViewWidth == 0) return 0;
     CGRect cellFrame = cell.frame;
     cellFrame.size.width = CGRectGetWidth(tableView.frame);
     cell.frame = cellFrame;
@@ -140,16 +143,31 @@
     });
 }
 
-- (void)setWhc_CellWidth:(NSNumber *)whc_CellWidth {
+- (void)screenWillChange:(NSNotification *)notification {
+    [self reloadData];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:UIApplicationWillChangeStatusBarOrientationNotification];
+}
+
+- (void)monitorScreenOrientation {
+    if (![self isMonitorScreen]) {
+        [self setDidMonitorScreen];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenWillChange:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+    }
+}
+
+- (void)setDidMonitorScreen {
     objc_setAssociatedObject(self,
-                             @selector(whc_CellWidth),
-                             whc_CellWidth,
+                             @selector(isMonitorScreen),
+                             @(YES),
                              OBJC_ASSOCIATION_RETAIN);
 }
 
-- (NSNumber *)whc_CellWidth {
-    id width = objc_getAssociatedObject(self, _cmd);
-    return width == nil ? @(0) : width;
+- (BOOL)isMonitorScreen {
+    id monitor = objc_getAssociatedObject(self, _cmd);
+    return monitor == nil ? NO : [monitor boolValue];
 }
 
 - (void)setWhc_CacheHeightDictionary:(NSMutableDictionary *)whc_CacheHeightDictionary {
@@ -240,11 +258,8 @@
     if (collectionView.whc_CacheHeightDictionary == nil) {
         collectionView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
     }
-    CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
-    if (screenWidth != collectionView.whc_CellWidth.floatValue) {
-        [collectionView.whc_CacheHeightDictionary removeAllObjects];
-        collectionView.whc_CellWidth = @(screenWidth);
-    }
+    [collectionView monitorScreenOrientation];
+    
     NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
     NSNumber * cacheHeightValue = [collectionView.whc_CacheHeightDictionary objectForKey:cacheHeightKey];
     if (cacheHeightValue != nil) {
@@ -255,8 +270,6 @@
     if (cell.whc_CellTableView) {
         [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
     }
-    cell.frame = CGRectMake(0, 0, screenWidth, CGRectGetHeight(cell.frame));
-    cell.contentView.frame = CGRectMake(0, 0, screenWidth, CGRectGetHeight(cell.contentView.frame));
     [cell layoutIfNeeded];
     UIView * bottomView = nil;
     if (cell.whc_CellBottomView != nil) {
@@ -305,16 +318,31 @@
     });
 }
 
-- (void)setWhc_CellWidth:(NSNumber *)whc_CellWidth {
+- (void)screenWillChange:(NSNotification *)notification {
+    [self reloadData];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:UIApplicationWillChangeStatusBarOrientationNotification];
+}
+
+- (void)monitorScreenOrientation {
+    if (![self isMonitorScreen]) {
+        [self setDidMonitorScreen];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenWillChange:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+    }
+}
+
+- (void)setDidMonitorScreen {
     objc_setAssociatedObject(self,
-                             @selector(whc_CellWidth),
-                             whc_CellWidth,
+                             @selector(isMonitorScreen),
+                             @(YES),
                              OBJC_ASSOCIATION_RETAIN);
 }
 
-- (NSNumber *)whc_CellWidth {
-    id width = objc_getAssociatedObject(self, _cmd);
-    return width == nil ? @(0) : width;
+- (BOOL)isMonitorScreen {
+    id monitor = objc_getAssociatedObject(self, _cmd);
+    return monitor == nil ? NO : [monitor boolValue];
 }
 
 - (void)setWhc_CacheHeightDictionary:(NSMutableDictionary *)whc_CacheHeightDictionary {
