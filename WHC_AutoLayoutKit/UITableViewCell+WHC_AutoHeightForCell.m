@@ -75,12 +75,6 @@
         tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
     }
     [tableView monitorScreenOrientation];
-//    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-//    if (orientation != [tableView screenOrientation]) {
-//        [tableView.whc_CacheHeightDictionary removeAllObjects];
-//        [tableView saveScreenOrientation];
-//    }
-//    UIApplicationDidChangeStatusBarOrientationNotification
     NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
     NSNumber * cacheHeightValue = [tableView.whc_CacheHeightDictionary objectForKey:cacheHeightKey];
     if (cacheHeightValue != nil) {
