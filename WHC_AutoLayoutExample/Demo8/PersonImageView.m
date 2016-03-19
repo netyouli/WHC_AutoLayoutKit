@@ -27,10 +27,12 @@
 @implementation PersonImageView
 
 - (void)awakeFromNib {
-    [_backgroundImageView whc_RightSpace:0];
-    [_personView whc_TrailingSpace:20];
-    [_titleLable whc_TrailingSpace:15 toView:_personView];
+    _backgroundImageView.whc_RightSpace(0);
+    _personView.whc_TrailingSpace(20);
+    _titleLable.whc_TrailingSpaceToView(15,_personView);
+
 }
+
 
 
 @end
