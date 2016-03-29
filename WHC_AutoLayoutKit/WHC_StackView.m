@@ -134,7 +134,6 @@
     [self runStackLayoutEngine];
     NSInteger subViewCount = self.subviews.count;
     if (_autoHeight) {
-        [self layoutIfNeeded];
         if (self.whc_HeightWidthRatio > 0) {
             if (subViewCount == 0) {
                 [self whc_Height:0];
@@ -142,20 +141,6 @@
                 NSInteger rowCount = (subViewCount / self.whc_Column + (subViewCount % self.whc_Column == 0 ? 0 : 1));
                 CGFloat stackViewHeight = _elementHeight * rowCount + self.whc_Edge.top + self.whc_Edge.bottom + (rowCount - 1) * self.whc_Space;
                 [self whc_Height:stackViewHeight];
-            }
-        }else {
-            if (subViewCount > 0) {
-                [self layoutIfNeeded];
-                UIView * lastView = self.subviews[0];
-                for (NSInteger i = 1; i < subViewCount; i++) {
-                    UIView * view = self.subviews[i];
-                    if (CGRectGetMinY(lastView.frame) < CGRectGetMinY(view.frame)) {
-                        lastView = view;
-                    }
-                }
-                [self whc_Height:CGRectGetMaxY(lastView.frame) + self.whc_Edge.bottom];
-            }else {
-                [self whc_Height:0];
             }
         }
     }
@@ -219,11 +204,7 @@ WHC_GOTO:
                                            ratio:oneView.whc_HeightWeight / secondView.whc_HeightWeight];
                 }
             }else {
-                if (_autoHeight && [oneView isKindOfClass:[UILabel class]]) {
-                    [oneView whc_HeightAuto];
-                }else {
-                    [oneView whc_BottomSpace:self.whc_Edge.bottom];
-                }
+                [oneView whc_BottomSpace:self.whc_Edge.bottom];
             }
             toView = oneView;
             if ([toView isKindOfClass:[WHC_StackView class]]) {
@@ -243,11 +224,7 @@ WHC_GOTO:
                                             ratio:view.whc_HeightWeight / nextView.whc_HeightWeight];
                     }
                 }else {
-                    if (_autoHeight && [view isKindOfClass:[UILabel class]]) {
-                        [view whc_HeightAuto];
-                    }else {
-                        [view whc_BottomSpace:self.whc_Edge.bottom];
-                    }
+                    [view whc_BottomSpace:self.whc_Edge.bottom];
                 }
                 toView = view;
                 if ([toView isKindOfClass:[WHC_StackView class]]) {

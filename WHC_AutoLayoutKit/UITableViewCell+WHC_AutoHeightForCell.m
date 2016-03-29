@@ -75,7 +75,7 @@
         tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
     }
     [tableView monitorScreenOrientation];
-    NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
+    NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
     NSNumber * cacheHeightValue = [tableView.whc_CacheHeightDictionary objectForKey:cacheHeightKey];
     if (cacheHeightValue != nil) {
         return cacheHeightValue.floatValue;
@@ -132,6 +132,9 @@
         Method whc_ReloadData = class_getInstanceMethod(self, @selector(whc_ReloadData));
         Method reloadDataRow = class_getInstanceMethod(self, @selector(reloadRowsAtIndexPaths:withRowAnimation:));
         Method whc_ReloadDataRow = class_getInstanceMethod(self, @selector(whc_ReloadDatasAtIndexPaths:withRowAnimation:));
+        Method sectionReloadData = class_getInstanceMethod(self, @selector(reloadSections:withRowAnimation:));
+        Method whc_SectionReloadData = class_getInstanceMethod(self, @selector(whc_ReloadSetion:withRowAnimation:));
+        method_exchangeImplementations(sectionReloadData, whc_SectionReloadData);
         method_exchangeImplementations(reloadDataRow, whc_ReloadDataRow);
         method_exchangeImplementations(reloadData, whc_ReloadData);
     });
@@ -150,7 +153,7 @@
 - (void)monitorScreenOrientation {
     if (![self isMonitorScreen]) {
         [self setDidMonitorScreen];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenWillChange:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenWillChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     }
 }
 
@@ -177,11 +180,27 @@
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)whc_ReloadSetion:(NSIndexSet *)sections
+        withRowAnimation:(UITableViewRowAnimation)animation {
+    if (sections) {
+        NSArray * cacheHeightKeyArray = [self.whc_CacheHeightDictionary allKeys];
+        [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString * sectionString = [NSString stringWithFormat:@"%ld-",idx];
+            for (NSString * cacheHeightKey in cacheHeightKeyArray) {
+                if ([cacheHeightKey rangeOfString:sectionString].location != NSNotFound) {
+                    [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
+                }
+            }
+        }];
+    }
+    [self whc_ReloadSetion:sections withRowAnimation:animation];
+}
+
 - (void)whc_ReloadDatasAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
                    withRowAnimation:(UITableViewRowAnimation)animation {
     if (indexPaths) {
         for (NSIndexPath * indexPath in indexPaths) {
-            NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
+            NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
             [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
         }
     }
@@ -256,7 +275,7 @@
     }
     [collectionView monitorScreenOrientation];
     
-    NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
+    NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
     NSNumber * cacheHeightValue = [collectionView.whc_CacheHeightDictionary objectForKey:cacheHeightKey];
     if (cacheHeightValue != nil) {
         return cacheHeightValue.floatValue;
@@ -357,7 +376,7 @@
 - (void)whc_ReloadItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
     if (indexPaths) {
         for (NSIndexPath * indexPath in indexPaths) {
-            NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
+            NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
             [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
         }
     }

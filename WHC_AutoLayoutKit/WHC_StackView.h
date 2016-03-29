@@ -25,6 +25,7 @@
  * 说明: 控件横向和垂直布局宽度或者高度权重比例
  */
 @property (nonatomic , assign)CGFloat whc_WidthWeight;
+
 @property (nonatomic , assign)CGFloat whc_HeightWeight;
 @end
 

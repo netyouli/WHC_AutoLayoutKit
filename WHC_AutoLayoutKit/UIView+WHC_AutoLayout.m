@@ -18,6 +18,8 @@
 #import "UIView+WHC_AutoLayout.h"
 #import <objc/runtime.h>
 
+#define kDeprecatedVerticalAdapter (0)
+
 typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     XIB = 1 << 0,
     SB = 1 << 1
@@ -702,8 +704,12 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 }
 
 - (void)whc_BaseLineSpace:(CGFloat)lineSpace toView:(UIView *)toView {
-    [self whc_ConstraintWithItem:toView
+    [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLastBaseline
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:toView
+                       attribute:NSLayoutAttributeTop
+                      multiplier:1
                         constant:0.0 - lineSpace];
 }
 
@@ -863,6 +869,14 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     if (item && item.translatesAutoresizingMaskIntoConstraints) {
         item.translatesAutoresizingMaskIntoConstraints = NO;
     }
+    NSLayoutConstraint * constraint = nil;
+    constraint =[NSLayoutConstraint constraintWithItem:item
+                                             attribute:attribute
+                                             relatedBy:related
+                                                toItem:toItem
+                                             attribute:toAttribute
+                                            multiplier:multiplier
+                                              constant:constant];
     NSLayoutConstraint * originConstraint = [self getOriginConstraintWithMainView:superView
                                                                              view:item
                                                                         attribute:attribute
@@ -880,9 +894,14 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                                                  attribute:toAttribute
                                                 multiplier:multiplier
                                                   constant:constant];
+        if (attribute == 8 && [item isKindOfClass:[UIImageView class]] && superView.constraints.count > 0) {
+            NSLog(@"");
+        }
         [superView addConstraint:constraint];
     }else {
-        originConstraint.constant = constant;
+        if (originConstraint.constant != constant) {
+            originConstraint.constant = constant;
+        }
     }
 }
 
@@ -963,6 +982,11 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                         [view removeConstraint:selfWidthConstraint];
                         [view setSelfWidthConstraint:nil];
                     }
+                    NSLayoutConstraint * autoWidthConstraint = [view autoWidthConstraint];
+                    if (autoWidthConstraint) {
+                        [view removeConstraint:autoWidthConstraint];
+                        [view setAutoWidthConstraint:nil];
+                    }
                 }
                     break;
                 case NSLayoutAttributeWidth: {
@@ -1003,6 +1027,11 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                     if (selfHeightConstraint) {
                         [view removeConstraint:selfHeightConstraint];
                         [view setSelfHeightConstraint:nil];
+                    }
+                    NSLayoutConstraint * autoHeightConstraint = [view autoHeightConstraint];
+                    if (autoHeightConstraint) {
+                        [view removeConstraint:autoHeightConstraint];
+                        [view setAutoHeightConstraint:nil];
                     }
                 }
                     break;
@@ -1085,40 +1114,62 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 - (void)whc_AddConstraint:(NSLayoutConstraint *)constraint {
     switch (constraint.firstAttribute) {
         case NSLayoutAttributeHeight: {
-            switch (constraint.relation) {
-                case NSLayoutRelationEqual: {
-                    if (constraint.secondItem == nil) {
-                        [self setSelfHeightConstraint:constraint];
-                    }else {
-                        [constraint.firstItem setEquelHeightConstraint:constraint];
+            if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
+                for (NSLayoutConstraint * selfConstraint in self.constraints) {
+                    if (selfConstraint.firstAttribute == NSLayoutAttributeHeight &&
+                        selfConstraint.relation == NSLayoutRelationEqual) {
+                        return;
                     }
                 }
-                    break;
-                case NSLayoutRelationGreaterThanOrEqual: {
-                    [self setAutoHeightConstraint:constraint];
+                [self whc_AddConstraint:constraint];
+                return;
+            }else {
+                switch (constraint.relation) {
+                    case NSLayoutRelationEqual: {
+                        if (constraint.secondItem == nil) {
+                            [self setSelfHeightConstraint:constraint];
+                        }else {
+                            [constraint.firstItem setEquelHeightConstraint:constraint];
+                        }
+                    }
+                        break;
+                    case NSLayoutRelationGreaterThanOrEqual: {
+                        [self setAutoHeightConstraint:constraint];
+                    }
+                        break;
+                    default:
+                        break;
                 }
-                    break;
-                default:
-                    break;
             }
         }
             break;
         case NSLayoutAttributeWidth: {
-            switch (constraint.relation) {
-                case NSLayoutRelationEqual: {
-                    if (constraint.secondItem == nil) {
-                        [self setSelfWidthConstraint:constraint];
-                    }else {
-                        [constraint.firstItem setEquelWidthConstraint:constraint];
+            if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
+                for (NSLayoutConstraint * selfConstraint in self.constraints) {
+                    if (selfConstraint.firstAttribute == NSLayoutAttributeWidth &&
+                        selfConstraint.relation == NSLayoutRelationEqual) {
+                        return;
                     }
                 }
-                    break;
-                case NSLayoutRelationGreaterThanOrEqual: {
-                    [self setAutoWidthConstraint:constraint];
+                [self whc_AddConstraint:constraint];
+                return;
+            }else {
+                switch (constraint.relation) {
+                    case NSLayoutRelationEqual: {
+                        if (constraint.secondItem == nil) {
+                            [self setSelfWidthConstraint:constraint];
+                        }else {
+                            [constraint.firstItem setEquelWidthConstraint:constraint];
+                        }
+                    }
+                        break;
+                    case NSLayoutRelationGreaterThanOrEqual: {
+                        [self setAutoWidthConstraint:constraint];
+                    }
+                        break;
+                    default:
+                        break;
                 }
-                    break;
-                default:
-                    break;
             }
         }
             break;
@@ -1178,7 +1229,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 
 
 
-
 - (void)setEquelHeightConstraint:(NSLayoutConstraint *)constraint {
     objc_setAssociatedObject(self, @selector(equelHeightConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
 }
@@ -1206,11 +1256,20 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 #pragma mark - Xib智能布局模块 -
 
 - (void)whc_AutoXibLayout {
+#if kDeprecatedVerticalAdapter
     [self whc_AutoXibLayoutType:DefaultType];
+#else
+    [self whc_AutoXibHorizontalLayout];
+#endif
 }
 
 - (void)whc_AutoXibLayoutType:(WHC_LayoutTypeOptions)type {
+#if kDeprecatedVerticalAdapter
     [self whc_RunLayoutEngineWithOrientation:All layoutType:type nibType:XIB];
+#else
+    [self whc_RunLayoutEngineWithOrientation:Horizontal layoutType:type nibType:XIB];
+#endif
+    
 }
 
 - (void)whc_AutoXibHorizontalLayout {
@@ -1222,13 +1281,22 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 }
 
 - (void)whc_AutoSBLayout {
+#if kDeprecatedVerticalAdapter
     [self whc_AutoSBLayoutType:DefaultType];
+#else
+    [self whc_AutoSBHorizontalLayout];
+#endif
 }
 
 - (void)whc_AutoSBLayoutType:(WHC_LayoutTypeOptions)type {
     CGRect initRect = self.bounds;
     self.bounds = CGRectMake(0, 0, 375, 667);
+#if kDeprecatedVerticalAdapter
     [self whc_RunLayoutEngineWithOrientation:All layoutType:type nibType:SB];
+#else
+    [self whc_RunLayoutEngineWithOrientation:Horizontal layoutType:type nibType:SB];
+#endif
+    
     self.bounds = initRect;
 }
 
@@ -1379,15 +1447,11 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
             }else {
             WHC_FIT_WIDTH:
                 if (canFitWidthOrHeight) {
-                    if (nextColumnView) {
-                        [view whc_WidthEqualView:nextColumnView
-                                           ratio:CGRectGetWidth(view.frame) / CGRectGetWidth(nextColumnView.frame)];
-                    }else {
-                        [view whc_RightSpace:CGRectGetWidth(view.superview.frame) - CGRectGetMaxX(view.frame)];
-                    }
+                    [view whc_RightSpace:CGRectGetWidth(view.superview.frame) - CGRectGetMaxX(view.frame)];
                 }else {
                     [view whc_Width:CGRectGetWidth(view.frame)];
                 }
+                [view whc_Height:CGRectGetHeight(view.frame)];
             }
             if ([view isKindOfClass:[UITableViewCell class]] ||
                 (view.subviews.count > 0 && ([NSStringFromClass(view.class) isEqualToString:@"UIView"] ||
