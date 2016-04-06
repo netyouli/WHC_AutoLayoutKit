@@ -17,6 +17,7 @@
 #import "DemoVC6.h"
 #import "DemoVC7.h"
 #import "WeiXinFriendsCircleVC.h"
+#import "Mp3ListVC.h"
 /*
  *  qq:712641411
  *  开发作者: 吴海超(WHC)
@@ -44,7 +45,8 @@
                   @"stackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局",
                   @"一行代码智能对Xib上所有控件智能添加约束布局",
                   @"一行代码智能对Xib上所有控件智能横向布局",
-                  @"微信朋友圈演示"];
+                  @"微信朋友圈演示",
+                  @"Mp3播放列表"];
     [self.tableView registerClass:[MainVCCell class] forCellReuseIdentifier:NSStringFromClass([MainVCCell class])];
 }
 
@@ -53,6 +55,9 @@
     if (!_initPush) {
         _initPush = YES;
         WeiXinFriendsCircleVC * vc = [WeiXinFriendsCircleVC new];
+//        Mp3ListVC * vc = [Mp3ListVC new];
+//        UINavigationController * nv = [[UINavigationController alloc] initWithRootViewController:vc];
+//        [self presentViewController:nv animated:YES completion:nil];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -120,6 +125,11 @@
             break;
         case 7: {
             WeiXinFriendsCircleVC * vc = [WeiXinFriendsCircleVC new];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 8: {
+            Mp3ListVC * vc = [Mp3ListVC new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
