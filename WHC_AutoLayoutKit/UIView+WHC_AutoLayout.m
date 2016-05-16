@@ -1525,40 +1525,52 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (void)whc_BottomLine:(CGFloat)value lineColor:(UIColor *)color {
+- (UIView *)whc_BottomLine:(CGFloat)value lineColor:(UIColor *)color {
+    return [self whc_BottomLine:value lineColor:color pading:0];
+}
+
+- (UIView *)whc_BottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
     WHC_Line * line = [self createLineWithTag:kBottom_Line_Tag];
     line.backgroundColor = color;
-    [line whc_RightSpace:0];
-    [line whc_LeftSpace:0];
+    [line whc_RightSpace:pading];
+    [line whc_LeftSpace:pading];
     [line whc_Height:value];
     [line whc_BaseLineSpace:value];
+    return line;
 }
 
-- (void)whc_TopLine:(CGFloat)value lineColor:(UIColor *)color {
+- (UIView *)whc_TopLine:(CGFloat)value lineColor:(UIColor *)color {
+    return [self whc_TopLine:value lineColor:color pading:0];
+}
+
+- (UIView *)whc_TopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
     WHC_Line * line = [self createLineWithTag:kTop_Line_Tag];
     line.backgroundColor = color;
-    [line whc_RightSpace:0];
-    [line whc_LeftSpace:0];
+    [line whc_RightSpace:pading];
+    [line whc_LeftSpace:pading];
     [line whc_Height:value];
     [line whc_TopSpace:0];
+    return line;
 }
 
-- (void)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color {
+- (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color {
     WHC_Line * line = [self createLineWithTag:kLeft_Line_Tag];
     line.backgroundColor = color;
     [line whc_Width:value];
     [line whc_LeftSpace:0];
     [line whc_TopSpace:0];
     [line whc_BottomSpace:0];
+    return line;
 }
 
-- (void)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color {
+- (UIView *)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color {
     WHC_Line * line = [self createLineWithTag:kRight_Line_Tag];
     line.backgroundColor = color;
     [line whc_Width:value];
     [line whc_TrailingSpace:value];
     [line whc_TopSpace:0];
     [line whc_BottomSpace:0];
+    return line;
 }
 
 @end

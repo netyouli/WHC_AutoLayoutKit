@@ -17,7 +17,6 @@
 #import "DemoVC6.h"
 #import "DemoVC7.h"
 #import "WeiXinFriendsCircleVC.h"
-#import "Mp3ListVC.h"
 /*
  *  qq:712641411
  *  开发作者: 吴海超(WHC)
@@ -129,8 +128,8 @@
         }
             break;
         case 8: {
-            Mp3ListVC * vc = [Mp3ListVC new];
-            [self.navigationController pushViewController:vc animated:YES];
+//            Mp3ListVC * vc = [Mp3ListVC new];
+//            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         default:
