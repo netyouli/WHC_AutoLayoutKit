@@ -34,7 +34,6 @@
 }
 
 - (void)setWhc_CellBottomViews:(NSArray *)whc_CellBottomViews {
-    NSAssert(whc_CellBottomViews, @"cell 底部视图数组不能为nil");
     objc_setAssociatedObject(self,
                              @selector(whc_CellBottomViews),
                              whc_CellBottomViews,
@@ -46,7 +45,6 @@
 }
 
 - (void)setWhc_CellBottomView:(UIView *)whc_CellBottomView {
-    NSAssert(whc_CellBottomView, @"cell 底部视图不能为nil");
     objc_setAssociatedObject(self,
                              @selector(whc_CellBottomView),
                              whc_CellBottomView,
@@ -69,8 +67,6 @@
 }
 
 + (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView {
-    NSAssert(indexPath, @"indexPath = nil");
-    NSAssert(tableView, @"tableView = nil");
     if (tableView.whc_CacheHeightDictionary == nil) {
         tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
     }
@@ -81,7 +77,6 @@
         return cacheHeightValue.floatValue;
     }
     UITableViewCell * cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:indexPath];
-    NSAssert(cell, @"cell = nil");
     if (cell.whc_CellTableView) {
         [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
     }

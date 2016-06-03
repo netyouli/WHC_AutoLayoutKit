@@ -49,25 +49,11 @@
 /// 容器自动布局方向
 @property (nonatomic , assign) WHC_LayoutOrientationOptions whc_Orientation;
 
-/************重载父类属性**************/
-/// 自动高度
-@property (nonatomic ,copy , readonly)HeightAuto whc_heightAuto;
-
-/// 自动宽度
-@property (nonatomic ,copy , readonly)WidthAuto whc_widthAuto;
-
-/************重载父类方法**************/
-/**
- * 说明: 自动宽度
- */
-
-- (void)whc_WidthAuto;
-
 /**
  * 说明: 自动高度
  */
 
-- (void)whc_HeightAuto;
+- (void)whc_AutoHeight;
 
 /**
  * 说明：开始进行自动布局

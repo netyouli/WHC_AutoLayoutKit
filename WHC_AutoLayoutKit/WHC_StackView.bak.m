@@ -62,7 +62,6 @@
 
 @interface WHC_StackView () {
     BOOL      _autoHeight;
-    BOOL      _autoWidth;
     CGFloat   _elementWidth;
     CGFloat   _elementHeight;
     NSInteger _lastRowVacantCount;
@@ -120,34 +119,10 @@
     return MAX(_whc_Column, 1);
 }
 
-- (void)whc_HeightAuto {
-    [super whc_HeightAuto];
+- (void)whc_AutoHeight {
+    [self whc_HeightAuto];
     _autoHeight = YES;
 }
-
-- (HeightAuto)whc_heightAuto {
-    _autoHeight = YES;
-    __weak typeof(self) weakSelf = self;
-    return ^() {
-        [weakSelf.superview whc_HeightAuto];
-        return weakSelf;
-    };
-}
-
-- (void)whc_WidthAuto {
-    [super whc_WidthAuto];
-    _autoWidth = YES;
-}
-
-- (WidthAuto)whc_widthAuto {
-    _autoWidth = YES;
-    __weak typeof(self) weakSelf = self;
-    return ^() {
-        [weakSelf.superview whc_widthAuto];
-        return weakSelf;
-    };
-}
-
 
 - (void)whc_StartLayout {
     if (_autoHeight && self.whc_HeightWidthRatio > 0) {
@@ -187,12 +162,8 @@ WHC_GOTO:
             [oneView whc_TopSpace:self.whc_Edge.top];
             [oneView whc_BottomSpace:self.whc_Edge.bottom];
             if (secondView) {
-                if (_autoHeight && [oneView isKindOfClass:[UILabel class]]) {
-                    [oneView whc_WidthAuto];
-                }else {
-                    [oneView whc_WidthEqualView:secondView
+                [oneView whc_WidthEqualView:secondView
                                       ratio:oneView.whc_WidthWeight / secondView.whc_WidthWeight];
-                }
             }else {
                 [oneView whc_RightSpace:self.whc_Edge.right];
             }
@@ -207,12 +178,8 @@ WHC_GOTO:
                 [view whc_TopSpace:self.whc_Edge.top];
                 [view whc_BottomSpace:self.whc_Edge.bottom];
                 if (nextView) {
-                    if (_autoHeight && [oneView isKindOfClass:[UILabel class]]) {
-                        [view whc_WidthAuto];
-                    }else {
-                        [view whc_WidthEqualView:nextView
+                    [view whc_WidthEqualView:nextView
                                        ratio:view.whc_WidthWeight / nextView.whc_WidthWeight];
-                    }
                 }else {
                     [view whc_RightSpace:self.whc_Edge.right];
                 }

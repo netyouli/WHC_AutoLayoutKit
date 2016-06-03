@@ -183,7 +183,7 @@
     [_imageStackView whc_TopSpace:5 toView:_contentLabel];
     [_imageStackView whc_LeftSpaceEqualView:_contentLabel];
     [_imageStackView whc_RightSpace:10];
-    [_imageStackView whc_AutoHeight];
+    [_imageStackView whc_HeightAuto];
     
     /// 配置图片展示容器
     _imageStackView.whc_Column = 3;               // 最大3列
@@ -212,7 +212,7 @@
     [_commentStackView whc_TopSpace:0 toView:_supportView];
     [_commentStackView whc_LeftSpaceEqualView:_timeLabel];
     [_commentStackView whc_RightSpace:10];
-    [_commentStackView whc_AutoHeight];
+    [_commentStackView whc_HeightAuto];
     
     /// 配置评论展示容器
     _commentStackView.whc_Edge = UIEdgeInsetsMake(5, 5, 5, 5);  // 内边距为5

@@ -8,7 +8,7 @@
 ##### WHC_AutoLayoutKit 借鉴android的相对布局和线性布局
 ##### pod集成： pod 'WHC_AutoLayoutKit', '~> 2.1.0'
 
-## VERSION ~ 2.1.0 (最低能支持iOS6)添加如下功能:
+## VERSION ~ 2.2.0 (最低能支持iOS6)添加如下功能:
 ##### 1.一行代码对xib或者storyboard上的所有UI控件智能识别约束关系，并自动添加好相应约束条件
 ##### 2.masonary拥有的功能WHC_AutoLayoutKit都有,同时包含一行代码计算Cell高度使用比masonary更方便快捷
 ##### 3.拥有UIStackView(WHC_StackView)功能使用更简单直接
@@ -53,15 +53,10 @@ view.whc_LeftSpace(10).whc_TopSpace(10).whc_RightSpaceToView(10,view1).whc_Heigh
 [_whcView whc_FrameAuto:WHCAutoRectMake(10, 0, 10, 10)];
 
 /// 普通对视图添加约束方式
-[view1 whc_LeftSpace:10];
-[view1 whc_TopSpace:74];
-[view1 whc_WidthEqualView:view2];
-[view1 whc_Height:150];
+view1.whc_LeftSpace(10).whc_TopSpace(10).whc_WidthEqualView(view2).whc_Height(150);
 
-[view2 whc_LeftSpace:10 toView:view1];
-[view2 whc_TopSpace:74];
-[view2 whc_RightSpace:10];
-[view2 whc_HeightEqualView:view1];
+// 修改约束
+view1.whc_LeftSpace(20);
 ```
 ### 4.一行代码计算UITableViewCell高度例子
 
