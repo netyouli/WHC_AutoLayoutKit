@@ -1,8 +1,7 @@
 # WHC_AutoLayoutKit
 
-##### 联系QQ: 712641411
+##### 咨询QQ: 712641411
 ##### 开发作者: 吴海超
-##### iOS技术交流群: 302157745
 
 ##### WHC_AutoLayoutKit 致力打造使用最简单功能最强大的自动布局开源库
 ##### WHC_AutoLayoutKit 借鉴android的相对布局和线性布局
