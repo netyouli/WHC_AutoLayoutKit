@@ -50,25 +50,22 @@
         _title.text = @"WHC";
         _title.font = [UIFont systemFontOfSize:20];
         _title.textColor = [UIColor redColor];
-        
-        [_title whc_FrameAutoWidth:WHCWidthAutoRectMake(10, 0, 10, 30)];
-        
         _image.textAlignment = NSTextAlignmentCenter;
-        [_image whc_LeftSpace:10];
-        [_image whc_TopSpace:10 toView:_title];
-        [_image whc_Size:CGSizeMake(40, 40)];
-        
-        [_content whc_TopSpace:10 toView:_title];
-        [_content whc_LeftSpace:10 toView:_image];
-        [_content whc_RightSpace:10];
-        [_content whc_HeightAuto];
-        
         _tableView.scrollEnabled = NO;
-        [_tableView whc_TopSpace:10 toView:_content];
-        [_tableView whc_LeftSpace:10];
-        [_tableView whc_RightSpace:10];
+        
+        /// 一行代码添加约束
+        [_title whc_AutoWidth:10 top:0 right:10 height:30];
+        _image.whc_LeftSpace(10).whc_TopSpaceToView(10,_title).whc_Size(CGSizeMake(40, 40));
+        _content.whc_TopSpaceToView(10,_title)
+                .whc_LeftSpaceToView(10,_image)
+                .whc_RightSpace(10)
+                .whc_heightAuto();
+        
+        _tableView.whc_TopSpaceToView(10,_content)
+                  .whc_LeftSpaceEqualView(_image)
+                  .whc_RightSpace(10)
+                  .whc_Height(44);
         self.whc_CellBottomOffset = 10;
-        [_tableView whc_Height:44];
         self.whc_CellTableView = _tableView;
     }
     return self;
@@ -87,10 +84,8 @@
         _other.text = content;
         if (![self.contentView.subviews containsObject:_other]) {
             [self.contentView addSubview:_other];
-            [_other whc_TopSpace:10 toView:_tableView];
-            [_other whc_LeftSpace:10 toView:_image];
-            [_other whc_RightSpace:10];
-            [_other whc_HeightAuto];
+            /// 一行代码添加约束
+            _other.whc_TopSpaceToView(10,_tableView).whc_LeftSpaceToView(10,_image).whc_RightSpace(10).whc_heightAuto();
         }
         self.whc_CellBottomView = _other;
     }else {

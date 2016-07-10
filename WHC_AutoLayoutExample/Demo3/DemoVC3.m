@@ -40,14 +40,15 @@
     [self.view addSubview:stackView2];
     [self.view addSubview:stackView1];
     
-    // 容器视图1布局
-    [stackView1 whc_FrameAutoWidth:WHCWidthAutoRectMake(0, 64, 0, 150)];
+    // 容器视图1布局 一行代码添加约束
+    [stackView1 whc_AutoWidth:0 top:64 right:0 height:150];
     [stackView1 whc_HeightEqualView:stackView2];
     
     // 容器视图1配置
     stackView1.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
     stackView1.whc_Orientation = Horizontal;// 自动横向布局
-    stackView1.whc_Space = 10;
+    stackView1.whc_HSpace = 10;
+    stackView1.whc_VSpace = 10;
     
     UILabel * lable1 = [UILabel new];
     UILabel * lable2 = [UILabel new];
@@ -65,16 +66,14 @@
     [stackView1 addSubview:lable3];
     [stackView1 addSubview:lable4];
     
-    // 容器视图2布局
-    [stackView2 whc_LeftSpace:0];
-    [stackView2 whc_TopSpace:10 toView:stackView1];
-    [stackView2 whc_RightSpace:0];
-    [stackView2 whc_BottomSpace:10];
+    // 容器视图2布局 一行代码添加约束
+    stackView2.whc_LeftSpace(0).whc_TopSpaceToView(10,stackView1).whc_RightSpace(0).whc_BottomSpace(10);
     
     // 容器视图2配置
     stackView2.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
     stackView2.whc_Orientation = Horizontal;// 自动横向布局
-    stackView2.whc_Space = 10;
+    stackView2.whc_HSpace = 10;
+    stackView2.whc_VSpace = 10;
     
     // 创建容器视图2的子容器视图（容器嵌套使用）
     WHC_StackView * substackView21 = [WHC_StackView new];
@@ -90,7 +89,8 @@
     // 容器2视图子容器21配置
     substackView21.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
     substackView21.whc_Orientation = Horizontal;// 自动横向布局
-    substackView21.whc_Space = 10;
+    substackView21.whc_HSpace = 10;
+    substackView21.whc_VSpace = 10;
     
     UIView * sublable211 = [UIView new];
     UIView * sublable212 = [UIView new];
@@ -115,7 +115,8 @@
     // 容器2视图子容器22配置
     substackView22.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);
     substackView22.whc_Orientation = Horizontal;// 自动横向布局
-    substackView22.whc_Space = 10;
+    substackView22.whc_HSpace = 10;
+    substackView22.whc_VSpace = 10;
     
     UIView * sublable221 = [UIView new];
     UIView * sublable222 = [UIView new];

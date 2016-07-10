@@ -22,7 +22,6 @@
     UILabel * lable1,*lable2,*lable3;
     CGFloat width , height;
 }
-
 @end
 
 @implementation DemoVC1
@@ -48,25 +47,20 @@
     [self.view addSubview:view3];
     [self.view addSubview:lable];
     
-    [view1 whc_LeftSpace:10];
-    [view1 whc_TopSpace:74];
-    [view1 whc_WidthEqualView:view2];
-    [view1 whc_Height:150];
-    
-    [view2 whc_LeftSpace:10 toView:view1];
-    [view2 whc_TopSpace:74];
-    [view2 whc_RightSpace:10];
-    [view2 whc_HeightEqualView:view1];
-    
-    [view3 whc_Y:10 toView:view1];
-    [view3 whc_RightSpace:10];
-    [view3 whc_HeightEqualView:view2];
-    [view3 whc_LeftSpace:10 toView:view1];
-    
-    [lable whc_LeftSpace:10];
-    [lable whc_RightSpace:10 toView:view3];
-    [lable whc_TopSpace:10 toView:view1];
-    [lable whc_HeightAuto];
+    /// 一行代码添加约束
+    view1.whc_LeftSpace(10)
+         .whc_TopSpace(74)
+         .whc_WidthEqualView(view2)
+         .whc_Height(150);
+    view2.whc_LeftSpaceToView(10,view1)
+         .whc_TopSpace(74)
+         .whc_RightSpace(10)
+         .whc_HeightEqualView(view1);
+    view3.whc_TopSpaceToView(10,view1)
+         .whc_RightSpace(10)
+         .whc_HeightEqualView(view2)
+         .whc_LeftSpaceToView(10,view1);
+    lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_heightAuto();
     
     lable1 = [UILabel new];
     lable2 = [UILabel new];
@@ -81,33 +75,33 @@
     [self.view addSubview:lable3];
     
     
-    [lable1 whc_LeadingSpace:10];
-    [lable1 whc_TopSpace:10 toView:view3];
-    [lable1 whc_WidthEqualView:lable2];
-    [lable1 whc_Height:100];
+    /// 一行代码添加约束
+    lable1.whc_LeadingSpace(10).whc_TopSpaceToView(10,view3).whc_WidthEqualView(lable2).whc_Height(100);
+    lable2.whc_LeadingSpaceToView(10,lable1)
+          .whc_TopSpaceEqualView(lable1)
+          .whc_WidthEqualView(lable3)
+          .whc_HeightEqualView(lable1);
     
-    [lable2 whc_LeadingSpace:10 toView:lable1];
-    [lable2 whc_TopSpaceEqualView:lable1];
-    [lable2 whc_WidthEqualView:lable3];
-    [lable2 whc_HeightEqualView:lable1];
     
-    [lable3 whc_LeadingSpace:10 toView:lable2];
-    [lable3 whc_TopSpaceEqualView:lable2];
-    [lable3 whc_RightSpace:10];
-    [lable3 whc_HeightEqualView:lable2];
+    lable3.whc_LeadingSpaceToView(10, lable2)
+          .whc_TopSpaceEqualView(lable2)
+          .whc_RightSpace(10)
+          .whc_HeightEqualView(lable2);
     
     [lable removeFromSuperview];
  
 }
 
+
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.view addSubview:lable];
-    [lable whc_LeftSpace:10];
-    [lable whc_RightSpace:10 toView:view3];
-    [lable whc_TopSpace:10 toView:view1];
-    [lable whc_HeightAuto];
+    
+    /// 一行代码添加约束
+    lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_heightAuto();
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

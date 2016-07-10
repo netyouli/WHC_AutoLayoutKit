@@ -74,7 +74,7 @@ static  NSInteger kDefaultOnePageDataCount = 10;
     _friendTableView = [UITableView new];
     [self.view addSubview:_friendTableView];
     /// 上下左右间隙为0(全屏)
-    [_friendTableView whc_FrameAuto:WHCAutoRectMake(0, 0, 0, 0)];
+    [_friendTableView whc_AutoSize:0 top:0 right:0 bottom:0];
     _friendTableView.backgroundColor = [UIColor grayColor];
     _friendTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _friendTableView.delegate = self;
@@ -96,7 +96,7 @@ static  NSInteger kDefaultOnePageDataCount = 10;
     _downRefreshImageView = [UIImageView new];
     [self.view addSubview:_downRefreshImageView];
     _downRefreshImageView.image = [UIImage imageNamed:@"AlbumReflashIcon"];
-    [_downRefreshImageView whc_Frame:WHCRectMake(30, 34, 30, 30)];
+    [_downRefreshImageView whc_Frame:30 top:34 width:30 height:30];
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -114,10 +114,8 @@ static  NSInteger kDefaultOnePageDataCount = 10;
         _sendView.whc_Orientation = Vertical;
         _sendView.whc_Edge = UIEdgeInsetsMake(5, 5, 5, 5);
         
-        [_sendView whc_LeadingSpace:0];
-        [_sendView whc_RightSpace:0];
-        [_sendView whc_BaseLineSpace:-40];
-        [_sendView whc_Height:40];
+        /// 一行代码添加约束
+        _sendView.whc_LeadingSpace(0).whc_RightSpace(0).whc_BaseLineSpace(-40).whc_Height(40);
         
         [_sendView whc_StartLayout];
         _keyBoradMonitorView = (WHC_KeyboradHeaderView *)[WHC_KeyboradHeaderView monitorKeyboradShowAddHeaderView:_sendView observer:self];

@@ -25,55 +25,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     SB = 1 << 1
 };
 
-WHCRect WHCRectMake(CGFloat left ,
-                    CGFloat top ,
-                    CGFloat width,
-                    CGFloat height) {
-    WHCRect rect;
-    rect.left = left;
-    rect.top = top;
-    rect.width = width;
-    rect.height = height;
-    return rect;
-}
-
-
-WHCAutoRect WHCAutoRectMake(CGFloat left ,
-                            CGFloat top ,
-                            CGFloat right,
-                            CGFloat bottom) {
-    WHCAutoRect rect;
-    rect.left = left;
-    rect.top = top;
-    rect.right = right;
-    rect.bottom = bottom;
-    return rect;
-}
-
-WHCWidthAutoRect WHCWidthAutoRectMake(CGFloat left ,
-                                      CGFloat top ,
-                                      CGFloat right,
-                                      CGFloat height) {
-    WHCWidthAutoRect rect;
-    rect.left = left;
-    rect.top = top;
-    rect.right = right;
-    rect.height = height;
-    return rect;
-}
-
-WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
-                                        CGFloat top ,
-                                        CGFloat width,
-                                        CGFloat bottom) {
-    WHCHeightAutoRect rect;
-    rect.left = left;
-    rect.top = top;
-    rect.width = width;
-    rect.bottom = bottom;
-    return rect;
-}
-
 #pragma mark - UI自动布局 -
 
 @interface WHC_Line : UIView
@@ -197,6 +148,14 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     };
 }
 
+- (RightSpaceEqualView)whc_RightSpaceEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * toView) {
+        [weakSelf whc_RightSpaceEqualView:toView];
+        return weakSelf;
+    };
+}
+
 
 - (TopSpace)whc_TopSpace {
     __weak typeof(self) weakSelf = self;
@@ -234,6 +193,14 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     __weak typeof(self) weakSelf = self;
     return ^(CGFloat value , UIView * toView) {
         [weakSelf whc_BottomSpace:value toView:toView];
+        return weakSelf;
+    };
+}
+
+- (BottomSpaceEqualView)whc_BottomSpaceEqualView {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * toView) {
+        [weakSelf whc_BottomSpaceEqualView:toView];
         return weakSelf;
     };
 }
@@ -352,70 +319,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     };
 }
 
-- (Frame)whc_Frame {
-    __weak typeof(self) weakSelf = self;
-    return ^(WHCRect frame) {
-        [weakSelf whc_Frame:frame];
-        return weakSelf;
-    };
-}
-
-- (FrameToView)whc_FrameToView {
-    __weak typeof(self) weakSelf = self;
-    return ^(WHCRect frame , UIView * toView) {
-        [weakSelf whc_Frame:frame toView:toView];
-        return weakSelf;
-    };
-}
-
-- (FrameAutoWidth)whc_FrameAutoWidth {
-    __weak typeof(self) weakSelf = self;
-    return ^(WHCWidthAutoRect frame) {
-        [weakSelf whc_FrameAutoWidth:frame];
-        return weakSelf;
-    };
-}
-
-- (FrameAutoWidthToView)whc_FrameAutoWidthToView {
-    __weak typeof(self) weakSelf = self;
-    return ^(WHCWidthAutoRect frame , UIView * toView) {
-        [weakSelf whc_FrameAutoWidth:frame toView:toView];
-        return weakSelf;
-    };
-}
-
-- (FrameAutoHeight)whc_FrameAutoHeight {
-    __weak typeof(self) weakSelf = self;
-    return ^(WHCHeightAutoRect frame) {
-        [weakSelf whc_FrameAutoHeight:frame];
-        return weakSelf;
-    };
-}
-
-- (FrameAutoHeightToView)whc_FrameAutoHeightToView {
-    __weak typeof(self) weakSelf = self;
-    return ^(WHCHeightAutoRect frame , UIView * toView) {
-        [weakSelf whc_FrameAutoHeight:frame toView:toView];
-        return weakSelf;
-    };
-}
-
-- (FrameAuto)whc_FrameAuto {
-    __weak typeof(self) weakSelf = self;
-    return ^(WHCAutoRect frame) {
-        [weakSelf whc_FrameAuto:frame];
-        return weakSelf;
-    };
-}
-
-- (FrameAutoToView)whc_FrameAutoToView {
-    __weak typeof(self) weakSelf = self;
-    return ^(WHCAutoRect frame , UIView * toView) {
-        [weakSelf whc_FrameAuto:frame toView:toView];
-        return weakSelf;
-    };
-}
-
 - (size)whc_Size {
     __weak typeof(self) weakSelf = self;
     return ^(CGSize size) {
@@ -449,32 +352,31 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     }
 }
 
-- (void)whc_X:(CGFloat)x {
+- (void)whc_LeftSpace:(CGFloat)leftSpace {
     [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeLeft
-                        constant:x];
+                        constant:leftSpace];
 }
 
-- (void)whc_X:(CGFloat)x toView:(UIView *)toView {
+- (void)whc_LeftSpace:(CGFloat)leftSpace toView:(UIView *)toView {
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeft
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
                        attribute:NSLayoutAttributeRight
                       multiplier:1
-                        constant:x];
-}
-
-- (void)whc_LeftSpace:(CGFloat)leftSpace {
-    [self whc_X:leftSpace];
-}
-
-- (void)whc_LeftSpace:(CGFloat)leftSpace toView:(UIView *)toView {
-    [self whc_X:leftSpace toView:toView];
+                        constant:leftSpace];
 }
 
 - (void)whc_LeftSpaceEqualView:(UIView *)view {
-    [self whc_LeadingSpaceEqualView:view];
+//    [self whc_LeadingSpaceEqualView:view];
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeLeft
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:view
+                       attribute:NSLayoutAttributeLeft
+                      multiplier:1
+                        constant:0];
 }
 
 - (void)whc_RightSpace:(CGFloat)rightSpace {
@@ -491,6 +393,16 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                        attribute:NSLayoutAttributeLeft
                       multiplier:1
                         constant:0.0 - rightSpace];
+}
+
+- (void)whc_RightSpaceEqualView:(UIView *)view {
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeRight
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:view
+                       attribute:NSLayoutAttributeRight
+                      multiplier:1
+                        constant:0];
 }
 
 - (void)whc_LeadingSpace:(CGFloat)leadingSpace {
@@ -548,28 +460,20 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
 }
 
 
-- (void)whc_Y:(CGFloat)y {
+- (void)whc_TopSpace:(CGFloat)topSpace {
     [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeTop
-                        constant:y];
+                        constant:topSpace];
 }
 
-- (void)whc_Y:(CGFloat)y toView:(UIView *)toView {
+- (void)whc_TopSpace:(CGFloat)topSpace toView:(UIView *)toView {
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeTop
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
                        attribute:NSLayoutAttributeBottom
                       multiplier:1
-                        constant:y];
-}
-
-- (void)whc_TopSpace:(CGFloat)topSpace {
-    [self whc_Y:topSpace];
-}
-
-- (void)whc_TopSpace:(CGFloat)topSpace toView:(UIView *)toView {
-    [self whc_Y:topSpace toView:toView];
+                        constant:topSpace];
 }
 
 - (void)whc_TopSpaceEqualView:(UIView *)view {
@@ -596,6 +500,16 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                        attribute:NSLayoutAttributeTop
                       multiplier:1
                         constant:0.0 - bottomSpace];
+}
+
+- (void)whc_BottomSpaceEqualView:(UIView *)view {
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeBottom
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:view
+                       attribute:NSLayoutAttributeBottom
+                      multiplier:1
+                        constant:0];
 }
 
 - (void)whc_Width:(CGFloat)width{
@@ -719,15 +633,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                         constant:0];
 }
 
-- (void)whc_XY:(CGPoint)xy {
-    [self whc_X:xy.x];
-    [self whc_Y:xy.y];
-}
-
-- (void)whc_XY:(CGPoint)xy toView:(UIView *)toView {
-    [self whc_X:xy.x toView:toView];
-    [self whc_Y:xy.y toView:toView];
-}
 
 - (void)whc_Center:(CGPoint)center {
     [self whc_CenterX:center.x];
@@ -739,11 +644,11 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     [self whc_CenterY:center.y toView:toView];
 }
 
-- (void)whc_Frame:(WHCRect)frame {
-    [self whc_X:frame.left];
-    [self whc_Y:frame.top];
-    [self whc_Width:frame.width];
-    [self whc_Height:frame.height];
+- (void)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height {
+    [self whc_LeftSpace:left];
+    [self whc_TopSpace:top];
+    [self whc_Width:width];
+    [self whc_Height:height];
 }
 
 - (void)whc_Size:(CGSize)size {
@@ -751,53 +656,53 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     [self whc_Height:size.height];
 }
 
-- (void)whc_Frame:(WHCRect)frame toView:(UIView *)toView {
-    [self whc_X:frame.left toView:toView];
-    [self whc_Y:frame.top toView:toView];
-    [self whc_Width:frame.width];
-    [self whc_Height:frame.height];
+- (void)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height toView:(UIView *)toView {
+    [self whc_LeftSpace:left toView:toView];
+    [self whc_TopSpace:top toView:toView];
+    [self whc_Width:width];
+    [self whc_Height:height];
 }
 
-- (void)whc_FrameAuto:(WHCAutoRect)frame {
-    [self whc_X:frame.left];
-    [self whc_Y:frame.top];
-    [self whc_RightSpace:frame.right];
-    [self whc_BottomSpace:frame.bottom];
+- (void)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom {
+    [self whc_LeftSpace:left];
+    [self whc_TopSpace:top];
+    [self whc_RightSpace:right];
+    [self whc_BottomSpace:bottom];
 }
 
-- (void)whc_FrameAutoWidth:(WHCWidthAutoRect)frame {
-    [self whc_X:frame.left];
-    [self whc_Y:frame.top];
-    [self whc_RightSpace:frame.right];
-    [self whc_Height:frame.height];
+- (void)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height {
+    [self whc_LeftSpace:left];
+    [self whc_TopSpace:top];
+    [self whc_RightSpace:right];
+    [self whc_Height:height];
 }
 
-- (void)whc_FrameAutoHeight:(WHCHeightAutoRect)frame {
-    [self whc_X:frame.left];
-    [self whc_Y:frame.top];
-    [self whc_Width:frame.width];
-    [self whc_BottomSpace:frame.bottom];
+- (void)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom {
+    [self whc_LeftSpace:left];
+    [self whc_TopSpace:top];
+    [self whc_Width:width];
+    [self whc_BottomSpace:bottom];
 }
 
-- (void)whc_FrameAuto:(WHCAutoRect)frame toView:(UIView *)toView {
-    [self whc_X:frame.left toView:toView];
-    [self whc_Y:frame.top toView:toView];
-    [self whc_RightSpace:frame.right toView:toView];
-    [self whc_BottomSpace:frame.bottom toView:toView];
+- (void)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom toView:(UIView *)toView {
+    [self whc_LeftSpace:left toView:toView];
+    [self whc_TopSpace:top toView:toView];
+    [self whc_RightSpace:right toView:toView];
+    [self whc_BottomSpace:bottom toView:toView];
 }
 
-- (void)whc_FrameAutoWidth:(WHCWidthAutoRect)frame toView:(UIView *)toView {
-    [self whc_X:frame.left toView:toView];
-    [self whc_Y:frame.top toView:toView];
-    [self whc_RightSpace:frame.right toView:toView];
-    [self whc_Height:frame.height];
+- (void)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height toView:(UIView *)toView {
+    [self whc_LeftSpace:left toView:toView];
+    [self whc_TopSpace:top toView:toView];
+    [self whc_RightSpace:right toView:toView];
+    [self whc_Height:height];
 }
 
-- (void)whc_FrameAutoHeight:(WHCHeightAutoRect)frame toView:(UIView *)toView {
-    [self whc_X:frame.left toView:toView];
-    [self whc_Y:frame.top toView:toView];
-    [self whc_Width:frame.width];
-    [self whc_BottomSpace:frame.bottom toView:toView];
+- (void)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom toView:(UIView *)toView {
+    [self whc_LeftSpace:left toView:toView];
+    [self whc_TopSpace:top toView:toView];
+    [self whc_Width:width];
+    [self whc_BottomSpace:bottom toView:toView];
 }
 
 - (void)whc_ConstraintWithItem:(UIView *)item
@@ -869,14 +774,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
     if (item && item.translatesAutoresizingMaskIntoConstraints) {
         item.translatesAutoresizingMaskIntoConstraints = NO;
     }
-    NSLayoutConstraint * constraint = nil;
-    constraint =[NSLayoutConstraint constraintWithItem:item
-                                             attribute:attribute
-                                             relatedBy:related
-                                                toItem:toItem
-                                             attribute:toAttribute
-                                            multiplier:multiplier
-                                              constant:constant];
     NSLayoutConstraint * originConstraint = [self getOriginConstraintWithMainView:superView
                                                                              view:item
                                                                         attribute:attribute
@@ -1096,7 +993,6 @@ WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
                         }
                     }
                 }
-
             }
         }
         return originConstraint;

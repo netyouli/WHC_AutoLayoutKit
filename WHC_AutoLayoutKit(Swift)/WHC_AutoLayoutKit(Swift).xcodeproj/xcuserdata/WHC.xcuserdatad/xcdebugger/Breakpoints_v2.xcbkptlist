@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WHC_AutoLayoutExample/Demo1/MKQuestionAlertView.m"
-            timestampString = "487592107.207604"
+            filePath = "WHC_AutoLayoutKit/WHC_AutoCellHeight.swift"
+            timestampString = "489828531.575192"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "-layoutUI"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "screenWillChange(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WHC_AutoLayoutKit/UIView+WHC_AutoLayout.m"
-            timestampString = "487591581.346843"
+            filePath = "WHC_AutoLayoutKit/WHC_AutoCellHeight.swift"
+            timestampString = "489828580.217161"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "968"
-            endingLineNumber = "968"
-            landmarkName = "-getOriginConstraintWithMainView:view:attribute:relatedBy:toView:toAttribute:multiplier:constant:"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "whc_ReloadData()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

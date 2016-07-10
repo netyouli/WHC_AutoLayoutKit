@@ -18,6 +18,33 @@
 #import "WHC_StackView.h"
 #import <objc/runtime.h>
 
+@implementation UIButton (WHC_StackView)
+
+- (CGSize)calcTextSize {
+    if (self.titleLabel.text != nil) {
+        return [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: self.titleLabel.font}];
+    }
+    return CGSizeZero;
+}
+
+- (void)whc_WidthAuto {
+    if (self.titleEdgeInsets.left + self.titleEdgeInsets.right != 0) {
+        [self whc_Width:[self calcTextSize].width + self.titleEdgeInsets.left + self.titleEdgeInsets.right];
+    }else {
+        [super whc_WidthAuto];
+    }
+}
+
+- (void)whc_HeightAuto {
+    if (self.titleEdgeInsets.top + self.titleEdgeInsets.bottom != 0) {
+        [self whc_Height:[self calcTextSize].height + self.titleEdgeInsets.top + self.titleEdgeInsets.bottom];
+    }else {
+        [super whc_HeightAuto];
+    }
+}
+
+@end
+
 @implementation UIView (WHC_StackViewCategory)
 
 - (void)setWhc_WidthWeight:(CGFloat)whc_WidthWeight {
@@ -62,6 +89,7 @@
 
 @interface WHC_StackView () {
     BOOL      _autoHeight;
+    BOOL      _autoWidth;
     CGFloat   _elementWidth;
     CGFloat   _elementHeight;
     NSInteger _lastRowVacantCount;
@@ -119,16 +147,40 @@
     return MAX(_whc_Column, 1);
 }
 
-- (void)whc_AutoHeight {
-    [self whc_HeightAuto];
+- (void)whc_HeightAuto {
+    [super whc_HeightAuto];
     _autoHeight = YES;
 }
+
+- (HeightAuto)whc_heightAuto {
+    _autoHeight = YES;
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [super whc_HeightAuto];
+        return weakSelf;
+    };
+}
+
+- (void)whc_WidthAuto {
+    [super whc_WidthAuto];
+    _autoWidth = YES;
+}
+
+- (WidthAuto)whc_widthAuto {
+    _autoWidth = YES;
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [super whc_WidthAuto];
+        return weakSelf;
+    };
+}
+
 
 - (void)whc_StartLayout {
     if (_autoHeight && self.whc_HeightWidthRatio > 0) {
         [self layoutIfNeeded];
         CGFloat stackViewWidth = CGRectGetWidth(self.frame);
-        _elementWidth = (stackViewWidth - self.whc_Space * (MAX(1, self.whc_Column) - 1) - self.whc_Edge.left - self.whc_Edge.right) / self.whc_Column;
+        _elementWidth = (stackViewWidth - self.whc_HSpace * (MAX(1, self.whc_Column) - 1) - self.whc_Edge.left - self.whc_Edge.right) / self.whc_Column;
         _elementHeight = _elementWidth * self.whc_HeightWidthRatio;
     }
     [self runStackLayoutEngine];
@@ -139,7 +191,7 @@
                 [self whc_Height:0];
             }else {
                 NSInteger rowCount = (subViewCount / self.whc_Column + (subViewCount % self.whc_Column == 0 ? 0 : 1));
-                CGFloat stackViewHeight = _elementHeight * rowCount + self.whc_Edge.top + self.whc_Edge.bottom + (rowCount - 1) * self.whc_Space;
+                CGFloat stackViewHeight = _elementHeight * rowCount + self.whc_Edge.top + self.whc_Edge.bottom + (rowCount - 1) * self.whc_VSpace;
                 [self whc_Height:stackViewHeight];
             }
         }
@@ -162,8 +214,12 @@ WHC_GOTO:
             [oneView whc_TopSpace:self.whc_Edge.top];
             [oneView whc_BottomSpace:self.whc_Edge.bottom];
             if (secondView) {
-                [oneView whc_WidthEqualView:secondView
+                if (_autoHeight && [oneView isKindOfClass:[UILabel class]]) {
+                    [oneView whc_WidthAuto];
+                }else {
+                    [oneView whc_WidthEqualView:secondView
                                       ratio:oneView.whc_WidthWeight / secondView.whc_WidthWeight];
+                }
             }else {
                 [oneView whc_RightSpace:self.whc_Edge.right];
             }
@@ -174,12 +230,16 @@ WHC_GOTO:
             for (int i = 1; i < count; i++) {
                 UIView * view = subViews[i];
                 UIView * nextView = i < count - 1 ? subViews[i + 1] : nil;
-                [view whc_LeftSpace:self.whc_Space toView:toView];
+                [view whc_LeftSpace:self.whc_HSpace toView:toView];
                 [view whc_TopSpace:self.whc_Edge.top];
                 [view whc_BottomSpace:self.whc_Edge.bottom];
                 if (nextView) {
-                    [view whc_WidthEqualView:nextView
+                    if (_autoHeight && [oneView isKindOfClass:[UILabel class]]) {
+                        [view whc_WidthAuto];
+                    }else {
+                        [view whc_WidthEqualView:nextView
                                        ratio:view.whc_WidthWeight / nextView.whc_WidthWeight];
+                    }
                 }else {
                     [view whc_RightSpace:self.whc_Edge.right];
                 }
@@ -214,7 +274,7 @@ WHC_GOTO:
                 UIView * view = subViews[i];
                 UIView * nextView = i < count - 1 ? subViews[i + 1] : nil;
                 [view whc_LeftSpace:self.whc_Edge.left];
-                [view whc_TopSpace:self.whc_Space toView:toView];
+                [view whc_TopSpace:self.whc_VSpace toView:toView];
                 [view whc_RightSpace:self.whc_Edge.right];
                 if (nextView) {
                     if (_autoHeight && [view isKindOfClass:[UILabel class]]) {
@@ -277,12 +337,12 @@ WHC_GOTO:
                         if (row == 0) {
                             [view whc_TopSpace:self.whc_Edge.top];
                         }else {
-                            [view whc_TopSpace:self.whc_Space toView:frontRowView];
+                            [view whc_TopSpace:self.whc_VSpace toView:frontRowView];
                         }
                         if (column == 0) {
                             [view whc_LeftSpace:self.whc_Edge.left];
                         }else {
-                            [view whc_LeftSpace:self.whc_Space toView:frontColumnView];
+                            [view whc_LeftSpace:self.whc_HSpace toView:frontColumnView];
                         }
                         if (nextRowView) {
                             if (_autoHeight && [view isKindOfClass:[UIImageView class]]) {

@@ -36,96 +36,6 @@ typedef NS_OPTIONS(NSUInteger, WHC_LayoutTypeOptions) {
     LeftRightType = 1 << 1,
 };
 
-/**
- * WHCRect 类似 CGRect 用来构建一个View显示区域,但是与CGRect有点不同的是没有width和height属性而是right和bottom
- */
-
-struct WHCRect {
-    /// 左边距类似x
-    CGFloat left;
-    /// 顶边距类似y
-    CGFloat top;
-    /// 宽度(固定不可收缩)
-    CGFloat width;
-    /// 高度(固定不可收缩)
-    CGFloat height;
-};
-
-struct WHCAutoRect {
-    /// 左边距类似x
-    CGFloat left;
-    /// 顶边距类似y
-    CGFloat top;
-    /// 右边距(可自动收缩)
-    CGFloat right;
-    /// 底边距(可自动收缩)
-    CGFloat bottom;
-};
-
-struct WHCWidthAutoRect {
-    /// 左边距类似x
-    CGFloat left;
-    /// 顶边距类似y
-    CGFloat top;
-    /// 右边距(可自动收缩)
-    CGFloat right;
-    /// 高度(固定不可收缩)
-    CGFloat height;
-};
-
-struct WHCHeightAutoRect {
-    /// 左边距类似x
-    CGFloat left;
-    /// 顶边距类似y
-    CGFloat top;
-    /// 宽度(固定不可收缩)
-    CGFloat width;
-    /// 底边距(可自动收缩)
-    CGFloat bottom;
-};
-
-typedef struct WHCRect WHCRect;
-
-typedef struct WHCAutoRect WHCAutoRect;
-
-typedef struct WHCWidthAutoRect WHCWidthAutoRect;
-
-typedef struct WHCHeightAutoRect WHCHeightAutoRect;
-
-/**
- * 构建view显示区域(横竖屏宽高固定)
- */
-WHCRect WHCRectMake(CGFloat left ,
-                    CGFloat top ,
-                    CGFloat width,
-                    CGFloat height);
-
-/**
- * 构建view显示区域(横竖屏宽高可自动收缩)
- */
-WHCAutoRect WHCAutoRectMake(CGFloat left ,
-                            CGFloat top ,
-                            CGFloat right,
-                            CGFloat bottom);
-
-/**
- * 构建view显示区域(横竖屏仅仅宽度自动收缩)
- */
-
-WHCWidthAutoRect WHCWidthAutoRectMake(CGFloat left ,
-                                      CGFloat top ,
-                                      CGFloat right,
-                                      CGFloat height);
-
-/**
- * 构建view显示区域(横竖屏仅仅高度自动收缩)
- */
-
-WHCHeightAutoRect WHCHeightAutoRectMake(CGFloat left ,
-                                        CGFloat top ,
-                                        CGFloat width,
-                                        CGFloat bottom);
-
 typedef UIView * (^LeftSpace)(CGFloat value);
 typedef UIView * (^LeftSpaceToView)(CGFloat value , UIView * toView);
 typedef UIView * (^LeftSpaceEqualView)(UIView * view);
@@ -173,18 +83,6 @@ typedef UIView * (^CenterYToView)(CGFloat value, UIView * toView);
 typedef UIView * (^Center)(CGPoint center);
 typedef UIView * (^CenterToView)(CGPoint center, UIView * toView);
 
-typedef UIView * (^Frame)(WHCRect frame);
-typedef UIView * (^FrameToView)(WHCRect frame , UIView * toView);
-
-typedef UIView * (^FrameAutoWidth)(WHCWidthAutoRect frame);
-typedef UIView * (^FrameAutoWidthToView)(WHCWidthAutoRect frame ,UIView * toView);
-
-typedef UIView * (^FrameAutoHeight)(WHCHeightAutoRect frame);
-typedef UIView * (^FrameAutoHeightToView)(WHCHeightAutoRect frame,UIView * toView);
-
-typedef UIView * (^FrameAuto)(WHCAutoRect frame);
-typedef UIView * (^FrameAutoToView)(WHCAutoRect frame, UIView * toView);
-
 typedef UIView * (^size)(CGSize size);
 
 #pragma mark - UI自动布局 -
@@ -225,6 +123,8 @@ typedef UIView * (^size)(CGSize size);
 @property (nonatomic ,copy , readonly)RightSpace whc_RightSpace;
 /// 与相对视图toView右边间距(CGFloat value,UIView * toView)
 @property (nonatomic ,copy , readonly)RightSpaceToView whc_RightSpaceToView;
+/// 与相对视图toView右边间距相等(UIView toView)
+@property (nonatomic ,copy , readonly)RightSpaceEqualView whc_RightSpaceEqualView;
 
 /// 与父视图顶边间距(CGFloat value)
 @property (nonatomic ,copy , readonly)TopSpace whc_TopSpace;
@@ -237,6 +137,8 @@ typedef UIView * (^size)(CGSize size);
 @property (nonatomic ,copy , readonly)BottomSpace whc_BottomSpace;
 /// 与相对视图toView底边间距(CGFloat value,UIView * toView)
 @property (nonatomic ,copy , readonly)BottomSpaceToView whc_BottomSpaceToView;
+/// 与相对视图toView底边间距相等(UIView * toView)
+@property (nonatomic ,copy , readonly)BottomSpaceEqualView whc_BottomSpaceEqualView;
 
 /// 宽度(CGFloat value)
 @property (nonatomic ,copy , readonly)Width whc_Width;
@@ -271,26 +173,6 @@ typedef UIView * (^size)(CGSize size);
 /// 中心与视图view偏移(CGFloat value , UIView * toView)
 @property (nonatomic ,copy , readonly)CenterToView whc_CenterToView;
 
-/// 普通frame设置(WHC_Rect frame)
-@property (nonatomic ,copy , readonly)Frame whc_Frame;
-/// 普通frame设置相对toView(WHC_Rect frame , UIView * toView)
-@property (nonatomic ,copy , readonly)FrameToView whc_FrameToView;
-
-/// frame设置自动宽度(WHCWidthAutoRect frame)
-@property (nonatomic ,copy , readonly)FrameAutoWidth whc_FrameAutoWidth;
-/// frame设置自动宽度相对toView(WHCWidthAutoRect frame, UIView * toView)
-@property (nonatomic ,copy , readonly)FrameAutoWidthToView whc_FrameAutoWidthToView;
-
-/// frame设置自动高度(WHCHeightAutoRect frame)
-@property (nonatomic ,copy , readonly)FrameAutoHeight whc_FrameAutoHeight;
-/// frame设置自动高度相对toView(WHCHeightAutoRect frame, UIView * toView)
-@property (nonatomic ,copy , readonly)FrameAutoHeightToView whc_FrameAutoHeightToView;
-
-/// frame设置自动高宽度(WHCAutoRect frame)
-@property (nonatomic ,copy , readonly)FrameAuto whc_FrameAuto;
-/// frame设置自动高宽度相对toView(WHCAutoRect frame, UIView * toView)
-@property (nonatomic ,copy , readonly)FrameAutoToView whc_FrameAutoToView;
-
 /// size设置(Size size)
 @property (nonatomic ,copy , readonly)size whc_Size;
 
@@ -300,21 +182,6 @@ typedef UIView * (^size)(CGSize size);
  * 说明: 自动调整UiScrollview的ContentSize
  */
 - (void)whc_AutoContentSize;
-
-/**
- * 说明:设置x坐标(默认相对父视图)
- * @param x: 左边距
- */
-
-- (void)whc_X:(CGFloat)x;
-
-/**
- * 说明: 设置x坐标
- * @param x: 左边距
- * @param toView: 设置相对参考视图
- */
-
-- (void)whc_X:(CGFloat)x toView:(UIView *)toView;
 
 /**
  * 说明:设置左边距(默认相对父视图)
@@ -331,7 +198,7 @@ typedef UIView * (^size)(CGSize size);
 - (void)whc_LeftSpace:(CGFloat)leftSpace toView:(UIView *)toView;
 
 /**
- * 说明：设置左对齐边距与某视图左对齐边距相等
+ * 说明：设置左边距与视图view左边距相等
  */
 - (void)whc_LeftSpaceEqualView:(UIView *)view;
 
@@ -349,6 +216,12 @@ typedef UIView * (^size)(CGSize size);
  */
 
 - (void)whc_RightSpace:(CGFloat)rightSpace toView:(UIView *)toView;
+
+/**
+ * 说明：设置右边距与视图view左对齐边距相等
+ */
+
+- (void)whc_RightSpaceEqualView:(UIView *)view;
 
 /**
  * 说明: 设置左对齐(默认相对父视图)
@@ -393,21 +266,6 @@ typedef UIView * (^size)(CGSize size);
 - (void)whc_TrailingSpaceEqualView:(UIView *)view;
 
 /**
- * 说明:设置y坐标(默认相对父视图)
- * @param y: 顶边距
- */
-
-- (void)whc_Y:(CGFloat)y;
-
-/**
- * 说明:设置y坐标
- * @param y: 顶边距
- * @param toView: 设置相对参考视图
- */
-
-- (void)whc_Y:(CGFloat)y toView:(UIView *)toView;
-
-/**
  * 说明:设置顶边距(默认相对父视图)
  * @param topSpace: 顶边距
  */
@@ -424,7 +282,7 @@ typedef UIView * (^size)(CGSize size);
 
 
 /**
- * 说明：设置顶边距与某视图顶边距相等
+ * 说明：设置顶边距与视图view顶边距相等
  */
 
 - (void)whc_TopSpaceEqualView:(UIView *)view;
@@ -446,6 +304,13 @@ typedef UIView * (^size)(CGSize size);
 
 - (void)whc_BottomSpace:(CGFloat)bottomSpace toView:(UIView *)toView;
 
+
+/**
+ * 说明：设置底边距与视图view底边距相等
+ */
+
+- (void)whc_BottomSpaceEqualView:(UIView *)view;
+
 /**
  * 说明:设置宽度
  * @param width: 宽度
@@ -461,7 +326,7 @@ typedef UIView * (^size)(CGSize size);
 - (void)whc_WidthEqualView:(UIView *)view;
 
 /**
- * 说明:设置宽度与某个视图相等
+ * 说明:设置宽度与视图view相等
  * @param ratio: 宽度比例
  * @param view: 相等视图
  */
@@ -469,7 +334,7 @@ typedef UIView * (^size)(CGSize size);
 - (void)whc_WidthEqualView:(UIView *)view ratio:(CGFloat)ratio;
 
 /**
- * 说明:自动拉伸宽度根据字符内容(只针对UILabel)
+ * 说明:设置自动宽度
  */
 - (void)whc_WidthAuto;
 
@@ -481,14 +346,14 @@ typedef UIView * (^size)(CGSize size);
 - (void)whc_Height:(CGFloat)height;
 
 /**
- * 说明:设置高度与某个视图相等
+ * 说明:设置高度与视图view相等
  * @param view: 相等视图
  */
 
 - (void)whc_HeightEqualView:(UIView *)view;
 
 /**
- * 说明:设置高度与某个视图相等
+ * 说明:设置高度与视图view相等
  * @param ratio: 宽度比例
  * @param view: 相等视图
  */
@@ -496,7 +361,7 @@ typedef UIView * (^size)(CGSize size);
 - (void)whc_HeightEqualView:(UIView *)view ratio:(CGFloat)ratio;
 
 /**
- * 说明:自动拉伸高度根据字符内容(只针对UILabel)
+ * 说明:设置自动高度
  */
 - (void)whc_HeightAuto;
 
@@ -551,20 +416,6 @@ typedef UIView * (^size)(CGSize size);
  */
 
 - (void)whc_BaseLineSpaceEqualView:(UIView *)view;
-/**
- * 说明:设置xy(左顶边距,默认相对父视图)
- * @param xy: 左边距和顶边距
- */
-
-- (void)whc_XY:(CGPoint)xy;
-
-/**
- * 说明:设置xy(左顶边距,默认相对父视图)
- * @param xy: 左边距和顶边距
- * @param toView: 设置相对参考视图
- */
-
-- (void)whc_XY:(CGPoint)xy toView:(UIView *)toView;
 
 /**
  * 说明:设置中心偏移(默认相对父视图)center = CGPointZero 与父视图中心重合
@@ -582,64 +433,87 @@ typedef UIView * (^size)(CGSize size);
 - (void)whc_Center:(CGPoint)center toView:(UIView *)toView;
 
 /**
- * 说明:设置视图显示区域(默认相对父视图,宽度高度固定)
- * @param frame: 视图显示区域
+ * 说明:设置frame(默认相对父视图)
+ * @param left 左边距
+ * @param top 顶边距
+ * @param width 宽度
+ * @param height 高度
  */
 
-- (void)whc_Frame:(WHCRect)frame;
+- (void)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height;
 
 /**
- * 说明:设置视图显示区域(默认相对父视图,横竖屏宽高可自动收缩)
- * @param frame: 视图显示区域
+ * 说明:设置frame (默认相对父视图)
+ * @param left 左边距
+ * @param top 顶边距
+ * @param right 右边距
+ * @param bottom 底边距
  */
 
-- (void)whc_FrameAuto:(WHCAutoRect)frame;
+- (void)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom;
 
 /**
- * 说明:设置视图显示区域(宽度高度固定)
- * @param frame: 视图显示区域
+ * 说明:设置frame
+ * @param left 左边距
+ * @param top 顶边距
+ * @param width 宽度
+ * @param height 高度
+ * @param toView frame参考视图
  */
 
-- (void)whc_Frame:(WHCRect)frame toView:(UIView *)toView;
+- (void)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height toView:(UIView *)toView;
 
 /**
- * 说明:设置视图显示区域(默认相对父视图,横竖屏仅仅宽度自动收缩)
- * @param frame: 视图显示区域
- * @param toView: 设置相对参考视图
+ * 说明:设置frame (默认相对父视图)
+ * @param left 左边距
+ * @param top 顶边距
+ * @param right 右边距
+ * @param height 高度
  */
 
-- (void)whc_FrameAutoWidth:(WHCWidthAutoRect)frame;
+- (void)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height;
 
 /**
- * 说明:设置视图显示区域(默认相对父视图,横竖屏仅仅高度自动收缩)
- * @param frame: 视图显示区域
+ * 说明:设置frame (默认相对父视图)
+ * @param left 左边距
+ * @param top 顶边距
+ * @param width 宽度
+ * @param bottom 底边距
  */
 
-- (void)whc_FrameAutoHeight:(WHCHeightAutoRect)frame;
+- (void)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom;
 
 /**
- * 说明:设置视图显示区域(横竖屏宽高可自动收缩)
- * @param frame: 视图显示区域
- * @param toView: 设置相对参考视图
+ * 说明:设置frame
+ * @param left 左边距
+ * @param top 顶边距
+ * @param right 右边距
+ * @param bottom 底边距
+ * @param toView frame参考视图
  */
 
-- (void)whc_FrameAuto:(WHCAutoRect)frame toView:(UIView *)toView;
+- (void)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom toView:(UIView *)toView;
 
 /**
- * 说明:设置视图显示区域(横竖屏宽高可自动收缩)
- * @param frame: 视图显示区域
- * @param toView: 设置相对参考视图
+ * 说明:设置frame
+ * @param left 左边距
+ * @param top 顶边距
+ * @param right 右边距
+ * @param height 高度
+ * @param toView frame参考视图
  */
 
-- (void)whc_FrameAutoWidth:(WHCWidthAutoRect)frame toView:(UIView *)toView;
+- (void)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height toView:(UIView *)toView;
 
 /**
- * 说明:设置视图显示区域(横竖屏高度可自动收缩)
- * @param frame: 视图显示区域
- * @param toView: 设置相对参考视图
+ * 说明:设置frame (默认相对父视图)
+ * @param left 左边距
+ * @param top 顶边距
+ * @param width 宽度
+ * @param bottom 底边距
  */
 
-- (void)whc_FrameAutoHeight:(WHCHeightAutoRect)frame toView:(UIView *)toView;
+- (void)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom toView:(UIView *)toView;
 
 /**
  * 说明:设置视图显示宽高

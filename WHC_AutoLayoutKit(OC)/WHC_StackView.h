@@ -18,6 +18,10 @@
 #import <UIKit/UIKit.h>
 #import "UIView+WHC_AutoLayout.h"
 
+@interface UIButton (WHC_StackView)
+
+@end
+
 #pragma mark - UI自动布局StackView容器 -
 
 @interface UIView (WHC_StackViewCategory)
@@ -37,8 +41,10 @@
 @property (nonatomic , assign) NSInteger whc_Column;
 /// 容器内边距
 @property (nonatomic , assign) UIEdgeInsets whc_Edge;
-/// 容器内子控件之间的空隙
-@property (nonatomic , assign) CGFloat whc_Space;
+/// 容器内子控件横向间隙
+@property (nonatomic , assign) CGFloat whc_HSpace;
+/// 容器内子控件垂直间隙
+@property (nonatomic , assign) CGFloat whc_VSpace;
 
 /// 子元素高宽比(该属性仅仅在自动高度的时候才有效)
 @property (nonatomic , assign) CGFloat whc_HeightWidthRatio;

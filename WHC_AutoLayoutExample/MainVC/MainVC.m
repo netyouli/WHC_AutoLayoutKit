@@ -54,9 +54,6 @@
     if (!_initPush) {
         _initPush = YES;
         WeiXinFriendsCircleVC * vc = [WeiXinFriendsCircleVC new];
-//        Mp3ListVC * vc = [Mp3ListVC new];
-//        UINavigationController * nv = [[UINavigationController alloc] initWithRootViewController:vc];
-//        [self presentViewController:nv animated:YES completion:nil];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -79,6 +76,7 @@
     return _contents.count;
 }
 
+/// 一行代码计算cell高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = [MainVCCell whc_CellHeightForIndexPath:indexPath tableView:tableView];
     return height;

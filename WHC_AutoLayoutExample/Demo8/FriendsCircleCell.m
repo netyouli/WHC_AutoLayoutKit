@@ -168,55 +168,55 @@
     [self createLayoutView];
     
     /// 使用先进的WHC_AutoLayoutKit进行自动布局
-    [_userImageView whc_Frame:WHCRectMake(10, 15, 40, 40)];
+    [_userImageView whc_Frame:10 top:15 width:40 height:40];
+    _userNameLabel.whc_TopSpaceEqualView(_userImageView)
+                  .whc_LeftSpaceToView(10,_userImageView)
+                  .whc_widthAuto()
+                  .whc_Height(20);
     
-    [_userNameLabel whc_TopSpaceEqualView:_userImageView];
-    [_userNameLabel whc_LeftSpace:10 toView:_userImageView];
-    [_userNameLabel whc_WidthAuto];
-    [_userNameLabel whc_Height:20];
+    _contentLabel.whc_LeftSpaceEqualView(_userNameLabel)
+                 .whc_TopSpaceToView(5,_userNameLabel)
+                 .whc_RightSpace(10)
+                 .whc_heightAuto();
     
-    [_contentLabel whc_LeftSpaceEqualView:_userNameLabel];
-    [_contentLabel whc_TopSpace:5 toView:_userNameLabel];
-    [_contentLabel whc_RightSpace:10];
-    [_contentLabel whc_HeightAuto];
-    
-    [_imageStackView whc_TopSpace:5 toView:_contentLabel];
-    [_imageStackView whc_LeftSpaceEqualView:_contentLabel];
-    [_imageStackView whc_RightSpace:10];
-    [_imageStackView whc_HeightAuto];
+    _imageStackView.whc_TopSpaceToView(5,_contentLabel)
+                   .whc_LeftSpaceEqualView(_contentLabel)
+                   .whc_RightSpace(10)
+                   .whc_heightAuto();
     
     /// 配置图片展示容器
     _imageStackView.whc_Column = 3;               // 最大3列
     _imageStackView.whc_Edge = UIEdgeInsetsZero;  // 内边距为0
-    _imageStackView.whc_Space = 4;                // 图片之间的空隙为4
+    _imageStackView.whc_HSpace = 4;                // 图片之间的空隙为4
+    _imageStackView.whc_VSpace = 4;                // 图片之间的空隙为4
     _imageStackView.whc_Orientation = All;        // 横竖混合布局
     _imageStackView.whc_HeightWidthRatio = 4 / 3; // 图片高宽比
     
-    [_timeLabel whc_TopSpace:10 toView:_imageStackView];
-    [_timeLabel whc_LeftSpaceEqualView:_imageStackView];
-    [_timeLabel whc_Size:CGSizeMake(100, 20)];
+    _timeLabel.whc_TopSpaceToView(10,_imageStackView)
+              .whc_LeftSpaceEqualView(_imageStackView)
+              .whc_Size(CGSizeMake(100, 20));
+    _answerButton.whc_TopSpaceEqualView(_timeLabel)
+                 .whc_TrailingSpace(10)
+                 .whc_Size(CGSizeMake(30, 25));
     
-    [_answerButton whc_TopSpaceEqualView:_timeLabel];
-    [_answerButton whc_TrailingSpace:10];
-    [_answerButton whc_Size:CGSizeMake(30, 25)];
+    _upArrowImageView.whc_TopSpaceToView(5,_timeLabel)
+                     .whc_LeftSpaceEqualView(_timeLabel)
+                     .whc_Size(CGSizeMake(60, 20));
     
-    [_upArrowImageView whc_TopSpace:5 toView:_timeLabel];
-    [_upArrowImageView whc_LeftSpaceEqualView:_timeLabel];
-    [_upArrowImageView whc_Size:CGSizeMake(60, 20)];
+    _supportView.whc_TopSpaceToView(10,_timeLabel)
+                .whc_LeftSpaceEqualView(_timeLabel)
+                .whc_RightSpace(10)
+                .whc_Height(21);
     
-    [_supportView whc_TopSpace:10 toView:_timeLabel];
-    [_supportView whc_LeftSpaceEqualView:_timeLabel];
-    [_supportView whc_RightSpace:10];
-    [_supportView whc_Height:21];
-    
-    [_commentStackView whc_TopSpace:0 toView:_supportView];
-    [_commentStackView whc_LeftSpaceEqualView:_timeLabel];
-    [_commentStackView whc_RightSpace:10];
-    [_commentStackView whc_HeightAuto];
+    _commentStackView.whc_TopSpaceToView(0,_supportView)
+                     .whc_LeftSpaceEqualView(_timeLabel)
+                     .whc_RightSpace(10)
+                     .whc_heightAuto();
     
     /// 配置评论展示容器
     _commentStackView.whc_Edge = UIEdgeInsetsMake(5, 5, 5, 5);  // 内边距为5
-    _commentStackView.whc_Space = 10;                           // 评论之间的空隙为10
+    _commentStackView.whc_HSpace = 10;                           // 评论之间的空隙为10
+    _commentStackView.whc_VSpace = 10;                           // 评论之间的空隙为10
     _commentStackView.whc_Orientation = Vertical;               // 垂直布局
     
     /// 设置cell底部间隙

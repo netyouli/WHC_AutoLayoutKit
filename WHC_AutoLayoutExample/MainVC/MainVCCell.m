@@ -33,7 +33,7 @@
         [self.contentView addSubview:_content];
         _title.textColor = [UIColor redColor];
         _title.font = [UIFont boldSystemFontOfSize:20];
-        [_title whc_FrameAutoWidth:WHCWidthAutoRectMake(10, 10, 10, 30)];
+        [_title whc_AutoWidth:10 top:10 right:10 height:30];
         [_content whc_LeftSpace:10];
         [_content whc_TopSpace:10 toView:_title];
         [_content whc_RightSpace:10];

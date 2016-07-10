@@ -66,7 +66,8 @@
     
     _tableView = [UITableView new];
     [self.view addSubview:_tableView];
-    [_tableView whc_FrameAuto:WHCAutoRectMake(0, 0, 0, 0)];
+    /// 一行代码添加约束 (全屏)
+    [_tableView whc_AutoSize:0 top:0 right:0 bottom:0];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [_tableView registerClass:[DemoVC2Cell class] forCellReuseIdentifier:NSStringFromClass([DemoVC2Cell class])];
@@ -90,6 +91,7 @@
     return dateSourceArray.count;
 }
 
+/// 自动计算cell高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [DemoVC2Cell whc_CellHeightForIndexPath:indexPath tableView:tableView];
 }
