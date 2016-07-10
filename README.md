@@ -1,6 +1,6 @@
 # WHC_AutoLayoutKit
 
-##### 联系QQ: 712641411
+##### 咨询QQ: 712641411
 ##### 开发作者: 吴海超
 ##### WHC_AutoLayoutKit 致力打造使用最简单功能最强大的自动布局开源库
 ##### 同时开发OC版和Swift自动布局库
@@ -80,7 +80,7 @@ func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSInde
     /// 开始进行布局
     [stackView whc_StartLayout];
 }
-```
+
 
 #### Swift版StackView使用范例
 ```swift
