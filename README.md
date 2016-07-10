@@ -119,5 +119,5 @@ override func viewDidLoad() {
 ```
 
 #### 部分WHC_AutoLayoutKit demo展示
-![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/b.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
+![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swfitb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
 

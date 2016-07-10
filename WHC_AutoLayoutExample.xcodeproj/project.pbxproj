@@ -54,7 +54,7 @@
 		C3FEAF451C8697F4008E1E97 /* DemoVC7.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEAF431C8697F4008E1E97 /* DemoVC7.m */; };
 		C3FEAF461C8697F4008E1E97 /* DemoVC7.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */; };
 		C3FEAF4B1C86AD37008E1E97 /* a.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF481C86AD37008E1E97 /* a.gif */; };
-		FEE278441D325A5100FE0B80 /* b.gif in Resources */ = {isa = PBXBuildFile; fileRef = FEE278431D325A5100FE0B80 /* b.gif */; };
+		FEE278441D325A5100FE0B80 /* swiftb.gif in Resources */ = {isa = PBXBuildFile; fileRef = FEE278431D325A5100FE0B80 /* swiftb.gif */; };
 		FEE278461D325AE800FE0B80 /* c.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE278451D325AE800FE0B80 /* c.png */; };
 		FEE278481D325B3000FE0B80 /* d.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE278471D325B3000FE0B80 /* d.png */; };
 		FEE278501D325BF600FE0B80 /* UITableViewCell+WHC_AutoHeightForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2784B1D325BF600FE0B80 /* UITableViewCell+WHC_AutoHeightForCell.m */; };
@@ -131,7 +131,7 @@
 		C3FEAF431C8697F4008E1E97 /* DemoVC7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC7.m; sourceTree = "<group>"; };
 		C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoVC7.xib; sourceTree = "<group>"; };
 		C3FEAF481C86AD37008E1E97 /* a.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = a.gif; sourceTree = "<group>"; };
-		FEE278431D325A5100FE0B80 /* b.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = b.gif; sourceTree = "<group>"; };
+		FEE278431D325A5100FE0B80 /* swiftb.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = swiftb.gif; sourceTree = "<group>"; };
 		FEE278451D325AE800FE0B80 /* c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c.png; sourceTree = "<group>"; };
 		FEE278471D325B3000FE0B80 /* d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = d.png; sourceTree = "<group>"; };
 		FEE2784A1D325BF600FE0B80 /* UITableViewCell+WHC_AutoHeightForCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+WHC_AutoHeightForCell.h"; sourceTree = "<group>"; };
@@ -352,7 +352,7 @@
 			children = (
 				FEE278471D325B3000FE0B80 /* d.png */,
 				FEE278451D325AE800FE0B80 /* c.png */,
-				FEE278431D325A5100FE0B80 /* b.gif */,
+				FEE278431D325A5100FE0B80 /* swiftb.gif */,
 				C350C0241C99439600A02263 /* f.gif */,
 				C3FEAF481C86AD37008E1E97 /* a.gif */,
 			);
@@ -441,7 +441,7 @@
 				C307EB851C914470008D974A /* pic3.jpg in Resources */,
 				C307EB841C914470008D974A /* pic2.jpg in Resources */,
 				C307EB411C910E44008D974A /* PersonImageView.xib in Resources */,
-				FEE278441D325A5100FE0B80 /* b.gif in Resources */,
+				FEE278441D325A5100FE0B80 /* swiftb.gif in Resources */,
 				C307EB891C914470008D974A /* pic7.jpg in Resources */,
 				C307EB871C914470008D974A /* pic5.jpg in Resources */,
 				C307EB861C914470008D974A /* pic4.jpg in Resources */,
