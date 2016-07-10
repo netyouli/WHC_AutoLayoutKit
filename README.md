@@ -3,7 +3,7 @@
 ##### 咨询QQ: 712641411
 ##### 开发作者: 吴海超
 ##### WHC_AutoLayoutKit 致力打造使用最简单功能最强大的自动布局开源库
-##### 同时开发OC版和Swift自动布局库
+##### WHC_AutoLayoutKit 同时有OC版和Swift版
 ##### OC版和Swift版自动布局库api接口使用代码里都有详细使用说明
 
 #### ObjectiveC版自动布局库使用范例
