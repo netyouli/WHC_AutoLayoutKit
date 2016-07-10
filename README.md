@@ -80,7 +80,7 @@ func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSInde
     /// 开始进行布局
     [stackView whc_StartLayout];
 }
-
+```
 
 #### Swift版StackView使用范例
 
@@ -120,5 +120,6 @@ override func viewDidLoad() {
 ```
 
 #### 部分WHC_AutoLayoutKit demo展示
-![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
+![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)
+![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
 
