@@ -32,6 +32,9 @@
     self.navigationItem.title = @"列表自动计算cell高度";
     self.view.backgroundColor = [UIColor whiteColor];
     
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStylePlain target:self action:@selector(clickRefresh:)];
+    
+    self.navigationItem.rightBarButtonItem = rightItem;
     dateSourceArray = @[@"- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath",
                         @"- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath\
                         - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath\
@@ -70,6 +73,10 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [_tableView registerClass:[DemoVC2Cell class] forCellReuseIdentifier:NSStringFromClass([DemoVC2Cell class])];
+    [_tableView reloadData];
+}
+
+- (void)clickRefresh:(UIBarButtonItem *)sender {
     [_tableView reloadData];
 }
 

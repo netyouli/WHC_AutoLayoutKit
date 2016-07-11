@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WHC_AutoLayoutKit/WHC_AutoCellHeight.swift"
-            timestampString = "489828531.575192"
+            timestampString = "489921804.202183"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "screenWillChange(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WHC_AutoLayoutKit/WHC_AutoCellHeight.swift"
-            timestampString = "489828580.217161"
+            timestampString = "489921804.202183"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "whc_ReloadData()"
             landmarkType = "5">
          </BreakpointContent>

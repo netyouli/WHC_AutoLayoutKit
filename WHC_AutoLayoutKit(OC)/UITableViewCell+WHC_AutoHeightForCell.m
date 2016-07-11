@@ -92,11 +92,15 @@
     if (cell.whc_CellTableView) {
         [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
     }
+    [tableView layoutIfNeeded];
     CGFloat tableViewWidth = CGRectGetWidth(tableView.frame);
     if (tableViewWidth == 0) return 0;
     CGRect cellFrame = cell.frame;
-    cellFrame.size.width = CGRectGetWidth(tableView.frame);
+    cellFrame.size.width = tableViewWidth;
     cell.frame = cellFrame;
+    CGRect contentFrame = cell.contentView.frame;
+    contentFrame.size.width = tableViewWidth;
+    cell.contentView.frame = contentFrame;
     [cell layoutIfNeeded];
     UIView * bottomView = nil;
     if (cell.whc_CellBottomView != nil) {

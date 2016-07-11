@@ -194,12 +194,16 @@ extension UITableViewCell {
             return 0
         }
         cell?.whc_CellTableView?.whc_Height((cell?.whc_CellTableView?.contentSize.height)!)
+        tableView.layoutIfNeeded()
         let tableViewWidth = CGRectGetWidth(tableView.frame)
         if tableViewWidth == 0 {
             return 0
         }
         var cellFrame = cell?.frame
-        cellFrame?.size.width = CGRectGetWidth(tableView.frame)
+        var contentFrame = cell?.contentView.frame
+        contentFrame?.size.width = tableViewWidth
+        cellFrame?.size.width = tableViewWidth
+        cell?.contentView.frame = contentFrame!
         cell?.frame = cellFrame!
         cell?.layoutIfNeeded()
         var bottomView: UIView!
