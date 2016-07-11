@@ -904,13 +904,10 @@ extension UIView {
                                     constant: CGFloat) {
         var currentSuperView = item.superview
         if toItem != nil {
-            if attribute == toAttribute {
-                switch attribute {
-                case .Right,.Bottom:
-                    currentSuperView = toItem
-                default:
-                    break
-                }
+            if toItem.superview == nil {
+                currentSuperView = toItem
+            }else if toItem.superview !== item.superview {
+                currentSuperView = toItem
             }
         }else {
             currentSuperView = item

@@ -777,15 +777,10 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                       constant:(CGFloat)constant {
     UIView * superView = item.superview;
     if (toItem) {
-        if (attribute == toAttribute) {
-            switch (attribute) {
-                case NSLayoutAttributeRight:
-                case NSLayoutAttributeBottom:
-                    superView = toItem;
-                    break;
-                default:
-                    break;
-            }
+        if (toItem.superview == nil) {
+            superView = toItem;
+        }else if (toItem.superview != item.superview) {
+            superView = toItem;
         }
     }else {
         superView = item;
