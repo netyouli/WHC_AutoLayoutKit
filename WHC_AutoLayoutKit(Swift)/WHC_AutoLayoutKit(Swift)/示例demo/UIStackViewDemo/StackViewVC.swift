@@ -6,6 +6,11 @@
 //  Copyright © 2016年 WHC. All rights reserved.
 //
 
+/*
+ *  iOS技术交流群:490149447
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
+ */
+
 import UIKit
 
 class StackViewVC: UIViewController {

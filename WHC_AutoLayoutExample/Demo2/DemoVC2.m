@@ -9,10 +9,9 @@
 /*
  *  qq:712641411
  *  开发作者: 吴海超(WHC)
- *  iOS技术交流群:302157745
+ *  iOS技术交流群:490149447
  *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
  */
-
 #import "DemoVC2.h"
 #import "DemoVC2Cell.h"
 #import "UIView+WHC_AutoLayout.h"
