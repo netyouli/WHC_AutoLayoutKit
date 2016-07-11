@@ -402,7 +402,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                        attribute:NSLayoutAttributeRight
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeLeft
+                       attribute:NSLayoutAttributeRight
                       multiplier:1
                         constant:0.0 - rightSpace];
 }
@@ -509,7 +509,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                        attribute:NSLayoutAttributeBottom
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeTop
+                       attribute:NSLayoutAttributeBottom
                       multiplier:1
                         constant:0.0 - bottomSpace];
 }
@@ -776,7 +776,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     multiplier:(CGFloat)multiplier
                       constant:(CGFloat)constant {
     UIView * superView = item.superview;
-    if (toItem == nil) {
+    if (toItem) {
+        if (attribute == toAttribute) {
+            switch (attribute) {
+                case NSLayoutAttributeRight:
+                case NSLayoutAttributeBottom:
+                    superView = toItem;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }else {
         superView = item;
         toAttribute = NSLayoutAttributeNotAnAttribute;
     }

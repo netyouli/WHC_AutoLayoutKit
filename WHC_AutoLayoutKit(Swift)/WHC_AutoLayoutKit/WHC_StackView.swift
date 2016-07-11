@@ -58,6 +58,9 @@ extension UIButton {
 
 extension UILabel {
     
+    public override func layoutSubviews() {
+        <#code#>
+    }
     /// 文字左边距
     public var whc_LeftPadding: CGFloat {
         set {

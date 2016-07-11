@@ -153,7 +153,7 @@ extension UIView {
      */
     
     public func whc_Right(space: CGFloat, toView: UIView!) -> UIView {
-        var toAttribute = NSLayoutAttribute.Left
+        var toAttribute = NSLayoutAttribute.Right
         self.constraintWithItem(self, attribute: .Right, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: 0 - space)
         return self
     }
@@ -297,7 +297,7 @@ extension UIView {
      */
     
     public func whc_Bottom(space: CGFloat, toView: UIView!) -> UIView {
-        var toAttribute = NSLayoutAttribute.Top
+        var toAttribute = NSLayoutAttribute.Bottom
         self.constraintWithItem(self, attribute: .Bottom, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: 0 - space)
         return self
     }
@@ -903,7 +903,16 @@ extension UIView {
                                     multiplier: CGFloat,
                                     constant: CGFloat) {
         var currentSuperView = item.superview
-        if toItem == nil {
+        if toItem != nil {
+            if attribute == toAttribute {
+                switch attribute {
+                case .Right,.Bottom:
+                    currentSuperView = toItem
+                default:
+                    break
+                }
+            }
+        }else {
             currentSuperView = item
             toAttribute = .NotAnAttribute
         }
