@@ -371,17 +371,22 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_LeftSpace:(CGFloat)leftSpace toView:(UIView *)toView {
+    NSLayoutAttribute toAttribute = NSLayoutAttributeRight;
+    if (toView.superview == nil) {
+        toAttribute = NSLayoutAttributeLeft;
+    }else if (self.superview != toView.superview) {
+        toAttribute = NSLayoutAttributeLeft;
+    }
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeft
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeRight
+                       attribute:toAttribute
                       multiplier:1
                         constant:leftSpace];
 }
 
 - (void)whc_LeftSpaceEqualView:(UIView *)view {
-//    [self whc_LeadingSpaceEqualView:view];
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeft
                        relatedBy:NSLayoutRelationEqual
@@ -425,6 +430,12 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (void)whc_LeadingSpace:(CGFloat)leadingSpace
             toView:(UIView *)toView {
+    NSLayoutAttribute toAttribute = NSLayoutAttributeTrailing;
+    if (toView.superview == nil) {
+        toAttribute = NSLayoutAttributeLeading;
+    }else if (self.superview != toView.superview) {
+        toAttribute = NSLayoutAttributeLeading;
+    }
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeading
                        relatedBy:NSLayoutRelationEqual
@@ -452,6 +463,12 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (void)whc_TrailingSpace:(CGFloat)trailingSpace
              toView:(UIView *)toView {
+    NSLayoutAttribute toAttribute = NSLayoutAttributeLeading;
+    if (toView.superview == nil) {
+        toAttribute = NSLayoutAttributeTrailing;
+    }else if (self.superview != toView.superview) {
+        toAttribute = NSLayoutAttributeTrailing;
+    }
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeTrailing
                        relatedBy:NSLayoutRelationEqual

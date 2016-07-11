@@ -118,6 +118,11 @@ extension UIView {
     
     public func whc_Left(space: CGFloat, toView: UIView!) -> UIView {
         var toAttribute = NSLayoutAttribute.Right
+        if toView.superview == nil {
+            toAttribute = .Left
+        }else if toView.superview !== self.superview {
+            toAttribute = .Left
+        }
         self.constraintWithItem(self, attribute: .Left, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: space)
         return self
     }
@@ -190,6 +195,11 @@ extension UIView {
     
     public func whc_Leading(space: CGFloat, toView: UIView!) -> UIView {
         var toAttribute = NSLayoutAttribute.Trailing
+        if toView.superview == nil {
+            toAttribute = .Leading
+        }else if toView.superview !== self.superview {
+            toAttribute = .Leading
+        }
         self.constraintWithItem(self, attribute: .Leading, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: space)
         return self
     }
@@ -226,6 +236,11 @@ extension UIView {
     
     public func whc_Trailing(space: CGFloat, toView: UIView!) -> UIView {
         var toAttribute = NSLayoutAttribute.Leading
+        if toView.superview == nil {
+            toAttribute = .Trailing
+        }else if toView.superview !== self.superview {
+            toAttribute = .Trailing
+        }
         self.constraintWithItem(self, attribute: .Trailing, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: 0 - space)
         return self
     }
@@ -262,6 +277,11 @@ extension UIView {
     
     public func whc_Top(space: CGFloat, toView: UIView!) -> UIView {
         var toAttribute = NSLayoutAttribute.Bottom
+        if toView.superview == nil {
+            toAttribute = .Top
+        }else if toView.superview !== self.superview {
+            toAttribute = .Top
+        }
         self.constraintWithItem(self, attribute: .Top, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: space)
         return self
     }
