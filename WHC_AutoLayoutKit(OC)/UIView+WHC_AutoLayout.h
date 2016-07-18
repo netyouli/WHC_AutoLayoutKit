@@ -81,11 +81,13 @@ typedef UIView * (^Width)(CGFloat value);
 typedef UIView * (^WidthAuto)();
 typedef UIView * (^WidthEqualView)(UIView * view);
 typedef UIView * (^WidthEqualViewRatio)(UIView * view, CGFloat ratio);
+typedef UIView * (^WidthHeightRatio)(CGFloat ratio);
 
 typedef UIView * (^Height)(CGFloat value);
 typedef UIView * (^HeightAuto)();
 typedef UIView * (^HeightEqualView)(UIView * view);
 typedef UIView * (^HeightEqualViewRatio)(UIView * view, CGFloat ratio);
+typedef UIView * (^HeightWidthRatio)(CGFloat ratio);
 
 typedef UIView * (^CenterX)(CGFloat value);
 typedef UIView * (^CenterXToView)(CGFloat value, UIView * toView);
@@ -161,6 +163,9 @@ typedef UIView * (^size)(CGSize size);
 @property (nonatomic ,copy , readonly)WidthEqualView whc_WidthEqualView;
 /// 宽度等于视图view 参照比例Ratio(UIView * view ,CGFloat ratio)
 @property (nonatomic ,copy , readonly)WidthEqualViewRatio whc_WidthEqualViewRatio;
+/// 视图自身宽度与高度的比(CGFloat Ratio)
+@property (nonatomic ,copy , readonly)WidthHeightRatio whc_WidthHeightRatio;
+
 
 /// 高度(CGFloat value)
 @property (nonatomic ,copy , readonly)Height whc_Height;
@@ -170,6 +175,8 @@ typedef UIView * (^size)(CGSize size);
 @property (nonatomic ,copy , readonly)HeightEqualView whc_HeightEqualView;
 /// 高度等于视图view 参照比例Ratio(UIView * view ,CGFloat ratio)
 @property (nonatomic ,copy , readonly)HeightEqualViewRatio whc_HeightEqualViewRatio;
+/// 视图自身高度与宽度的比(CGFloat Ratio)
+@property (nonatomic ,copy , readonly)HeightWidthRatio whc_HeightWidthRatio;
 
 /// 中心X与父视图偏移(CGFloat value)
 @property (nonatomic ,copy , readonly)CenterX whc_CenterX;
@@ -352,6 +359,13 @@ typedef UIView * (^size)(CGSize size);
 - (void)whc_WidthAuto;
 
 /**
+ * 说明: 设置视图自身宽度与高度的比
+ * @param ratio 视图自身宽度与高度的比
+ */
+
+- (void)whc_WidthHeightRatio:(CGFloat)ratio;
+
+/**
  * 说明:设置高度
  * @param height: 高度
  */
@@ -377,6 +391,13 @@ typedef UIView * (^size)(CGSize size);
  * 说明:设置自动高度
  */
 - (void)whc_HeightAuto;
+
+/**
+ * 说明: 设置视图自身高度与宽度的比
+ * @param ratio 视图自身高度与宽度的比
+ */
+
+- (void)whc_HeightWidthRatio:(CGFloat)ratio;
 
 /**
  * 说明:设置中心x与父视图中心的偏移 centerX = 0 与父视图中心x重合

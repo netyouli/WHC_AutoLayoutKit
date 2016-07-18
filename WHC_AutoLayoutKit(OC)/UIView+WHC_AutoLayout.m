@@ -250,6 +250,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
+- (WidthHeightRatio)whc_WidthHeightRatio {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value) {
+        [weakSelf whc_WidthHeightRatio:value];
+        return weakSelf;
+    };
+}
 
 - (Height)whc_Height {
     __weak typeof(self) weakSelf = self;
@@ -279,6 +286,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     __weak typeof(self) weakSelf = self;
     return ^(UIView * view , CGFloat value) {
         [weakSelf whc_HeightEqualView:view ratio:value];
+        return weakSelf;
+    };
+}
+
+- (HeightWidthRatio)whc_HeightWidthRatio {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value) {
+        [weakSelf whc_HeightWidthRatio:value];
         return weakSelf;
     };
 }
@@ -581,6 +596,16 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0];
 }
 
+- (void)whc_WidthHeightRatio:(CGFloat)ratio {
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeWidth
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:self
+                       attribute:NSLayoutAttributeHeight
+                      multiplier:ratio
+                        constant:0];
+}
+
 - (void)whc_Height:(CGFloat)height{
     [self whc_ConstraintWithItem:nil
                        attribute:NSLayoutAttributeHeight
@@ -614,6 +639,16 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                       multiplier:1
                         constant:0];
 
+}
+
+- (void)whc_HeightWidthRatio:(CGFloat)ratio {
+    [self whc_ConstraintWithItem:self
+                       attribute:NSLayoutAttributeHeight
+                       relatedBy:NSLayoutRelationEqual
+                          toItem:self
+                       attribute:NSLayoutAttributeWidth
+                      multiplier:ratio
+                        constant:0];
 }
 
 - (void)whc_CenterX:(CGFloat)centerX {

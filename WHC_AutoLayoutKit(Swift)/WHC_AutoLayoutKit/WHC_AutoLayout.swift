@@ -387,6 +387,18 @@ extension UIView {
     }
     
     /**
+     * 说明: 设置视图自身高度与宽度的比
+     * @param ratio 视图自身高度与宽度的比
+     * @return 返回当前视图
+     */
+    
+    public func whc_HeightWidthRatio(ratio: CGFloat) -> UIView {
+        var toAttribute = NSLayoutAttribute.Width
+        self.constraintWithItem(self, attribute: .Height, related: .Equal, toItem: self, toAttribute: &toAttribute, multiplier: ratio, constant: 0)
+        return self;
+    }
+    
+    /**
      * 说明:设置高度
      * @param height: 高度
      * @return 返回当前视图
@@ -435,6 +447,18 @@ extension UIView {
         var toAttribute = NSLayoutAttribute.NotAnAttribute
         self.constraintWithItem(self, attribute: .Height, related: .GreaterThanOrEqual, toItem: nil, toAttribute: &toAttribute, multiplier: 1, constant: 0)
         return self
+    }
+    
+    /**
+     * 说明: 设置视图自身宽度与高度的比
+     * @param ratio 视图自身宽度与高度的比
+     * @return 返回当前视图
+     */
+    
+    public func whc_WidthHeightRatio(ratio: CGFloat) -> UIView {
+        var toAttribute = NSLayoutAttribute.Height
+        self.constraintWithItem(self, attribute: .Width, related: .Equal, toItem: self, toAttribute: &toAttribute, multiplier: ratio, constant: 0)
+        return self;
     }
     
     /**

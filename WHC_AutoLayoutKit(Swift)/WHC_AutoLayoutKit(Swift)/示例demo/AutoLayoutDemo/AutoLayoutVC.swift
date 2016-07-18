@@ -39,7 +39,7 @@ class AutoLayoutVC: UIViewController {
         rightTopLable.whc_Trailing(0).whc_Top(64).whc_SizeEqual(leftTopLable)
         rightBottomLable.whc_Trailing(0).whc_BaseLine(0).whc_SizeEqual(leftBottomLable)
         
-        button.whc_CenterEqual(self.view, offsetX: 0, offsetY: 32).whc_SizeEqual(leftTopLable)
+        button.whc_CenterEqual(self.view, offsetX: 0, offsetY: 32).whc_WidthEqual(leftTopLable)
         
         
         leftTopLable.backgroundColor = UIColor.orangeColor()
