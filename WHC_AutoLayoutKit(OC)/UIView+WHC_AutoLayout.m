@@ -72,6 +72,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
+- (LeftSpaceEqualViewOffset)whc_LeftSpaceEqualViewOffset {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view, CGFloat offset) {
+        [weakSelf whc_LeftSpaceEqualView:view offset:offset];
+        return weakSelf;
+    };
+}
+
 - (LeadingSpace)whc_LeadingSpace {
     __weak typeof(self) weakSelf = self;
     return ^(CGFloat space) {
@@ -92,6 +100,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     __weak typeof(self) weakSelf = self;
     return ^(UIView * view) {
         [weakSelf whc_LeadingSpaceEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (LeadingSpaceEqualViewOffset)whc_LeadingSpaceEqualViewOffset {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view, CGFloat offset) {
+        [weakSelf whc_LeadingSpaceEqualView:view offset:offset];
         return weakSelf;
     };
 }
@@ -120,6 +136,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
+- (TrailingSpaceEqualViewOffset)whc_TrailingSpaceEqualViewOffset {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view, CGFloat offset) {
+        [weakSelf whc_TrailingSpaceEqualView:view offset:offset];
+        return weakSelf;
+    };
+}
+
 - (BaseLineSpace)whc_BaseLineSpace {
     __weak typeof(self) weakSelf = self;
     return ^(CGFloat space) {
@@ -140,6 +164,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     __weak typeof(self) weakSelf = self;
     return ^(UIView * view) {
         [weakSelf whc_BaseLineSpaceEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (BaseLineSpaceEqualViewOffset)whc_BaseLineSpaceEqualViewOffset {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view, CGFloat offset) {
+        [weakSelf whc_BaseLineSpaceEqualView:view offset:offset];
         return weakSelf;
     };
 }
@@ -168,6 +200,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
+- (RightSpaceEqualViewOffset)whc_RightSpaceEqualViewOffset {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * toView, CGFloat offset) {
+        [weakSelf whc_RightSpaceEqualView:toView offset:offset];
+        return weakSelf;
+    };
+}
 
 - (TopSpace)whc_TopSpace {
     __weak typeof(self) weakSelf = self;
@@ -189,6 +228,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     __weak typeof(self) weakSelf = self;
     return ^(UIView * view) {
         [weakSelf whc_TopSpaceEqualView:view];
+        return weakSelf;
+    };
+}
+
+- (TopSpaceEqualViewOffset)whc_TopSpaceEqualViewOffset {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view, CGFloat offset) {
+        [weakSelf whc_TopSpaceEqualView:view offset:offset];
         return weakSelf;
     };
 }
@@ -217,6 +264,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
+- (BottomSpaceEqualViewOffset)whc_BottomSpaceEqualViewOffset {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * toView, CGFloat offset) {
+        [weakSelf whc_BottomSpaceEqualView:toView offset:offset];
+        return weakSelf;
+    };
+}
 
 - (Width)whc_Width {
     __weak typeof(self) weakSelf = self;
@@ -402,13 +456,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_LeftSpaceEqualView:(UIView *)view {
+    [self whc_LeftSpaceEqualView:view offset:0];
+}
+
+- (void)whc_LeftSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeft
                        relatedBy:NSLayoutRelationEqual
                           toItem:view
                        attribute:NSLayoutAttributeLeft
                       multiplier:1
-                        constant:0];
+                        constant:offset];
 }
 
 - (void)whc_RightSpace:(CGFloat)rightSpace {
@@ -428,13 +486,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_RightSpaceEqualView:(UIView *)view {
+    [self whc_RightSpaceEqualView:view offset:0];
+}
+
+- (void)whc_RightSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeRight
                        relatedBy:NSLayoutRelationEqual
                           toItem:view
                        attribute:NSLayoutAttributeRight
                       multiplier:1
-                        constant:0];
+                        constant:0.0 - offset];
 }
 
 - (void)whc_LeadingSpace:(CGFloat)leadingSpace {
@@ -461,13 +523,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_LeadingSpaceEqualView:(UIView *)view {
+    [self whc_LeadingSpaceEqualView:view offset:0];
+}
+
+- (void)whc_LeadingSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeading
                        relatedBy:NSLayoutRelationEqual
                           toItem:view
                        attribute:NSLayoutAttributeLeading
                       multiplier:1
-                        constant:0];
+                        constant:offset];
 }
 
 - (void)whc_TrailingSpace:(CGFloat)trailingSpace {
@@ -494,15 +560,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_TrailingSpaceEqualView:(UIView *)view {
+    [self whc_TrailingSpaceEqualView:view offset:0];
+}
+
+- (void)whc_TrailingSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeTrailing
                        relatedBy:NSLayoutRelationEqual
                           toItem:view
                        attribute:NSLayoutAttributeTrailing
                       multiplier:1
-                        constant:0];
+                        constant:0.0 - offset];
 }
-
 
 - (void)whc_TopSpace:(CGFloat)topSpace {
     [self whc_ConstraintWithItem:self.superview
@@ -521,13 +590,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_TopSpaceEqualView:(UIView *)view {
+    [self whc_TopSpaceEqualView:view offset:0];
+}
+
+- (void)whc_TopSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeTop
                        relatedBy:NSLayoutRelationEqual
                           toItem:view
                        attribute:NSLayoutAttributeTop
                       multiplier:1
-                        constant:0];
+                        constant:offset];
 }
 
 - (void)whc_BottomSpace:(CGFloat)bottomSpace {
@@ -547,13 +620,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_BottomSpaceEqualView:(UIView *)view {
+    [self whc_BottomSpaceEqualView:view offset:0];
+}
+
+- (void)whc_BottomSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeBottom
                        relatedBy:NSLayoutRelationEqual
                           toItem:view
                        attribute:NSLayoutAttributeBottom
                       multiplier:1
-                        constant:0];
+                        constant:0.0 - offset];
 }
 
 - (void)whc_Width:(CGFloat)width{
@@ -692,9 +769,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_BaseLineSpaceEqualView:(UIView *)view {
+    [self whc_BaseLineSpaceEqualView:view offset:0];
+}
+
+- (void)whc_BaseLineSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
     [self whc_ConstraintWithItem:view
                        attribute:NSLayoutAttributeLastBaseline
-                        constant:0];
+                        constant:0.0 - offset];
 }
 
 

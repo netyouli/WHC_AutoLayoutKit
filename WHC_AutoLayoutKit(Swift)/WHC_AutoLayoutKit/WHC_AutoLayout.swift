@@ -134,8 +134,19 @@ extension UIView {
      */
     
     public func whc_LeftEqual(view: UIView) -> UIView {
+        return self.whc_LeftEqual(view, offset: 0)
+    }
+    
+    /**
+     * 说明：设置左边距相等
+     * @param view 左边距相等视图
+     * @param offset 偏移量
+     * @return 返回当前视图
+     */
+    
+    public func whc_LeftEqual(view: UIView, offset: CGFloat) -> UIView {
         var toAttribute = NSLayoutAttribute.Left
-        self.constraintWithItem(self, attribute: .Left, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0)
+        self.constraintWithItem(self, attribute: .Left, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: offset)
         return self
     }
     
@@ -170,8 +181,19 @@ extension UIView {
      */
     
     public func whc_RightEqual(view: UIView) -> UIView {
+        return self.whc_RightEqual(view, offset: 0)
+    }
+    
+    /**
+     * 说明: 设置右边距相等
+     * @param view 右边距相等参考视图
+     * @param offset 偏移量
+     * @return 返回当前视图
+     */
+    
+    public func whc_RightEqual(view: UIView, offset: CGFloat) -> UIView {
         var toAttribute = NSLayoutAttribute.Right
-        self.constraintWithItem(self, attribute: .Right, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0)
+        self.constraintWithItem(self, attribute: .Right, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0.0 - offset)
         return self
     }
     
@@ -211,8 +233,19 @@ extension UIView {
      */
     
     public func whc_LeadingEqual(view: UIView) -> UIView {
+        return self.whc_LeadingEqual(view, offset: 0)
+    }
+    
+    /**
+     * 说明：设置左边距相等
+     * @param view 左边距相等参考视图
+     * @param offset 偏移量
+     * @return 返回当前视图
+     */
+    
+    public func whc_LeadingEqual(view: UIView, offset: CGFloat) -> UIView {
         var toAttribute = NSLayoutAttribute.Leading
-        self.constraintWithItem(self, attribute: .Leading, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0)
+        self.constraintWithItem(self, attribute: .Leading, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: offset)
         return self
     }
     
@@ -252,8 +285,19 @@ extension UIView {
      */
     
     public func whc_TrailingEqual(view: UIView) -> UIView {
+        return self.whc_TrailingEqual(view, offset: 0)
+    }
+    
+    /**
+     * 说明：设置右对齐相等
+     * @param view 右对齐相等参考视图
+     * @param offset 偏移量
+     * @return 返回当前视图
+     */
+    
+    public func whc_TrailingEqual(view: UIView, offset: CGFloat) -> UIView {
         var toAttribute = NSLayoutAttribute.Trailing
-        self.constraintWithItem(self, attribute: .Trailing, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0)
+        self.constraintWithItem(self, attribute: .Trailing, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0.0 - offset)
         return self
     }
     
@@ -293,8 +337,19 @@ extension UIView {
      */
     
     public func whc_TopEqual(view: UIView) -> UIView {
+        return self.whc_TopEqual(view, offset: 0)
+    }
+    
+    /**
+     * 说明：设置顶边距相等
+     * @param view 顶边距相等参考视图
+     * @param offset 偏移量
+     * @return 返回当前视图
+     */
+    
+    public func whc_TopEqual(view: UIView, offset: CGFloat) -> UIView {
         var toAttribute = NSLayoutAttribute.Top
-        self.constraintWithItem(self, attribute: .Top, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0)
+        self.constraintWithItem(self, attribute: .Top, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: offset)
         return self
     }
     
@@ -329,8 +384,19 @@ extension UIView {
      */
     
     public func whc_BottomEqual(view: UIView) -> UIView {
+        return self.whc_BottomEqual(view, offset: 0)
+    }
+    
+    /**
+     * 说明：设置底边距相等
+     * @param view 底边距相等参考视图
+     * @param offset 偏移量
+     * @return 返回当前视图
+     */
+    
+    public func whc_BottomEqual(view: UIView, offset: CGFloat) -> UIView {
         var toAttribute = NSLayoutAttribute.Bottom
-        self.constraintWithItem(self, attribute: .Bottom, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0)
+        self.constraintWithItem(self, attribute: .Bottom, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0.0 - offset)
         return self
     }
     
@@ -583,7 +649,18 @@ extension UIView {
      */
     
     public func whc_BaseLineEqual(view: UIView!) -> UIView {
-        self.constraintWithItem(view, attribute: .Baseline, constant: 0)
+        return self.whc_BaseLineEqual(view, offset: 0)
+    }
+    
+    /**
+     * 说明:设置基线边距相等
+     * @param view: 相等参考视图
+     * @param offset: 偏移量
+     * @return 返回当前视图
+     */
+    
+    public func whc_BaseLineEqual(view: UIView!, offset: CGFloat) -> UIView {
+        self.constraintWithItem(view, attribute: .Baseline, constant: 0.0 - offset)
         return self
     }
     
