@@ -124,6 +124,7 @@ override func viewDidLoad() {
 ##### 2.修复一行代码计算cell高度横竖屏计算的错误的bug
 ##### 3.增加Swift版自动布局开源库WHC_AutoLayoutKit
 ##### 4.增加新api(OC&Swift)：whc_WidthHeightRatio 和whc_HeightWidthRatio (视图自身宽度与高度的比(CGFloat Ratio))
+##### 5.增加Equal带offset的api如：public func whc_LeftEqual(view:UIView offset:CGFloat) -> UIView
 
 #### 部分WHC_AutoLayoutKit demo展示
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
