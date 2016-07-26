@@ -14,6 +14,7 @@ class ModityXibVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         testView.whc_Height(400).whc_Width(300).whc_CenterEqual(self.view)
+    
         // Do any additional setup after loading the view.
     }
 

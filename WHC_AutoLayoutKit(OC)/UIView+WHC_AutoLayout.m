@@ -1163,7 +1163,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     if (superView != nil) {
         NSArray<NSLayoutConstraint *> * constraintArray = superView.constraints;
         [constraintArray enumerateObjectsUsingBlock:^(NSLayoutConstraint * _Nonnull constraint, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (constraint.firstItem == self &&
+            if ([NSStringFromClass(constraint.class) isEqualToString:@"NSIBPrototypingLayoutConstraint"] &&
+                constraint.firstItem == self &&
                 constraint.firstAttribute == attribute &&
                 constraint.secondItem == nil) {
                 [superView removeConstraint:constraint];
@@ -1176,7 +1177,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 - (void)whc_AddConstraint:(NSLayoutConstraint *)constraint {
     switch (constraint.firstAttribute) {
         case NSLayoutAttributeHeight: {
-            [self handleXibConstraint:NSLayoutAttributeHeight];
             if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
                 for (NSLayoutConstraint * selfConstraint in self.constraints) {
                     if (selfConstraint.firstAttribute == NSLayoutAttributeHeight &&
@@ -1187,6 +1187,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [self whc_AddConstraint:constraint];
                 return;
             }else {
+                [self handleXibConstraint:NSLayoutAttributeHeight];
                 switch (constraint.relation) {
                     case NSLayoutRelationEqual: {
                         if (constraint.secondItem == nil) {
@@ -1207,7 +1208,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         }
             break;
         case NSLayoutAttributeWidth: {
-            [self handleXibConstraint:NSLayoutAttributeWidth];
             if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
                 for (NSLayoutConstraint * selfConstraint in self.constraints) {
                     if (selfConstraint.firstAttribute == NSLayoutAttributeWidth &&
@@ -1218,6 +1218,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [self whc_AddConstraint:constraint];
                 return;
             }else {
+                [self handleXibConstraint:NSLayoutAttributeWidth];
                 switch (constraint.relation) {
                     case NSLayoutRelationEqual: {
                         if (constraint.secondItem == nil) {

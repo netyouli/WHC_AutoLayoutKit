@@ -843,7 +843,8 @@ extension UIView {
         let constraintArray = self.superview?.constraints
         if constraintArray != nil {
             for constraint in constraintArray! {
-                if constraint.firstAttribute == attribute &&
+                if NSStringFromClass(constraint.classForCoder) == "NSIBPrototypingLayoutConstraint" &&
+                    constraint.firstAttribute == attribute &&
                     constraint.firstItem === self &&
                     constraint.secondItem == nil {
                     self.superview?.removeConstraint(constraint)
@@ -856,7 +857,6 @@ extension UIView {
     @objc private func whc_AddConstraint(constraint: NSLayoutConstraint) {
         switch constraint.firstAttribute {
         case .Height:
-            handleXibConstraint(NSLayoutAttribute.Height)
             if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
                 for selfConstraint in self.constraints {
                     if selfConstraint.firstAttribute == .Height &&
@@ -867,6 +867,7 @@ extension UIView {
                 self.whc_AddConstraint(constraint)
                 return
             }else {
+                handleXibConstraint(NSLayoutAttribute.Height)
                 switch constraint.relation {
                 case .Equal:
                     if constraint.secondItem == nil {
@@ -881,7 +882,6 @@ extension UIView {
                 }
             }
         case .Width:
-            handleXibConstraint(NSLayoutAttribute.Width)
             if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
                 for selfConstraint in self.constraints {
                     if selfConstraint.firstAttribute == .Width &&
@@ -892,6 +892,7 @@ extension UIView {
                 self.whc_AddConstraint(constraint)
                 return
             }else {
+                handleXibConstraint(NSLayoutAttribute.Width)
                 switch constraint.relation {
                 case .Equal:
                     if constraint.secondItem == nil {
