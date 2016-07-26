@@ -134,6 +134,7 @@
     }
     
     CGFloat cacheHeight = CGRectGetMaxY(bottomView.frame) + cell.whc_CellBottomOffset;
+    NSLog(@"index = %d cacheHeight = %f bottomWidth = %f",indexPath.row,cacheHeight,bottomView.frame.size.width);
     [sectionCacheHeightArray addObject:@(cacheHeight)];
     return cacheHeight;
 }
@@ -164,7 +165,9 @@
 }
 
 - (void)screenWillChange:(NSNotification *)notification {
-    [self reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self reloadData];
+    });
 }
 
 - (void)dealloc {

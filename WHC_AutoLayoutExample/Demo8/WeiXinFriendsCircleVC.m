@@ -233,7 +233,7 @@ static  NSInteger kDefaultOnePageDataCount = 10;
     return [UITableViewCell whc_CellHeightForIndexPath:indexPath tableView:tableView];
 }
 
-#pragma mark - UIScrollViewDelegate - 
+#pragma mark - UIScrollViewDelegate -
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsety = -scrollView.contentOffset.y;
