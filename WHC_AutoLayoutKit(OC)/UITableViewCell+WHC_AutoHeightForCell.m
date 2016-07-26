@@ -83,11 +83,21 @@
         tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
     }
     [tableView monitorScreenOrientation];
-    NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
-    NSNumber * cacheHeightValue = [tableView.whc_CacheHeightDictionary objectForKey:cacheHeightKey];
-    if (cacheHeightValue != nil) {
-        return cacheHeightValue.floatValue;
+//    NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
+    NSString * cacheHeightKey = @(indexPath.section).stringValue;
+    NSMutableArray * sectionCacheHeightArray = tableView.whc_CacheHeightDictionary[cacheHeightKey];
+    if (sectionCacheHeightArray != nil) {
+        if (sectionCacheHeightArray.count > indexPath.row) {
+            return [sectionCacheHeightArray[indexPath.row] floatValue];
+        }
+    }else {
+        sectionCacheHeightArray = [NSMutableArray array];
+        [tableView.whc_CacheHeightDictionary setObject:sectionCacheHeightArray forKey:cacheHeightKey];
     }
+//    NSNumber * cacheHeightValue = [tableView.whc_CacheHeightDictionary objectForKey:cacheHeightKey];
+//    if (cacheHeightValue != nil) {
+//        return cacheHeightValue.floatValue;
+//    }
     UITableViewCell * cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:indexPath];
     if (cell.whc_CellTableView) {
         [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
@@ -127,8 +137,10 @@
             bottomView = cell.contentView;
         }
     }
+    
     CGFloat cacheHeight = CGRectGetMaxY(bottomView.frame) + cell.whc_CellBottomOffset;
-    [tableView.whc_CacheHeightDictionary setObject:@(cacheHeight) forKey:cacheHeightKey];
+    [sectionCacheHeightArray addObject:@(cacheHeight)];
+//    [tableView.whc_CacheHeightDictionary setObject:@(cacheHeight) forKey:cacheHeightKey];
     return cacheHeight;
 }
 
@@ -142,12 +154,18 @@
         Method reloadData = class_getInstanceMethod(self, @selector(reloadData));
         Method whc_ReloadData = class_getInstanceMethod(self, @selector(whc_ReloadData));
         Method reloadDataRow = class_getInstanceMethod(self, @selector(reloadRowsAtIndexPaths:withRowAnimation:));
-        Method whc_ReloadDataRow = class_getInstanceMethod(self, @selector(whc_ReloadDatasAtIndexPaths:withRowAnimation:));
+        Method whc_ReloadDataRow = class_getInstanceMethod(self, @selector(whc_reloadRowsAtIndexPaths:withRowAnimation:));
         Method sectionReloadData = class_getInstanceMethod(self, @selector(reloadSections:withRowAnimation:));
         Method whc_SectionReloadData = class_getInstanceMethod(self, @selector(whc_ReloadSetion:withRowAnimation:));
+        Method deleteCell = class_getInstanceMethod(self, @selector(deleteItemsAtIndexPaths:));
+        Method whc_deleteCell = class_getInstanceMethod(self, @selector(whc_deleteItemsAtIndexPaths:));
+        Method deleteSection = class_getInstanceMethod(self, @selector(deleteSections:));
+        Method whc_deleteSection = class_getInstanceMethod(self, @selector(whc_deleteSections:));
         method_exchangeImplementations(sectionReloadData, whc_SectionReloadData);
         method_exchangeImplementations(reloadDataRow, whc_ReloadDataRow);
         method_exchangeImplementations(reloadData, whc_ReloadData);
+        method_exchangeImplementations(deleteCell, whc_deleteCell);
+        method_exchangeImplementations(deleteSection, whc_deleteSection);
     });
 }
 
@@ -191,31 +209,86 @@
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)handleCacheHeightDictionary {
+    NSArray<NSString *> * allKey = self.whc_CacheHeightDictionary.allKeys.copy;
+//    allKey = [allKey sortedArrayUsingComparator:^NSComparisonResult(NSString *  _Nonnull obj1, NSString *  _Nonnull obj2) {
+//        return  obj1.integerValue > obj2.integerValue ? NSOrderedAscending : NSOrderedDescending;
+//    }];
+    __block NSString * frontKey = nil;
+    __block NSInteger  index = 0;
+    [allKey enumerateObjectsUsingBlock:^(NSString * _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (frontKey == nil) {
+            frontKey = key;
+        }else {
+            if (key.integerValue - frontKey.integerValue > 1) {
+                if (index == 0) {
+                    index = frontKey.integerValue;
+                }
+                [self.whc_CacheHeightDictionary setObject:self.whc_CacheHeightDictionary[key] forKey:@(allKey[index].integerValue + 1).stringValue];
+                [self.whc_CacheHeightDictionary removeObjectForKey:key];
+                index = idx;
+            }
+            frontKey = key;
+        }
+    }];
+}
+
+- (void)whc_deleteSections:(NSIndexSet *)sections {
+    if (sections) {
+        [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.whc_CacheHeightDictionary removeObjectForKey:@(idx).stringValue];
+        }];
+    }
+    [self handleCacheHeightDictionary];
+    [self whc_deleteSections:sections];
+}
+
+- (void)whc_deleteItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    if (indexPaths) {
+        [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString * cacheHeightKey = @(indexPath.section).stringValue;
+            NSMutableArray * sectionCacheHeightArray = self.whc_CacheHeightDictionary[cacheHeightKey];
+            if (sectionCacheHeightArray != nil && sectionCacheHeightArray.count > indexPath.row) {
+                [sectionCacheHeightArray removeObjectAtIndex:indexPath.row];
+            }
+        }];
+    }
+    [self whc_deleteItemsAtIndexPaths:indexPaths];
+}
+
 - (void)whc_ReloadSetion:(NSIndexSet *)sections
         withRowAnimation:(UITableViewRowAnimation)animation {
     if (sections) {
-        NSArray * cacheHeightKeyArray = [self.whc_CacheHeightDictionary allKeys];
+//        NSArray * cacheHeightKeyArray = [self.whc_CacheHeightDictionary allKeys];
         [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
-            NSString * sectionString = [NSString stringWithFormat:@"%ld-",idx];
-            for (NSString * cacheHeightKey in cacheHeightKeyArray) {
-                if ([cacheHeightKey rangeOfString:sectionString].location != NSNotFound) {
-                    [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
-                }
-            }
+//            NSString * sectionString = [NSString stringWithFormat:@"%ld-",idx];
+//            for (NSString * cacheHeightKey in cacheHeightKeyArray) {
+//                if ([cacheHeightKey rangeOfString:sectionString].location != NSNotFound) {
+//                    [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
+//                }
+//            }
+            [self.whc_CacheHeightDictionary removeObjectForKey:@(idx).stringValue];
         }];
+        [self handleCacheHeightDictionary];
     }
     [self whc_ReloadSetion:sections withRowAnimation:animation];
 }
 
-- (void)whc_ReloadDatasAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
-                   withRowAnimation:(UITableViewRowAnimation)animation {
+- (void)whc_reloadRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
     if (indexPaths) {
-        for (NSIndexPath * indexPath in indexPaths) {
-            NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
-            [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
-        }
+//        for (NSIndexPath * indexPath in indexPaths) {
+//            NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
+//            [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
+//        }
+        [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString * cacheHeightKey = @(indexPath.section).stringValue;
+            NSMutableArray * sectionCacheHeightArray = self.whc_CacheHeightDictionary[cacheHeightKey];
+            if (sectionCacheHeightArray != nil && sectionCacheHeightArray.count > indexPath.row) {
+                [sectionCacheHeightArray removeObjectAtIndex:indexPath.row];
+            }
+        }];
     }
-    [self whc_ReloadDatasAtIndexPaths:indexPaths withRowAnimation:animation];
+    [self whc_reloadRowsAtIndexPaths:indexPaths withRowAnimation:animation];
 }
 
 - (void)whc_ReloadData {

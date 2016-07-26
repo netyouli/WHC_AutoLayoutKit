@@ -839,9 +839,24 @@ extension UIView {
     
     //MARK: -私有方法-
     
+    private func handleXibConstraint(attribute:NSLayoutAttribute) {
+        let constraintArray = self.superview?.constraints
+        if constraintArray != nil {
+            for constraint in constraintArray! {
+                if constraint.firstAttribute == attribute &&
+                    constraint.firstItem === self &&
+                    constraint.secondItem == nil {
+                    self.superview?.removeConstraint(constraint)
+                    return
+                }
+            }
+        }
+    }
+    
     @objc private func whc_AddConstraint(constraint: NSLayoutConstraint) {
         switch constraint.firstAttribute {
         case .Height:
+            handleXibConstraint(NSLayoutAttribute.Height)
             if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
                 for selfConstraint in self.constraints {
                     if selfConstraint.firstAttribute == .Height &&
@@ -866,6 +881,7 @@ extension UIView {
                 }
             }
         case .Width:
+            handleXibConstraint(NSLayoutAttribute.Width)
             if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
                 for selfConstraint in self.constraints {
                     if selfConstraint.firstAttribute == .Width &&

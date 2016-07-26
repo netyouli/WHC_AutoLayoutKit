@@ -20,6 +20,7 @@
 @property (nonatomic , strong)IBOutlet UIImageView * backgroundImageView;
 @property (nonatomic , strong)IBOutlet UILabel * titleLable;
 @property (nonatomic , strong)IBOutlet UIView * personView;
+@property (nonatomic , strong)IBOutlet UIImageView * meImageView;
 @end
 
 @implementation PersonImageView

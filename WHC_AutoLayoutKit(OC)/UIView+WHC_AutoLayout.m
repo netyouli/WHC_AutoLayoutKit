@@ -1158,9 +1158,25 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     });
 }
 
+- (void)handleXibConstraint:(NSLayoutAttribute)attribute {
+    UIView * superView = self.superview;
+    if (superView != nil) {
+        NSArray<NSLayoutConstraint *> * constraintArray = superView.constraints;
+        [constraintArray enumerateObjectsUsingBlock:^(NSLayoutConstraint * _Nonnull constraint, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (constraint.firstItem == self &&
+                constraint.firstAttribute == attribute &&
+                constraint.secondItem == nil) {
+                [superView removeConstraint:constraint];
+                *stop = YES;
+            }
+        }];
+    }
+}
+
 - (void)whc_AddConstraint:(NSLayoutConstraint *)constraint {
     switch (constraint.firstAttribute) {
         case NSLayoutAttributeHeight: {
+            [self handleXibConstraint:NSLayoutAttributeHeight];
             if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
                 for (NSLayoutConstraint * selfConstraint in self.constraints) {
                     if (selfConstraint.firstAttribute == NSLayoutAttributeHeight &&
@@ -1191,6 +1207,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         }
             break;
         case NSLayoutAttributeWidth: {
+            [self handleXibConstraint:NSLayoutAttributeWidth];
             if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
                 for (NSLayoutConstraint * selfConstraint in self.constraints) {
                     if (selfConstraint.firstAttribute == NSLayoutAttributeWidth &&

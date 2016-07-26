@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WHC_AutoLayoutKit(OC)/UITableViewCell+WHC_AutoHeightForCell.m"
-            timestampString = "489921592.817008"
+            timestampString = "490766302.209069"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "+whc_CellHeightForIndexPath:collectionView:"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
+            landmarkName = "-setWhc_CellBottomViews:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -16,7 +16,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private let tableView = UITableView()
-    private let contents = ["AutoLayout示例","UIStackView示例","自动计算cell高度示例"]
+    private let contents = ["AutoLayout示例","UIStackView示例","自动计算cell高度示例","动态修改XIB约束"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -65,6 +65,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             vc = StackViewVC()
         case 2:// 自动计算cell高度示例
             vc = AutoCellHeightVC()
+        case 3:// 修改xib约束
+            vc = ModityXibVC(nibName: "ModityXibVC", bundle: nil)
         default:
             break
         }

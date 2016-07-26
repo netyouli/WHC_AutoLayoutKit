@@ -11,6 +11,8 @@
 		FE4CABC61D30DBCD00AC02C9 /* AutoCellHeightVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CABC51D30DBCD00AC02C9 /* AutoCellHeightVC.swift */; };
 		FE4CABC81D30DBFE00AC02C9 /* StackViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CABC71D30DBFE00AC02C9 /* StackViewVC.swift */; };
 		FE4CABCA1D321EA000AC02C9 /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CABC91D321EA000AC02C9 /* MyCell.swift */; };
+		FEA9047C1D46F94700FB26B9 /* ModityXibVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA9047A1D46F94700FB26B9 /* ModityXibVC.swift */; };
+		FEA9047D1D46F94700FB26B9 /* ModityXibVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA9047B1D46F94700FB26B9 /* ModityXibVC.xib */; };
 		FEAC43C21D2FAB4400F20819 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAC43C11D2FAB4400F20819 /* AppDelegate.swift */; };
 		FEAC43C41D2FAB4400F20819 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAC43C31D2FAB4400F20819 /* ViewController.swift */; };
 		FEAC43C91D2FAB4400F20819 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEAC43C81D2FAB4400F20819 /* Assets.xcassets */; };
@@ -25,6 +27,8 @@
 		FE4CABC51D30DBCD00AC02C9 /* AutoCellHeightVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCellHeightVC.swift; sourceTree = "<group>"; };
 		FE4CABC71D30DBFE00AC02C9 /* StackViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackViewVC.swift; sourceTree = "<group>"; };
 		FE4CABC91D321EA000AC02C9 /* MyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
+		FEA9047A1D46F94700FB26B9 /* ModityXibVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModityXibVC.swift; sourceTree = "<group>"; };
+		FEA9047B1D46F94700FB26B9 /* ModityXibVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModityXibVC.xib; sourceTree = "<group>"; };
 		FEAC43BE1D2FAB4400F20819 /* WHC_AutoLayoutKit(Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WHC_AutoLayoutKit(Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEAC43C11D2FAB4400F20819 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEAC43C31D2FAB4400F20819 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,6 +54,7 @@
 		FE4CABBD1D30DAF400AC02C9 /* 示例demo */ = {
 			isa = PBXGroup;
 			children = (
+				FEA904791D46F92500FB26B9 /* 动态修改xib */,
 				FE4CABC01D30DBA100AC02C9 /* AutoCellHeightDemo */,
 				FE4CABC11D30DBA100AC02C9 /* AutoLayoutDemo */,
 				FE4CABC31D30DBA100AC02C9 /* UIStackViewDemo */,
@@ -80,6 +85,15 @@
 				FE4CABC71D30DBFE00AC02C9 /* StackViewVC.swift */,
 			);
 			path = UIStackViewDemo;
+			sourceTree = "<group>";
+		};
+		FEA904791D46F92500FB26B9 /* 动态修改xib */ = {
+			isa = PBXGroup;
+			children = (
+				FEA9047A1D46F94700FB26B9 /* ModityXibVC.swift */,
+				FEA9047B1D46F94700FB26B9 /* ModityXibVC.xib */,
+			);
+			path = "动态修改xib";
 			sourceTree = "<group>";
 		};
 		FEAC43B51D2FAB4400F20819 = {
@@ -181,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEAC43CC1D2FAB4400F20819 /* LaunchScreen.storyboard in Resources */,
+				FEA9047D1D46F94700FB26B9 /* ModityXibVC.xib in Resources */,
 				FEAC43C91D2FAB4400F20819 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,6 +211,7 @@
 				FEAC43C41D2FAB4400F20819 /* ViewController.swift in Sources */,
 				FEAC43D71D2FAB8700F20819 /* WHC_AutoCellHeight.swift in Sources */,
 				FEAC43C21D2FAB4400F20819 /* AppDelegate.swift in Sources */,
+				FEA9047C1D46F94700FB26B9 /* ModityXibVC.swift in Sources */,
 				FEAC43D81D2FAB8700F20819 /* WHC_AutoLayout.swift in Sources */,
 				FEAC43D91D2FAB8700F20819 /* WHC_StackView.swift in Sources */,
 				FE4CABCA1D321EA000AC02C9 /* MyCell.swift in Sources */,
