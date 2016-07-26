@@ -134,7 +134,6 @@
     }
     
     CGFloat cacheHeight = CGRectGetMaxY(bottomView.frame) + cell.whc_CellBottomOffset;
-    NSLog(@"index = %d cacheHeight = %f bottomWidth = %f",indexPath.row,cacheHeight,bottomView.frame.size.width);
     [sectionCacheHeightArray addObject:@(cacheHeight)];
     return cacheHeight;
 }
