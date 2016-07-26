@@ -83,7 +83,6 @@
         tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
     }
     [tableView monitorScreenOrientation];
-//    NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
     NSString * cacheHeightKey = @(indexPath.section).stringValue;
     NSMutableArray * sectionCacheHeightArray = tableView.whc_CacheHeightDictionary[cacheHeightKey];
     if (sectionCacheHeightArray != nil) {
@@ -94,10 +93,6 @@
         sectionCacheHeightArray = [NSMutableArray array];
         [tableView.whc_CacheHeightDictionary setObject:sectionCacheHeightArray forKey:cacheHeightKey];
     }
-//    NSNumber * cacheHeightValue = [tableView.whc_CacheHeightDictionary objectForKey:cacheHeightKey];
-//    if (cacheHeightValue != nil) {
-//        return cacheHeightValue.floatValue;
-//    }
     UITableViewCell * cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:indexPath];
     if (cell.whc_CellTableView) {
         [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
@@ -140,7 +135,6 @@
     
     CGFloat cacheHeight = CGRectGetMaxY(bottomView.frame) + cell.whc_CellBottomOffset;
     [sectionCacheHeightArray addObject:@(cacheHeight)];
-//    [tableView.whc_CacheHeightDictionary setObject:@(cacheHeight) forKey:cacheHeightKey];
     return cacheHeight;
 }
 
@@ -211,9 +205,6 @@
 
 - (void)handleCacheHeightDictionary {
     NSArray<NSString *> * allKey = self.whc_CacheHeightDictionary.allKeys.copy;
-//    allKey = [allKey sortedArrayUsingComparator:^NSComparisonResult(NSString *  _Nonnull obj1, NSString *  _Nonnull obj2) {
-//        return  obj1.integerValue > obj2.integerValue ? NSOrderedAscending : NSOrderedDescending;
-//    }];
     __block NSString * frontKey = nil;
     __block NSInteger  index = 0;
     [allKey enumerateObjectsUsingBlock:^(NSString * _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -259,14 +250,7 @@
 - (void)whc_ReloadSetion:(NSIndexSet *)sections
         withRowAnimation:(UITableViewRowAnimation)animation {
     if (sections) {
-//        NSArray * cacheHeightKeyArray = [self.whc_CacheHeightDictionary allKeys];
         [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
-//            NSString * sectionString = [NSString stringWithFormat:@"%ld-",idx];
-//            for (NSString * cacheHeightKey in cacheHeightKeyArray) {
-//                if ([cacheHeightKey rangeOfString:sectionString].location != NSNotFound) {
-//                    [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
-//                }
-//            }
             [self.whc_CacheHeightDictionary removeObjectForKey:@(idx).stringValue];
         }];
         [self handleCacheHeightDictionary];
@@ -276,10 +260,6 @@
 
 - (void)whc_reloadRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
     if (indexPaths) {
-//        for (NSIndexPath * indexPath in indexPaths) {
-//            NSString * cacheHeightKey = [NSString stringWithFormat:@"%ld-%ld",(long)indexPath.section,(long)indexPath.row];
-//            [self.whc_CacheHeightDictionary removeObjectForKey:cacheHeightKey];
-//        }
         [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString * cacheHeightKey = @(indexPath.section).stringValue;
             NSMutableArray * sectionCacheHeightArray = self.whc_CacheHeightDictionary[cacheHeightKey];
