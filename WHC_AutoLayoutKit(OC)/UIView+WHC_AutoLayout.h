@@ -712,10 +712,30 @@ typedef UIView * (^size)(CGSize size);
 - (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
+ *  说明: 对视图左边加线
+ *
+ *  @param value   线宽
+ *  @param color   线的颜色
+ *  @param padding 边距
+ *
+ *  @return line
+ */
+- (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
+
+/**
  * 说明: 对视图右边加线
  * @param value: 线宽
  * @param color: 线的颜色
  */
 
 - (UIView *)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color;
+
+/**
+ * 说明: 对视图右边加线
+ * @param value: 线宽
+ * @param color: 线的颜色
+ * @param pading: 边距
+ */
+
+- (UIView *)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
 @end

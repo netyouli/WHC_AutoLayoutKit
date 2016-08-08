@@ -169,7 +169,7 @@ extension UIView {
      */
     
     public func whc_Right(space: CGFloat, toView: UIView!) -> UIView {
-        var toAttribute = NSLayoutAttribute.Right
+        var toAttribute = NSLayoutAttribute.Left
         self.constraintWithItem(self, attribute: .Right, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: 0 - space)
         return self
     }

@@ -480,7 +480,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                        attribute:NSLayoutAttributeRight
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeRight
+                       attribute:NSLayoutAttributeLeft
                       multiplier:1
                         constant:0.0 - rightSpace];
 }
@@ -1618,6 +1618,17 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
+- (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
+{
+    WHC_Line * line = [self createLineWithTag:kLeft_Line_Tag];
+    line.backgroundColor = color;
+    [line whc_Width:value];
+    [line whc_LeftSpace:0];
+    [line whc_TopSpace:padding];
+    [line whc_BottomSpace:padding];
+    return line;
+}
+
 - (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color {
     WHC_Line * line = [self createLineWithTag:kLeft_Line_Tag];
     line.backgroundColor = color;
@@ -1635,6 +1646,17 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     [line whc_TrailingSpace:value];
     [line whc_TopSpace:0];
     [line whc_BottomSpace:0];
+    return line;
+}
+
+- (UIView *)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
+{
+    WHC_Line * line = [self createLineWithTag:kRight_Line_Tag];
+    line.backgroundColor = color;
+    [line whc_Width:value];
+    [line whc_TrailingSpace:value];
+    [line whc_TopSpace:padding];
+    [line whc_BottomSpace:padding];
     return line;
 }
 
