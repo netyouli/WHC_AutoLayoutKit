@@ -58,29 +58,3 @@
 - (NSMutableDictionary *)whc_CacheHeightDictionary;
 @end
 
-////////////////////////////集合视图//////////////////////////////
-
-@interface UICollectionViewCell (WHC_AutoHeightForCell)
-
-/// cell最底部视图
-@property (nonatomic , strong) UIView * whc_CellBottomView;
-/// cell最底部视图集合
-@property (nonatomic , strong) NSArray * whc_CellBottomViews;
-/// cell最底部视图与cell底部的间隙
-@property (nonatomic , assign) CGFloat  whc_CellBottomOffset;
-/// cell中包含的UITableView
-@property (nonatomic , strong) UITableView * whc_CellTableView;
-
-/// 自动计算cell高度
-+ (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath collectionView:(UICollectionView *)collectionView;
-
-@end
-
-@interface UICollectionView (WHC_CacheCellHeight)
-
-/// 缓存cell高度字典
-@property (nonatomic , strong) NSMutableDictionary * whc_CacheHeightDictionary;
-
-- (void)monitorScreenOrientation;
-
-@end
