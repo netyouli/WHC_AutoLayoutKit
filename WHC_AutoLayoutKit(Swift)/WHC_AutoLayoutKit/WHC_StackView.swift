@@ -30,6 +30,91 @@
 
 import UIKit
 
+extension UITextField {
+    public override class func initialize() {
+        struct WHC_TextFieldLoad {
+            static var token: dispatch_once_t = 0
+        }
+        dispatch_once(&WHC_TextFieldLoad.token) {
+            let editingRectForBounds = class_getInstanceMethod(self, #selector(UITextField.editingRectForBounds(_:)))
+            let myEditingRectForBounds = class_getInstanceMethod(self, #selector(UITextField.myEditingRectForBounds(_:)))
+            method_exchangeImplementations(editingRectForBounds, myEditingRectForBounds)
+            
+            let textRectForBounds =  class_getInstanceMethod(self, #selector(UITextField.textRectForBounds(_:)))
+            let myTextRectForBounds =  class_getInstanceMethod(self, #selector(UITextField.myTextRectForBounds(_:)))
+            method_exchangeImplementations(textRectForBounds, myTextRectForBounds)
+        }
+    }
+    
+    /// 文字左边距
+    public var whc_LeftPadding: CGFloat {
+        set {
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldLeftPadding, NSNumber(float: Float(newValue)), .OBJC_ASSOCIATION_RETAIN)
+        }
+        get {
+            let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldLeftPadding)
+            if value != nil {
+                return CGFloat(value.floatValue)
+            }
+            return 0
+        }
+    }
+    
+    /// 文字右边距
+    public var whc_RightPadding: CGFloat {
+        set {
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldRightPadding, NSNumber(float: Float(newValue)), .OBJC_ASSOCIATION_RETAIN)
+        }
+        get {
+            let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldRightPadding)
+            if value != nil {
+                return CGFloat(value.floatValue)
+            }
+            return 0
+        }
+    }
+    
+    /// 文字顶边距
+    public var whc_TopPadding: CGFloat {
+        set {
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldTopPadding, NSNumber(float: Float(newValue)), .OBJC_ASSOCIATION_RETAIN)
+        }
+        get {
+            let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldTopPadding)
+            if value != nil {
+                return CGFloat(value.floatValue)
+            }
+            return 0
+        }
+    }
+    
+    /// 文字底边距
+    public var whc_BottomPadding: CGFloat {
+        set {
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldBottomPadding, NSNumber(float: Float(newValue)), .OBJC_ASSOCIATION_RETAIN)
+        }
+        
+        get {
+            let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldBottomPadding)
+            if value != nil {
+                return CGFloat(value.floatValue)
+            }
+            return 0
+        }
+    }
+    
+    @objc private func myEditingRectForBounds(bounds: CGRect) -> CGRect {
+        
+        return self.myEditingRectForBounds(CGRectMake(self.whc_LeftPadding, self.whc_TopPadding, CGRectGetWidth(bounds) - self.whc_LeftPadding - self.whc_RightPadding, CGRectGetHeight(bounds) - whc_TopPadding - whc_BottomPadding))
+    }
+    
+    @objc private func myTextRectForBounds(bounds: CGRect) -> CGRect {
+        return self.myTextRectForBounds(CGRectMake(self.whc_LeftPadding, self.whc_TopPadding, CGRectGetWidth(bounds) - self.whc_LeftPadding - self.whc_RightPadding, CGRectGetHeight(bounds) - whc_TopPadding - whc_BottomPadding))
+    }
+    
+}
+
+
 extension UIButton {
     
     private func calcTextSize() -> CGSize {

@@ -60,7 +60,7 @@
          .whc_RightSpace(10)
          .whc_HeightEqualView(view2)
          .whc_LeftSpaceToView(10,view1);
-    lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_heightAuto();
+//    lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_heightAuto();
     
     lable1 = [UILabel new];
     lable2 = [UILabel new];
@@ -99,7 +99,8 @@
     [self.view addSubview:lable];
     
     /// 一行代码添加约束
-    lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_heightAuto();
+    lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_Height(20);
+    lable.whc_heightAuto();
 }
 
 

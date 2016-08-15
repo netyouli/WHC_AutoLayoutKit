@@ -55,6 +55,11 @@ extension UIView {
         static var kRightPadding           = "rightPadding"
         static var kTopPadding             = "topPadding"
         static var kBottomPadding          = "bottomPadding"
+        
+        static var kFieldLeftPadding       = "fieldLeftPadding"
+        static var kFieldRightPadding      = "fieldRightPadding"
+        static var kFieldTopPadding        = "fieldTopPadding"
+        static var kFieldBottomPadding     = "fieldBottomPadding"
     }
     
     public override class func initialize() {
@@ -256,7 +261,7 @@ extension UIView {
      */
     
     public func whc_Trailing(space: CGFloat) -> UIView {
-        self.constraintWithItem(self.superview, attribute: .Trailing, constant: space)
+        self.constraintWithItem(self.superview, attribute: .Trailing, constant: 0.0 - space)
         return self
     }
     
@@ -372,8 +377,8 @@ extension UIView {
      */
     
     public func whc_Bottom(space: CGFloat, toView: UIView!) -> UIView {
-        var toAttribute = NSLayoutAttribute.Bottom
-        self.constraintWithItem(self, attribute: .Bottom, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: 0 - space)
+        var toAttribute = NSLayoutAttribute.Top
+        self.constraintWithItem(self, attribute: .Bottom, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: space)
         return self
     }
     
@@ -580,7 +585,7 @@ extension UIView {
      */
     
     public func whc_CenterY(y: CGFloat) -> UIView {
-        self.constraintWithItem(self.superview, attribute: .CenterX, constant: y)
+        self.constraintWithItem(self.superview, attribute: .CenterY, constant: y)
         return self
     }
     
@@ -1166,6 +1171,12 @@ extension UIView {
                                 view.superview?.removeConstraint(equelWidthConstraint)
                                 view.setEquelWidthConstraint(nil)
                             }
+                        case .GreaterThanOrEqual:
+                            if constraint.relation == .Equal &&
+                                NSStringFromClass(constraint.classForCoder) == "NSLayoutConstraint" {
+                                view.removeConstraint(constraint)
+                                view.setEquelWidthConstraint(nil)
+                            }
                         default:
                             break
                         }
@@ -1209,6 +1220,12 @@ extension UIView {
                             let equelHeightConstraint = view.equelHeightConstraint()
                             if equelHeightConstraint != nil {
                                 view.superview?.removeConstraint(equelHeightConstraint)
+                                view.setEquelHeightConstraint(nil)
+                            }
+                        case .GreaterThanOrEqual:
+                            if constraint.relation == .Equal &&
+                                NSStringFromClass(constraint.classForCoder) == "NSLayoutConstraint" {
+                                view.removeConstraint(constraint)
                                 view.setEquelHeightConstraint(nil)
                             }
                         default:

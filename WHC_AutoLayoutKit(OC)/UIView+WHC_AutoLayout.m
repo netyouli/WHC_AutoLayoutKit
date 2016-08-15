@@ -614,9 +614,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                        attribute:NSLayoutAttributeBottom
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeBottom
+                       attribute:NSLayoutAttributeTop
                       multiplier:1
-                        constant:0.0 - bottomSpace];
+                        constant:bottomSpace];
 }
 
 - (void)whc_BottomSpaceEqualView:(UIView *)view {
@@ -942,9 +942,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                                  attribute:toAttribute
                                                 multiplier:multiplier
                                                   constant:constant];
-        if (attribute == 8 && [item isKindOfClass:[UIImageView class]] && superView.constraints.count > 0) {
-            NSLog(@"");
-        }
         [superView addConstraint:constraint];
     }else {
         if (originConstraint.constant != constant) {
@@ -961,8 +958,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                             toAttribute:(NSLayoutAttribute)toAttribute
                                              multiplier:(CGFloat)multiplier
                                                constant:(CGFloat)constant {
-    NSAssert(mainView, @"mainView can not nil");
+    
     NSLayoutConstraint * originConstraint = nil;
+    if (mainView == nil) return originConstraint;
     NSArray * constraintArray = [mainView constraints];
     for (NSLayoutConstraint * constraint in constraintArray) {
         if (constraint.firstItem == view) {
@@ -1053,6 +1051,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                 }
                             }
                                 break;
+                            case NSLayoutRelationGreaterThanOrEqual: {
+                                if (constraint.relation == NSLayoutRelationEqual &&
+                                    [NSStringFromClass(constraint.class) isEqualToString:@"NSLayoutConstraint"]) {
+                                    [view removeConstraint:constraint];
+                                    [view setEquelWidthConstraint:nil];
+                                }
+                            }
+                                break;
                             default:
                                 break;
                         }
@@ -1101,6 +1107,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                 NSLayoutConstraint * equelHeightConstraint = [view equelHeightConstraint];
                                 if (equelHeightConstraint) {
                                     [view.superview removeConstraint:equelHeightConstraint];
+                                    [view setEquelHeightConstraint:nil];
+                                }
+                            }
+                                break;
+                            case NSLayoutRelationGreaterThanOrEqual: {
+                                if (constraint.relation == NSLayoutRelationEqual &&
+                                    [NSStringFromClass(constraint.class) isEqualToString:@"NSLayoutConstraint"]) {
+                                    [view removeConstraint:constraint];
                                     [view setEquelHeightConstraint:nil];
                                 }
                             }
