@@ -42,10 +42,19 @@
     lable.backgroundColor = [UIColor orangeColor];
     lable.text = @"dkdlskdlakdlakgjkdjgkajkgjdljidslidgjaldkgakjnvjndsjlagjdjlnsjdkjlsjakdalkdajakfjsalgjaljgasd";
     
+    UIButton * btn = [UIButton new];
+    [btn setTitle:@"收起" forState:UIControlStateNormal];
+    [btn setTitle:@"展开" forState:UIControlStateSelected];
+    [btn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+    btn.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:btn];
+    
     [self.view addSubview:view1];
     [self.view addSubview:view2];
     [self.view addSubview:view3];
     [self.view addSubview:lable];
+    
+    btn.whc_BaseLineSpace(10).whc_LeftSpace(0).whc_RightSpace(0).whc_Height(40);
     
     /// 一行代码添加约束
     view1.whc_LeftSpace(10)
@@ -93,6 +102,20 @@
 }
 
 
+- (void)clickButton:(UIButton *)sender {
+    sender.selected = !sender.selected;
+//    if (sender.selected) {
+//        lable.whc_Height(20);
+//    }else {
+//        lable.whc_heightAuto();
+//    }
+    
+    if (sender.selected) {
+        lable.whc_heightAuto();
+    }else {
+        lable.whc_Height(20);
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -100,7 +123,8 @@
     
     /// 一行代码添加约束
     lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_Height(20);
-    lable.whc_heightAuto();
+//    lable.whc_heightAuto();
+    
 }
 
 

@@ -858,14 +858,15 @@ extension UIView {
             }
         }
     }
-    
+
     @objc private func whc_AddConstraint(constraint: NSLayoutConstraint) {
         switch constraint.firstAttribute {
         case .Height:
             if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
                 for selfConstraint in self.constraints {
                     if selfConstraint.firstAttribute == .Height &&
-                        selfConstraint.relation == .Equal {
+                        selfConstraint.relation == constraint.relation &&
+                        NSStringFromClass(selfConstraint.classForCoder) == "NSContentSizeLayoutConstraint" {
                         return
                     }
                 }
@@ -890,7 +891,8 @@ extension UIView {
             if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
                 for selfConstraint in self.constraints {
                     if selfConstraint.firstAttribute == .Width &&
-                        selfConstraint.relation == .Equal {
+                        selfConstraint.relation == constraint.relation &&
+                        NSStringFromClass(selfConstraint.classForCoder) == "NSContentSizeLayoutConstraint" {
                         return
                     }
                 }
@@ -1164,18 +1166,23 @@ extension UIView {
                         view.setRightConstraint(nil)
                     }
                     if toView == nil {
+                        let equelWidthConstraint = view.equelWidthConstraint()
+                        if equelWidthConstraint != nil {
+                            view.superview?.removeConstraint(equelWidthConstraint)
+                            view.setEquelWidthConstraint(nil)
+                        }
                         switch related {
                         case .Equal:
-                            let equelWidthConstraint = view.equelWidthConstraint()
-                            if equelWidthConstraint != nil {
-                                view.superview?.removeConstraint(equelWidthConstraint)
-                                view.setEquelWidthConstraint(nil)
+                            let autoWidthConstraint = view.autoWidthConstraint()
+                            if autoWidthConstraint != nil && NSStringFromClass(autoWidthConstraint.classForCoder) == "NSLayoutConstraint" {
+                                view.removeConstraint(autoWidthConstraint)
+                                view.setAutoWidthConstraint(nil)
                             }
                         case .GreaterThanOrEqual:
-                            if constraint.relation == .Equal &&
-                                NSStringFromClass(constraint.classForCoder) == "NSLayoutConstraint" {
-                                view.removeConstraint(constraint)
-                                view.setEquelWidthConstraint(nil)
+                            let selfWidthConstraint = view.selfWidthConstraint()
+                            if selfWidthConstraint != nil && NSStringFromClass(selfWidthConstraint.classForCoder) == "NSLayoutConstraint" {
+                                view.removeConstraint(selfWidthConstraint)
+                                view.setSelfWidthConstraint(nil)
                             }
                         default:
                             break
@@ -1215,18 +1222,23 @@ extension UIView {
                             view.setSelfHeightConstraint(nil)
                         }
                     }else {
+                        let equelHeightConstraint = view.equelHeightConstraint()
+                        if equelHeightConstraint != nil {
+                            view.superview?.removeConstraint(equelHeightConstraint)
+                            view.setEquelHeightConstraint(nil)
+                        }
                         switch related {
                         case .Equal:
-                            let equelHeightConstraint = view.equelHeightConstraint()
-                            if equelHeightConstraint != nil {
-                                view.superview?.removeConstraint(equelHeightConstraint)
-                                view.setEquelHeightConstraint(nil)
+                            let autoHeightConstraint = view.autoHeightConstraint()
+                            if autoHeightConstraint != nil && NSStringFromClass(autoHeightConstraint.classForCoder) == "NSLayoutConstraint" {
+                                view.removeConstraint(autoHeightConstraint)
+                                view.setAutoHeightConstraint(nil)
                             }
                         case .GreaterThanOrEqual:
-                            if constraint.relation == .Equal &&
-                                NSStringFromClass(constraint.classForCoder) == "NSLayoutConstraint" {
-                                view.removeConstraint(constraint)
-                                view.setEquelHeightConstraint(nil)
+                            let selfHeightConstraint = view.selfHeightConstraint()
+                            if selfHeightConstraint != nil && NSStringFromClass(selfHeightConstraint.classForCoder) == "NSLayoutConstraint" {
+                                view.removeConstraint(selfHeightConstraint)
+                                view.setSelfHeightConstraint(nil)
                             }
                         default:
                             break
@@ -1248,7 +1260,8 @@ extension UIView {
                         mainView.removeConstraint(constraint)
                     }
                 }else {
-                    if constraint.firstAttribute == attribute {
+                    if constraint.firstAttribute == attribute &&
+                        related == constraint.relation {
                         let className = NSStringFromClass(constraint.classForCoder)
                         switch related {
                         case .Equal:
@@ -1256,9 +1269,7 @@ extension UIView {
                                 originConstraint = constraint
                             }
                         case .GreaterThanOrEqual:
-                            if className == "NSContentSizeLayoutConstraint" {
-                                originConstraint = constraint
-                            }
+                            originConstraint = constraint
                         default:
                             break
                         }

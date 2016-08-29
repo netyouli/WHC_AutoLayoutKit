@@ -127,6 +127,7 @@ override func viewDidLoad() {
 ##### 5.增加Equal带offset的api如：public func whc_LeftEqual(view:UIView offset:CGFloat) -> UIView
 ##### 6.修复xib上当给控件不添加高宽约束时在代码里修改高宽约束无效的bug
 ##### 7.修复微信demo点赞cell行计算错误bug
+##### 8.优化自动识别冲突约束处理方式
 
 #### 部分WHC_AutoLayoutKit demo展示
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)

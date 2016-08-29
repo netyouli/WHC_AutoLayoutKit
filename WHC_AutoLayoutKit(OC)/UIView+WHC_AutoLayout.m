@@ -1042,20 +1042,25 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         [view setRightConstraint:nil];
                     }
                     if (toView == nil) {
+                        NSLayoutConstraint * equelWidthConstraint = [view equelWidthConstraint];
+                        if (equelWidthConstraint) {
+                            [view.superview removeConstraint:equelWidthConstraint];
+                            [view setEquelWidthConstraint:nil];
+                        }
                         switch (related) {
                             case NSLayoutRelationEqual: {
-                                NSLayoutConstraint * equelWidthConstraint = [view equelWidthConstraint];
-                                if (equelWidthConstraint) {
-                                    [view.superview removeConstraint:equelWidthConstraint];
-                                    [view setEquelWidthConstraint:nil];
+                                NSLayoutConstraint * autoWidthConstraint = [view autoWidthConstraint];
+                                if (autoWidthConstraint && [NSStringFromClass(autoWidthConstraint.class) isEqualToString:@"NSLayoutConstraint"]) {
+                                    [view removeConstraint:autoWidthConstraint];
+                                    [view setAutoWidthConstraint:nil];
                                 }
                             }
                                 break;
                             case NSLayoutRelationGreaterThanOrEqual: {
-                                if (constraint.relation == NSLayoutRelationEqual &&
-                                    [NSStringFromClass(constraint.class) isEqualToString:@"NSLayoutConstraint"]) {
-                                    [view removeConstraint:constraint];
-                                    [view setEquelWidthConstraint:nil];
+                                NSLayoutConstraint * selfWidthConstraint = [view selfWidthConstraint];
+                                if (selfWidthConstraint && [NSStringFromClass(selfWidthConstraint.class) isEqualToString:@"NSLayoutConstraint"]) {
+                                    [view removeConstraint:selfWidthConstraint];
+                                    [view setSelfWidthConstraint:nil];
                                 }
                             }
                                 break;
@@ -1073,8 +1078,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
                     break;
                 case NSLayoutAttributeBottom: {
-                    if (constraint.firstAttribute == NSLayoutAttributeHeight) {
-                        [mainView removeConstraint:constraint];
+                    NSLayoutConstraint * equelHeightConstraint = [view equelHeightConstraint];
+                    if (equelHeightConstraint) {
+                        [mainView removeConstraint:equelHeightConstraint];
                         [view setEquelHeightConstraint:nil];
                     }
                     NSLayoutConstraint * selfHeightConstraint = [view selfHeightConstraint];
@@ -1102,20 +1108,25 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                             [view setSelfHeightConstraint:nil];
                         }
                     }else if(toView == nil) {
+                        NSLayoutConstraint * equelHeightConstraint = [view equelHeightConstraint];
+                        if (equelHeightConstraint) {
+                            [view.superview removeConstraint:equelHeightConstraint];
+                            [view setEquelHeightConstraint:nil];
+                        }
                         switch (related) {
                             case NSLayoutRelationEqual: {
-                                NSLayoutConstraint * equelHeightConstraint = [view equelHeightConstraint];
-                                if (equelHeightConstraint) {
-                                    [view.superview removeConstraint:equelHeightConstraint];
-                                    [view setEquelHeightConstraint:nil];
+                                NSLayoutConstraint * autoHeightConstraint = [view autoHeightConstraint];
+                                if (autoHeightConstraint && [NSStringFromClass(autoHeightConstraint.class) isEqualToString:@"NSLayoutConstraint"]) {
+                                    [view removeConstraint:autoHeightConstraint];
+                                    [view setAutoHeightConstraint:nil];
                                 }
                             }
                                 break;
                             case NSLayoutRelationGreaterThanOrEqual: {
-                                if (constraint.relation == NSLayoutRelationEqual &&
-                                    [NSStringFromClass(constraint.class) isEqualToString:@"NSLayoutConstraint"]) {
-                                    [view removeConstraint:constraint];
-                                    [view setEquelHeightConstraint:nil];
+                                NSLayoutConstraint * selfHeightConstraint = [view selfHeightConstraint];
+                                if (selfHeightConstraint && [NSStringFromClass(selfHeightConstraint.class) isEqualToString:@"NSLayoutConstraint"]) {
+                                    [view removeConstraint:selfHeightConstraint];
+                                    [view setSelfHeightConstraint:nil];
                                 }
                             }
                                 break;
@@ -1142,19 +1153,19 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     }
                 }else {
                     if (constraint.firstAttribute == attribute) {
-                        switch (related) {
-                            case NSLayoutRelationEqual:
-                                if ([NSStringFromClass(constraint.class) isEqualToString:@"NSLayoutConstraint"]) {
+                        if (related == constraint.relation) {
+                            switch (related) {
+                                case NSLayoutRelationEqual:
+                                    if ([NSStringFromClass(constraint.class) isEqualToString:@"NSLayoutConstraint"]) {
+                                        originConstraint = constraint;
+                                    }
+                                    break;
+                                case NSLayoutRelationGreaterThanOrEqual:
                                     originConstraint = constraint;
-                                }
-                                break;
-                            case NSLayoutRelationGreaterThanOrEqual:
-                                if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
-                                    originConstraint = constraint;
-                                }
-                                break;
-                            default:
-                                break;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }
@@ -1194,7 +1205,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
                 for (NSLayoutConstraint * selfConstraint in self.constraints) {
                     if (selfConstraint.firstAttribute == NSLayoutAttributeHeight &&
-                        selfConstraint.relation == NSLayoutRelationEqual) {
+                        selfConstraint.relation == constraint.relation && [NSStringFromClass(selfConstraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
                         return;
                     }
                 }
@@ -1225,7 +1236,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
                 for (NSLayoutConstraint * selfConstraint in self.constraints) {
                     if (selfConstraint.firstAttribute == NSLayoutAttributeWidth &&
-                        selfConstraint.relation == NSLayoutRelationEqual) {
+                        selfConstraint.relation == constraint.relation && [NSStringFromClass(selfConstraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
                         return;
                     }
                 }
