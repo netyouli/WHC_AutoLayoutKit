@@ -476,11 +476,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_RightSpace:(CGFloat)rightSpace toView:(UIView *)toView {
+    NSLayoutAttribute toAttribute = NSLayoutAttributeLeft;
+    if (toView.superview == nil) {
+        toAttribute = NSLayoutAttributeRight;
+    }else if (self.superview != toView.superview) {
+        toAttribute = NSLayoutAttributeRight;
+    }
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeRight
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeLeft
+                       attribute:toAttribute
                       multiplier:1
                         constant:0.0 - rightSpace];
 }
@@ -517,7 +523,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                        attribute:NSLayoutAttributeLeading
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeTrailing
+                       attribute:toAttribute
                       multiplier:1
                         constant:leadingSpace];
 }
@@ -554,7 +560,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                        attribute:NSLayoutAttributeTrailing
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeLeading
+                       attribute:toAttribute
                       multiplier:1
                         constant:0.0 - trailingSpace];
 }
@@ -580,11 +586,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_TopSpace:(CGFloat)topSpace toView:(UIView *)toView {
+    NSLayoutAttribute toAttribute = NSLayoutAttributeBottom;
+    if (toView.superview == nil) {
+        toAttribute = NSLayoutAttributeTop;
+    }else if (self.superview != toView.superview) {
+        toAttribute = NSLayoutAttributeTop;
+    }
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeTop
                        relatedBy:NSLayoutRelationEqual
                           toItem:toView
-                       attribute:NSLayoutAttributeBottom
+                       attribute:toAttribute
                       multiplier:1
                         constant:topSpace];
 }
