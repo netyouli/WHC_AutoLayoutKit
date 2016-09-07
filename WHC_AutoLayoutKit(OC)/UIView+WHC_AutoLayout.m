@@ -1314,9 +1314,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     break;
                 case NSLayoutAttributeBottom: {
                     if (![self keepHeightConstraint]) {
-                        NSLayoutConstraint * equelHeightConstraint = [view equelHeightConstraint];
-                        if (equelHeightConstraint) {
-                            [mainView removeConstraint:equelHeightConstraint];
+                        if (constraint.firstAttribute == NSLayoutAttributeHeight) {
+                            [mainView removeConstraint:constraint];
                             [view setEquelHeightConstraint:nil];
                         }
                         NSLayoutConstraint * selfHeightConstraint = [view selfHeightConstraint];
