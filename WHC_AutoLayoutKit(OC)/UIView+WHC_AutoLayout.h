@@ -74,6 +74,11 @@ typedef UIView * (^RightSpaceToView)(CGFloat value , UIView * toView);
 typedef UIView * (^RightSpaceEqualView)(UIView * view);
 typedef UIView * (^RightSpaceEqualViewOffset)(UIView * view, CGFloat offset);
 
+typedef UIView * (^RightSpaceKeepWidthConstraint)(CGFloat value, BOOL isKeep);
+typedef UIView * (^RightSpaceToViewKeepWidthConstraint)(CGFloat value , UIView * toView, BOOL isKeep);
+typedef UIView * (^RightSpaceEqualViewKeepWidthConstraint)(UIView * view, BOOL isKeep);
+typedef UIView * (^RightSpaceEqualViewOffsetKeepWidthConstraint)(UIView * view, CGFloat offset, BOOL isKeep);
+
 typedef UIView * (^TopSpace)(CGFloat value);
 typedef UIView * (^TopSpaceToView)(CGFloat value , UIView * toView);
 typedef UIView * (^TopSpaceEqualView)(UIView * view);
@@ -84,17 +89,32 @@ typedef UIView * (^BottomSpaceToView)(CGFloat value , UIView * toView);
 typedef UIView * (^BottomSpaceEqualView)(UIView * view);
 typedef UIView * (^BottomSpaceEqualViewOffset)(UIView * view, CGFloat offset);
 
+typedef UIView * (^BottomSpaceKeepHeightConstraint)(CGFloat value, BOOL isKeep);
+typedef UIView * (^BottomSpaceToViewKeepHeightConstraint)(CGFloat value , UIView * toView, BOOL isKeep);
+typedef UIView * (^BottomSpaceEqualViewKeepHeightConstraint)(UIView * view, BOOL isKeep);
+typedef UIView * (^BottomSpaceEqualViewOffsetKeepHeightConstraint)(UIView * view, CGFloat offset, BOOL isKeep);
+
 typedef UIView * (^Width)(CGFloat value);
 typedef UIView * (^WidthAuto)();
 typedef UIView * (^WidthEqualView)(UIView * view);
 typedef UIView * (^WidthEqualViewRatio)(UIView * view, CGFloat ratio);
 typedef UIView * (^WidthHeightRatio)(CGFloat ratio);
 
+typedef UIView * (^WidthKeepRightConstraint)(CGFloat value, BOOL isKeep);
+typedef UIView * (^WidthAutoKeepRightConstraint)(BOOL isKeep);
+typedef UIView * (^WidthEqualViewKeepRightConstraint)(UIView * view, BOOL isKeep);
+typedef UIView * (^WidthEqualViewRatioKeepRightConstraint)(UIView * view, CGFloat ratio, BOOL isKeep);
+
 typedef UIView * (^Height)(CGFloat value);
 typedef UIView * (^HeightAuto)();
 typedef UIView * (^HeightEqualView)(UIView * view);
 typedef UIView * (^HeightEqualViewRatio)(UIView * view, CGFloat ratio);
 typedef UIView * (^HeightWidthRatio)(CGFloat ratio);
+
+typedef UIView * (^HeightKeepBottomConstraint)(CGFloat value, BOOL isKeep);
+typedef UIView * (^HeightAutoKeepBottomConstraint)(BOOL isKeep);
+typedef UIView * (^HeightEqualViewKeepBottomConstraint)(UIView * view, BOOL isKeep);
+typedef UIView * (^HeightEqualViewRatioKeepBottomConstraint)(UIView * view, CGFloat ratio, BOOL isKeep);
 
 typedef UIView * (^CenterX)(CGFloat value);
 typedef UIView * (^CenterXToView)(CGFloat value, UIView * toView);
@@ -157,6 +177,15 @@ typedef UIView * (^size)(CGSize size);
 /// 与相对视图toView右边间距相等并偏移offset(UIView toView, CGFloat offset)
 @property (nonatomic ,copy , readonly)RightSpaceEqualViewOffset whc_RightSpaceEqualViewOffset;
 
+/// 与父视图右边间距是否保留宽度约束(CGFloat value, BOOL isKeep)
+@property (nonatomic ,copy , readonly)RightSpaceKeepWidthConstraint whc_RightSpaceKeepWidthConstraint;
+/// 与相对视图toView右边间距是否保留宽度约束(CGFloat value,UIView * toView, BOOL isKeep)
+@property (nonatomic ,copy , readonly)RightSpaceToViewKeepWidthConstraint whc_RightSpaceToViewKeepWidthConstraint;
+/// 与相对视图toView右边间距相等是否保留宽度约束(UIView toView, BOOL isKeep)
+@property (nonatomic ,copy , readonly)RightSpaceEqualViewKeepWidthConstraint whc_RightSpaceEqualViewKeepWidthConstraint;
+/// 与相对视图toView右边间距相等并偏移offset是否保留宽度约束(UIView toView, CGFloat offset, BOOL isKeep)
+@property (nonatomic ,copy , readonly)RightSpaceEqualViewOffsetKeepWidthConstraint whc_RightSpaceEqualViewOffsetKeepWidthConstraint;
+
 /// 与父视图顶边间距(CGFloat value)
 @property (nonatomic ,copy , readonly)TopSpace whc_TopSpace;
 /// 与相对视图toView顶边间距(CGFloat value,UIView * toView)
@@ -175,6 +204,15 @@ typedef UIView * (^size)(CGSize size);
 /// 与相对视图toView底边间距相等并偏移offset(UIView * toView, CGFloat offset)
 @property (nonatomic ,copy , readonly)BottomSpaceEqualViewOffset whc_BottomSpaceEqualViewOffset;
 
+/// 与父视图底边间距是否保留高度约束(CGFloat value,BOOL isKeep)
+@property (nonatomic ,copy , readonly)BottomSpaceKeepHeightConstraint whc_BottomSpaceKeepHeightConstraint;
+/// 与相对视图toView底边间距是否保留高度约束(CGFloat value,UIView * toView,BOOL isKeep)
+@property (nonatomic ,copy , readonly)BottomSpaceToViewKeepHeightConstraint whc_BottomSpaceToViewKeepHeightConstraint;
+/// 与相对视图toView底边间距相等是否保留高度约束(UIView * toView,BOOL isKeep)
+@property (nonatomic ,copy , readonly)BottomSpaceEqualViewKeepHeightConstraint whc_BottomSpaceEqualViewKeepHeightConstraint;
+/// 与相对视图toView底边间距相等并偏移offset是否保留高度约束(UIView * toView, CGFloat offset,BOOL isKeep)
+@property (nonatomic ,copy , readonly)BottomSpaceEqualViewOffsetKeepHeightConstraint whc_BottomSpaceEqualViewOffsetKeepHeightConstraint;
+
 /// 宽度(CGFloat value)
 @property (nonatomic ,copy , readonly)Width whc_Width;
 /// 宽度自动()
@@ -186,6 +224,14 @@ typedef UIView * (^size)(CGSize size);
 /// 视图自身宽度与高度的比(CGFloat Ratio)
 @property (nonatomic ,copy , readonly)WidthHeightRatio whc_WidthHeightRatio;
 
+/// 宽度是否保留宽度约束(CGFloat value, BOOL isKeep)
+@property (nonatomic ,copy , readonly)WidthKeepRightConstraint whc_WidthKeepRightConstraint;
+/// 宽度自动是否保留宽度约束(BOOL isKeep)
+@property (nonatomic ,copy , readonly)WidthAutoKeepRightConstraint whc_widthAutoKeepRightConstraint;
+/// 宽度等于视图view是否保留宽度约束(UIView * view, BOOL isKeep, BOOL isKeep)
+@property (nonatomic ,copy , readonly)WidthEqualViewKeepRightConstraint whc_WidthEqualViewKeepRightConstraint;
+/// 宽度等于视图view 参照比例Ratio是否保留宽度约束(UIView * view ,CGFloat ratio, BOOL isKeep)
+@property (nonatomic ,copy , readonly)WidthEqualViewRatioKeepRightConstraint whc_WidthEqualViewRatioKeepRightConstraint;
 
 /// 高度(CGFloat value)
 @property (nonatomic ,copy , readonly)Height whc_Height;
@@ -197,6 +243,15 @@ typedef UIView * (^size)(CGSize size);
 @property (nonatomic ,copy , readonly)HeightEqualViewRatio whc_HeightEqualViewRatio;
 /// 视图自身高度与宽度的比(CGFloat Ratio)
 @property (nonatomic ,copy , readonly)HeightWidthRatio whc_HeightWidthRatio;
+
+/// 高度是否保留高度约束(CGFloat value, BOOL isKeep)
+@property (nonatomic ,copy , readonly)HeightKeepBottomConstraint whc_HeightKeepBottomConstraint;
+/// 高度自动是否保留高度约束(BOOL isKeep)
+@property (nonatomic ,copy , readonly)HeightAutoKeepBottomConstraint whc_heightAutoKeepBottomConstraint;
+/// 高度等于视图view是否保留高度约束(UIView * view, BOOL isKeep)
+@property (nonatomic ,copy , readonly)HeightEqualViewKeepBottomConstraint whc_HeightEqualViewKeepBottomConstraint;
+/// 高度等于视图view 参照比例Ratio是否保留高度约束(UIView * view ,CGFloat ratio, BOOL isKeep)
+@property (nonatomic ,copy , readonly)HeightEqualViewRatioKeepBottomConstraint whc_HeightEqualViewRatioKeepBottomConstraint;
 
 /// 中心X与父视图偏移(CGFloat value)
 @property (nonatomic ,copy , readonly)CenterX whc_CenterX;
@@ -273,6 +328,37 @@ typedef UIView * (^size)(CGSize size);
  * 说明：设置右边距与视图view左对齐边距相等并偏移offset
  */
 - (void)whc_RightSpaceEqualView:(UIView *)view offset:(CGFloat)offset;
+
+/**
+ * 说明:设置右边距(默认相对父视图)
+ * @param rightSpace: 右边距
+ * @param isKeep: 是否保留宽度约束
+ */
+
+- (void)whc_RightSpace:(CGFloat)rightSpace keepWidthConstraint:(BOOL)isKeep;
+
+/**
+ * 说明:设置右边距
+ * @param rightSpace: 右边距
+ * @param toView: 设置相对参考视图
+ * @param isKeep: 是否保留宽度约束
+ */
+
+- (void)whc_RightSpace:(CGFloat)rightSpace toView:(UIView *)toView keepWidthConstraint:(BOOL)isKeep;
+
+/**
+ * 说明：设置右边距与视图view左对齐边距相等
+ * @param isKeep: 是否保留宽度约束
+ */
+
+- (void)whc_RightSpaceEqualView:(UIView *)view keepWidthConstraint:(BOOL)isKeep;
+
+/**
+ * 说明：设置右边距与视图view左对齐边距相等并偏移offset
+ * @param isKeep: 是否保留宽度约束
+ */
+
+- (void)whc_RightSpaceEqualView:(UIView *)view offset:(CGFloat)offset keepWidthConstraint:(BOOL)isKeep;
 
 /**
  * 说明: 设置左对齐(默认相对父视图)
@@ -358,8 +444,6 @@ typedef UIView * (^size)(CGSize size);
  * @param bottomSpace: 底边距边距
  */
 
-
-
 - (void)whc_BottomSpace:(CGFloat)bottomSpace;
 
 /**
@@ -382,6 +466,37 @@ typedef UIView * (^size)(CGSize size);
  */
 
 - (void)whc_BottomSpaceEqualView:(UIView *)view offset:(CGFloat)offset;
+
+/**
+ * 说明:设置底边距(默认相对父视图)
+ * @param bottomSpace: 底边距边距
+ * @param isKeep: 是否保留高度约束
+ */
+
+- (void)whc_BottomSpace:(CGFloat)bottomSpace keepHeightConstraint:(BOOL)isKeep;
+
+/**
+ * 说明:设置底边距
+ * @param bottomSpace: 底边距边距
+ * @param toView: 设置相对参考视图
+ * @param isKeep: 是否保留高度约束
+ */
+
+- (void)whc_BottomSpace:(CGFloat)bottomSpace toView:(UIView *)toView keepHeightConstraint:(BOOL)isKeep;
+
+/**
+ * 说明：设置底边距与视图view底边距相等
+ * @param isKeep: 是否保留高度约束
+ */
+
+- (void)whc_BottomSpaceEqualView:(UIView *)view keepHeightConstraint:(BOOL)isKeep;
+
+/**
+ * 说明：设置底边距与视图view底边距相等并偏移offset
+ * @param isKeep: 是否保留高度约束
+ */
+
+- (void)whc_BottomSpaceEqualView:(UIView *)view offset:(CGFloat)offset keepHeightConstraint:(BOOL)isKeep;
 
 /**
  * 说明:设置宽度
@@ -408,7 +523,40 @@ typedef UIView * (^size)(CGSize size);
 /**
  * 说明:设置自动宽度
  */
+
 - (void)whc_WidthAuto;
+
+/**
+ * 说明:设置宽度
+ * @param width: 宽度
+ * @param isKeep: 是否保留右边距约束
+ */
+
+- (void)whc_Width:(CGFloat)width keepRightConstraint:(BOOL)isKeep;
+
+/**
+ * 说明:设置宽度与某个视图相等
+ * @param view: 相等视图
+ * @param isKeep: 是否保留右边距约束
+ */
+
+- (void)whc_WidthEqualView:(UIView *)view keepRightConstraint:(BOOL)isKeep;
+
+/**
+ * 说明:设置宽度与视图view相等
+ * @param ratio: 宽度比例
+ * @param view: 相等视图
+ * @param isKeep: 是否保留右边距约束
+ */
+
+- (void)whc_WidthEqualView:(UIView *)view ratio:(CGFloat)ratio keepRightConstraint:(BOOL)isKeep;
+
+/**
+ * 说明:设置自动宽度
+ * @param isKeep: 是否保留右边距约束
+ */
+
+- (void)whc_WidthAutoKeepRightConstraint:(BOOL)isKeep;
 
 /**
  * 说明: 设置视图自身宽度与高度的比
@@ -443,6 +591,37 @@ typedef UIView * (^size)(CGSize size);
  * 说明:设置自动高度
  */
 - (void)whc_HeightAuto;
+
+/**
+ * 说明:设置高度
+ * @param height: 高度
+ * @param isKeep: 是否保留底边距约束
+ */
+
+- (void)whc_Height:(CGFloat)height keepBottomConstraint:(BOOL)isKeep;
+
+/**
+ * 说明:设置高度与视图view相等
+ * @param view: 相等视图
+ * @param isKeep: 是否保留底边距约束
+ */
+
+- (void)whc_HeightEqualView:(UIView *)view keepBottomConstraint:(BOOL)isKeep;
+
+/**
+ * 说明:设置高度与视图view相等
+ * @param ratio: 宽度比例
+ * @param view: 相等视图
+ * @param isKeep: 是否保留底边距约束
+ */
+
+- (void)whc_HeightEqualView:(UIView *)view ratio:(CGFloat)ratio keepBottomConstraint:(BOOL)isKeep;
+
+/**
+ * 说明:设置自动高度
+ * @param isKeep: 是否保留底边距约束
+ */
+- (void)whc_HeightAutoKeepBottomConstraint:(BOOL)isKeep;
 
 /**
  * 说明: 设置视图自身高度与宽度的比
@@ -674,7 +853,7 @@ typedef UIView * (^size)(CGSize size);
  * @param color: 线的颜色
  */
 
-- (UIView *)whc_BottomLine:(CGFloat)value lineColor:(UIColor *)color;
+- (UIView *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
  * 说明: 对视图底部加线
@@ -683,7 +862,7 @@ typedef UIView * (^size)(CGSize size);
  * @param pading: 边距
  */
 
-- (UIView *)whc_BottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading;
+- (UIView *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading;
 
 /**
  * 说明: 对视图顶部加线
@@ -691,7 +870,7 @@ typedef UIView * (^size)(CGSize size);
  * @param color: 线的颜色
  */
 
-- (UIView *)whc_TopLine:(CGFloat)value lineColor:(UIColor *)color;
+- (UIView *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
  * 说明: 对视图顶部加线
@@ -700,7 +879,7 @@ typedef UIView * (^size)(CGSize size);
  * @param pading: 边距
  */
 
-- (UIView *)whc_TopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading;
+- (UIView *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading;
 
 /**
  * 说明: 对视图左边加线
@@ -709,7 +888,7 @@ typedef UIView * (^size)(CGSize size);
  */
 
 
-- (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color;
+- (UIView *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
  *  说明: 对视图左边加线
@@ -720,7 +899,7 @@ typedef UIView * (^size)(CGSize size);
  *
  *  @return line
  */
-- (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
+- (UIView *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
 
 /**
  * 说明: 对视图右边加线
@@ -728,7 +907,7 @@ typedef UIView * (^size)(CGSize size);
  * @param color: 线的颜色
  */
 
-- (UIView *)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color;
+- (UIView *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
  * 说明: 对视图右边加线
@@ -737,5 +916,5 @@ typedef UIView * (^size)(CGSize size);
  * @param pading: 边距
  */
 
-- (UIView *)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
+- (UIView *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
 @end

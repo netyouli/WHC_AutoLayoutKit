@@ -142,7 +142,7 @@
     [_supportUserLabel whc_RightSpace:0];
     [_supportUserLabel whc_BottomSpace:0];
     
-    [_supportView whc_BottomLine:1 lineColor:[UIColor colorWithWhite:0.8 alpha:1]];
+    [_supportView whc_AddBottomLine:1 lineColor:[UIColor colorWithWhite:0.8 alpha:1]];
     
     [_answerButton addTarget:self action:@selector(clickAnswerButton:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -220,7 +220,7 @@
     /// 设置cell底部间隙
     self.whc_CellBottomView = _commentStackView;
     self.whc_CellBottomOffset = 10;
-    [self whc_BottomLine:1 lineColor:[UIColor colorWithWhite:0.8 alpha:1]];
+    [self whc_AddBottomLine:1 lineColor:[UIColor colorWithWhite:0.8 alpha:1]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -60,6 +60,11 @@ extension UIView {
         static var kFieldRightPadding      = "fieldRightPadding"
         static var kFieldTopPadding        = "fieldTopPadding"
         static var kFieldBottomPadding     = "fieldBottomPadding"
+
+        static var kKeepWidthConstraint    = "kKeepWidthConstraint"
+        static var kKeepHeightConstraint    = "kKeepHeightConstraint"
+        static var kKeepBottomConstraint    = "kKeepBottomConstraint"
+        static var kKeepRightConstraint    = "kKeepRightConstraint"
     }
     
     public override class func initialize() {
@@ -206,6 +211,57 @@ extension UIView {
         self.constraintWithItem(self, attribute: .Right, related: .Equal, toItem: view, toAttribute: &toAttribute, multiplier: 1, constant: 0.0 - offset)
         return self
     }
+    
+    /**
+     * 说明:设置右边距(默认相对父视图)
+     * @param space: 右边距
+     * @param keepWidthConstraint: 是否保留宽度约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_Right(space: CGFloat, keepWidthConstraint: Bool) -> UIView {
+        self.setKeepWidthConstraint(keepWidthConstraint)
+        return self.whc_Right(space)
+    }
+    
+    /**
+     * 说明:设置右边距
+     * @param space: 右边距
+     * @param toView: 设置右边距参考视图
+     * @param keepWidthConstraint: 是否保留宽度约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_Right(space: CGFloat, toView: UIView!, keepWidthConstraint: Bool) -> UIView {
+        self.setKeepWidthConstraint(keepWidthConstraint)
+        return self.whc_Right(space, toView: toView)
+    }
+    
+    /**
+     * 说明: 设置右边距相等
+     * @param view 右边距相等参考视图
+     * @param keepWidthConstraint: 是否保留宽度约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_RightEqual(view: UIView, keepWidthConstraint: Bool) -> UIView {
+        self.setKeepWidthConstraint(keepWidthConstraint)
+        return self.whc_RightEqual(view)
+    }
+    
+    /**
+     * 说明: 设置右边距相等
+     * @param view 右边距相等参考视图
+     * @param offset 偏移量
+     * @param keepWidthConstraint: 是否保留宽度约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_RightEqual(view: UIView, offset: CGFloat, keepWidthConstraint: Bool) -> UIView {
+        self.setKeepWidthConstraint(keepWidthConstraint)
+        return whc_RightEqual(view, offset: offset)
+    }
+
     
     /**
      * 说明: 设置左边距(默认相对父视图)
@@ -411,6 +467,57 @@ extension UIView {
     }
     
     /**
+     * 说明:设置底边距(默认相对父视图)
+     * @param bottom: 底边距
+     * @param keepHeightConstraint: 是否保留高度约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_Bottom(space: CGFloat, keepHeightConstraint: Bool) -> UIView {
+        self.setKeepHeightConstraint(keepHeightConstraint)
+        return self.whc_Bottom(space)
+    }
+    
+    /**
+     * 说明:设置底边距
+     * @param bottom: 底边距
+     * @param toView: 底边距相对参考视图
+     * @param keepHeightConstraint: 是否保留高度约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_Bottom(space: CGFloat, toView: UIView!, keepHeightConstraint: Bool) -> UIView {
+        self.setKeepHeightConstraint(keepHeightConstraint)
+        return self.whc_Bottom(space, toView: toView)
+    }
+    
+    /**
+     * 说明：设置底边距相等
+     * @param view 底边距相等参考视图
+     * @param keepHeightConstraint: 是否保留高度约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_BottomEqual(view: UIView, keepHeightConstraint: Bool) -> UIView {
+        self.setKeepHeightConstraint(keepHeightConstraint)
+        return self.whc_BottomEqual(view)
+    }
+    
+    /**
+     * 说明：设置底边距相等
+     * @param view 底边距相等参考视图
+     * @param offset 偏移量
+     * @param keepHeightConstraint: 是否保留高度约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_BottomEqual(view: UIView, offset: CGFloat, keepHeightConstraint: Bool) -> UIView {
+        self.setKeepHeightConstraint(keepHeightConstraint)
+        return self.whc_BottomEqual(view, offset: offset)
+    }
+
+    
+    /**
      * 说明:设置宽度
      * @param width: 宽度
      * @return 返回当前视图
@@ -461,6 +568,55 @@ extension UIView {
         self.constraintWithItem(self, attribute: .Width, related: .GreaterThanOrEqual, toItem: nil, toAttribute: &toAttribute, multiplier: 1, constant: 0)
         return self
     }
+    
+    /**
+     * 说明:设置宽度
+     * @param width: 宽度
+     * @parma keepRightConstraint: 是否保留右边距约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_Width(width: CGFloat, keepRightConstraint: Bool) -> UIView {
+        self.setKeepRightConstraint(keepRightConstraint)
+        return self.whc_Width(width)
+    }
+    
+    /**
+     * 说明:设置宽度相等
+     * @param view: 宽度相等参考视图
+     * @parma keepRightConstraint: 是否保留右边距约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_WidthEqual(view: UIView!, keepRightConstraint: Bool) -> UIView {
+        self.setKeepRightConstraint(keepRightConstraint)
+        return self.whc_WidthEqual(view)
+    }
+    
+    /**
+     * 说明:设置宽度相等
+     * @param ratio: 宽度相等比例
+     * @param view: 宽度相等参考视图
+     * @parma keepRightConstraint: 是否保留右边距约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_WidthEqual(view: UIView!, ratio: CGFloat, keepRightConstraint: Bool) -> UIView {
+        self.setKeepRightConstraint(keepRightConstraint)
+        return self.whc_WidthEqual(view, ratio: ratio)
+    }
+    
+    /**
+     * 说明:设置自动宽度
+     * @parma keepRightConstraint: 是否保留右边距约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_WidthAutoKeepRightConstraint(keepRightConstraint: Bool) -> UIView {
+        self.setKeepRightConstraint(keepRightConstraint)
+        return self.whc_WidthAuto()
+    }
+
     
     /**
      * 说明: 设置视图自身高度与宽度的比
@@ -524,6 +680,55 @@ extension UIView {
         self.constraintWithItem(self, attribute: .Height, related: .GreaterThanOrEqual, toItem: nil, toAttribute: &toAttribute, multiplier: 1, constant: 0)
         return self
     }
+    
+    /**
+     * 说明:设置高度
+     * @param height: 高度
+     * @param keepBottomConstraint: 是否保留底边距约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_Height(height: CGFloat, keepBottomConstraint: Bool) -> UIView {
+        self.setKeepBottomConstraint(keepBottomConstraint)
+        return self.whc_Height(height)
+    }
+    
+    /**
+     * 说明:设置高度相等
+     * @param view: 高度相等参考视图
+     * @param keepBottomConstraint: 是否保留底边距约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_HeightEqual(view: UIView!, keepBottomConstraint: Bool) -> UIView {
+        self.setKeepBottomConstraint(keepBottomConstraint)
+        return self.whc_HeightEqual(view)
+    }
+    
+    /**
+     * 说明:设置高度相等
+     * @param ratio: 高度相等比例
+     * @param view: 高度相等参考视图
+     * @param keepBottomConstraint: 是否保留底边距约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_HeightEqual(view: UIView!, ratio: CGFloat, keepBottomConstraint: Bool) -> UIView {
+        self.setKeepBottomConstraint(keepBottomConstraint)
+        return self.whc_HeightEqual(view, ratio: ratio)
+    }
+    
+    /**
+     * 说明:设置自动高度
+     * @param keepBottomConstraint: 是否保留底边距约束
+     * @return 返回当前视图
+     */
+    
+    public func whc_HeightAutoKeepBottomConstraint(keepBottomConstraint: Bool) -> UIView {
+        self.setKeepBottomConstraint(keepBottomConstraint)
+        return self.whc_HeightAuto()
+    }
+
     
     /**
      * 说明: 设置视图自身宽度与高度的比
@@ -992,6 +1197,41 @@ extension UIView {
         return objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kSelfHeightConstraint) as? NSLayoutConstraint
     }
     
+    private func setKeepWidthConstraint(isKeep: Bool) {
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepWidthConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN)
+    }
+    
+    private func keepWidthConstraint() -> Bool {
+        let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepWidthConstraint) as? NSNumber
+        return value != nil ? value!.boolValue : false
+    }
+    
+    private func setKeepHeightConstraint(isKeep: Bool) {
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepHeightConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN)
+    }
+    
+    private func keepHeightConstraint() -> Bool {
+        let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepHeightConstraint) as? NSNumber
+        return value != nil ? value!.boolValue : false
+    }
+    
+    private func setKeepBottomConstraint(isKeep: Bool) {
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepBottomConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN)
+    }
+    
+    private func keepBottomConstraint() -> Bool {
+        let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepBottomConstraint) as? NSNumber
+        return value != nil ? value!.boolValue : false
+    }
+    
+    private func setKeepRightConstraint(isKeep: Bool) {
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepRightConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN)
+    }
+    
+    private func keepRightConstraint() -> Bool {
+        let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepRightConstraint) as? NSNumber
+        return value != nil ? value!.boolValue : false
+    }
     
     private func constraintWithItem(item: UIView!,
                                     attribute: NSLayoutAttribute,
@@ -1091,6 +1331,12 @@ extension UIView {
                 originConstraint.constant = constant
             }
         }
+        
+        /// reset keep constraint
+        self.setKeepBottomConstraint(false)
+        self.setKeepHeightConstraint(false)
+        self.setKeepWidthConstraint(false)
+        self.setKeepRightConstraint(false)
     }
     
     private func getOriginConstraintWithMainView(mainView: UIView!,
@@ -1150,25 +1396,29 @@ extension UIView {
                         mainView.removeConstraint(constraint)
                     }
                 case .Right:
-                    if constraint.firstAttribute == .Width {
-                        mainView.removeConstraint(constraint)
-                        view.setEquelWidthConstraint(nil)
-                    }
-                    let selfWidthConstraint = view.selfWidthConstraint()
-                    if selfWidthConstraint != nil {
-                        view.removeConstraint(selfWidthConstraint)
-                        view.setSelfWidthConstraint(nil)
-                    }
-                    let autoWidthConstraint = view.autoWidthConstraint()
-                    if autoWidthConstraint != nil {
-                        view.removeConstraint(autoWidthConstraint)
-                        view.setAutoWidthConstraint(nil)
+                    if !self.keepWidthConstraint() {
+                        if constraint.firstAttribute == .Width {
+                            mainView.removeConstraint(constraint)
+                            view.setEquelWidthConstraint(nil)
+                        }
+                        let selfWidthConstraint = view.selfWidthConstraint()
+                        if selfWidthConstraint != nil {
+                            view.removeConstraint(selfWidthConstraint)
+                            view.setSelfWidthConstraint(nil)
+                        }
+                        let autoWidthConstraint = view.autoWidthConstraint()
+                        if autoWidthConstraint != nil {
+                            view.removeConstraint(autoWidthConstraint)
+                            view.setAutoWidthConstraint(nil)
+                        }
                     }
                 case .Width:
-                    let rightConstraint = view.rightConstraint()
-                    if rightConstraint != nil {
-                        view.superview?.removeConstraint(rightConstraint)
-                        view.setRightConstraint(nil)
+                    if !self.keepRightConstraint() {
+                        let rightConstraint = view.rightConstraint()
+                        if rightConstraint != nil {
+                            view.superview?.removeConstraint(rightConstraint)
+                            view.setRightConstraint(nil)
+                        }
                     }
                     if toView == nil {
                         let equelWidthConstraint = view.equelWidthConstraint()
@@ -1200,25 +1450,29 @@ extension UIView {
                         }
                     }
                 case .Bottom:
-                    if constraint.firstAttribute == .Height {
-                        mainView.removeConstraint(constraint)
-                        view.setEquelHeightConstraint(nil)
-                    }
-                    let selfHeightConstraint = view.selfHeightConstraint()
-                    if selfHeightConstraint != nil {
-                        view.removeConstraint(selfHeightConstraint)
-                        view.setSelfHeightConstraint(nil)
-                    }
-                    let autoHeightConstraint = view.autoHeightConstraint()
-                    if autoHeightConstraint != nil {
-                        view.removeConstraint(autoHeightConstraint)
-                        view.setAutoHeightConstraint(nil)
+                    if !self.keepHeightConstraint() {
+                        if constraint.firstAttribute == .Height {
+                            mainView.removeConstraint(constraint)
+                            view.setEquelHeightConstraint(nil)
+                        }
+                        let selfHeightConstraint = view.selfHeightConstraint()
+                        if selfHeightConstraint != nil {
+                            view.removeConstraint(selfHeightConstraint)
+                            view.setSelfHeightConstraint(nil)
+                        }
+                        let autoHeightConstraint = view.autoHeightConstraint()
+                        if autoHeightConstraint != nil {
+                            view.removeConstraint(autoHeightConstraint)
+                            view.setAutoHeightConstraint(nil)
+                        }
                     }
                 case .Height:
-                    let bottomConstraint = view.bottomConstraint()
-                    if bottomConstraint != nil {
-                        view.superview?.removeConstraint(bottomConstraint)
-                        view.setBottomConstraint(nil)
+                    if !self.keepBottomConstraint() {
+                        let bottomConstraint = view.bottomConstraint()
+                        if bottomConstraint != nil {
+                            view.superview?.removeConstraint(bottomConstraint)
+                            view.setBottomConstraint(nil)
+                        }
                     }
                     if toView != nil {
                         let selfHeightConstraint = view.selfHeightConstraint()

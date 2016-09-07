@@ -25,7 +25,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.0)
+// VERSION:(2.5)
 
 #import "UIView+WHC_AutoLayout.h"
 #import <objc/runtime.h>
@@ -208,6 +208,39 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
+
+- (RightSpaceKeepWidthConstraint)whc_RightSpaceKeepWidthConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space, BOOL isKeep) {
+        [weakSelf whc_RightSpace:space keepWidthConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (RightSpaceToViewKeepWidthConstraint)whc_RightSpaceToViewKeepWidthConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value , UIView * toView, BOOL isKeep) {
+        [weakSelf whc_RightSpace:value toView:toView keepWidthConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (RightSpaceEqualViewKeepWidthConstraint)whc_RightSpaceEqualViewKeepWidthConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * toView, BOOL isKeep) {
+        [weakSelf whc_RightSpaceEqualView:toView keepWidthConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (RightSpaceEqualViewOffsetKeepWidthConstraint)whc_RightSpaceEqualViewOffsetKeepWidthConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * toView, CGFloat offset, BOOL isKeep) {
+        [weakSelf whc_RightSpaceEqualView:toView offset:offset keepWidthConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
 - (TopSpace)whc_TopSpace {
     __weak typeof(self) weakSelf = self;
     return ^(CGFloat space) {
@@ -272,6 +305,38 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
+- (BottomSpaceKeepHeightConstraint)whc_BottomSpaceKeepHeightConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat space, BOOL isKeep) {
+        [weakSelf whc_BottomSpace:space keepHeightConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (BottomSpaceToViewKeepHeightConstraint)whc_BottomSpaceToViewKeepHeightConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value , UIView * toView, BOOL isKeep) {
+        [weakSelf whc_BottomSpace:value toView:toView keepHeightConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (BottomSpaceEqualViewKeepHeightConstraint)whc_BottomSpaceEqualViewKeepHeightConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * toView, BOOL isKeep) {
+        [weakSelf whc_BottomSpaceEqualView:toView keepHeightConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (BottomSpaceEqualViewOffsetKeepHeightConstraint)whc_BottomSpaceEqualViewOffsetKeepHeightConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * toView, CGFloat offset, BOOL isKeep) {
+        [weakSelf whc_BottomSpaceEqualView:toView offset:offset keepHeightConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
 - (Width)whc_Width {
     __weak typeof(self) weakSelf = self;
     return ^(CGFloat value) {
@@ -300,6 +365,38 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     __weak typeof(self) weakSelf = self;
     return ^(UIView * view , CGFloat value) {
         [weakSelf whc_WidthEqualView:view ratio:value];
+        return weakSelf;
+    };
+}
+
+- (WidthKeepRightConstraint)whc_WidthKeepRightConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value, BOOL isKeep) {
+        [weakSelf whc_Width:value keepRightConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (WidthAutoKeepRightConstraint)whc_widthAutoKeepRightConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(BOOL isKeep) {
+        [weakSelf whc_WidthAutoKeepRightConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (WidthEqualViewKeepRightConstraint)whc_WidthEqualViewKeepRightConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view, BOOL isKeep) {
+        [weakSelf whc_WidthEqualView:view keepRightConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (WidthEqualViewRatioKeepRightConstraint)whc_WidthEqualViewRatioKeepRightConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view , CGFloat value, BOOL isKeep) {
+        [weakSelf whc_WidthEqualView:view ratio:value keepRightConstraint:isKeep];
         return weakSelf;
     };
 }
@@ -340,6 +437,38 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     __weak typeof(self) weakSelf = self;
     return ^(UIView * view , CGFloat value) {
         [weakSelf whc_HeightEqualView:view ratio:value];
+        return weakSelf;
+    };
+}
+
+- (HeightKeepBottomConstraint)whc_HeightKeepBottomConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value, BOOL isKeep) {
+        [weakSelf whc_Height:value keepBottomConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (HeightAutoKeepBottomConstraint)whc_heightAutoKeepBottomConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(BOOL isKeep) {
+        [weakSelf whc_HeightAutoKeepBottomConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (HeightEqualViewKeepBottomConstraint)whc_HeightEqualViewKeepBottomConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view, BOOL isKeep) {
+        [weakSelf whc_HeightEqualView:view keepBottomConstraint:isKeep];
+        return weakSelf;
+    };
+}
+
+- (HeightEqualViewRatioKeepBottomConstraint)whc_HeightEqualViewRatioKeepBottomConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(UIView * view , CGFloat value, BOOL isKeep) {
+        [weakSelf whc_HeightEqualView:view ratio:value keepBottomConstraint:isKeep];
         return weakSelf;
     };
 }
@@ -505,6 +634,28 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0.0 - offset];
 }
 
+- (void)whc_RightSpace:(CGFloat)rightSpace keepWidthConstraint:(BOOL)isKeep {
+    [self setKeepWidthConstraint:isKeep];
+    [self whc_RightSpace:rightSpace];
+}
+
+
+- (void)whc_RightSpace:(CGFloat)rightSpace toView:(UIView *)toView keepWidthConstraint:(BOOL)isKeep {
+    [self setKeepWidthConstraint:isKeep];
+    [self whc_RightSpace:rightSpace toView:toView];
+}
+
+
+- (void)whc_RightSpaceEqualView:(UIView *)view keepWidthConstraint:(BOOL)isKeep {
+    [self setKeepWidthConstraint:isKeep];
+    [self whc_RightSpaceEqualView:view];
+}
+
+- (void)whc_RightSpaceEqualView:(UIView *)view offset:(CGFloat)offset keepWidthConstraint:(BOOL)isKeep {
+    [self setKeepWidthConstraint:isKeep];
+    [self whc_RightSpaceEqualView:view offset:offset];
+}
+
 - (void)whc_LeadingSpace:(CGFloat)leadingSpace {
     [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeLeading
@@ -645,6 +796,28 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0.0 - offset];
 }
 
+- (void)whc_BottomSpace:(CGFloat)bottomSpace keepHeightConstraint:(BOOL)isKeep {
+    [self setKeepHeightConstraint:isKeep];
+    [self whc_BottomSpace:bottomSpace];
+}
+
+
+- (void)whc_BottomSpace:(CGFloat)bottomSpace toView:(UIView *)toView keepHeightConstraint:(BOOL)isKeep {
+    [self setKeepHeightConstraint:isKeep];
+    [self whc_BottomSpace:bottomSpace toView:toView];
+}
+
+
+- (void)whc_BottomSpaceEqualView:(UIView *)view keepHeightConstraint:(BOOL)isKeep {
+    [self setKeepHeightConstraint:isKeep];
+    [self whc_BottomSpaceEqualView:view];
+}
+
+- (void)whc_BottomSpaceEqualView:(UIView *)view offset:(CGFloat)offset keepHeightConstraint:(BOOL)isKeep {
+    [self setKeepHeightConstraint:isKeep];
+    [self whc_BottomSpaceEqualView:view offset:offset];
+}
+
 - (void)whc_Width:(CGFloat)width{
     [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeWidth
@@ -683,6 +856,26 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                        attribute:NSLayoutAttributeNotAnAttribute
                       multiplier:1
                         constant:0];
+}
+
+- (void)whc_Width:(CGFloat)width keepRightConstraint:(BOOL)isKeep {
+    [self setKeepRightConstraint:isKeep];
+    [self whc_Width:width];
+}
+
+- (void)whc_WidthEqualView:(UIView *)view keepRightConstraint:(BOOL)isKeep {
+    [self setKeepRightConstraint:isKeep];
+    [self whc_WidthEqualView:view];
+}
+
+- (void)whc_WidthEqualView:(UIView *)view ratio:(CGFloat)ratio keepRightConstraint:(BOOL)isKeep {
+    [self setKeepRightConstraint:isKeep];
+    [self whc_WidthEqualView:view ratio:ratio];
+}
+
+- (void)whc_WidthAutoKeepRightConstraint:(BOOL)isKeep {
+    [self setKeepRightConstraint:isKeep];
+    [self whc_WidthAuto];
 }
 
 - (void)whc_WidthHeightRatio:(CGFloat)ratio {
@@ -728,6 +921,26 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                       multiplier:1
                         constant:0];
 
+}
+
+- (void)whc_Height:(CGFloat)height keepBottomConstraint:(BOOL)isKeep {
+    [self setKeepBottomConstraint:isKeep];
+    [self whc_Height:height];
+}
+
+- (void)whc_HeightEqualView:(UIView *)view keepBottomConstraint:(BOOL)isKeep {
+    [self setKeepBottomConstraint:isKeep];
+    [self whc_HeightEqualView:view];
+}
+
+- (void)whc_HeightEqualView:(UIView *)view ratio:(CGFloat)ratio keepBottomConstraint:(BOOL)isKeep {
+    [self setKeepBottomConstraint:isKeep];
+    [self whc_HeightEqualView:view ratio:ratio];
+}
+
+- (void)whc_HeightAutoKeepBottomConstraint:(BOOL)isKeep {
+    [self setKeepBottomConstraint:isKeep];
+    [self whc_HeightAuto];
 }
 
 - (void)whc_HeightWidthRatio:(CGFloat)ratio {
@@ -960,6 +1173,12 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             originConstraint.constant = constant;
         }
     }
+    
+    /// reset keep constraint
+    [self setKeepRightConstraint:NO];
+    [self setKeepWidthConstraint:NO];
+    [self setKeepHeightConstraint:NO];
+    [self setKeepBottomConstraint:NO];
 }
 
 - (NSLayoutConstraint *)getOriginConstraintWithMainView:(UIView *)mainView
@@ -1031,27 +1250,31 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
                     break;
                 case NSLayoutAttributeRight: {
-                    if (constraint.firstAttribute == NSLayoutAttributeWidth) {
-                        [mainView removeConstraint:constraint];
-                        [view setEquelWidthConstraint:nil];
-                    }
-                    NSLayoutConstraint * selfWidthConstraint = [view selfWidthConstraint];
-                    if (selfWidthConstraint) {
-                        [view removeConstraint:selfWidthConstraint];
-                        [view setSelfWidthConstraint:nil];
-                    }
-                    NSLayoutConstraint * autoWidthConstraint = [view autoWidthConstraint];
-                    if (autoWidthConstraint) {
-                        [view removeConstraint:autoWidthConstraint];
-                        [view setAutoWidthConstraint:nil];
+                    if (![self keepWidthConstraint]) {
+                        if (constraint.firstAttribute == NSLayoutAttributeWidth) {
+                            [mainView removeConstraint:constraint];
+                            [view setEquelWidthConstraint:nil];
+                        }
+                        NSLayoutConstraint * selfWidthConstraint = [view selfWidthConstraint];
+                        if (selfWidthConstraint) {
+                            [view removeConstraint:selfWidthConstraint];
+                            [view setSelfWidthConstraint:nil];
+                        }
+                        NSLayoutConstraint * autoWidthConstraint = [view autoWidthConstraint];
+                        if (autoWidthConstraint) {
+                            [view removeConstraint:autoWidthConstraint];
+                            [view setAutoWidthConstraint:nil];
+                        }
                     }
                 }
                     break;
                 case NSLayoutAttributeWidth: {
-                    NSLayoutConstraint * rightConstraint = [view rightConstraint];
-                    if (rightConstraint) {
-                        [view.superview removeConstraint:rightConstraint];
-                        [view setRightConstraint:nil];
+                    if (![self keepRightConstraint]) {
+                        NSLayoutConstraint * rightConstraint = [view rightConstraint];
+                        if (rightConstraint) {
+                            [view.superview removeConstraint:rightConstraint];
+                            [view setRightConstraint:nil];
+                        }
                     }
                     if (toView == nil) {
                         NSLayoutConstraint * equelWidthConstraint = [view equelWidthConstraint];
@@ -1090,28 +1313,32 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
                     break;
                 case NSLayoutAttributeBottom: {
-                    NSLayoutConstraint * equelHeightConstraint = [view equelHeightConstraint];
-                    if (equelHeightConstraint) {
-                        [mainView removeConstraint:equelHeightConstraint];
-                        [view setEquelHeightConstraint:nil];
-                    }
-                    NSLayoutConstraint * selfHeightConstraint = [view selfHeightConstraint];
-                    if (selfHeightConstraint) {
-                        [view removeConstraint:selfHeightConstraint];
-                        [view setSelfHeightConstraint:nil];
-                    }
-                    NSLayoutConstraint * autoHeightConstraint = [view autoHeightConstraint];
-                    if (autoHeightConstraint) {
-                        [view removeConstraint:autoHeightConstraint];
-                        [view setAutoHeightConstraint:nil];
+                    if (![self keepHeightConstraint]) {
+                        NSLayoutConstraint * equelHeightConstraint = [view equelHeightConstraint];
+                        if (equelHeightConstraint) {
+                            [mainView removeConstraint:equelHeightConstraint];
+                            [view setEquelHeightConstraint:nil];
+                        }
+                        NSLayoutConstraint * selfHeightConstraint = [view selfHeightConstraint];
+                        if (selfHeightConstraint) {
+                            [view removeConstraint:selfHeightConstraint];
+                            [view setSelfHeightConstraint:nil];
+                        }
+                        NSLayoutConstraint * autoHeightConstraint = [view autoHeightConstraint];
+                        if (autoHeightConstraint) {
+                            [view removeConstraint:autoHeightConstraint];
+                            [view setAutoHeightConstraint:nil];
+                        }
                     }
                 }
                     break;
                 case NSLayoutAttributeHeight: {
-                    NSLayoutConstraint * bottomConstraint = [view bottomConstraint];
-                    if (bottomConstraint) {
-                        [view.superview removeConstraint:bottomConstraint];
-                        [view setBottomConstraint:nil];
+                    if (![self keepBottomConstraint]) {
+                        NSLayoutConstraint * bottomConstraint = [view bottomConstraint];
+                        if (bottomConstraint) {
+                            [view.superview removeConstraint:bottomConstraint];
+                            [view setBottomConstraint:nil];
+                        }
                     }
                     if (toView) {
                         NSLayoutConstraint * selfHeightConstraint = [view selfHeightConstraint];
@@ -1183,7 +1410,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
             }
         }
-        return originConstraint;
+    return originConstraint;
 }
 
 + (void)load {
@@ -1353,6 +1580,42 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (NSLayoutConstraint *)selfHeightConstraint {
     return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setKeepHeightConstraint:(BOOL)keepHeightConstraint {
+    objc_setAssociatedObject(self, @selector(keepHeightConstraint), @(keepHeightConstraint), OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL)keepHeightConstraint {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value != nil ? value.boolValue : NO;
+}
+
+- (void)setKeepBottomConstraint:(BOOL)keepBottomConstraint {
+    objc_setAssociatedObject(self, @selector(keepBottomConstraint), @(keepBottomConstraint), OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL)keepBottomConstraint {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value != nil ? value.boolValue : NO;
+}
+
+- (void)setKeepWidthConstraint:(BOOL)keepWidthConstraint {
+    objc_setAssociatedObject(self, @selector(keepWidthConstraint), @(keepWidthConstraint), OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL)keepWidthConstraint {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value != nil ? value.boolValue : NO;
+}
+
+- (void)setKeepRightConstraint:(BOOL)keepRightConstraint {
+    objc_setAssociatedObject(self, @selector(keepRightConstraint), @(keepRightConstraint), OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL)keepRightConstraint {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value != nil ? value.boolValue : NO;
 }
 
 #pragma mark - Xib智能布局模块 -
@@ -1627,25 +1890,25 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_BottomLine:(CGFloat)value lineColor:(UIColor *)color {
-    return [self whc_BottomLine:value lineColor:color pading:0];
+- (UIView *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color {
+    return [self whc_AddBottomLine:value lineColor:color pading:0];
 }
 
-- (UIView *)whc_BottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
+- (UIView *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
     WHC_Line * line = [self createLineWithTag:kBottom_Line_Tag];
     line.backgroundColor = color;
     [line whc_RightSpace:pading];
     [line whc_LeftSpace:pading];
     [line whc_Height:value];
-    [line whc_BaseLineSpace:value];
+    [line whc_BaseLineSpace:0];
     return line;
 }
 
-- (UIView *)whc_TopLine:(CGFloat)value lineColor:(UIColor *)color {
-    return [self whc_TopLine:value lineColor:color pading:0];
+- (UIView *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color {
+    return [self whc_AddTopLine:value lineColor:color pading:0];
 }
 
-- (UIView *)whc_TopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
+- (UIView *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
     WHC_Line * line = [self createLineWithTag:kTop_Line_Tag];
     line.backgroundColor = color;
     [line whc_RightSpace:pading];
@@ -1655,7 +1918,7 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
+- (UIView *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
 {
     WHC_Line * line = [self createLineWithTag:kLeft_Line_Tag];
     line.backgroundColor = color;
@@ -1666,7 +1929,7 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_LeftLine:(CGFloat)value lineColor:(UIColor *)color {
+- (UIView *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color {
     WHC_Line * line = [self createLineWithTag:kLeft_Line_Tag];
     line.backgroundColor = color;
     [line whc_Width:value];
@@ -1676,22 +1939,22 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color {
+- (UIView *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color {
     WHC_Line * line = [self createLineWithTag:kRight_Line_Tag];
     line.backgroundColor = color;
     [line whc_Width:value];
-    [line whc_TrailingSpace:value];
+    [line whc_TrailingSpace:0];
     [line whc_TopSpace:0];
     [line whc_BottomSpace:0];
     return line;
 }
 
-- (UIView *)whc_RightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
+- (UIView *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
 {
     WHC_Line * line = [self createLineWithTag:kRight_Line_Tag];
     line.backgroundColor = color;
     [line whc_Width:value];
-    [line whc_TrailingSpace:value];
+    [line whc_TrailingSpace:0];
     [line whc_TopSpace:padding];
     [line whc_BottomSpace:padding];
     return line;

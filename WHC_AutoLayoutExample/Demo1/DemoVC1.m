@@ -39,7 +39,7 @@
     view1.backgroundColor = [UIColor orangeColor];
     view2.backgroundColor = [UIColor grayColor];
     view3.backgroundColor = [UIColor redColor];
-    lable.backgroundColor = [UIColor orangeColor];
+    lable.backgroundColor = [UIColor magentaColor];
     lable.text = @"dkdlskdlakdlakgjkdjgkajkgjdljidslidgjaldkgakjnvjndsjlagjdjlnsjdkjlsjakdalkdajakfjsalgjaljgasd";
     
     UIButton * btn = [UIButton new];
@@ -52,7 +52,7 @@
     [self.view addSubview:view1];
     [self.view addSubview:view2];
     [self.view addSubview:view3];
-    [self.view addSubview:lable];
+    [view2 addSubview:lable];
     
     btn.whc_BaseLineSpace(10).whc_LeftSpace(0).whc_RightSpace(0).whc_Height(40);
     
@@ -63,67 +63,24 @@
          .whc_Height(150);
     view2.whc_LeftSpaceToView(10,view1)
          .whc_TopSpace(74)
-         .whc_RightSpace(10)
-         .whc_HeightEqualView(view1);
-    view3.whc_TopSpaceToView(10,view1)
-         .whc_RightSpace(10)
-         .whc_HeightEqualView(view2)
-         .whc_LeftSpaceToView(10,view1);
-//    lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_heightAuto();
-    
-    lable1 = [UILabel new];
-    lable2 = [UILabel new];
-    lable3 = [UILabel new];
-    
-    lable1.backgroundColor = [UIColor grayColor];
-    lable2.backgroundColor = [UIColor grayColor];
-    lable3.backgroundColor = [UIColor grayColor];
-    
-    [self.view addSubview:lable1];
-    [self.view addSubview:lable2];
-    [self.view addSubview:lable3];
-    
-    
-    /// 一行代码添加约束
-    lable1.whc_LeadingSpace(10).whc_TopSpaceToView(10,view3).whc_WidthEqualView(lable2).whc_Height(100);
-    lable2.whc_LeadingSpaceToView(10,lable1)
-          .whc_TopSpaceEqualView(lable1)
-          .whc_WidthEqualView(lable3)
-          .whc_HeightEqualView(lable1);
-    
-    
-    lable3.whc_LeadingSpaceToView(10, lable2)
-          .whc_TopSpaceEqualView(lable2)
-          .whc_RightSpace(10)
-          .whc_HeightEqualView(lable2);
-    
-    [lable removeFromSuperview];
+    .whc_RightSpace(10).whc_heightAuto();
  
 }
 
 
 - (void)clickButton:(UIButton *)sender {
     sender.selected = !sender.selected;
-//    if (sender.selected) {
-//        lable.whc_Height(20);
-//    }else {
-//        lable.whc_heightAuto();
-//    }
-    
     if (sender.selected) {
-        lable.whc_heightAuto();
+        lable.whc_heightAutoKeepBottomConstraint(YES);
     }else {
-        lable.whc_Height(20);
+        lable.whc_HeightKeepBottomConstraint(20,YES);
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.view addSubview:lable];
-    
     /// 一行代码添加约束
-    lable.whc_LeftSpace(10).whc_RightSpaceToView(10,view3).whc_TopSpaceToView(10,view1).whc_Height(20);
-//    lable.whc_heightAuto();
+    lable.whc_LeftSpace(10).whc_RightSpace(10).whc_TopSpace(10).whc_BottomSpace(20).whc_HeightKeepBottomConstraint(40,YES);
     
 }
 

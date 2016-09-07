@@ -5,6 +5,7 @@
 ##### WHC_AutoLayoutKit 致力打造使用最简单功能最强大的自动布局开源库
 ##### WHC_AutoLayoutKit 同时有OC版和Swift版
 ##### OC版和Swift版自动布局库api接口使用代码里都有详细使用说明
+##### Version: 2.5
 
 #### ObjectiveC版自动布局库使用范例
 ```objective-c
@@ -128,6 +129,7 @@ override func viewDidLoad() {
 ##### 6.修复xib上当给控件不添加高宽约束时在代码里修改高宽约束无效的bug
 ##### 7.修复微信demo点赞cell行计算错误bug
 ##### 8.优化自动识别冲突约束处理方式
+##### 9.支持UIView根据子视图高度和宽度自动
 
 #### 部分WHC_AutoLayoutKit demo展示
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
