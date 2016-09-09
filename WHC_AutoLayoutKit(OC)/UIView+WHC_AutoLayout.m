@@ -1250,11 +1250,16 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
                     break;
                 case NSLayoutAttributeRight: {
+                    if (constraint.firstAttribute == NSLayoutAttributeWidth && [NSStringFromClass(constraint.class) isEqualToString:@"NSIBPrototypingLayoutConstraint"]) {
+                        [mainView removeConstraint:constraint];
+                    }
                     if (![self keepWidthConstraint]) {
-                        if (constraint.firstAttribute == NSLayoutAttributeWidth) {
-                            [mainView removeConstraint:constraint];
+                        NSLayoutConstraint * equelWidthConstraint = [view equelWidthConstraint];
+                        if (equelWidthConstraint) {
+                            [mainView removeConstraint:equelWidthConstraint];
                             [view setEquelWidthConstraint:nil];
                         }
+                        
                         NSLayoutConstraint * selfWidthConstraint = [view selfWidthConstraint];
                         if (selfWidthConstraint) {
                             [view removeConstraint:selfWidthConstraint];
@@ -1313,9 +1318,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
                     break;
                 case NSLayoutAttributeBottom: {
+                    if (constraint.firstAttribute == NSLayoutAttributeHeight && [NSStringFromClass(constraint.class) isEqualToString:@"NSIBPrototypingLayoutConstraint"]) {
+                        [mainView removeConstraint:constraint];
+                    }
                     if (![self keepHeightConstraint]) {
-                        if (constraint.firstAttribute == NSLayoutAttributeHeight) {
-                            [mainView removeConstraint:constraint];
+                        NSLayoutConstraint * equelHeightConstraint = [view equelHeightConstraint];
+                        if (equelHeightConstraint) {
+                            [mainView removeConstraint:equelHeightConstraint];
                             [view setEquelHeightConstraint:nil];
                         }
                         NSLayoutConstraint * selfHeightConstraint = [view selfHeightConstraint];

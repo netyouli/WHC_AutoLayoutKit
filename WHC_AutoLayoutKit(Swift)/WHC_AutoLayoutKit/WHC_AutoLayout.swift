@@ -1060,7 +1060,7 @@ extension UIView {
             for constraint in constraintArray! {
                 if NSStringFromClass(constraint.classForCoder) == "NSIBPrototypingLayoutConstraint" &&
                     constraint.firstAttribute == attribute &&
-                    constraint.firstItem === self &&
+//                    constraint.firstItem === self &&
                     constraint.secondItem == nil {
                     self.superview?.removeConstraint(constraint)
                     return
@@ -1396,9 +1396,14 @@ extension UIView {
                         mainView.removeConstraint(constraint)
                     }
                 case .Right:
+                    if constraint.firstAttribute == .Width &&
+                        NSStringFromClass(constraint.classForCoder) == "NSIBPrototypingLayoutConstraint" {
+                        mainView.removeConstraint(constraint)
+                    }
                     if !self.keepWidthConstraint() {
-                        if constraint.firstAttribute == .Width {
-                            mainView.removeConstraint(constraint)
+                        let equelWidthConstraint = view.equelWidthConstraint()
+                        if equelWidthConstraint != nil {
+                            mainView.removeConstraint(equelWidthConstraint)
                             view.setEquelWidthConstraint(nil)
                         }
                         let selfWidthConstraint = view.selfWidthConstraint()
@@ -1450,9 +1455,14 @@ extension UIView {
                         }
                     }
                 case .Bottom:
+                    if constraint.firstAttribute == .Height &&
+                        NSStringFromClass(constraint.classForCoder) == "NSIBPrototypingLayoutConstraint" {
+                        mainView.removeConstraint(constraint)
+                    }
                     if !self.keepHeightConstraint() {
-                        if constraint.firstAttribute == .Height {
-                            mainView.removeConstraint(constraint)
+                        let equelHeightConstraint = view.equelHeightConstraint()
+                        if equelHeightConstraint != nil {
+                            mainView.removeConstraint(equelHeightConstraint)
                             view.setEquelHeightConstraint(nil)
                         }
                         let selfHeightConstraint = view.selfHeightConstraint()
