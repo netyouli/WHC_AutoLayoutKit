@@ -25,7 +25,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.0)
+// VERSION:(2.2)
 
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
 #import "UIView+WHC_AutoLayout.h"
@@ -86,9 +86,9 @@
     NSString * cacheHeightKey = @(indexPath.section).stringValue;
     NSMutableDictionary * sectionCacheHeightDictionary = tableView.whc_CacheHeightDictionary[cacheHeightKey];
     if (sectionCacheHeightDictionary != nil) {
-        id height = sectionCacheHeightDictionary[@(indexPath.row)];
-        if (height) {
-            return [height floatValue];
+        NSNumber * cellHeight = sectionCacheHeightDictionary[@(indexPath.row).stringValue];
+        if (cellHeight) {
+            return cellHeight.floatValue;
         }
     }else {
         sectionCacheHeightDictionary = [NSMutableDictionary dictionary];
@@ -135,7 +135,7 @@
     }
     
     CGFloat cacheHeight = CGRectGetMaxY(bottomView.frame) + cell.whc_CellBottomOffset;
-    sectionCacheHeightDictionary[@(indexPath.row)] = @(cacheHeight);
+    [sectionCacheHeightDictionary setValue:@(cacheHeight) forKey:@(indexPath.row).stringValue];
     return cacheHeight;
 }
 
@@ -243,7 +243,7 @@
             NSString * cacheHeightKey = @(indexPath.section).stringValue;
             NSMutableDictionary * sectionCacheHeightDictionary = self.whc_CacheHeightDictionary[cacheHeightKey];
             if (sectionCacheHeightDictionary != nil) {
-                [sectionCacheHeightDictionary removeObjectForKey:@(indexPath.row)];
+                [sectionCacheHeightDictionary removeObjectForKey:@(indexPath.row).stringValue];
             }
         }];
     }
@@ -267,7 +267,7 @@
             NSString * cacheHeightKey = @(indexPath.section).stringValue;
             NSMutableDictionary * sectionCacheHeightDictionary = self.whc_CacheHeightDictionary[cacheHeightKey];
             if (sectionCacheHeightDictionary != nil) {
-                [sectionCacheHeightDictionary removeObjectForKey:@(indexPath.row)];
+                [sectionCacheHeightDictionary removeObjectForKey:@(indexPath.row).stringValue];
             }
         }];
     }
@@ -282,5 +282,4 @@
 }
 
 @end
-
 
