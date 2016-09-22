@@ -5,6 +5,8 @@
 ##### WHC_AutoLayoutKit 致力打造使用最简单功能最强大的自动布局开源库
 ##### WHC_AutoLayoutKit 同时有OC版和Swift版
 ##### OC版和Swift版自动布局库api接口使用代码里都有详细使用说明
+##### 同时推出Swift3.0和Swift2.3版本
+##### 支持View自动高度和自动宽度，可参看demo1，并且完全兼容代码方式修改xib视图上的约束
 ##### Version: 2.5
 
 #### ObjectiveC版自动布局库使用范例
@@ -119,6 +121,9 @@ override func viewDidLoad() {
     stackView.whc_StartLayout()
 }
 ```
+
+#### 未来开发计划
+##### 1.开发更加智能方便的WHC_StackView视图容器组件（正在构建）
 
 #### 升级更新日志
 ##### 1.更新升级不常用的api
