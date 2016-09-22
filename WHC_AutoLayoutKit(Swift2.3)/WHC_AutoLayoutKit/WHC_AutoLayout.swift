@@ -840,7 +840,7 @@ extension UIView {
      */
     
     public func whc_BaseLine(space: CGFloat) -> UIView {
-        self.constraintWithItem(self.superview, attribute: .Baseline, constant: space)
+        self.constraintWithItem(self.superview, attribute: .LastBaseline, constant: space)
         return self
     }
     
@@ -853,7 +853,7 @@ extension UIView {
     
     public func whc_BaseLine(space: CGFloat, toView: UIView!) -> UIView {
         var toAttribute = NSLayoutAttribute.Top
-        self.constraintWithItem(self, attribute: .Baseline, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: 0 - space)
+        self.constraintWithItem(self, attribute: .LastBaseline, related: .Equal, toItem: toView, toAttribute: &toAttribute, multiplier: 1, constant: 0 - space)
         return self
     }
     
@@ -875,7 +875,7 @@ extension UIView {
      */
     
     public func whc_BaseLineEqual(view: UIView!, offset: CGFloat) -> UIView {
-        self.constraintWithItem(view, attribute: .Baseline, constant: 0.0 - offset)
+        self.constraintWithItem(view, attribute: .LastBaseline, constant: 0.0 - offset)
         return self
     }
     
@@ -1382,12 +1382,12 @@ extension UIView {
                     }
                 case .Top:
                     if constraint.firstAttribute == .CenterY ||
-                        constraint.firstAttribute == .Baseline {
+                        constraint.firstAttribute == .LastBaseline {
                         mainView.removeConstraint(constraint)
                     }
                 case .CenterY:
                     if constraint.firstAttribute == .Top ||
-                        constraint.firstAttribute == .Baseline {
+                        constraint.firstAttribute == .LastBaseline {
                         mainView.removeConstraint(constraint)
                     }
                 case .Baseline:
