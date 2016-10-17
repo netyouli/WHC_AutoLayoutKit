@@ -1399,26 +1399,27 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         [mainView removeConstraint:constraint];
                     }
                 }else {
-                    if (constraint.firstAttribute == attribute) {
-                        if (related == constraint.relation) {
-                            switch (related) {
-                                case NSLayoutRelationEqual:
-                                    if ([NSStringFromClass(constraint.class) isEqualToString:@"NSLayoutConstraint"]) {
-                                        originConstraint = constraint;
-                                    }
-                                    break;
-                                case NSLayoutRelationGreaterThanOrEqual:
+                    if (constraint.firstAttribute == attribute &&
+                        constraint.relation == related) {
+                        switch (related) {
+                            case NSLayoutRelationEqual:
+                                if ([NSStringFromClass(constraint.class) isEqualToString:@"NSLayoutConstraint"]) {
                                     originConstraint = constraint;
-                                    break;
-                                default:
-                                    break;
-                            }
+                                }
+                                break;
+                            case NSLayoutRelationGreaterThanOrEqual:
+                                if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
+                                    originConstraint = constraint;
+                                }
+                                break;
+                            default:
+                                break;
                         }
                     }
                 }
             }
         }
-    return originConstraint;
+        return originConstraint;
 }
 
 + (void)load {
@@ -1511,11 +1512,15 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         }
             break;
         case NSLayoutAttributeRight: {
-            [constraint.firstItem setRightConstraint:constraint];
+            if ([constraint.firstItem respondsToSelector:@selector(setRightConstraint:)]) {
+                [constraint.firstItem setRightConstraint:constraint];
+            }
         }
             break;
         case NSLayoutAttributeBottom: {
-            [constraint.firstItem setBottomConstraint:constraint];
+            if ([constraint.firstItem respondsToSelector:@selector(setBottomConstraint:)]) {
+                [constraint.firstItem setBottomConstraint:constraint];
+            }
         }
             break;
         default:

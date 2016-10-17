@@ -26,12 +26,19 @@
 @implementation PersonImageView
 
 - (void)awakeFromNib {
-    _backgroundImageView.whc_RightSpace(0);
-    _personView.whc_TrailingSpace(20);
-    _titleLable.whc_TrailingSpaceToView(15,_personView);
-
+    [super awakeFromNib];
+    _backgroundImageView.whc_LeftSpace(0)
+    .whc_TopSpace(0)
+    .whc_BottomSpace(25)
+    .whc_RightSpace(0);
+    
+    _personView.whc_TrailingSpace(20)
+    .whc_Size(CGSizeMake(60, 60))
+    .whc_TopSpace(200);
+    
+    _titleLable.whc_TrailingSpaceToView(15,_personView)
+    .whc_CenterYToView(0,_personView)
+    .whc_widthAuto()
+    .whc_heightAuto();
 }
-
-
-
 @end

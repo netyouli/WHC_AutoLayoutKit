@@ -188,7 +188,7 @@
     _imageStackView.whc_HSpace = 4;                // 图片之间的空隙为4
     _imageStackView.whc_VSpace = 4;                // 图片之间的空隙为4
     _imageStackView.whc_Orientation = All;        // 横竖混合布局
-    _imageStackView.whc_HeightWidthRatio = 4 / 3; // 图片高宽比
+    _imageStackView.whc_ElementHeightWidthRatio = 4 / 3; // 图片高宽比
     
     _timeLabel.whc_TopSpaceToView(10,_imageStackView)
               .whc_LeftSpaceEqualView(_imageStackView)

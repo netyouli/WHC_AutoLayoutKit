@@ -6,6 +6,7 @@
 ##### WHC_AutoLayoutKit 同时有OC版和Swift版
 ##### OC版和Swift版自动布局库api接口使用代码里都有详细使用说明
 ##### 同时推出Swift3.0和Swift2.3版本
+####  WHC_StackView支持添加分割线(网格)看demo6
 ##### 支持View自动高度和自动宽度，可参看demo1，并且完全兼容代码方式修改xib视图上的约束
 ##### Version: 2.5
 

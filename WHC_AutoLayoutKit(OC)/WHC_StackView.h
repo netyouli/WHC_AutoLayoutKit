@@ -30,8 +30,30 @@
 #import <UIKit/UIKit.h>
 #import "UIView+WHC_AutoLayout.h"
 
+typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
+    Top = 1 << 0, /// 顶部对齐
+    Middle = 1 << 1, /// 居中对齐
+    Bottom = 1 << 2, /// 底部对齐
+};
+
 @interface UIButton (WHC_StackView)
 
+@end
+
+@interface UILabel (WHC_StackView)
+/************重载父类属性**************/
+/// 自动高度
+@property (nonatomic ,copy , readonly)HeightAuto whc_heightAuto;
+
+/// 自动宽度
+@property (nonatomic ,copy , readonly)WidthAuto whc_widthAuto;
+@property (nonatomic, assign)CGFloat whc_LeftPadding;
+@property (nonatomic, assign)CGFloat whc_TopPadding;
+@property (nonatomic, assign)CGFloat whc_RightPadding;
+@property (nonatomic, assign)CGFloat whc_BottomPadding;
+
+/// 设置标签垂直方向对齐方式
+@property (nonatomic, assign)WHC_UILabelVerticalAlignment whc_VerticalAlignment;
 @end
 
 #pragma mark - UI自动布局StackView容器 -
@@ -58,14 +80,30 @@
 /// 容器内子控件垂直间隙
 @property (nonatomic , assign) CGFloat whc_VSpace;
 
-/// 子元素高宽比(该属性仅仅在自动高度的时候才有效)
-@property (nonatomic , assign) CGFloat whc_HeightWidthRatio;
+/// 子元素高宽比
+@property (nonatomic , assign) CGFloat whc_ElementHeightWidthRatio;
+
+/// 子元素宽高比
+@property (nonatomic , assign) CGFloat whc_ElementWidthHeightRatio;
 
 /// 容器里子元素实际数量
 @property (nonatomic , assign , readonly) NSInteger whc_SubViewCount;
 
 /// 容器自动布局方向
 @property (nonatomic , assign) WHC_LayoutOrientationOptions whc_Orientation;
+
+/// 子视图固定宽度
+@property (nonatomic , assign) CGFloat whc_SubViewWidth;
+
+/// 子视图固定高度
+@property (nonatomic , assign) CGFloat whc_SubViewHeight;
+
+/// 设置分割线尺寸
+@property (nonatomic , assign) CGFloat whc_SegmentLineSize;
+/// 设置分割线内边距
+@property (nonatomic , assign) CGFloat whc_SegmentLinePadding;
+/// 设置分割线的颜色
+@property (nonatomic , strong) UIColor * whc_SegmentLineColor;
 
 /************重载父类属性**************/
 /// 自动高度
@@ -91,4 +129,9 @@
  * 说明：开始进行自动布局
  */
 - (void)whc_StartLayout;
+
+/**
+ * 说明：清除所有子视图
+ */
+- (void)whc_removeAllSubviews;
 @end

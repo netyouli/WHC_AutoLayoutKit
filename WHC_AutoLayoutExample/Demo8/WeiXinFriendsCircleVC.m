@@ -83,11 +83,11 @@ static  NSInteger kDefaultOnePageDataCount = 10;
              forCellReuseIdentifier:kFirendsCircleCellIdentifier];
     
     PersonImageView * headerView = [[NSBundle mainBundle] loadNibNamed:@"PersonImageView" owner:nil options:nil][0];
-    headerView.frame = CGRectMake(0, 0, 0, 269);
+    headerView.frame = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), 269);
     _friendTableView.tableHeaderView = headerView;
     
     FooterView * footerView = [[NSBundle mainBundle] loadNibNamed:@"FooterView" owner:nil options:nil][0];
-    footerView.frame = CGRectMake(0, 0, 0, 40);
+    footerView.frame = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), 40);
     _friendTableView.tableFooterView = footerView;
     
     /// 下拉菊花
@@ -113,7 +113,10 @@ static  NSInteger kDefaultOnePageDataCount = 10;
         _sendView.whc_Edge = UIEdgeInsetsMake(5, 5, 5, 5);
         
         /// 一行代码添加约束
-        _sendView.whc_LeadingSpace(0).whc_RightSpace(0).whc_BaseLineSpace(-40).whc_Height(40);
+        _sendView.whc_LeadingSpace(0)
+        .whc_RightSpace(0)
+        .whc_BaseLineSpace(-40)
+        .whc_Height(40);
         
         [_sendView whc_StartLayout];
         _keyBoradMonitorView = (WHC_KeyboradHeaderView *)[WHC_KeyboradHeaderView monitorKeyboradShowAddHeaderView:_sendView observer:self];
@@ -199,10 +202,16 @@ static  NSInteger kDefaultOnePageDataCount = 10;
     _currentAnswerCell = cell;
     _currentAnswerRow = row;
     _lastAnswerLabel = commentLabel;
-    CGRect answerRc = [commentLabel convertRect:commentLabel.bounds toView:self.view];
-    CGRect sendRc = _sendView.frame;
-    CGFloat diffY = CGRectGetMaxY(answerRc) - CGRectGetMinY(sendRc);
-    [_friendTableView setContentOffset:CGPointMake(0, _friendTableView.contentOffset.y + diffY) animated:YES];
+    __weak typeof(self) weakSelf = self;
+    __weak typeof(_sendView) weakSendView = _sendView;
+    __weak typeof(_friendTableView) weakTableView = _friendTableView;
+    _keyBoradMonitorView.keyboardWillShow = ^{
+        CGRect answerRc = [commentLabel convertRect:commentLabel.bounds toView:weakSelf.view];
+        CGRect sendRc = weakSendView.frame;
+        CGFloat diffY = CGRectGetMaxY(answerRc) - CGRectGetMinY(sendRc);
+        [weakTableView setContentOffset:CGPointMake(0, weakTableView.contentOffset.y + diffY) animated:YES];
+    };
+    
 }
 
 /// 点赞回调

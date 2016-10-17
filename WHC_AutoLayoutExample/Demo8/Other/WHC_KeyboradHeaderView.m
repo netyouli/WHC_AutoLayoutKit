@@ -163,7 +163,9 @@
     [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [headerView layoutIfNeeded];
     } completion:^(BOOL finished) {
-        
+        if (self.keyboardWillShow) {
+            self.keyboardWillShow();
+        }
     }];
 }
 
@@ -179,6 +181,9 @@
     [UIView animateWithDuration:animationDuration animations:^{
         [headerView layoutIfNeeded];
     }completion:^(BOOL finished) {
+        if (self.keyboardWillHide) {
+            self.keyboardWillHide();
+        }
     }];
 }
 

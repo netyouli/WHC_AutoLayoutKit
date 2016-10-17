@@ -57,6 +57,143 @@
 
 @end
 
+@implementation UILabel (WHC_StackView)
+
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Method drawTextInRect = class_getInstanceMethod(self, @selector(drawTextInRect:));
+        Method myDrawTextInRect = class_getInstanceMethod(self, @selector(myDrawTextInRect:));
+        Method textRectForBounds = class_getInstanceMethod(self, @selector(textRectForBounds:limitedToNumberOfLines:));
+        Method myTextRectForBounds = class_getInstanceMethod(self, @selector(myTextRectForBounds:limitedToNumberOfLines:));
+        method_exchangeImplementations(drawTextInRect, myDrawTextInRect);
+        method_exchangeImplementations(textRectForBounds, myTextRectForBounds);
+    });
+}
+
+- (void)setWhc_LeftPadding:(CGFloat)whc_LeftPadding {
+    objc_setAssociatedObject(self, @selector(whc_LeftPadding), @(whc_LeftPadding), OBJC_ASSOCIATION_RETAIN);
+    [self setNeedsDisplay];
+}
+
+- (CGFloat)whc_LeftPadding {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value == nil ? 0 : value.floatValue;
+}
+
+- (void)setWhc_TopPadding:(CGFloat)whc_TopPadding {
+    objc_setAssociatedObject(self, @selector(whc_TopPadding), @(whc_TopPadding), OBJC_ASSOCIATION_RETAIN);
+    [self setNeedsDisplay];
+}
+
+- (CGFloat)whc_TopPadding {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value == nil ? 0 : value.floatValue;
+}
+
+- (void)setWhc_RightPadding:(CGFloat)whc_RightPadding {
+    objc_setAssociatedObject(self, @selector(whc_RightPadding), @(whc_RightPadding), OBJC_ASSOCIATION_RETAIN);
+    [self setNeedsDisplay];
+}
+
+- (CGFloat)whc_RightPadding {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value == nil ? 0 : value.floatValue;
+}
+- (void)setWhc_BottomPadding:(CGFloat)whc_BottomPadding {
+    objc_setAssociatedObject(self, @selector(whc_BottomPadding), @(whc_BottomPadding), OBJC_ASSOCIATION_RETAIN);
+    [self setNeedsDisplay];
+}
+
+- (CGFloat)whc_BottomPadding {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value == nil ? 0 : value.floatValue;
+}
+
+- (CGSize)calcTextSize {
+    if (self.text != nil) {
+        return [self.text sizeWithAttributes:@{NSFontAttributeName: self.font}];
+    }
+    return CGSizeZero;
+}
+
+- (void)setWhc_VerticalAlignment:(WHC_UILabelVerticalAlignment)whc_VerticalAlignment {
+    objc_setAssociatedObject(self, @selector(whc_VerticalAlignment), @(whc_VerticalAlignment), OBJC_ASSOCIATION_RETAIN);
+    [self setNeedsDisplay];
+}
+
+- (WHC_UILabelVerticalAlignment)whc_VerticalAlignment {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    return value == nil ? Middle : value.integerValue;
+}
+
+
+- (HeightAuto)whc_heightAuto {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        if (weakSelf.whc_TopPadding + weakSelf.whc_BottomPadding != 0) {
+            [super whc_Height:[weakSelf calcTextSize].width + weakSelf.whc_TopPadding + weakSelf.whc_BottomPadding + 0.5];
+        }else {
+            [super whc_HeightAuto];
+        }
+        return weakSelf;
+    };
+}
+
+- (WidthAuto)whc_widthAuto {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        if (weakSelf.whc_LeftPadding + weakSelf.whc_RightPadding != 0) {
+            [super whc_Width:[weakSelf calcTextSize].width + weakSelf.whc_LeftPadding + weakSelf.whc_RightPadding + 0.5];
+        }else {
+            [super whc_WidthAuto];
+        }
+        return weakSelf;
+    };
+}
+
+- (void)myDrawTextInRect:(CGRect)rect {
+    if (self.whc_VerticalAlignment != Middle) {
+        CGRect textRect = [self textRectForBounds:rect limitedToNumberOfLines:self.numberOfLines];
+        textRect.size.width = CGRectGetWidth(rect);
+        switch (self.whc_VerticalAlignment) {
+            case Top:
+                textRect.size.height += self.whc_TopPadding;
+                break;
+            case Bottom:
+                textRect.origin.y -= self.whc_BottomPadding;
+                textRect.size.height += self.whc_BottomPadding;
+                break;
+            default:
+                break;
+        }
+        CGRect inRect = UIEdgeInsetsInsetRect(textRect, UIEdgeInsetsMake(self.whc_TopPadding, self.whc_LeftPadding, self.whc_BottomPadding, self.whc_RightPadding));
+        [self myDrawTextInRect:inRect];
+    }else {
+        CGRect inRect = UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(self.whc_TopPadding, self.whc_LeftPadding, self.whc_BottomPadding, self.whc_RightPadding));
+        [self myDrawTextInRect:inRect];
+    }
+}
+
+- (CGRect)myTextRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines {
+    CGRect textRect = [self myTextRectForBounds:bounds limitedToNumberOfLines:numberOfLines];
+    switch (self.whc_VerticalAlignment) {
+        case Top:
+            break;
+        case Middle:
+            break;
+        case Bottom:
+            textRect.origin.y = bounds.origin.y + bounds.size.height - textRect.size.height;
+            break;
+        default:
+            break;
+    }
+    return textRect;
+}
+
+
+@end
+
 @implementation UIView (WHC_StackViewCategory)
 
 - (void)setWhc_WidthWeight:(CGFloat)whc_WidthWeight {
@@ -91,6 +228,7 @@
 
 @end
 
+/// 填充空白视图类
 @interface WHC_VacntView : UIView
 
 @end
@@ -99,11 +237,18 @@
 
 @end
 
+/// 分割线视图
+@interface WHC_StackViewLineView : UIView
+
+@end
+
+@implementation WHC_StackViewLineView
+
+@end
+
 @interface WHC_StackView () {
     BOOL      _autoHeight;
     BOOL      _autoWidth;
-    CGFloat   _elementWidth;
-    CGFloat   _elementHeight;
     NSInteger _lastRowVacantCount;
 }
 
@@ -148,6 +293,16 @@
     return width;
 }
 
+- (void)setWhc_ElementHeightWidthRatio:(CGFloat)whc_ElementHeightWidthRatio {
+    _whc_ElementHeightWidthRatio = whc_ElementHeightWidthRatio;
+    _whc_ElementWidthHeightRatio = 0;
+}
+
+- (void)setWhc_ElementWidthHeightRatio:(CGFloat)whc_ElementWidthHeightRatio {
+    _whc_ElementWidthHeightRatio = whc_ElementWidthHeightRatio;
+    _whc_ElementHeightWidthRatio = 0;
+}
+
 - (NSInteger)whc_SubViewCount {
     if (self.whc_Orientation == All) {
         return self.subviews.count - _lastRowVacantCount;
@@ -187,73 +342,134 @@
     };
 }
 
-
 - (void)whc_StartLayout {
-    if (_autoHeight && self.whc_HeightWidthRatio > 0) {
-        [self layoutIfNeeded];
-        CGFloat stackViewWidth = CGRectGetWidth(self.frame);
-        _elementWidth = (stackViewWidth - self.whc_HSpace * (MAX(1, self.whc_Column) - 1) - self.whc_Edge.left - self.whc_Edge.right) / self.whc_Column;
-        _elementHeight = _elementWidth * self.whc_HeightWidthRatio;
-    }
     [self runStackLayoutEngine];
-    NSInteger subViewCount = self.subviews.count;
-    if (_autoHeight) {
-        if (self.whc_HeightWidthRatio > 0) {
-            if (subViewCount == 0) {
-                [self whc_Height:0];
-            }else {
-                NSInteger rowCount = (subViewCount / self.whc_Column + (subViewCount % self.whc_Column == 0 ? 0 : 1));
-                CGFloat stackViewHeight = _elementHeight * rowCount + self.whc_Edge.top + self.whc_Edge.bottom + (rowCount - 1) * self.whc_VSpace;
-                [self whc_Height:stackViewHeight];
-            }
-        }
+}
+
+- (WHC_StackViewLineView *)makeLine {
+    WHC_StackViewLineView * lineView = [WHC_StackViewLineView new];
+    if (self.whc_SegmentLineColor) {
+        lineView.backgroundColor = self.whc_SegmentLineColor;
+    }else {
+        lineView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     }
+    return lineView;
+}
+
+- (void)whc_removeAllSubviews {
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj removeFromSuperview];
+    }];
+}
+
+- (void)removeAllSegmentLine {
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[WHC_StackViewLineView class]]) {
+            [obj removeFromSuperview];
+        }
+    }];
 }
 
 - (void)runStackLayoutEngine {
+    [self removeAllSegmentLine];
     NSArray * subViews = self.subviews;
     NSInteger count = subViews.count;
     if (count == 0) {
         return;
     }
     UIView * toView = nil;
+    WHC_LayoutOrientationOptions orientation = self.whc_Orientation;
 WHC_GOTO:
-    switch (self.whc_Orientation) {
+    switch (orientation) {
         case Horizontal: {
-            UIView * oneView = subViews[0];
-            UIView * secondView = count > 1 ? subViews[1] : nil;
-            [oneView whc_LeftSpace:self.whc_Edge.left];
-            [oneView whc_TopSpace:self.whc_Edge.top];
-            [oneView whc_BottomSpace:self.whc_Edge.bottom];
-            if (secondView) {
-                if (_autoHeight && [oneView isKindOfClass:[UILabel class]]) {
-                    [oneView whc_WidthAuto];
-                }else {
-                    [oneView whc_WidthEqualView:secondView
-                                      ratio:oneView.whc_WidthWeight / secondView.whc_WidthWeight];
-                }
-            }else {
-                [oneView whc_RightSpace:self.whc_Edge.right];
-            }
-            toView = oneView;
-            if ([toView isKindOfClass:[WHC_StackView class]]) {
-                [((WHC_StackView *)toView) whc_StartLayout];
-            }
-            for (int i = 1; i < count; i++) {
+            for (int i = 0; i < count; i++) {
                 UIView * view = subViews[i];
                 UIView * nextView = i < count - 1 ? subViews[i + 1] : nil;
-                [view whc_LeftSpace:self.whc_HSpace toView:toView];
-                [view whc_TopSpace:self.whc_Edge.top];
-                [view whc_BottomSpace:self.whc_Edge.bottom];
-                if (nextView) {
-                    if (_autoHeight && [oneView isKindOfClass:[UILabel class]]) {
-                        [view whc_WidthAuto];
+                if (i == 0) {
+                    [view whc_LeftSpace:self.whc_Edge.left];
+                }else {
+                    if (self.whc_SegmentLineSize > 0.0) {
+                        WHC_StackViewLineView * lineView = [self makeLine];
+                        [self addSubview:lineView];
+                        [lineView whc_TopSpace:self.whc_SegmentLinePadding];
+                        [lineView whc_BottomSpace:self.whc_SegmentLinePadding];
+                        [lineView whc_LeftSpace:self.whc_HSpace / 2.0 toView:toView];
+                        [lineView whc_Width:self.whc_SegmentLineSize];
+                        [view whc_LeftSpace:self.whc_HSpace / 2.0 toView:lineView];
                     }else {
-                        [view whc_WidthEqualView:nextView
-                                       ratio:view.whc_WidthWeight / nextView.whc_WidthWeight];
+                        [view whc_LeftSpace:self.whc_HSpace toView:toView];
+                    }
+                }
+                [view whc_TopSpace:self.whc_Edge.top];
+                if (nextView) {
+                    if (self.whc_SubViewWidth > 0) {
+                        [view whc_Width:self.whc_SubViewWidth];
+                    }else {
+                        if (_whc_ElementWidthHeightRatio > 0) {
+                            [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
+                        }else {
+                            if (_autoWidth) {
+                                [view whc_WidthAuto];
+                            }else {
+                                [view whc_WidthEqualView:nextView
+                                                   ratio:view.whc_WidthWeight / nextView.whc_WidthWeight];
+                            }
+                        }
+                    }
+                    if (self.whc_SubViewHeight > 0) {
+                        [view whc_Height:self.whc_SubViewHeight];
+                    }else {
+                        if (_whc_ElementHeightWidthRatio > 0) {
+                            [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
+                        }else {
+                            if (_autoHeight) {
+                                [view whc_HeightAuto];
+                            }else {
+                                [view whc_BottomSpace:self.whc_Edge.bottom];
+                            }
+                        }
                     }
                 }else {
-                    [view whc_RightSpace:self.whc_Edge.right];
+                    if (self.whc_SubViewWidth > 0) {
+                        [view whc_Width:self.whc_SubViewWidth];
+                        if (_autoWidth) {
+                            [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                        }
+                    }else {
+                        if (_whc_ElementWidthHeightRatio > 0) {
+                            [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
+                            if (_autoWidth) {
+                                [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                            }
+                        }else {
+                            if (_autoWidth) {
+                                [view whc_WidthAuto];
+                                [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                            }else {
+                                [view whc_RightSpace:self.whc_Edge.right];
+                            }
+                        }
+                    }
+                    if (self.whc_SubViewHeight > 0) {
+                        [view whc_Height:self.whc_SubViewHeight];
+                        if (_autoHeight) {
+                            [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                        }
+                    }else {
+                        if (_whc_ElementHeightWidthRatio > 0) {
+                            [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
+                            if (_autoHeight) {
+                                [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                            }
+                        }else {
+                            if (_autoHeight) {
+                                [view whc_HeightAuto];
+                                [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                            }else {
+                                [view whc_BottomSpace:self.whc_Edge.bottom];
+                            }
+                        }
+                    }
                 }
                 toView = view;
                 if ([toView isKindOfClass:[WHC_StackView class]]) {
@@ -263,40 +479,94 @@ WHC_GOTO:
             break;
         }
         case Vertical: {
-            UIView * oneView = subViews[0];
-            UIView * secondView = count > 1 ? subViews[1] : nil;
-            [oneView whc_LeftSpace:self.whc_Edge.left];
-            [oneView whc_TopSpace:self.whc_Edge.top];
-            [oneView whc_RightSpace:self.whc_Edge.right];
-            if (secondView) {
-                if (_autoHeight && [oneView isKindOfClass:[UILabel class]]) {
-                    [oneView whc_HeightAuto];
-                }else {
-                    [oneView whc_HeightEqualView:secondView
-                                           ratio:oneView.whc_HeightWeight / secondView.whc_HeightWeight];
-                }
-            }else {
-                [oneView whc_BottomSpace:self.whc_Edge.bottom];
-            }
-            toView = oneView;
-            if ([toView isKindOfClass:[WHC_StackView class]]) {
-                [((WHC_StackView *)toView) whc_StartLayout];
-            }
-            for (int i = 1; i < count; i++) {
+            for (int i = 0; i < count; i++) {
                 UIView * view = subViews[i];
                 UIView * nextView = i < count - 1 ? subViews[i + 1] : nil;
-                [view whc_LeftSpace:self.whc_Edge.left];
-                [view whc_TopSpace:self.whc_VSpace toView:toView];
-                [view whc_RightSpace:self.whc_Edge.right];
-                if (nextView) {
-                    if (_autoHeight && [view isKindOfClass:[UILabel class]]) {
-                        [view whc_HeightAuto];
+                if (i == 0) {
+                    [view whc_TopSpace:self.whc_Edge.top];
+                }else {
+                    if (self.whc_SegmentLineSize > 0.0) {
+                        WHC_StackViewLineView * lineView = [self makeLine];
+                        [self addSubview:lineView];
+                        [lineView whc_LeftSpace:self.whc_SegmentLinePadding];
+                        [lineView whc_RightSpace:self.whc_SegmentLinePadding];
+                        [lineView whc_Height:self.whc_SegmentLineSize];
+                        [lineView whc_TopSpace:self.whc_VSpace / 2.0 toView:toView];
+                        [view whc_TopSpace:self.whc_VSpace / 2.0 toView:lineView];
                     }else {
-                        [view whc_HeightEqualView:nextView
-                                            ratio:view.whc_HeightWeight / nextView.whc_HeightWeight];
+                        [view whc_TopSpace:self.whc_VSpace toView:toView];
+                    }
+                }
+                [view whc_LeftSpace:self.whc_Edge.left];
+                if (nextView) {
+                    if (self.whc_SubViewWidth > 0) {
+                        [view whc_Width:self.whc_SubViewWidth];
+                    }else {
+                        if (_whc_ElementWidthHeightRatio > 0) {
+                            [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
+                        }else {
+                            if (_autoWidth) {
+                                [view whc_WidthAuto];
+                            }else {
+                                [view whc_RightSpace:self.whc_Edge.right];
+                            }
+                        }
+                    }
+                    if (self.whc_SubViewHeight > 0) {
+                        [view whc_Height:self.whc_SubViewHeight];
+                    }else {
+                        if (_whc_ElementHeightWidthRatio > 0) {
+                            [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
+                        }else {
+                            if (_autoHeight) {
+                                [view whc_HeightAuto];
+                            }else {
+                                [view whc_HeightEqualView:nextView
+                                                    ratio:view.whc_HeightWeight / nextView.whc_HeightWeight];
+                            }
+                        }
                     }
                 }else {
-                    [view whc_BottomSpace:self.whc_Edge.bottom];
+                    if (self.whc_SubViewWidth > 0) {
+                        [view whc_Width:self.whc_SubViewWidth];
+                        if (_autoWidth) {
+                            [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                        }
+                    }else {
+                        if (_whc_ElementWidthHeightRatio > 0) {
+                            [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
+                            if (_autoWidth) {
+                                [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                            }
+                        }else {
+                            if (_autoWidth) {
+                                [view whc_WidthAuto];
+                                [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                            }else {
+                                [view whc_RightSpace:self.whc_Edge.right];
+                            }
+                        }
+                    }
+                    if (self.whc_SubViewHeight > 0) {
+                        [view whc_Height:self.whc_SubViewHeight];
+                        if (_autoHeight) {
+                            [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                        }
+                    }else {
+                        if (_whc_ElementHeightWidthRatio > 0) {
+                            [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
+                            if (_autoHeight) {
+                                [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                            }
+                        }else {
+                            if (_autoHeight) {
+                                [view whc_HeightAuto];
+                                [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                            }else {
+                                [view whc_BottomSpace:self.whc_Edge.bottom];
+                            }
+                        }
+                    }
                 }
                 toView = view;
                 if ([toView isKindOfClass:[WHC_StackView class]]) {
@@ -314,7 +584,7 @@ WHC_GOTO:
             subViews = self.subviews;
             count = subViews.count;
             if (self.whc_Column < 2) {
-                self.whc_Orientation = Vertical;
+                orientation = Vertical;
                 goto WHC_GOTO;
             }else {
                 NSInteger rowCount = count / self.whc_Column + (count % self.whc_Column == 0 ? 0 : 1);
@@ -322,7 +592,7 @@ WHC_GOTO:
                 _lastRowVacantCount = rowCount * self.whc_Column - count;
                 for (NSInteger i = 0; i < _lastRowVacantCount; i++) {
                     WHC_VacntView * view = [WHC_VacntView new];
-                    view.backgroundColor = self.backgroundColor;
+                    view.backgroundColor = [UIColor clearColor];
                     [self addSubview:view];
                 }
                 if (_lastRowVacantCount > 0) {
@@ -332,6 +602,8 @@ WHC_GOTO:
                 }
                 UIView * frontRowView = nil;
                 UIView * frontColumnView = nil;
+                
+                WHC_StackViewLineView * columnLineView = nil;
                 for (NSInteger row = 0; row < rowCount; row++) {
                     UIView * nextRowView = nil;
                     UIView * rowView = subViews[row * self.whc_Column];
@@ -339,42 +611,122 @@ WHC_GOTO:
                     if (nextRow < count) {
                         nextRowView = subViews[nextRow];
                     }
+                    WHC_StackViewLineView * rowLineView = nil;
+                    if (self.whc_SegmentLineSize > 0.0 && row > 0) {
+                        rowLineView = [self makeLine];
+                        [self addSubview:rowLineView];
+                        [rowLineView whc_LeftSpace:self.whc_SegmentLinePadding];
+                        [rowLineView whc_RightSpace:self.whc_SegmentLinePadding];
+                        [rowLineView whc_Height:self.whc_SegmentLineSize];
+                        [rowLineView whc_TopSpace:self.whc_VSpace / 2.0 toView:frontRowView];
+                    }
                     for (NSInteger column = 0; column < self.whc_Column; column++) {
                         index = row * self.whc_Column + column;
                         UIView * view = subViews[index];
                         UIView * nextColumnView = nil;
+                        if (column > 0 && self.whc_SegmentLineSize > 0.0) {
+                            columnLineView = [self makeLine];
+                            [self addSubview:columnLineView];
+                            [columnLineView whc_LeftSpace:self.whc_HSpace / 2.0 toView:frontColumnView];
+                            [columnLineView whc_TopSpace:self.whc_SegmentLinePadding];
+                            [columnLineView whc_BottomSpace:self.whc_SegmentLinePadding];
+                            [columnLineView whc_Width:self.whc_SegmentLineSize];
+                        }
                         if (column < self.whc_Column - 1 && index < count) {
                             nextColumnView = subViews[index + 1];
                         }
                         if (row == 0) {
                             [view whc_TopSpace:self.whc_Edge.top];
                         }else {
-                            [view whc_TopSpace:self.whc_VSpace toView:frontRowView];
+                            if (rowLineView) {
+                                [view whc_TopSpace:self.whc_VSpace / 2.0 toView:rowLineView];
+                            }else {
+                                [view whc_TopSpace:self.whc_VSpace toView:frontRowView];
+                            }
                         }
                         if (column == 0) {
                             [view whc_LeftSpace:self.whc_Edge.left];
                         }else {
-                            [view whc_LeftSpace:self.whc_HSpace toView:frontColumnView];
+                            if (columnLineView) {
+                                [view whc_LeftSpace:self.whc_HSpace / 2.0 toView:columnLineView];
+                            }else {
+                                [view whc_LeftSpace:self.whc_HSpace toView:frontColumnView];
+                            }
+                            
                         }
                         if (nextRowView) {
-                            if (_autoHeight && [view isKindOfClass:[UIImageView class]]) {
-                                [view whc_Height:_elementHeight];
+                            if (self.whc_SubViewHeight > 0) {
+                                [view whc_Height:self.whc_SubViewHeight];
                             }else {
-                                [view whc_HeightEqualView:nextRowView
-                                                    ratio:view.whc_HeightWeight / nextRowView.whc_HeightWeight];
+                                if (_whc_ElementHeightWidthRatio > 0) {
+                                    [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
+                                }else {
+                                    if (_autoHeight) {
+                                        [view whc_heightAuto];
+                                    }else {
+                                        [view whc_HeightEqualView:nextRowView
+                                                            ratio:view.whc_HeightWeight / nextRowView.whc_HeightWeight];
+                                    }
+                                }
                             }
                         }else {
-                            if ([view isKindOfClass:[UIImageView class]] && _autoHeight) {
-                                [view whc_Height:_elementHeight];
+                            if (self.whc_SubViewHeight > 0) {
+                                [view whc_Height:self.whc_SubViewHeight];
+                                if (_autoHeight) {
+                                    [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                                }
                             }else {
-                                [view whc_BottomSpace:self.whc_Edge.bottom];
+                                if (_whc_ElementHeightWidthRatio > 0) {
+                                    [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
+                                    if (_autoHeight) {
+                                        [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                                    }
+                                }else {
+                                    if (_autoHeight) {
+                                        [view whc_heightAuto];
+                                        [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                                    }else {
+                                        [view whc_BottomSpace:self.whc_Edge.bottom];
+                                    }
+                                }
                             }
                         }
                         if (nextColumnView) {
-                            [view whc_WidthEqualView:nextColumnView
-                                               ratio:view.whc_WidthWeight / nextColumnView.whc_WidthWeight];
+                            if (self.whc_SubViewWidth > 0) {
+                                [view whc_Width:self.whc_SubViewWidth];
+                            }else {
+                                if (_whc_ElementWidthHeightRatio > 0) {
+                                    [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
+                                }else {
+                                    if (_autoWidth) {
+                                        [view whc_WidthAuto];
+                                    }else {
+                                        [view whc_WidthEqualView:nextColumnView
+                                                       ratio:view.whc_WidthWeight / nextColumnView.whc_WidthWeight];
+                                    }
+                                }
+                            }
                         }else {
-                            [view whc_RightSpace:self.whc_Edge.right];
+                            if (self.whc_SubViewWidth > 0) {
+                                [view whc_Width:self.whc_SubViewWidth];
+                                if (_autoWidth) {
+                                    [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                                }
+                            }else {
+                                if (_whc_ElementWidthHeightRatio > 0) {
+                                    [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
+                                    if (_autoWidth) {
+                                        [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                                    }
+                                }else {
+                                    if (_autoWidth) {
+                                        [view whc_WidthAuto];
+                                        [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                                    }else {
+                                        [view whc_RightSpace:self.whc_Edge.right];
+                                    }
+                                }
+                            }
                         }
                         frontColumnView = view;
                         if ([frontColumnView isKindOfClass:[WHC_StackView class]]) {

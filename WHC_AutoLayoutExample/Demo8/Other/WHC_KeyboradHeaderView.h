@@ -16,8 +16,12 @@
  *************************************************************/
 #import <UIKit/UIKit.h>
 
-
 @interface WHC_KeyboradHeaderView : UIView
+
+@property (nonatomic, copy) void(^keyboardDidShow)();
+@property (nonatomic, copy) void(^keyboardWillShow)();
+@property (nonatomic, copy) void(^keyboardWillHide)();
+@property (nonatomic, copy) void(^keyboardDidHide)();
 
 + (CGFloat)height;
 
