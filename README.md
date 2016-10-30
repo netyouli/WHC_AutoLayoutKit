@@ -127,8 +127,7 @@ override func viewDidLoad() {
 
     /// 配置StackView
     stackView.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10)  // 内边距
-    stackView.whc_Orientation = .Horizontal                // 自动横向布局
-    stackView.whc_Column = 4                               // 一行4列
+    stackView.whc_Orientation = .All                       // 自动横向垂直布局
     stackView.whc_HSpace = 10                              // 子视图横向间隙
     stackView.whc_VSpace = 10                              // 子视图垂直间隙
 
@@ -150,7 +149,7 @@ override func viewDidLoad() {
 
 ### 部分WHC_AutoLayoutKit demo展示
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
-![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png)
+![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/g.png)
 
 ## <a id="期待"></a>期待
 
