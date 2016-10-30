@@ -148,8 +148,10 @@ override func viewDidLoad() {
 ```
 
 ### 部分WHC_AutoLayoutKit demo展示
+
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
-![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/g.png)
+
+<img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png" width = "375"><img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/g.png" width = "375">
 
 ## <a id="期待"></a>期待
 
