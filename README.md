@@ -6,7 +6,7 @@ WHC_AutoLayoutKit
 简介
 ==============
 -  布局Api采用链式调用(快捷方便)
--  提供《Objective-C,Swift2.3,Swift3.0》三种语言版本库
+-  提供【Objective-C】【Swift2.3】【Swift3.0】三种语言版本库
 -  包含一行代码计算UITableViewCell高度模块
 -  包含WHC_StackView模块(目的替代系统UIStackView)
 -  Version: 2.6
@@ -18,8 +18,20 @@ WHC_AutoLayoutKit
 * iOS 6.0 or later
 * Xcode 8.0 or later
 
+集成
+==============
+* 使用CocoaPods:
+  - **Objective-C**: pod 'WHC_AutoLayoutKit', '~> 2.6.0'
+  - **Swift2.3**: pod 'WHC_AutoLayoutKit(Swift2.3)', '~> 1.0.0'
+  - **Swift3.0**: pod 'WHC_AutoLayoutKit(Swift)', '~> 1.0.0'
+* 手工集成:
+  - **Objective-C**: 导入文件夹WHC_AutoLayoutKit(OC)
+  - **Swift2.3**: 导入文件夹WHC_AutoLayoutKit(Swift2.3)
+  - **Swift3.0**: 导入文件夹WHC_AutoLayoutKit(Swift3.0)
 
-#### ObjectiveC版自动布局库使用范例
+使用
+==============
+* Objective-C版
 ```objective-c
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,7 +45,7 @@ WHC_AutoLayoutKit
 }
 ```
 
-#### Swift版自动布局使用范例
+* Swift版
 ```swift
 override func viewDidLoad() {
     super.viewDidLoad()
