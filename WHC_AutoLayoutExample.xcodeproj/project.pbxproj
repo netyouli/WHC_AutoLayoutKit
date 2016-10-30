@@ -52,6 +52,8 @@
 		C3FEAF451C8697F4008E1E97 /* DemoVC7.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEAF431C8697F4008E1E97 /* DemoVC7.m */; };
 		C3FEAF461C8697F4008E1E97 /* DemoVC7.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */; };
 		FECDAB4F1DC594A900B510AA /* UIView+WHC_Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = FECDAB4E1DC594A900B510AA /* UIView+WHC_Frame.m */; };
+		FECDAB7B1DC628D900B510AA /* WHC_AutoLayoutKit(Swift).podspec in Resources */ = {isa = PBXBuildFile; fileRef = FECDAB791DC628D900B510AA /* WHC_AutoLayoutKit(Swift).podspec */; };
+		FECDAB7C1DC628D900B510AA /* WHC_AutoLayoutKit(Swift2.3).podspec in Resources */ = {isa = PBXBuildFile; fileRef = FECDAB7A1DC628D900B510AA /* WHC_AutoLayoutKit(Swift2.3).podspec */; };
 		FEE278501D325BF600FE0B80 /* UITableViewCell+WHC_AutoHeightForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2784B1D325BF600FE0B80 /* UITableViewCell+WHC_AutoHeightForCell.m */; };
 		FEE278511D325BF600FE0B80 /* UIView+WHC_AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2784D1D325BF600FE0B80 /* UIView+WHC_AutoLayout.m */; };
 		FEE278521D325BF600FE0B80 /* WHC_StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2784F1D325BF600FE0B80 /* WHC_StackView.m */; };
@@ -125,6 +127,8 @@
 		C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoVC7.xib; sourceTree = "<group>"; };
 		FECDAB4D1DC594A900B510AA /* UIView+WHC_Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WHC_Frame.h"; sourceTree = "<group>"; };
 		FECDAB4E1DC594A900B510AA /* UIView+WHC_Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WHC_Frame.m"; sourceTree = "<group>"; };
+		FECDAB791DC628D900B510AA /* WHC_AutoLayoutKit(Swift).podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "WHC_AutoLayoutKit(Swift).podspec"; sourceTree = "<group>"; };
+		FECDAB7A1DC628D900B510AA /* WHC_AutoLayoutKit(Swift2.3).podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "WHC_AutoLayoutKit(Swift2.3).podspec"; sourceTree = "<group>"; };
 		FEE2784A1D325BF600FE0B80 /* UITableViewCell+WHC_AutoHeightForCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+WHC_AutoHeightForCell.h"; sourceTree = "<group>"; };
 		FEE2784B1D325BF600FE0B80 /* UITableViewCell+WHC_AutoHeightForCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+WHC_AutoHeightForCell.m"; sourceTree = "<group>"; };
 		FEE2784C1D325BF600FE0B80 /* UIView+WHC_AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WHC_AutoLayout.h"; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 		C3068BC01C8418F000F88455 = {
 			isa = PBXGroup;
 			children = (
+				FECDAB791DC628D900B510AA /* WHC_AutoLayoutKit(Swift).podspec */,
+				FECDAB7A1DC628D900B510AA /* WHC_AutoLayoutKit(Swift2.3).podspec */,
 				C3F812301C8FCC6A003821AD /* WHC_AutoLayoutKit.podspec */,
 				C3FEAF471C86AD37008E1E97 /* Gif */,
 				C3068C0F1C84271300F88455 /* README.md */,
@@ -436,8 +442,10 @@
 				C3068BD91C8418F000F88455 /* Assets.xcassets in Resources */,
 				C307EB8D1C914470008D974A /* LikeCmtBg.png in Resources */,
 				C307EB821C914470008D974A /* pic0.jpg in Resources */,
+				FECDAB7B1DC628D900B510AA /* WHC_AutoLayoutKit(Swift).podspec in Resources */,
 				C307EB481C912306008D974A /* me.jpg in Resources */,
 				C307EB801C914470008D974A /* AlbumReflashIcon.png in Resources */,
+				FECDAB7C1DC628D900B510AA /* WHC_AutoLayoutKit(Swift2.3).podspec in Resources */,
 				C307EB811C914470008D974A /* pbg.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

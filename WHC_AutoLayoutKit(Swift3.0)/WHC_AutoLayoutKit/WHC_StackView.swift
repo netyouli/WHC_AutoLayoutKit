@@ -26,7 +26,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.0)
+// VERSION:(2.6)
 
 import UIKit
 
@@ -50,7 +50,7 @@ extension UITextField {
     /// 文字左边距
     public var whc_LeftPadding: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldLeftPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldLeftPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
             let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldLeftPadding)
@@ -64,7 +64,7 @@ extension UITextField {
     /// 文字右边距
     public var whc_RightPadding: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldRightPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldRightPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
             let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldRightPadding)
@@ -78,7 +78,7 @@ extension UITextField {
     /// 文字顶边距
     public var whc_TopPadding: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldTopPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldTopPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
             let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldTopPadding)
@@ -92,7 +92,7 @@ extension UITextField {
     /// 文字底边距
     public var whc_BottomPadding: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldBottomPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kFieldBottomPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         
         get {
@@ -147,7 +147,7 @@ extension UILabel {
     /// 文字左边距
     public var whc_LeftPadding: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kLeftPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kLeftPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
             let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kLeftPadding)
@@ -161,7 +161,7 @@ extension UILabel {
     /// 文字右边距
     public var whc_RightPadding: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kRightPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kRightPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
             let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kRightPadding)
@@ -175,7 +175,7 @@ extension UILabel {
     /// 文字顶边距
     public var whc_TopPadding: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kTopPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kTopPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         get {
             let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kTopPadding)
@@ -189,7 +189,7 @@ extension UILabel {
     /// 文字底边距
     public var whc_BottomPadding: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kBottomPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kBottomPadding, NSNumber(value: Float(newValue) as Float), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         
         get {
@@ -208,7 +208,7 @@ extension UILabel {
         if WHC_LabelLoad.token == 0 {
             WHC_LabelLoad.token = 1
             let drawTextInRect = class_getInstanceMethod(self, #selector(UILabel.drawText(in:)))
-            let myDrawTextInRect = class_getInstanceMethod(self, #selector(UILabel.myDrawText(in:)))
+            let myDrawTextInRect = class_getInstanceMethod(self, #selector(UILabel.myDrawTextInRect(_:)))
             method_exchangeImplementations(drawTextInRect, myDrawTextInRect)
         }
     }
@@ -223,20 +223,20 @@ extension UILabel {
     
     public override func whc_WidthAuto() -> UIView {
         if whc_LeftPadding + whc_RightPadding != 0 {
-            return self.whc_Width(calcTextSize().width + whc_LeftPadding + whc_RightPadding + 0.5)
+            return self.whc_Width(calcTextSize().width + whc_LeftPadding + whc_RightPadding + 1)
         }
         return super.whc_WidthAuto()
     }
     
     public override func whc_HeightAuto() -> UIView {
         if whc_TopPadding + whc_BottomPadding != 0 {
-            return self.whc_Height(calcTextSize().height + whc_TopPadding + whc_BottomPadding + 0.5)
+            return self.whc_Height(calcTextSize().height + whc_TopPadding + whc_BottomPadding + 1)
         }
         return super.whc_HeightAuto()
     }
     
-    @objc fileprivate func myDrawText(in rect: CGRect) {
-        self.myDrawText(in: UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(whc_TopPadding, whc_LeftPadding, whc_BottomPadding, whc_RightPadding)))
+    @objc fileprivate func myDrawTextInRect(_ rect: CGRect) {
+        self.myDrawTextInRect(UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(whc_TopPadding, whc_LeftPadding, whc_BottomPadding, whc_RightPadding)))
     }
 }
 
@@ -244,7 +244,7 @@ extension UIView {
     /// 宽度权重
     public var whc_WidthWeight: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kWidthWeight, newValue, .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kWidthWeight, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         
         get {
@@ -259,7 +259,7 @@ extension UIView {
     /// 高度权重
     public var whc_HeightWeight: CGFloat {
         set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kHeightWeight, newValue, .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kHeightWeight, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         
         get {
@@ -282,25 +282,23 @@ public enum WHC_LayoutOrientationOptions {
 }
 
 open class WHC_StackView: UIView {
-
-    class WHC_VacntView: UIView {
-        
-    }
+    fileprivate class WHC_StackViewLineView: UIView {}
+    fileprivate class WHC_VacntView: UIView {}
     
-    fileprivate var lastRowVacantCount = 0
-    fileprivate var autoHeight = false
-    fileprivate var autoWidth = false
+    fileprivate lazy var lastRowVacantCount = 0
+    fileprivate lazy var autoHeight = false
+    fileprivate lazy var autoWidth = false
     
     /// StackView列数
-    open var whc_Column = 0
+    open lazy var whc_Column = 1
     /// StackView内边距
-    open var whc_Edge = UIEdgeInsets.zero
+    open lazy var whc_Edge = UIEdgeInsets.zero
     /// StackView子视图横向间隙
-    open var whc_HSpace = CGFloat(0)
+    open lazy var whc_HSpace = CGFloat(0)
     /// StackView子视图垂直间隙
-    open var whc_VSpace = CGFloat(0)
-    /// StackView子视图高宽比(目前只针对图片视图)
-    open var whc_HeightWidthRatio = CGFloat(0)
+    open lazy var whc_VSpace = CGFloat(0)
+    /// StackView布局方向
+    open lazy var whc_Orientation = WHC_LayoutOrientationOptions.horizontal
     /// StackView子视图个数
     open var whc_SubViewCount: Int {
         if self.whc_Orientation == .all {
@@ -309,7 +307,21 @@ open class WHC_StackView: UIView {
         return self.subviews.count
     }
     
-    open var whc_Orientation = WHC_LayoutOrientationOptions.horizontal
+    /// 子元素高宽比
+    open lazy var whc_ElementHeightWidthRatio: CGFloat = 0
+    /// 子元素宽高比
+    open lazy var whc_ElementWidthHeightRatio: CGFloat = 0
+    
+    /// 子视图固定宽度
+    open lazy var whc_SubViewWidth: CGFloat = 0
+    /// 子视图固定高度
+    open lazy var whc_SubViewHeight: CGFloat = 0
+    /// 设置分割线尺寸
+    open lazy var whc_SegmentLineSize: CGFloat = 0
+    /// 设置分割线内边距
+    open lazy var whc_SegmentLinePadding: CGFloat = 0
+    /// 设置分割线的颜色
+    open lazy var whc_SegmentLineColor = UIColor(white: 0.9, alpha: 1.0)
     
     open override func whc_WidthAuto() -> UIView {
         autoWidth = true
@@ -335,106 +347,236 @@ open class WHC_StackView: UIView {
         runStackLayoutEngine()
     }
     
+    /// 移除StackView上所有子视图
+    open func whc_removeAllSubviews() {
+        for subView in self.subviews {
+            subView.removeFromSuperview()
+        }
+    }
+    
+    fileprivate func makeLine() -> WHC_StackViewLineView {
+        let lineView = WHC_StackViewLineView()
+        lineView.backgroundColor = whc_SegmentLineColor
+        return lineView
+    }
+    
+    fileprivate func removeAllSegmentLine() {
+        for subView in self.subviews {
+            if subView is WHC_StackViewLineView {
+                subView.removeFromSuperview()
+            }
+        }
+    }
+    
+    /// 布局引擎
     fileprivate func runStackLayoutEngine() {
         var currentSubViews = self.subviews
         var count = currentSubViews.count
-        if count == 0 {
-            return
-        }
+        if count == 0 {return}
         var toView: UIView!
         switch whc_Orientation {
-        case .horizontal:
+        case .horizontal: /// 横向布局
             for i in 0 ..< count {
                 let view = currentSubViews[i]
                 let nextView: UIView! = i < count - 1 ? currentSubViews[i + 1] : nil
                 if i == 0 {
-                    view.whc_Left(whc_Edge.left).whc_Top(whc_Edge.top)
+                    view.whc_Left(whc_Edge.left)
                 }else {
-                    view.whc_Left(whc_HSpace, toView: toView).whc_Top(whc_Edge.top)
+                    if whc_SegmentLineSize > 0 {
+                        let lineView = makeLine()
+                        self.addSubview(lineView)
+                        lineView.whc_Top(whc_SegmentLinePadding)
+                        lineView.whc_Bottom(whc_SegmentLinePadding)
+                        lineView.whc_Left(whc_HSpace / 2.0 , toView: toView)
+                        lineView.whc_Width(whc_SegmentLineSize)
+                        view.whc_Left(whc_HSpace / 2.0, toView: lineView)
+                    }else {
+                        view.whc_Left(whc_HSpace, toView: toView)
+                    }
                 }
+                view.whc_Top(whc_Edge.top)
                 if nextView != nil {
-                    if autoHeight {
-                        view.whc_HeightAuto()
+                    if whc_SubViewWidth > 0 {
+                        view.whc_Width(whc_SubViewWidth)
                     }else {
-                        view.whc_Bottom(whc_Edge.bottom)
+                        if whc_ElementWidthHeightRatio > 0 {
+                            view.whc_WidthHeightRatio(whc_ElementWidthHeightRatio)
+                        }else {
+                            if autoWidth {
+                                view.whc_WidthAuto()
+                            }else {
+                                view.whc_WidthEqual(nextView, ratio: view.whc_WidthWeight / nextView.whc_WidthWeight)
+                            }
+                        }
                     }
-                    if autoWidth {
-                        view.whc_WidthAuto()
+                    if whc_SubViewHeight > 0 {
+                        view.whc_Height(whc_SubViewHeight)
                     }else {
-                        view.whc_WidthEqual(nextView, ratio: view.whc_WidthWeight / nextView.whc_WidthWeight)
+                        if whc_ElementHeightWidthRatio > 0 {
+                            view.whc_HeightWidthRatio(whc_ElementHeightWidthRatio)
+                        }else {
+                            if autoHeight {
+                                view.whc_HeightAuto()
+                            }else {
+                                view.whc_Bottom(whc_Edge.bottom)
+                            }
+                        }
                     }
                 }else {
-                    if autoHeight {
-                        view.whc_HeightAuto()
-                        .whc_Bottom(whc_Edge.bottom, keepHeightConstraint: true)
+                    if whc_SubViewWidth > 0 {
+                        view.whc_Width(whc_SubViewWidth)
+                        if autoWidth {
+                            view.whc_Right(whc_Edge.right , keepWidthConstraint: true)
+                        }
                     }else {
-                        view.whc_Bottom(whc_Edge.bottom)
+                        if whc_ElementWidthHeightRatio > 0 {
+                            view.whc_WidthHeightRatio(whc_ElementWidthHeightRatio)
+                            if autoWidth {
+                                view.whc_Right(whc_Edge.right , keepWidthConstraint:true)
+                            }
+                        }else {
+                            if autoWidth {
+                                view.whc_WidthAuto()
+                                view.whc_Right(whc_Edge.right , keepWidthConstraint:true)
+                            }else {
+                                view.whc_Right(whc_Edge.right)
+                            }
+                        }
                     }
-                    if autoWidth {
-                        view.whc_WidthAuto()
-                        .whc_Right(whc_Edge.right, keepWidthConstraint: true)
+                    if whc_SubViewHeight > 0 {
+                        view.whc_Height(whc_SubViewHeight)
+                        if autoHeight {
+                            view.whc_Bottom(whc_Edge.bottom , keepHeightConstraint:true)
+                        }
                     }else {
-                        view.whc_Right(whc_Edge.right)
+                        if whc_ElementHeightWidthRatio > 0 {
+                            view.whc_HeightWidthRatio(whc_ElementHeightWidthRatio)
+                            if autoHeight {
+                                view.whc_Bottom(whc_Edge.bottom , keepHeightConstraint:true)
+                            }
+                        }else {
+                            if autoHeight {
+                                view.whc_HeightAuto()
+                                view.whc_Bottom(whc_Edge.bottom ,keepHeightConstraint:true)
+                            }else {
+                                view.whc_Bottom(whc_Edge.bottom)
+                            }
+                        }
                     }
                 }
-                toView = view
+                toView = view;
                 if toView is WHC_StackView {
                     (toView as! WHC_StackView).whc_StartLayout()
                 }
             }
-        case .vertical:
+        case .vertical: /// 垂直布局
             for i in 0 ..< count {
-                let view = currentSubViews[i]
-                let nextView: UIView! = i < count - 1 ? currentSubViews[i + 1] : nil
+                let view = currentSubViews[i];
+                let nextView: UIView! = i < count - 1 ? currentSubViews[i + 1] : nil;
                 if i == 0 {
-                    view.whc_Left(whc_Edge.left).whc_Top(whc_Edge.top)
+                    view.whc_Top(whc_Edge.top)
                 }else {
-                    view.whc_Left(whc_Edge.left).whc_Top(whc_VSpace, toView: toView)
+                    if whc_SegmentLineSize > 0.0 {
+                        let lineView = makeLine()
+                        self.addSubview(lineView)
+                        lineView.whc_Left(whc_SegmentLinePadding)
+                        lineView.whc_Right(whc_SegmentLinePadding)
+                        lineView.whc_Height(whc_SegmentLineSize)
+                        lineView.whc_Top(whc_VSpace / 2.0 , toView:toView)
+                        view.whc_Top(whc_VSpace / 2.0 , toView:lineView)
+                    }else {
+                        view.whc_Top(whc_VSpace ,toView:toView)
+                    }
                 }
+                view.whc_Left(whc_Edge.left)
                 if nextView != nil {
-                    if autoWidth {
-                        view.whc_WidthAuto()
+                    if whc_SubViewWidth > 0 {
+                        view.whc_Width(whc_SubViewWidth)
                     }else {
-                        view.whc_Right(whc_Edge.right)
+                        if whc_ElementWidthHeightRatio > 0 {
+                            view.whc_WidthHeightRatio(whc_ElementWidthHeightRatio)
+                        }else {
+                            if autoWidth {
+                                view.whc_WidthAuto()
+                            }else {
+                                view.whc_Right(whc_Edge.right)
+                            }
+                        }
                     }
-                    if autoHeight {
-                        view.whc_HeightAuto()
+                    if whc_SubViewHeight > 0 {
+                        view.whc_Height(whc_SubViewHeight)
                     }else {
-                        view.whc_HeightEqual(nextView, ratio: view.whc_HeightWeight / nextView.whc_HeightWeight)
+                        if whc_ElementHeightWidthRatio > 0 {
+                            view.whc_HeightWidthRatio(whc_ElementHeightWidthRatio)
+                        }else {
+                            if autoHeight {
+                                view.whc_HeightAuto()
+                            }else {
+                                view.whc_WidthEqual(nextView, ratio: view.whc_HeightWeight / nextView.whc_HeightWeight)
+                            }
+                        }
                     }
                 }else {
-                    if autoWidth {
-                        view.whc_WidthAuto()
-                        .whc_Right(whc_Edge.right, keepWidthConstraint: true)
+                    if whc_SubViewWidth > 0 {
+                        view.whc_Width(whc_SubViewWidth)
+                        if autoWidth {
+                            view.whc_Right(whc_Edge.right, keepWidthConstraint:true)
+                        }
                     }else {
-                        view.whc_Right(whc_Edge.right)
+                        if whc_ElementWidthHeightRatio > 0 {
+                            view.whc_WidthHeightRatio(whc_ElementWidthHeightRatio)
+                            if autoWidth {
+                                view.whc_Right(whc_Edge.right, keepWidthConstraint:true)
+                            }
+                        }else {
+                            if autoWidth {
+                                view.whc_WidthAuto()
+                                view.whc_Right(whc_Edge.right, keepWidthConstraint:true)
+                            }else {
+                                view.whc_Right(whc_Edge.right)
+                            }
+                        }
                     }
-                    if autoHeight {
-                        view.whc_HeightAuto()
-                        .whc_Bottom(whc_Edge.bottom, keepHeightConstraint: true)
+                    if whc_SubViewHeight > 0 {
+                        view.whc_Height(whc_SubViewHeight)
+                        if autoHeight {
+                            view.whc_Bottom(whc_Edge.bottom, keepHeightConstraint:true)
+                        }
                     }else {
-                        view.whc_Bottom(whc_Edge.bottom)
+                        if whc_ElementHeightWidthRatio > 0 {
+                            view.whc_HeightWidthRatio(whc_ElementHeightWidthRatio)
+                            if autoHeight {
+                                view.whc_Bottom(whc_Edge.bottom, keepHeightConstraint:true)
+                            }
+                        }else {
+                            if autoHeight {
+                                view.whc_HeightAuto()
+                                view.whc_Bottom(whc_Edge.bottom, keepHeightConstraint:true)
+                            }else {
+                                view.whc_Bottom(whc_Edge.bottom)
+                            }
+                        }
                     }
                 }
-                toView = view
+                toView = view;
                 if toView is WHC_StackView {
                     (toView as! WHC_StackView).whc_StartLayout()
                 }
             }
-        case .all:
+        case .all: // 横向垂直很混布局
             for view in self.subviews {
                 if view is WHC_VacntView {
                     view.removeFromSuperview()
                 }
             }
-            currentSubViews = self.subviews
-            count = currentSubViews.count
-            let rowCount = count / whc_Column + ((count % whc_Column) == 0 ? 0 : 1)
-            var index = 0
-            lastRowVacantCount = rowCount * whc_Column - count
+            currentSubViews = self.subviews;
+            count = currentSubViews.count;
+            let rowCount = count / self.whc_Column + (count % self.whc_Column == 0 ? 0 : 1);
+            var index = 0;
+            lastRowVacantCount = rowCount * whc_Column - count;
             for _ in 0 ..< lastRowVacantCount {
                 let view = WHC_VacntView()
-                view.backgroundColor = self.backgroundColor
+                view.backgroundColor = UIColor.clear
                 self.addSubview(view)
             }
             if lastRowVacantCount > 0 {
@@ -443,56 +585,116 @@ open class WHC_StackView: UIView {
             }
             var frontRowView: UIView!
             var frontColumnView: UIView!
+            
+            var columnLineView: WHC_StackViewLineView!
             for row in 0 ..< rowCount {
                 var nextRowView: UIView!
-                let rowView = currentSubViews[row * whc_Column]
-                let nextRow = (row + 1) * whc_Column
+                let rowView = currentSubViews[row * self.whc_Column]
+                let nextRow = (row + 1) * self.whc_Column
                 if nextRow < count {
                     nextRowView = currentSubViews[nextRow]
                 }
+                var rowLineView: WHC_StackViewLineView!
+                if whc_SegmentLineSize > 0.0 && row > 0 {
+                    rowLineView = makeLine()
+                    self.addSubview(rowLineView)
+                    rowLineView.whc_Left(whc_SegmentLinePadding)
+                    rowLineView.whc_Right(whc_SegmentLinePadding)
+                    rowLineView.whc_Height(whc_SegmentLineSize)
+                    rowLineView.whc_Top(whc_VSpace / 2.0 , toView:frontRowView)
+                }
                 for column in 0 ..< whc_Column {
-                    index = row * whc_Column + column
-                    let view = currentSubViews[index]
+                    index = row * self.whc_Column + column
+                    let view  = currentSubViews[index]
                     var nextColumnView: UIView!
-                    if column < whc_Column - 1 && index < count {
+                    if column > 0 && whc_SegmentLineSize > 0.0 {
+                        columnLineView = makeLine()
+                        self.addSubview(columnLineView)
+                        columnLineView.whc_Left(whc_HSpace / 2.0 ,toView:frontColumnView)
+                        columnLineView.whc_Top(whc_SegmentLinePadding)
+                        columnLineView.whc_Bottom(whc_SegmentLinePadding)
+                        columnLineView.whc_Width(whc_SegmentLineSize)
+                    }
+                    if column < self.whc_Column - 1 && index < count {
                         nextColumnView = currentSubViews[index + 1]
                     }
                     if row == 0 {
                         view.whc_Top(whc_Edge.top)
                     }else {
-                        view.whc_Top(whc_VSpace, toView: frontRowView)
+                        if rowLineView != nil {
+                            view.whc_Top(whc_VSpace / 2.0, toView:rowLineView)
+                        }else {
+                            view.whc_Top(whc_VSpace , toView:frontRowView)
+                        }
                     }
                     if column == 0 {
                         view.whc_Left(whc_Edge.left)
                     }else {
-                        view.whc_Left(whc_HSpace, toView: frontColumnView)
+                        if columnLineView != nil {
+                            view.whc_Left(whc_HSpace / 2.0, toView:columnLineView)
+                        }else {
+                            view.whc_Left(whc_HSpace , toView:frontColumnView)
+                        }
+                        
                     }
                     if nextRowView != nil {
-                        if autoHeight {
-                            view.whc_HeightAuto()
+                        if whc_SubViewHeight > 0 {
+                            view.whc_Height(whc_SubViewHeight)
                         }else {
-                            view.whc_HeightEqual(nextRowView, ratio: view.whc_HeightWeight / nextRowView.whc_HeightWeight)
+                            if whc_ElementHeightWidthRatio > 0 {
+                                view.whc_HeightWidthRatio(whc_ElementHeightWidthRatio)
+                            }else {
+                                if autoHeight {
+                                    view.whc_HeightAuto()
+                                }else {
+                                    view.whc_HeightEqual(nextRowView ,
+                                        ratio:view.whc_HeightWeight / nextRowView.whc_HeightWeight)
+                                }
+                            }
                         }
                     }else {
-                        if autoHeight {
-                            view.whc_HeightAuto()
-                            .whc_Bottom(whc_Edge.bottom, keepHeightConstraint: true)
+                        if whc_SubViewHeight > 0 {
+                            view.whc_Height(whc_SubViewHeight)
                         }else {
-                            view.whc_Bottom(whc_Edge.bottom)
+                            if whc_ElementHeightWidthRatio > 0 {
+                                view.whc_HeightWidthRatio(whc_ElementHeightWidthRatio)
+                            }else {
+                                if autoHeight {
+                                    view.whc_HeightAuto()
+                                }else {
+                                    view.whc_Bottom(whc_Edge.bottom)
+                                }
+                            }
                         }
                     }
                     if nextColumnView != nil {
-                        if autoWidth {
-                            view.whc_WidthAuto()
+                        if whc_SubViewWidth > 0 {
+                            view.whc_Width(whc_SubViewWidth)
                         }else {
-                            view.whc_WidthEqual(nextColumnView, ratio: view.whc_WidthWeight / nextColumnView.whc_WidthWeight)
+                            if whc_ElementWidthHeightRatio > 0 {
+                                view.whc_WidthHeightRatio(whc_ElementWidthHeightRatio)
+                            }else {
+                                if autoWidth {
+                                    view.whc_WidthAuto()
+                                }else {
+                                    view.whc_WidthEqual(nextColumnView ,
+                                        ratio:view.whc_WidthWeight / nextColumnView.whc_WidthWeight)
+                                }
+                            }
                         }
                     }else {
-                        if autoWidth {
-                            view.whc_WidthAuto()
-                            .whc_Right(whc_Edge.right, keepWidthConstraint: true)
+                        if whc_SubViewWidth > 0 {
+                            view.whc_Width(whc_SubViewWidth)
                         }else {
-                            view.whc_Right(whc_Edge.right)
+                            if whc_ElementWidthHeightRatio > 0 {
+                                view.whc_WidthHeightRatio(whc_ElementWidthHeightRatio)
+                            }else {
+                                if autoWidth {
+                                    view.whc_WidthAuto()
+                                }else {
+                                    view.whc_Right(whc_Edge.right)
+                                }
+                            }
                         }
                     }
                     frontColumnView = view
@@ -500,9 +702,39 @@ open class WHC_StackView: UIView {
                         (frontColumnView as! WHC_StackView).whc_StartLayout()
                     }
                 }
-                frontRowView = rowView
+                frontRowView = rowView;
+            }
+            if autoWidth {
+                self.layoutIfNeeded()
+                var rowLastColumnViewMaxX: CGFloat = 0
+                var rowLastColumnViewMaxXView: UIView!
+                for r in 1 ... rowCount {
+                    let index = r * whc_Column - 1
+                    let maxWidthView = subviews[index]
+                    maxWidthView.layoutIfNeeded()
+                    if maxWidthView.whc_MaxX > rowLastColumnViewMaxX {
+                        rowLastColumnViewMaxX = maxWidthView.whc_MaxX
+                        rowLastColumnViewMaxXView = maxWidthView
+                    }
+                }
+                rowLastColumnViewMaxXView.whc_Right(whc_Edge.right, keepWidthConstraint: true)
+            }
+            
+            if autoHeight {
+                self.layoutIfNeeded()
+                var columnLastRowViewMaxY: CGFloat = 0
+                var columnLastRowViewMaxYView: UIView!
+                for r in 1 ... rowCount {
+                    let index = r * whc_Column - 1
+                    let maxHeightView = subviews[index]
+                    maxHeightView.layoutIfNeeded()
+                    if maxHeightView.whc_MaxY > columnLastRowViewMaxY {
+                        columnLastRowViewMaxY = maxHeightView.whc_MaxY
+                        columnLastRowViewMaxYView = maxHeightView
+                    }
+                }
+                columnLastRowViewMaxYView.whc_Bottom(whc_Edge.bottom, keepHeightConstraint: true)
             }
         }
     }
-
 }
