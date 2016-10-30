@@ -80,10 +80,10 @@ class StackViewVC: UIViewController {
         label4.text = "StackView垂直布局(普通垂直布局)"
         
         // 填充内容
-        stackView1.backgroundColor = UIColor.grayColor()
-        stackView2.backgroundColor = UIColor.grayColor()
-        stackView3.backgroundColor = UIColor.grayColor()
-        stackView4.backgroundColor = UIColor.grayColor()
+        stackView1.backgroundColor = UIColor.whiteColor()
+        stackView2.backgroundColor = UIColor.whiteColor()
+        stackView3.backgroundColor = UIColor.whiteColor()
+        stackView4.backgroundColor = UIColor.whiteColor()
         
         makeStyle1ContentView()
         makeStyle2ContentView()
