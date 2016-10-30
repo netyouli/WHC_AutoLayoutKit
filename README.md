@@ -21,17 +21,17 @@ WHC_AutoLayoutKit
 集成
 ==============
 * 使用CocoaPods:
-  - **Objective-C**: pod 'WHC_AutoLayoutKit', '~> 2.6.0'
-  - **Swift2.3**: pod 'WHC_AutoLayoutKit(Swift2.3)', '~> 1.0.0'
-  - **Swift3.0**: pod 'WHC_AutoLayoutKit(Swift)', '~> 1.0.0'
+  -  **Objective-C**: pod 'WHC_AutoLayoutKit', '~> 2.6.0'
+  -  **Swift2.3**: pod 'WHC_AutoLayoutKit(Swift2.3)', '~> 1.0.0'
+  -  **Swift3.0**: pod 'WHC_AutoLayoutKit(Swift)', '~> 1.0.0'
 * 手工集成:
-  - **Objective-C**: 导入文件夹WHC_AutoLayoutKit(OC)
-  - **Swift2.3**: 导入文件夹WHC_AutoLayoutKit(Swift2.3)
-  - **Swift3.0**: 导入文件夹WHC_AutoLayoutKit(Swift3.0)
+  -  **Objective-C**: 导入文件夹WHC_AutoLayoutKit(OC)
+  -  **Swift2.3**: 导入文件夹WHC_AutoLayoutKit(Swift2.3)
+  -  **Swift3.0**: 导入文件夹WHC_AutoLayoutKit(Swift3.0)
 
 使用
 ==============
-* Objective-C版
+### Objective-C版
 ```objective-c
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,7 +45,7 @@ WHC_AutoLayoutKit
 }
 ```
 
-* Swift版
+### Swift版
 ```swift
 override func viewDidLoad() {
     super.viewDidLoad()
@@ -58,21 +58,21 @@ override func viewDidLoad() {
         .whc_Top(64)
 }
 ```
-#### ObjectiveC版一行代码计算cell高度使用范例
+### ObjectiveC版一行代码计算cell高度使用范例
 ```objective-c
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [DemoVC2Cell whc_CellHeightForIndexPath:indexPath tableView:tableView];
 }
 ```
 
-#### Swift版一行代码计算cell高度使用范例
+### Swift版一行代码计算cell高度使用范例
 ```swift
 func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return UITableViewCell.whc_CellHeightForIndexPath(indexPath, tableView: tableView)
 }
 ```
 
-#### ObjectiveC版StackView使用范例
+### ObjectiveC版StackView使用范例
 ```objective-c
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -107,7 +107,7 @@ func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSInde
 }
 ```
 
-#### Swift版StackView使用范例
+### Swift版StackView使用范例
 
 ```swift
 override func viewDidLoad() {
