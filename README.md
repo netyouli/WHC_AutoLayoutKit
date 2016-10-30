@@ -1,8 +1,7 @@
-# WHC_AutoLayoutKit
+WHC_AutoLayoutKit
 ==============
 -  An use the most simple and powerful open source library automatic layout for iOS.
 -  iOS 平台使用最简单功能强大的自动布局开源库。
-==============
 
 简介
 ==============
@@ -11,7 +10,6 @@
 -  包含一行代码计算UITableViewCell高度模块
 -  包含WHC_StackView模块(目的替代系统UIStackView)
 -  Version: 2.6
-
 -  咨询QQ: 712641411
 -  开发作者: 吴海超
 
