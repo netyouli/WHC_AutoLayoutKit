@@ -1,1 +1,2 @@
 language: objective-c
+xcode_project: WHC_AutoLayoutExample.xcodeproj # path to your xcodeproj folder

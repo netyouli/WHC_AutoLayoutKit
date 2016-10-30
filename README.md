@@ -1,4 +1,5 @@
 WHC_AutoLayoutKit
+[![Build Status](https://travis-ci.org/[netyouli]/[WHC_AutoLayoutKit].png)](https://travis-ci.org/[netyouli]/[WHC_AutoLayoutKit])
 ==============
 -  An use the most simple and powerful open source library automatic layout for iOS.
 -  iOS 平台使用最简单功能最强大的自动布局开源库。
