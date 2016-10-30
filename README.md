@@ -9,6 +9,8 @@ WHC_AutoLayoutKit
 -  提供【Objective-C】【Swift2.3】【Swift3.0】三种语言版本库
 -  包含一行代码计算UITableViewCell高度模块
 -  包含WHC_StackView模块(目的替代系统UIStackView)
+-  支持修改约束优先级
+-  支持删除约束
 -  Version: 2.6
 -  咨询QQ: 712641411
 -  开发作者: 吴海超
@@ -41,7 +43,8 @@ WHC_AutoLayoutKit
     view.whc_LeftSpace(10)
         .whc_TopSpace(10)
         .whc_RightSpaceToView(10,view1)
-        .whc_Height(100);
+        .whc_Height(100)
+        .whc_PriorityLow() /// height低优先级
 }
 ```
 
@@ -56,23 +59,24 @@ override func viewDidLoad() {
         .whc_Right(0)
         .whc_Height(40)
         .whc_Top(64)
+        .whc_PriorityLow() /// top低优先级
 }
 ```
-### ObjectiveC版一行代码计算cell高度使用范例
+### ObjectiveC版一行代码计算cell高度
 ```objective-c
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [DemoVC2Cell whc_CellHeightForIndexPath:indexPath tableView:tableView];
+    return [UITableViewCell whc_CellHeightForIndexPath:indexPath tableView:tableView];
 }
 ```
 
-### Swift版一行代码计算cell高度使用范例
+### Swift版一行代码计算cell高度
 ```swift
 func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return UITableViewCell.whc_CellHeightForIndexPath(indexPath, tableView: tableView)
 }
 ```
 
-### ObjectiveC版StackView使用范例
+### ObjectiveC版WHC_StackView使用
 ```objective-c
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -107,7 +111,7 @@ func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSInde
 }
 ```
 
-### Swift版StackView使用范例
+### Swift版WHC_StackView使用范例
 
 ```swift
 override func viewDidLoad() {
@@ -144,21 +148,16 @@ override func viewDidLoad() {
 }
 ```
 
-#### 未来开发计划
-##### 1.开发更加智能方便的WHC_StackView视图容器组件（正在构建）
-
-#### 升级更新日志
-##### 1.更新升级不常用的api
-##### 2.修复一行代码计算cell高度横竖屏计算的错误的bug
-##### 3.增加Swift版自动布局开源库WHC_AutoLayoutKit
-##### 4.增加新api(OC&Swift)：whc_WidthHeightRatio 和whc_HeightWidthRatio (视图自身宽度与高度的比(CGFloat Ratio))
-##### 5.增加Equal带offset的api如：public func whc_LeftEqual(view:UIView offset:CGFloat) -> UIView
-##### 6.修复xib上当给控件不添加高宽约束时在代码里修改高宽约束无效的bug
-##### 7.修复微信demo点赞cell行计算错误bug
-##### 8.优化自动识别冲突约束处理方式
-##### 9.支持UIView根据子视图高度和宽度自动
-
-#### 部分WHC_AutoLayoutKit demo展示
+### 部分WHC_AutoLayoutKit demo展示
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
 ![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png)
+
+## <a id="期待"></a>期待
+
+- 如果您在使用过程中有任何问题，欢迎issue me! 很乐意为您解答任何相关问题!
+- 与其给我点star，不如向我狠狠地抛来一个BUG！
+- 如果您想要更多的接口来自定义或者建议/意见，欢迎issue me！我会全力满足大家！
+
+## Licenses
+All source code is licensed under the MIT License.
 
