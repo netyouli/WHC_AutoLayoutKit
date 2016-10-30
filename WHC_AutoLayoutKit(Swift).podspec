@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
   s.name         = "WHC_AutoLayoutKit(Swift)"
-  s.version      = "1.0.0"
-  s.summary      = "一行代码搞定xib和storyboard自动布局，最简单的UIStackView自定义，支持Cell和Tableview高度自适应，Label和ScrollView内容自适应，致力于做最简单易用的AutoLayout库。"
+  s.version      = "2.6.1"
+  s.summary      = "Swift3.0版本：一行代码搞定xib和storyboard自动布局，最简单的UIStackView自定义，支持Cell和Tableview高度自适应，Label和ScrollView内容自适应，致力于做最简单易用的AutoLayout库。"
 
   s.homepage     = "https://github.com/netyouli/WHC_AutoLayoutKit"
 
@@ -13,12 +13,9 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.platform     = :ios, "8.0"
 
-  s.source       = { :git => "https://github.com/netyouli/WHC_AutoLayoutKit.git", :tag => "2.6.0"}
+  s.source       = { :git => "https://github.com/netyouli/WHC_AutoLayoutKit.git", :tag => "2.6.1"}
 
-  s.source_files  = "WHC_AutoLayoutKit(Swift3.0)/WHC_AutoLayoutKit/*.{h,m}"
-
-  # s.public_header_files = "Classes/**/*.h"
-
+  s.source_files  = "WHC_AutoLayoutKit(Swift3.0)/WHC_AutoLayoutKit/*.{swift}"
 
   s.requires_arc = true
 

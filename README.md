@@ -24,8 +24,8 @@ WHC_AutoLayoutKit
 ==============
 * 使用CocoaPods:
   -  **Objective-C**: pod 'WHC_AutoLayoutKit', '~> 2.6.0'
-  -  **Swift2.3**: pod 'WHC_AutoLayoutKit(Swift2.3)', '~> 1.0.0'
-  -  **Swift3.0**: pod 'WHC_AutoLayoutKit(Swift)', '~> 1.0.0'
+  -  **Swift2.3**: pod 'WHC_AutoLayoutKit\(Swift2.3\)', '~> 2.6.0'
+  -  **Swift3.0**: pod 'WHC_AutoLayoutKit\(Swift\)', '~> 2.6.1'
 * 手工集成:
   -  **Objective-C**: 导入文件夹WHC_AutoLayoutKit(OC)
   -  **Swift2.3**: 导入文件夹WHC_AutoLayoutKit(Swift2.3)
