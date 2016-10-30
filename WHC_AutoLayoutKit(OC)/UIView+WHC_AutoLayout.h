@@ -26,7 +26,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.0)
+// VERSION:(2.6)
 
 #import <UIKit/UIKit.h>
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
@@ -48,6 +48,16 @@ typedef NS_OPTIONS(NSUInteger, WHC_LayoutTypeOptions) {
     /// 左右类型
     LeftRightType = 1 << 1,
 };
+
+typedef UIView * (^RemoveConstraintAttribute)(NSLayoutAttribute Attribute);
+typedef UIView * (^RemoveConstraintAttributeItem)(NSLayoutAttribute Attribute, UIView * item);
+typedef UIView * (^RemoveConstraintAttributeItemToItem)(NSLayoutAttribute Attribute, UIView * item,UIView * toItem);
+
+typedef UIView * (^PriorityLow)();
+typedef UIView * (^PriorityHigh)();
+typedef UIView * (^PriorityRequired)();
+typedef UIView * (^PriorityFitting)();
+typedef UIView * (^PriorityValue)(CGFloat value);
 
 typedef UIView * (^LeftSpace)(CGFloat value);
 typedef UIView * (^LeftSpaceToView)(CGFloat value , UIView * toView);
@@ -132,6 +142,24 @@ typedef UIView * (^size)(CGSize size);
 @interface UIView (WHC_AutoLayout)
 
 #pragma mark - api version ~ 2.0 -
+
+/// 移除约束(NSLayoutAttribute Attribute)
+@property (nonatomic ,copy , readonly)RemoveConstraintAttribute whc_RemoveConstraint;
+/// 移除约束(NSLayoutAttribute Attribute, UIView * item)
+@property (nonatomic ,copy , readonly)RemoveConstraintAttributeItem whc_RemoveConstraintItem;
+/// 移除约束(NSLayoutAttribute Attribute, UIView * item, UIView toItem)
+@property (nonatomic ,copy , readonly)RemoveConstraintAttributeItemToItem whc_RemoveConstraintItemToItem;
+
+/// 设置当前约束的低优先级
+@property (nonatomic ,copy , readonly)PriorityLow whc_PriorityLow;
+/// 设置当前约束的高优先级
+@property (nonatomic ,copy , readonly)PriorityHigh whc_PriorityHigh;
+/// 设置当前约束的默认优先级
+@property (nonatomic ,copy , readonly)PriorityRequired whc_PriorityRequired;
+/// 设置当前约束的合适优先级
+@property (nonatomic ,copy , readonly)PriorityFitting whc_PriorityFitting;
+/// 设置当前约束的优先级 (CGFloat value): 优先级大小(0-1000)
+@property (nonatomic ,copy , readonly)PriorityValue whc_Priority;
 
 /// 与父视图左边间距(CGFloat value)
 @property (nonatomic ,copy , readonly)LeftSpace whc_LeftSpace;
@@ -274,9 +302,51 @@ typedef UIView * (^size)(CGSize size);
 #pragma mark - api version ~ 1.0 -
 
 /**
- * 说明: 自动调整UiScrollview的ContentSize
+ * 说明:移除约束
+ * @param attribute 约束类型
  */
-- (void)whc_AutoContentSize;
+- (void)whc_RemoveConstraintAttribute:(NSLayoutAttribute)Attribute;
+
+/**
+ * 说明:移除约束
+ * @param attribute 约束类型
+ * @param item 关联第一个约束视图
+ */
+- (void)whc_RemoveConstraintAttribute:(NSLayoutAttribute)Attribute item:(UIView *)item;
+
+/**
+ * 说明:移除约束
+ * @param attribute 约束类型
+ * @param item 关联第一个约束视图
+ * @param toItem 关联第二个约束视图
+ */
+- (void)whc_RemoveConstraintAttribute:(NSLayoutAttribute)Attribute item:(UIView *)item toItem:(UIView *)toItem;
+
+/**
+ * 说明:设置当前约束的低优先级
+ */
+- (void)whc_priorityLow;
+
+/**
+ * 说明:设置当前约束的高优先级
+ */
+- (void)whc_priorityHigh;
+
+/**
+ * 说明:设置当前约束的默认优先级
+ */
+- (void)whc_priorityRequired;
+
+/**
+ * 说明:设置当前约束的合适优先级
+ */
+- (void)whc_priorityFitting;
+
+/**
+ * 说明:设置当前约束的优先级
+ * @param value: 优先级大小(0-1000)
+ */
+- (void)whc_priority:(CGFloat)value;
 
 /**
  * 说明:设置左边距(默认相对父视图)

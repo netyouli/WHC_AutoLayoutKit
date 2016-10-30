@@ -25,9 +25,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.0)
+// VERSION:(2.6)
 
 #import "WHC_StackView.h"
+#import "UIView+WHC_Frame.h"
 #import <objc/runtime.h>
 
 @implementation UIButton (WHC_StackView)
@@ -72,7 +73,7 @@
 }
 
 - (void)setWhc_LeftPadding:(CGFloat)whc_LeftPadding {
-    objc_setAssociatedObject(self, @selector(whc_LeftPadding), @(whc_LeftPadding), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(whc_LeftPadding), @(whc_LeftPadding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self setNeedsDisplay];
 }
 
@@ -82,7 +83,7 @@
 }
 
 - (void)setWhc_TopPadding:(CGFloat)whc_TopPadding {
-    objc_setAssociatedObject(self, @selector(whc_TopPadding), @(whc_TopPadding), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(whc_TopPadding), @(whc_TopPadding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self setNeedsDisplay];
 }
 
@@ -92,7 +93,7 @@
 }
 
 - (void)setWhc_RightPadding:(CGFloat)whc_RightPadding {
-    objc_setAssociatedObject(self, @selector(whc_RightPadding), @(whc_RightPadding), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(whc_RightPadding), @(whc_RightPadding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self setNeedsDisplay];
 }
 
@@ -101,7 +102,7 @@
     return value == nil ? 0 : value.floatValue;
 }
 - (void)setWhc_BottomPadding:(CGFloat)whc_BottomPadding {
-    objc_setAssociatedObject(self, @selector(whc_BottomPadding), @(whc_BottomPadding), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(whc_BottomPadding), @(whc_BottomPadding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self setNeedsDisplay];
 }
 
@@ -118,7 +119,7 @@
 }
 
 - (void)setWhc_VerticalAlignment:(WHC_UILabelVerticalAlignment)whc_VerticalAlignment {
-    objc_setAssociatedObject(self, @selector(whc_VerticalAlignment), @(whc_VerticalAlignment), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(whc_VerticalAlignment), @(whc_VerticalAlignment), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self setNeedsDisplay];
 }
 
@@ -200,7 +201,7 @@
     objc_setAssociatedObject(self,
                              @selector(whc_WidthWeight),
                              @(whc_WidthWeight),
-                             OBJC_ASSOCIATION_RETAIN);
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)whc_WidthWeight {
@@ -215,7 +216,7 @@
     objc_setAssociatedObject(self,
                              @selector(whc_HeightWeight),
                              @(whc_HeightWeight),
-                             OBJC_ASSOCIATION_RETAIN);
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)whc_HeightWeight {
@@ -276,21 +277,7 @@
     objc_setAssociatedObject(self,
                              @selector(whc_WidthWeight),
                              @(whc_WidthWeight),
-                             OBJC_ASSOCIATION_RETAIN);
-}
-
-- (CGFloat)whc_ScreenWidth {
-    id widthId = objc_getAssociatedObject(self, _cmd);
-    CGFloat width = 0;
-    if (widthId) {
-        width = [widthId floatValue];
-        if (width == 0.0) {
-            width = CGRectGetWidth([UIScreen mainScreen].bounds);
-        }
-    }else {
-        width = CGRectGetWidth([UIScreen mainScreen].bounds);
-    }
-    return width;
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)setWhc_ElementHeightWidthRatio:(CGFloat)whc_ElementHeightWidthRatio {
@@ -672,19 +659,12 @@ WHC_GOTO:
                         }else {
                             if (self.whc_SubViewHeight > 0) {
                                 [view whc_Height:self.whc_SubViewHeight];
-                                if (_autoHeight) {
-                                    [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
-                                }
                             }else {
                                 if (_whc_ElementHeightWidthRatio > 0) {
                                     [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
-                                    if (_autoHeight) {
-                                        [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
-                                    }
                                 }else {
                                     if (_autoHeight) {
                                         [view whc_heightAuto];
-                                        [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
                                     }else {
                                         [view whc_BottomSpace:self.whc_Edge.bottom];
                                     }
@@ -709,19 +689,12 @@ WHC_GOTO:
                         }else {
                             if (self.whc_SubViewWidth > 0) {
                                 [view whc_Width:self.whc_SubViewWidth];
-                                if (_autoWidth) {
-                                    [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
-                                }
                             }else {
                                 if (_whc_ElementWidthHeightRatio > 0) {
                                     [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
-                                    if (_autoWidth) {
-                                        [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
-                                    }
                                 }else {
                                     if (_autoWidth) {
                                         [view whc_WidthAuto];
-                                        [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
                                     }else {
                                         [view whc_RightSpace:self.whc_Edge.right];
                                     }
@@ -734,6 +707,38 @@ WHC_GOTO:
                         }
                     }
                     frontRowView = rowView;
+                }
+                
+                if (_autoWidth) {
+                    [self layoutIfNeeded];
+                    CGFloat rowLastColumnViewMaxX = 0;
+                    UIView * rowLastColumnViewMaxXView;
+                    for (NSInteger r = 1; r <= rowCount; r++) {
+                        NSInteger index = r * _whc_Column - 1;
+                        UIView * maxWidthView = self.subviews[index];
+                        [maxWidthView layoutIfNeeded];
+                        if (maxWidthView.whc_maxX > rowLastColumnViewMaxX) {
+                            rowLastColumnViewMaxX = maxWidthView.whc_maxX;
+                            rowLastColumnViewMaxXView = maxWidthView;
+                        }
+                    }
+                    [rowLastColumnViewMaxXView whc_RightSpace:_whc_Edge.right keepWidthConstraint:YES];
+                }
+                
+                if (_autoHeight) {
+                    [self layoutIfNeeded];
+                    CGFloat columnLastRowViewMaxY = 0;
+                    UIView * columnLastRowViewMaxYView;
+                    for (NSInteger r = 1; r <= rowCount; r++) {
+                        NSInteger index = r * _whc_Column - 1;
+                        UIView * maxHeightView = self.subviews[index];
+                        [maxHeightView layoutIfNeeded];
+                        if (maxHeightView.whc_maxY > columnLastRowViewMaxY) {
+                            columnLastRowViewMaxY = maxHeightView.whc_maxY;
+                            columnLastRowViewMaxYView = maxHeightView;
+                        }
+                    }
+                    [columnLastRowViewMaxYView whc_BottomSpace:_whc_Edge.bottom keepHeightConstraint:YES];
                 }
             }
             break;

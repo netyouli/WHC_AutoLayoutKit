@@ -25,7 +25,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.5)
+// VERSION:(2.6)
 
 #import "UIView+WHC_AutoLayout.h"
 #import <objc/runtime.h>
@@ -46,6 +46,86 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 @end
 
 @implementation UIView (WHC_AutoLayout)
+
+- (void)setCurrentConstraint:(NSLayoutConstraint *)currentConstraint {
+    objc_setAssociatedObject(self, @selector(currentConstraint), currentConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)currentConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+#pragma mark - removeConstraint api v2.0 -
+
+- (RemoveConstraintAttribute)whc_RemoveConstraint {
+    __weak typeof(self) weakSelf = self;
+    return ^(NSLayoutAttribute attribute) {
+        [weakSelf whc_RemoveConstraintAttribute:attribute];
+        return weakSelf;
+    };
+}
+
+- (RemoveConstraintAttributeItem)whc_RemoveConstraintItem {
+    __weak typeof(self) weakSelf = self;
+    return ^(NSLayoutAttribute attribute, UIView * item) {
+        if (item == nil) {
+            [weakSelf whc_RemoveConstraintAttribute:attribute];
+        }else {
+            [weakSelf whc_RemoveConstraintAttribute:attribute item:item];
+        }
+        return weakSelf;
+    };
+}
+
+- (RemoveConstraintAttributeItemToItem)whc_RemoveConstraintItemToItem {
+    __weak typeof(self) weakSelf = self;
+    return ^(NSLayoutAttribute attribute, UIView * item, UIView * toItem) {
+        [weakSelf whc_RemoveConstraintAttribute:attribute item:item toItem:toItem];
+        return weakSelf;
+    };
+}
+
+#pragma mark - constraintsPriority api v2.0 -
+
+- (PriorityLow)whc_PriorityLow {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [weakSelf whc_priorityLow];
+        return weakSelf;
+    };
+}
+
+- (PriorityHigh)whc_PriorityHigh {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [weakSelf whc_priorityHigh];
+        return weakSelf;
+    };
+}
+
+- (PriorityRequired)whc_PriorityRequired {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [weakSelf whc_priorityRequired];
+        return weakSelf;
+    };
+}
+
+- (PriorityFitting)whc_PriorityFitting {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [weakSelf whc_priorityFitting];
+        return weakSelf;
+    };
+}
+
+- (PriorityValue)whc_Priority {
+    __weak typeof(self) weakSelf = self;
+    return ^(CGFloat value) {
+        [weakSelf whc_priority:value];
+        return weakSelf;
+    };
+}
 
 #pragma mark - api version 2.0 -
 - (LeftSpace)whc_LeftSpace {
@@ -537,30 +617,77 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
-#pragma mark - api version 1.0 -
-- (void)whc_AutoContentSize {
-    if ([self isKindOfClass:[UIScrollView class]]) {
-        [self layoutIfNeeded];
-        NSArray * subViews = self.subviews;
-        CGFloat contentHeight = 0;
-        CGFloat contentWidth = 0;
-        if (subViews.count > 0) {
-            UIView * bottomView = subViews[0];
-            for (int i = 1; i < subViews.count; i++) {
-                UIView * view = subViews[i];
-                if (CGRectGetMaxY(bottomView.frame) < CGRectGetMaxY(view.frame)) {
-                    contentHeight = CGRectGetMaxY(view.frame);
-                }
-                if (CGRectGetMaxX(bottomView.frame) < CGRectGetMaxX(view.frame)) {
-                    contentWidth = CGRectGetMaxX(view.frame);
-                }
-            }
+#pragma mark - removeConstraint api v1.0 -
+
+- (void)whc_RemoveConstraintAttribute:(NSLayoutAttribute)Attribute {
+    [self.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.firstAttribute == Attribute && obj.secondItem == nil) {
+            [self removeConstraint:obj];
         }
-        ((UIScrollView *)self).contentSize = CGSizeMake(contentWidth, contentHeight);
+    }];
+}
+
+- (void)whc_RemoveConstraintAttribute:(NSLayoutAttribute)Attribute item:(UIView *)item {
+    if (item == nil) {
+        [self whc_RemoveConstraintAttribute:Attribute];
     }else {
-        NSLog(@"whc_AutoContentSize 只对UIScrollview有效");
+        [self.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.firstAttribute == Attribute &&
+                obj.secondItem == self &&
+                obj.firstItem == item) {
+                [self removeConstraint:obj];
+            }
+        }];
     }
 }
+
+- (void)whc_RemoveConstraintAttribute:(NSLayoutAttribute)Attribute item:(UIView *)item toItem:(UIView *)toItem {
+    [self.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.firstAttribute == Attribute &&
+            obj.firstItem == item &&
+            obj.secondItem == toItem) {
+            [self removeConstraint:obj];
+        }
+    }];
+}
+
+#pragma mark - constraintsPriority api v1.0 -
+- (void)whc_priorityLow {
+    NSLayoutConstraint * constraints = [self currentConstraint];
+    if (constraints) {
+        constraints.priority = UILayoutPriorityDefaultLow;
+    }
+}
+
+- (void)whc_priorityHigh {
+    NSLayoutConstraint * constraints = [self currentConstraint];
+    if (constraints) {
+        constraints.priority = UILayoutPriorityDefaultHigh;
+    }
+}
+
+- (void)whc_priorityRequired {
+    NSLayoutConstraint * constraints = [self currentConstraint];
+    if (constraints) {
+        constraints.priority = UILayoutPriorityRequired;
+    }
+}
+
+- (void)whc_priorityFitting {
+    NSLayoutConstraint * constraints = [self currentConstraint];
+    if (constraints) {
+        constraints.priority = UILayoutPriorityFittingSizeLevel;
+    }
+}
+
+- (void)whc_priority:(CGFloat)value {
+    NSLayoutConstraint * constraints = [self currentConstraint];
+    if (constraints) {
+        constraints.priority = value;
+    }
+}
+
+#pragma mark - api version 1.0 -
 
 - (void)whc_LeftSpace:(CGFloat)leftSpace {
     [self whc_ConstraintWithItem:self.superview
@@ -1168,7 +1295,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                                 multiplier:multiplier
                                                   constant:constant];
         [superView addConstraint:constraint];
+        [self setCurrentConstraint:constraint];
     }else {
+        [self setCurrentConstraint:originConstraint];
         if (originConstraint.constant != constant) {
             originConstraint.constant = constant;
         }
@@ -1530,7 +1659,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setRightConstraint:(NSLayoutConstraint *)constraint {
-   objc_setAssociatedObject(self, @selector(rightConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
+   objc_setAssociatedObject(self, @selector(rightConstraint), constraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)rightConstraint {
@@ -1538,7 +1667,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setBottomConstraint:(NSLayoutConstraint *)constraint {
-    objc_setAssociatedObject(self, @selector(bottomConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(bottomConstraint), constraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)bottomConstraint {
@@ -1546,7 +1675,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setEquelWidthConstraint:(NSLayoutConstraint *)constraint {
-    objc_setAssociatedObject(self, @selector(equelWidthConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(equelWidthConstraint), constraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)equelWidthConstraint {
@@ -1554,7 +1683,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setAutoWidthConstraint:(NSLayoutConstraint *)constraint {
-    objc_setAssociatedObject(self, @selector(autoWidthConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(autoWidthConstraint), constraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)autoWidthConstraint {
@@ -1562,7 +1691,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setSelfWidthConstraint:(NSLayoutConstraint *)constraint {
-    objc_setAssociatedObject(self, @selector(selfWidthConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(selfWidthConstraint), constraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)selfWidthConstraint {
@@ -1572,7 +1701,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 
 - (void)setEquelHeightConstraint:(NSLayoutConstraint *)constraint {
-    objc_setAssociatedObject(self, @selector(equelHeightConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(equelHeightConstraint), constraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)equelHeightConstraint {
@@ -1580,7 +1709,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setAutoHeightConstraint:(NSLayoutConstraint *)constraint {
-    objc_setAssociatedObject(self, @selector(autoHeightConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(autoHeightConstraint), constraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)autoHeightConstraint {
@@ -1588,7 +1717,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setSelfHeightConstraint:(NSLayoutConstraint *)constraint {
-    objc_setAssociatedObject(self, @selector(selfHeightConstraint), constraint, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(selfHeightConstraint), constraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)selfHeightConstraint {
@@ -1596,7 +1725,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setKeepHeightConstraint:(BOOL)keepHeightConstraint {
-    objc_setAssociatedObject(self, @selector(keepHeightConstraint), @(keepHeightConstraint), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(keepHeightConstraint), @(keepHeightConstraint), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)keepHeightConstraint {
@@ -1605,7 +1734,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setKeepBottomConstraint:(BOOL)keepBottomConstraint {
-    objc_setAssociatedObject(self, @selector(keepBottomConstraint), @(keepBottomConstraint), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(keepBottomConstraint), @(keepBottomConstraint), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)keepBottomConstraint {
@@ -1614,7 +1743,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setKeepWidthConstraint:(BOOL)keepWidthConstraint {
-    objc_setAssociatedObject(self, @selector(keepWidthConstraint), @(keepWidthConstraint), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(keepWidthConstraint), @(keepWidthConstraint), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)keepWidthConstraint {
@@ -1623,7 +1752,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)setKeepRightConstraint:(BOOL)keepRightConstraint {
-    objc_setAssociatedObject(self, @selector(keepRightConstraint), @(keepRightConstraint), OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(keepRightConstraint), @(keepRightConstraint), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)keepRightConstraint {

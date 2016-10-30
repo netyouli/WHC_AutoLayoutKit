@@ -25,7 +25,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.0)
+// VERSION:(2.6)
 
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
 #import "UIView+WHC_AutoLayout.h"
@@ -37,7 +37,7 @@
     objc_setAssociatedObject(self,
                              @selector(whc_CellBottomOffset),
                              @(whc_CellBottomOffset),
-                             OBJC_ASSOCIATION_RETAIN);
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)whc_CellBottomOffset {
@@ -60,7 +60,7 @@
     objc_setAssociatedObject(self,
                              @selector(whc_CellBottomView),
                              whc_CellBottomView,
-                             OBJC_ASSOCIATION_RETAIN);
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIView *)whc_CellBottomView {
@@ -75,7 +75,16 @@
     objc_setAssociatedObject(self,
                              @selector(whc_CellTableView),
                              whc_CellTableView,
-                             OBJC_ASSOCIATION_RETAIN);
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)whc_TableViewWidth {
+    id value = objc_getAssociatedObject(self, _cmd);
+    return value != nil ? [value floatValue] : 0;
+}
+
+- (void)setWhc_TableViewWidth:(CGFloat)whc_TableViewWidth {
+    objc_setAssociatedObject(self, @selector(whc_TableViewWidth), @(whc_TableViewWidth), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 + (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView {
@@ -98,8 +107,11 @@
     if (cell.whc_CellTableView) {
         [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
     }
-    [tableView layoutIfNeeded];
-    CGFloat tableViewWidth = CGRectGetWidth(tableView.frame);
+    CGFloat tableViewWidth = cell.whc_TableViewWidth;
+    if (tableViewWidth == 0) {
+        [tableView layoutIfNeeded];
+        tableViewWidth = CGRectGetWidth(tableView.frame);
+    }
     if (tableViewWidth == 0) return 0;
     CGRect cellFrame = cell.frame;
     cellFrame.size.width = tableViewWidth;
@@ -156,11 +168,24 @@
         Method whc_deleteCell = class_getInstanceMethod(self, @selector(whc_deleteItemsAtIndexPaths:));
         Method deleteSection = class_getInstanceMethod(self, @selector(deleteSections:));
         Method whc_deleteSection = class_getInstanceMethod(self, @selector(whc_deleteSections:));
+        Method moveSection = class_getInstanceMethod(self, @selector(moveSection:toSection:));
+        Method whc_moveSection = class_getInstanceMethod(self, @selector(whc_MoveSection:toSection:));
+        Method moveRowAtIndexPath = class_getInstanceMethod(self, @selector(moveRowAtIndexPath:toIndexPath:));
+        Method whc_moveRowAtIndexPath = class_getInstanceMethod(self, @selector(whc_MoveRowAtIndexPath:toIndexPath:));
+        Method insertSections = class_getInstanceMethod(self, @selector(insertSections:withRowAnimation:));
+        Method whc_insertSections = class_getInstanceMethod(self, @selector(whc_InsertSections:withRowAnimation:));
+        Method insertRowsAtIndexPaths = class_getInstanceMethod(self, @selector(insertRowsAtIndexPaths:withRowAnimation:));
+        Method whc_insertRowsAtIndexPaths = class_getInstanceMethod(self, @selector(whc_InsertRowsAtIndexPaths:withRowAnimation:));
+        
         method_exchangeImplementations(sectionReloadData, whc_SectionReloadData);
         method_exchangeImplementations(reloadDataRow, whc_ReloadDataRow);
         method_exchangeImplementations(reloadData, whc_ReloadData);
         method_exchangeImplementations(deleteCell, whc_deleteCell);
         method_exchangeImplementations(deleteSection, whc_deleteSection);
+        method_exchangeImplementations(moveSection, whc_moveSection);
+        method_exchangeImplementations(moveRowAtIndexPath, whc_moveRowAtIndexPath);
+        method_exchangeImplementations(insertSections, whc_insertSections);
+        method_exchangeImplementations(insertRowsAtIndexPaths, whc_insertRowsAtIndexPaths);
     });
 }
 
@@ -187,7 +212,7 @@
     objc_setAssociatedObject(self,
                              @selector(isMonitorScreen),
                              @(YES),
-                             OBJC_ASSOCIATION_RETAIN);
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)isMonitorScreen {
@@ -199,7 +224,7 @@
     objc_setAssociatedObject(self,
                              @selector(whc_CacheHeightDictionary),
                              whc_CacheHeightDictionary,
-                             OBJC_ASSOCIATION_RETAIN);
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSMutableDictionary *)whc_CacheHeightDictionary {
@@ -207,7 +232,9 @@
 }
 
 - (void)handleCacheHeightDictionary {
-    NSArray<NSString *> * allKey = self.whc_CacheHeightDictionary.allKeys.copy;
+    NSArray<NSString *> * allKey = [self.whc_CacheHeightDictionary.allKeys sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
+        return obj1.floatValue < obj2.floatValue;
+    }];
     __block NSString * frontKey = nil;
     __block NSInteger  index = 0;
     [allKey enumerateObjectsUsingBlock:^(NSString * _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -279,6 +306,61 @@
         [self.whc_CacheHeightDictionary removeAllObjects];
     }
     [self whc_ReloadData];
+}
+
+- (void)whc_MoveSection:(NSInteger)section toSection:(NSInteger)newSection {
+    NSMutableDictionary * sectionMap = [NSMutableDictionary dictionaryWithDictionary:self.whc_CacheHeightDictionary[@(section).stringValue]];
+    self.whc_CacheHeightDictionary[@(section).stringValue] = self.whc_CacheHeightDictionary[@(newSection).stringValue];
+    self.whc_CacheHeightDictionary[@(newSection).stringValue] = sectionMap;
+    [self whc_MoveSection:section toSection:newSection];
+}
+
+- (void)whc_MoveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+    if (indexPath == nil || newIndexPath) return;
+    NSMutableDictionary * indexPathMap = self.whc_CacheHeightDictionary[@(indexPath.section).stringValue];
+    CGFloat indexPathHeight = [indexPathMap[@(indexPath.row).stringValue] floatValue];
+    
+    NSMutableDictionary * newIndexPathMap = self.whc_CacheHeightDictionary[@(newIndexPath.section).stringValue];
+    CGFloat newIndexPathHeight = [newIndexPathMap[@(newIndexPath.row).stringValue] floatValue];
+    
+    indexPathMap[@(indexPath.row).stringValue] = @(newIndexPathHeight);
+    newIndexPathMap[@(newIndexPath.row).stringValue] = @(indexPathHeight);
+    [self whc_MoveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+}
+
+- (void)whc_InsertSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation {
+    if (sections == nil) return;
+    NSUInteger firstSection = sections.firstIndex;
+    NSUInteger moveSection = self.whc_CacheHeightDictionary.count;
+    if (moveSection > firstSection) {
+        for (NSInteger section = firstSection; section < moveSection; section++) {
+            NSMutableDictionary * sectionMap = self.whc_CacheHeightDictionary[@(section).stringValue];
+            if (sectionMap != nil) {
+                self.whc_CacheHeightDictionary[@(section + sections.count).stringValue] = sectionMap;
+                [self.whc_CacheHeightDictionary removeObjectForKey:@(section)];
+            }
+        }
+    }
+    [self whc_InsertSections:sections withRowAnimation:animation];
+}
+
+- (void)whc_InsertRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
+    if (indexPaths == nil) {return;}
+    [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSMutableDictionary * sectionMap = self.whc_CacheHeightDictionary[@(indexPath.section).stringValue];
+        if (sectionMap != nil) {
+            NSInteger moveRow = sectionMap.count;
+            if (moveRow > indexPath.row) {
+                for (NSInteger index = indexPath.row; index < moveRow; index++) {
+                    id heightObject = sectionMap[@(index).stringValue];
+                    if (heightObject) {
+                        sectionMap[@(index + 1).stringValue] = @([heightObject floatValue]);
+                        [sectionMap removeObjectForKey:@(index).stringValue];
+                    }
+                }
+            }
+        }
+    }];
 }
 
 @end

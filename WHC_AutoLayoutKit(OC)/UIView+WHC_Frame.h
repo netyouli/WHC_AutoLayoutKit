@@ -1,5 +1,5 @@
 //
-//  UITableViewCell+WHC_AutoHeightForCell.h
+//  UIView+WHC_Frame.h
 //  Github <https://github.com/netyouli/WHC_AutoLayoutKit>
 //
 //  Created by 吴海超 on 16/2/17.
@@ -29,34 +29,33 @@
 
 #import <UIKit/UIKit.h>
 
-
-////////////////////////////列表视图//////////////////////////////
-
-@interface UITableViewCell (WHC_AutoHeightForCell)
-/// cell最底部视图
-@property (nonatomic , strong) UIView * whc_CellBottomView;
-/// cell最底部视图集合
-@property (nonatomic , strong) NSArray * whc_CellBottomViews;
-/// cell最底部视图与cell底部的间隙
-@property (nonatomic , assign) CGFloat  whc_CellBottomOffset;
-/// cell中包含的UITableView
-@property (nonatomic , strong) UITableView * whc_CellTableView;
-/// 指定tableview宽度（有助于提高自动计算效率）
-@property (nonatomic , assign) CGFloat whc_TableViewWidth;
-
-/// 自动计算cell高度
-+ (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
+@interface UIView (WHC_Frame)
+/// 获取屏幕宽度
+@property (nonatomic, assign, readonly)CGFloat whc_sw;
+/// 获取屏幕高度
+@property (nonatomic, assign, readonly)CGFloat whc_sh;
+/// 获取视图宽度
+@property (nonatomic, assign)CGFloat whc_w;
+/// 获取视图高度
+@property (nonatomic, assign)CGFloat whc_h;
+/// 获取视图x
+@property (nonatomic, assign)CGFloat whc_x;
+/// 获取视图y
+@property (nonatomic, assign)CGFloat whc_y;
+/// 获取视图最大x
+@property (nonatomic, assign)CGFloat whc_maxX;
+/// 获取视图最大y
+@property (nonatomic, assign)CGFloat whc_maxY;
+/// 获取视图中间x
+@property (nonatomic, assign)CGFloat whc_midX;
+/// 获取视图中间y
+@property (nonatomic, assign)CGFloat whc_midY;
+/// 获取视图中心x
+@property (nonatomic, assign)CGFloat whc_cx;
+/// 获取视图中心y
+@property (nonatomic, assign)CGFloat whc_cy;
+/// 获取视图xy
+@property (nonatomic, assign)CGPoint whc_xy;
+/// 获取视图size
+@property (nonatomic, assign)CGSize  whc_s;
 @end
-
-@interface UITableView (WHC_CacheCellHeight)
-
-/// 缓存cell高度字典
-@property (nonatomic , strong) NSMutableDictionary * whc_CacheHeightDictionary;
-
-- (void)screenWillChange:(NSNotification *)notification;
-
-- (void)monitorScreenOrientation;
-
-- (NSMutableDictionary *)whc_CacheHeightDictionary;
-@end
-

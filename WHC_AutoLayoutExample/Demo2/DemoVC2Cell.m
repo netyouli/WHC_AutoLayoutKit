@@ -15,6 +15,8 @@
 
 #import "DemoVC2Cell.h"
 #import "UIView+WHC_AutoLayout.h"
+#import "UIView+WHC_Frame.h"
+
 #define cellName (@"CellName")
 @interface DemoVC2Cell ()<UITableViewDataSource,UITableViewDelegate> {
     UILabel *  _image;
@@ -67,6 +69,7 @@
                   .whc_Height(44);
         self.whc_CellBottomOffset = 10;
         self.whc_CellTableView = _tableView;
+        self.whc_TableViewWidth = self.whc_sw;
     }
     return self;
 }

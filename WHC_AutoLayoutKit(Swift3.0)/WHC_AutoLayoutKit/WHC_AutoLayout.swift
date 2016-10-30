@@ -832,7 +832,7 @@ extension UIView {
      */
     @discardableResult
     public func whc_CenterY(_ y: CGFloat, toView: UIView!) -> UIView {
-        self.constraintWithItem(toView, attribute: .centerX, constant: y)
+        self.constraintWithItem(toView, attribute: .centerY, constant: y)
         return self
     }
     
@@ -843,7 +843,7 @@ extension UIView {
      */
     @discardableResult
     public func whc_BaseLine(_ space: CGFloat) -> UIView {
-        self.constraintWithItem(self.superview, attribute: .lastBaseline, constant: space)
+        self.constraintWithItem(self.superview, attribute: .lastBaseline, constant: 0 - space)
         return self
     }
     

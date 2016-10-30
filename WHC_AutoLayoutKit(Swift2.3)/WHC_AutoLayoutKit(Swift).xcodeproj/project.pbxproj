@@ -20,6 +20,7 @@
 		FEAC43D71D2FAB8700F20819 /* WHC_AutoCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAC43D41D2FAB8700F20819 /* WHC_AutoCellHeight.swift */; };
 		FEAC43D81D2FAB8700F20819 /* WHC_AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAC43D51D2FAB8700F20819 /* WHC_AutoLayout.swift */; };
 		FEAC43D91D2FAB8700F20819 /* WHC_StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAC43D61D2FAB8700F20819 /* WHC_StackView.swift */; };
+		FECDAB231DC48E2000B510AA /* WHC_Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECDAB221DC48E2000B510AA /* WHC_Frame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,8 @@
 		FEAC43D41D2FAB8700F20819 /* WHC_AutoCellHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHC_AutoCellHeight.swift; sourceTree = "<group>"; };
 		FEAC43D51D2FAB8700F20819 /* WHC_AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHC_AutoLayout.swift; sourceTree = "<group>"; };
 		FEAC43D61D2FAB8700F20819 /* WHC_StackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHC_StackView.swift; sourceTree = "<group>"; };
+		FECDAB221DC48E2000B510AA /* WHC_Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHC_Frame.swift; sourceTree = "<group>"; };
+		FEDB47BC1DC1FB57009AD54A /* bridge_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bridge_Header.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,7 @@
 				FE4CABBD1D30DAF400AC02C9 /* 示例demo */,
 				FEAC43C81D2FAB4400F20819 /* Assets.xcassets */,
 				FEAC43CA1D2FAB4400F20819 /* LaunchScreen.storyboard */,
+				FEDB47BC1DC1FB57009AD54A /* bridge_Header.h */,
 				FEAC43CD1D2FAB4400F20819 /* Info.plist */,
 			);
 			path = "WHC_AutoLayoutKit(Swift)";
@@ -132,6 +136,7 @@
 				FEAC43D41D2FAB8700F20819 /* WHC_AutoCellHeight.swift */,
 				FEAC43D51D2FAB8700F20819 /* WHC_AutoLayout.swift */,
 				FEAC43D61D2FAB8700F20819 /* WHC_StackView.swift */,
+				FECDAB221DC48E2000B510AA /* WHC_Frame.swift */,
 			);
 			path = WHC_AutoLayoutKit;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				FE4CABC41D30DBA100AC02C9 /* AutoLayoutVC.swift in Sources */,
 				FEAC43C41D2FAB4400F20819 /* ViewController.swift in Sources */,
 				FEAC43D71D2FAB8700F20819 /* WHC_AutoCellHeight.swift in Sources */,
+				FECDAB231DC48E2000B510AA /* WHC_Frame.swift in Sources */,
 				FEAC43C21D2FAB4400F20819 /* AppDelegate.swift in Sources */,
 				FEA9047C1D46F94700FB26B9 /* ModityXibVC.swift in Sources */,
 				FEAC43D81D2FAB8700F20819 /* WHC_AutoLayout.swift in Sources */,
@@ -272,7 +278,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -311,7 +317,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -324,10 +330,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7F5YZXGNJ3;
 				INFOPLIST_FILE = "WHC_AutoLayoutKit(Swift)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "WHC.WHC-AutoLayoutKit-Swift-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WHC_AutoLayoutKit(Swift)/bridge_Header.h";
 				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
@@ -338,10 +345,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7F5YZXGNJ3;
 				INFOPLIST_FILE = "WHC_AutoLayoutKit(Swift)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "WHC.WHC-AutoLayoutKit-Swift-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WHC_AutoLayoutKit(Swift)/bridge_Header.h";
 				SWIFT_VERSION = 2.3;
 			};
 			name = Release;

@@ -26,10 +26,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // 使用WHC_AutoLayout 添加约束
         
         // 添加约束方式1
-//        tableView.whc_AutoSize(left: 0, top: 0, right: 0, bottom: 0)
+        tableView.whc_AutoSize(left: 0, top: 0, right: 0, bottom: 0)
         
         // 添加约束方式2
-        tableView.whc_Left(0).whc_Top(0).whc_Right(0).whc_Bottom(0)
+        tableView.whc_Left(0)
+            .whc_Top(0)
+            .whc_Right(0)
+            .whc_Bottom(0)
         
         tableView.delegate =  self
         tableView.dataSource = self

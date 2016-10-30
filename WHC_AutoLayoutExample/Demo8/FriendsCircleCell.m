@@ -15,6 +15,7 @@
 
 #import "FriendsCircleCell.h"
 #import "WHC_AutoLayoutExample-Swift.h"
+#import "UIView+WHC_Frame.h"
 
 @implementation AnswerMenuView
 
@@ -220,6 +221,7 @@
     /// 设置cell底部间隙
     self.whc_CellBottomView = _commentStackView;
     self.whc_CellBottomOffset = 10;
+    self.whc_TableViewWidth = self.whc_sw;
     [self whc_AddBottomLine:1 lineColor:[UIColor colorWithWhite:0.8 alpha:1]];
 }
 

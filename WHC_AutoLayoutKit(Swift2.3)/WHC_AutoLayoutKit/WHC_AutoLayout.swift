@@ -26,7 +26,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.0)
+// VERSION:(2.6)
 
 import UIKit
 
@@ -49,6 +49,7 @@ extension UIView {
         static var kCellBottomView         = "cellBottomView"
         static var kCellBottomViews        = "cellBottomViews"
         static var kCellTableView          = "cellTableView"
+        static var kCellTableViewWidth     = "TableViewWidth"
         static var kIsMonitorScreen        = "isMonitorScreen"
         static var kCacheHeightDictionary  = "cacheHeightDictionary"
         static var kLeftPadding            = "leftPadding"
@@ -65,6 +66,8 @@ extension UIView {
         static var kKeepHeightConstraint    = "kKeepHeightConstraint"
         static var kKeepBottomConstraint    = "kKeepBottomConstraint"
         static var kKeepRightConstraint    = "kKeepRightConstraint"
+        
+        static var kCurrentConstraints     = "kCurrentConstraints"
     }
     
     public override class func initialize() {
@@ -78,35 +81,122 @@ extension UIView {
         }
     }
     
-    //MARK: -自动布局公开接口api-
-    
-    /**
-     * 说明: 自动计算UIScrollView的ContentSize
-     */
-    
-    public func whc_AutoContentSize() {
-        if self is UIScrollView {
-            let subViewArray = subviews
-            self.layoutIfNeeded()
-            var contentHeight: CGFloat = 0
-            var contentWidth: CGFloat = 0
-            if subViewArray.count > 0 {
-                let bottomView = subViewArray[0]
-                for i in 0...subViewArray.count - 1 {
-                    let view = subViewArray[i]
-                    if CGRectGetMaxY(bottomView.frame) < CGRectGetMaxY(view.frame) {
-                        contentHeight = CGRectGetMaxY(view.frame)
-                    }
-                    if CGRectGetMaxX(bottomView.frame) < CGRectGetMaxX(view.frame) {
-                        contentWidth = CGRectGetMaxX(view.frame)
-                    }
-                }
-                (self as! UIScrollView).contentSize = CGSizeMake(contentWidth, contentHeight)
+    /// 当前添加的约束对象
+    private var currentConstraint: NSLayoutConstraint! {
+        set {
+            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kCurrentConstraints, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+        
+        get {
+            let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kCurrentConstraints)
+            if value != nil {
+                return value as! NSLayoutConstraint
             }
-        }else {
-            print("whc_AutoContentSize 只对UIScrollview有效")
+            return nil
         }
     }
+    
+    //MARK: - 移除约束 -
+    
+    /**
+     * 说明:移除约束
+     * @param attribute 约束类型
+     */
+    public func whc_RemoveConstraint(attribute: NSLayoutAttribute) -> UIView {
+        for constraint in self.constraints {
+            if constraint.firstAttribute == attribute &&
+                constraint.secondItem == nil {
+                self.removeConstraint(constraint)
+            }
+        }
+        return self
+    }
+    
+    /**
+     * 说明:移除约束
+     * @param attribute 约束类型
+     * @param item 关联第一个约束视图
+     */
+    public func whc_RemoveConstraint(attribute: NSLayoutAttribute, item: UIView!) -> UIView {
+        if item == nil {
+            self.whc_RemoveConstraint(attribute)
+        }else {
+            for constraint in self.constraints {
+                if constraint.firstAttribute == attribute &&
+                    constraint.firstItem === item  &&
+                    constraint.secondItem === self {
+                    self.removeConstraint(constraint)
+                }
+            }
+        }
+        return self
+    }
+    
+    /**
+     * 说明:移除约束
+     * @param attribute 约束类型
+     * @param item 关联第一个约束视图
+     * @param toItem 关联第二个约束视图
+     */
+    public func whc_RemoveConstraint(attribute: NSLayoutAttribute, item: UIView!, toItem: UIView!) -> UIView {
+        for constraint in self.constraints {
+            if constraint.firstAttribute == attribute &&
+                constraint.firstItem === item  &&
+                constraint.secondItem === toItem {
+                self.removeConstraint(constraint)
+            }
+        }
+        return self
+    }
+    
+    //MARK: - 设置当前约束优先级 -
+    /**
+     * 说明:设置当前约束的低优先级
+     * @return 返回当前视图
+     */
+    public func whc_PriorityLow() -> UIView {
+        self.currentConstraint?.priority = UILayoutPriorityDefaultLow
+        return self
+    }
+    
+    /**
+     * 说明:设置当前约束的高优先级
+     * @return 返回当前视图
+     */
+    public func whc_PriorityHigh() -> UIView {
+        self.currentConstraint?.priority = UILayoutPriorityDefaultHigh
+        return self
+    }
+    
+    /**
+     * 说明:设置当前约束的默认优先级
+     * @return 返回当前视图
+     */
+    public func whc_PriorityRequired() -> UIView {
+        self.currentConstraint?.priority = UILayoutPriorityRequired
+        return self
+    }
+    
+    /**
+     * 说明:设置当前约束的合适优先级
+     * @return 返回当前视图
+     */
+    public func whc_PriorityFitting() -> UIView {
+        self.currentConstraint?.priority = UILayoutPriorityFittingSizeLevel
+        return self
+    }
+    
+    /**
+     * 说明:设置当前约束的优先级
+     * @param value: 优先级大小(0-1000)
+     * @return 返回当前视图
+     */
+    public func whc_Priority(value: CGFloat) -> UIView {
+        self.currentConstraint?.priority = Float(value)
+        return self
+    }
+    
+    //MARK: -自动布局公开接口api-
     
     /**
      * 说明:设置左边距(默认相对父视图)
@@ -829,7 +919,7 @@ extension UIView {
      */
     
     public func whc_CenterY(y: CGFloat, toView: UIView!) -> UIView {
-        self.constraintWithItem(toView, attribute: .CenterX, constant: y)
+        self.constraintWithItem(toView, attribute: .CenterY, constant: y)
         return self
     }
     
@@ -840,7 +930,7 @@ extension UIView {
      */
     
     public func whc_BaseLine(space: CGFloat) -> UIView {
-        self.constraintWithItem(self.superview, attribute: .LastBaseline, constant: space)
+        self.constraintWithItem(self.superview, attribute: .LastBaseline, constant: 0 - space)
         return self
     }
     
@@ -1060,7 +1150,7 @@ extension UIView {
             for constraint in constraintArray! {
                 if NSStringFromClass(constraint.classForCoder) == "NSIBPrototypingLayoutConstraint" &&
                     constraint.firstAttribute == attribute &&
-//                    constraint.firstItem === self &&
+                    constraint.firstItem === self &&
                     constraint.secondItem == nil {
                     self.superview?.removeConstraint(constraint)
                     return
@@ -1134,7 +1224,7 @@ extension UIView {
     }
     
     private func setRightConstraint(constraint: NSLayoutConstraint!) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kRightConstraint, constraint, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kRightConstraint, constraint, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
     private func rightConstraint() -> NSLayoutConstraint! {
@@ -1142,7 +1232,7 @@ extension UIView {
     }
 
     private func setBottomConstraint(constraint: NSLayoutConstraint!) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kBottomConstraint, constraint, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kBottomConstraint, constraint, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
     private func bottomConstraint() -> NSLayoutConstraint! {
@@ -1150,7 +1240,7 @@ extension UIView {
     }
 
     private func setEquelWidthConstraint(constraint: NSLayoutConstraint!) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kEquelWidthConstraint, constraint, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kEquelWidthConstraint, constraint, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     private func equelWidthConstraint() -> NSLayoutConstraint! {
@@ -1158,7 +1248,7 @@ extension UIView {
     }
 
     private func setAutoWidthConstraint(constraint: NSLayoutConstraint!) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kAutoWidthConstraint, constraint, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kAutoWidthConstraint, constraint, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     private func autoWidthConstraint() -> NSLayoutConstraint! {
@@ -1166,7 +1256,7 @@ extension UIView {
     }
  
     private func setSelfWidthConstraint(constraint: NSLayoutConstraint!) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kSelfWidthConstraint, constraint, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kSelfWidthConstraint, constraint, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
     private func selfWidthConstraint() -> NSLayoutConstraint! {
@@ -1174,7 +1264,7 @@ extension UIView {
     }
     
     private func setEquelHeightConstraint(constraint: NSLayoutConstraint!) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kEquelHeightConstraint, constraint, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kEquelHeightConstraint, constraint, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     private func equelHeightConstraint() -> NSLayoutConstraint! {
@@ -1182,7 +1272,7 @@ extension UIView {
     }
     
     private func setAutoHeightConstraint(constraint: NSLayoutConstraint!) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kAutoHeightConstraint, constraint, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kAutoHeightConstraint, constraint, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     private func autoHeightConstraint() -> NSLayoutConstraint! {
@@ -1190,7 +1280,7 @@ extension UIView {
     }
     
     private func setSelfHeightConstraint(constraint: NSLayoutConstraint!) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kSelfHeightConstraint, constraint, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kSelfHeightConstraint, constraint, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     private func selfHeightConstraint() -> NSLayoutConstraint! {
@@ -1198,7 +1288,7 @@ extension UIView {
     }
     
     private func setKeepWidthConstraint(isKeep: Bool) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepWidthConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepWidthConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
     private func keepWidthConstraint() -> Bool {
@@ -1207,7 +1297,7 @@ extension UIView {
     }
     
     private func setKeepHeightConstraint(isKeep: Bool) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepHeightConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepHeightConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
     private func keepHeightConstraint() -> Bool {
@@ -1216,7 +1306,7 @@ extension UIView {
     }
     
     private func setKeepBottomConstraint(isKeep: Bool) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepBottomConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepBottomConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
     private func keepBottomConstraint() -> Bool {
@@ -1225,7 +1315,7 @@ extension UIView {
     }
     
     private func setKeepRightConstraint(isKeep: Bool) {
-        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepRightConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kKeepRightConstraint, NSNumber(bool: isKeep), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
     private func keepRightConstraint() -> Bool {
@@ -1326,7 +1416,9 @@ extension UIView {
                                                 multiplier: multiplier,
                                                 constant: constant)
             currentSuperView?.addConstraint(constraint)
+            self.currentConstraint = constraint
         }else {
+            self.currentConstraint = originConstraint
             if originConstraint.constant != constant {
                 originConstraint.constant = constant
             }
@@ -1585,7 +1677,7 @@ extension UIView {
     public func whc_AddBottomLine(height: CGFloat, color: UIColor, marge: CGFloat) -> UIView {
         let line = self.createLineWithTag(WHC_Tag.kBottomLine)
         line.backgroundColor = color
-        return line.whc_Right(marge).whc_Left(marge).whc_Height(height).whc_BaseLine(height)
+        return line.whc_Right(marge).whc_Left(marge).whc_Height(height).whc_BaseLine(0)
     }
     
     public func whc_AddTopLine(height: CGFloat, color: UIColor) -> UIView {

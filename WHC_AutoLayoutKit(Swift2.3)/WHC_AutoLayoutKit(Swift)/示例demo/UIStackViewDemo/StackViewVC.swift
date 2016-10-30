@@ -62,7 +62,7 @@ class StackViewVC: UIViewController {
         stackView2.whc_LeftEqual(stackView1)
                   .whc_Top(0, toView: label2)
                   .whc_HeightEqual(stackView1)
-                  .whc_RightEqual(stackView1)
+                  .whc_WidthAuto()
         
         stackView3.whc_LeftEqual(stackView1)
                   .whc_Top(0, toView: label3)
@@ -100,8 +100,8 @@ class StackViewVC: UIViewController {
         stackView1.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10)
         let titleArray = [["吴海超", "WHC", "Github", "iOS"],
                       ["开发者", "whc", "netyouli", "android"],
-                      ["Star", "菜鸟你好", "谢谢", "体验"],
-                      ["还有力作", "关注", "给star", "懂了吗"]]
+                      ["Star", "xx你好", "谢谢", "体验"],
+                      ["还有力作", "关注", "xxxxx", "懂了吗"]]
         for titles in titleArray {
             for title in titles {
                 let label = UILabel()
@@ -123,12 +123,11 @@ class StackViewVC: UIViewController {
         stackView2.whc_Orientation = .All
         stackView2.whc_HSpace = 20
         stackView2.whc_VSpace = 10
-        stackView2.whc_subViewWidthAuto = true
         stackView2.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10)
         let titleArray = [["吴海超", "WHC", "Github", "iOS"],
                           ["开发者", "whc", "netyouli", "android"],
-                          ["Star", "菜鸟你好", "谢谢", "体验"],
-                          ["还有力作", "关注", "给star", "懂了吗"]]
+                          ["Star", "xx你好", "谢谢", "体验"],
+                          ["还有力作", "关注", "xxxxx", "懂了吗"]]
         for titles in titleArray {
             for title in titles {
                 let button = UIButton()
@@ -137,10 +136,10 @@ class StackViewVC: UIViewController {
                 button.clipsToBounds = true
                 button.layer.cornerRadius = 5
                 button.layer.borderWidth = 1
+                button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10)
                 button.layer.borderColor = UIColor.orangeColor().CGColor
                 button.setTitle(title, forState: .Normal)
                 button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-                button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10)
             }
         }
         stackView2.whc_StartLayout()

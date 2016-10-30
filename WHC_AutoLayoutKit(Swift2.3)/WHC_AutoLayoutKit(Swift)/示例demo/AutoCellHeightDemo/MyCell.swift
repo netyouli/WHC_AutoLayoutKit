@@ -45,6 +45,7 @@ class MyCell: UITableViewCell , UITableViewDataSource, UITableViewDelegate {
         // 设置cell子视图内容与底部间隙
         self.whc_CellBottomOffset = 10
         self.whc_CellTableView = tableView
+        self.whc_TableViewWidth = self.whc_ScreenWidth
 
         
     }

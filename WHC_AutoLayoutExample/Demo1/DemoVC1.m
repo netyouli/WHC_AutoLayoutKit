@@ -15,6 +15,7 @@
 
 #import "DemoVC1.h"
 #import "UIView+WHC_AutoLayout.h"
+#import "WHC_StackView.h"
 
 @interface DemoVC1 () {
     UIView  * view1, * view2, * view3;
@@ -31,6 +32,7 @@
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"普通高度宽度自动布局";
     self.view.backgroundColor = [UIColor whiteColor];
+    
     view1 = [UIView new];
     view2 = [UIView new];
     view3 = [UIView new];
