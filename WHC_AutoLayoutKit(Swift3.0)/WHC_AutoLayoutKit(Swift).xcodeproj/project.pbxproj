@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE1031351DD5652100A9F284 /* WHC_Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1031341DD5652100A9F284 /* WHC_Frame.swift */; };
 		FE4CABC41D30DBA100AC02C9 /* AutoLayoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CABC21D30DBA100AC02C9 /* AutoLayoutVC.swift */; };
 		FE4CABC61D30DBCD00AC02C9 /* AutoCellHeightVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CABC51D30DBCD00AC02C9 /* AutoCellHeightVC.swift */; };
 		FE4CABC81D30DBFE00AC02C9 /* StackViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CABC71D30DBFE00AC02C9 /* StackViewVC.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE1031341DD5652100A9F284 /* WHC_Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHC_Frame.swift; sourceTree = "<group>"; };
 		FE4CABC21D30DBA100AC02C9 /* AutoLayoutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayoutVC.swift; sourceTree = "<group>"; };
 		FE4CABC51D30DBCD00AC02C9 /* AutoCellHeightVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCellHeightVC.swift; sourceTree = "<group>"; };
 		FE4CABC71D30DBFE00AC02C9 /* StackViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackViewVC.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		FEAC43D31D2FAB8700F20819 /* WHC_AutoLayoutKit */ = {
 			isa = PBXGroup;
 			children = (
+				FE1031341DD5652100A9F284 /* WHC_Frame.swift */,
 				FEAC43D41D2FAB8700F20819 /* WHC_AutoCellHeight.swift */,
 				FEAC43D51D2FAB8700F20819 /* WHC_AutoLayout.swift */,
 				FEAC43D61D2FAB8700F20819 /* WHC_StackView.swift */,
@@ -209,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE1031351DD5652100A9F284 /* WHC_Frame.swift in Sources */,
 				FE4CABC41D30DBA100AC02C9 /* AutoLayoutVC.swift in Sources */,
 				FEAC43C41D2FAB4400F20819 /* ViewController.swift in Sources */,
 				FEAC43D71D2FAB8700F20819 /* WHC_AutoCellHeight.swift in Sources */,
