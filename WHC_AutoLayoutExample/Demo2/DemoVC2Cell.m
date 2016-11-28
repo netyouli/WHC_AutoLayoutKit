@@ -61,7 +61,7 @@
         _content.whc_TopSpaceToView(10,_title)
                 .whc_LeftSpaceToView(10,_image)
                 .whc_RightSpace(10)
-                .whc_heightAuto();
+                .whc_HeightAuto();
         
         _tableView.whc_TopSpaceToView(10,_content)
                   .whc_LeftSpaceEqualView(_image)
@@ -88,7 +88,10 @@
         if (![self.contentView.subviews containsObject:_other]) {
             [self.contentView addSubview:_other];
             /// 一行代码添加约束
-            _other.whc_TopSpaceToView(10,_tableView).whc_LeftSpaceToView(10,_image).whc_RightSpace(10).whc_heightAuto();
+            _other.whc_TopSpaceToView(10,_tableView)
+                .whc_LeftSpaceToView(10,_image)
+                .whc_RightSpace(10)
+                .whc_HeightAuto();
         }
         self.whc_CellBottomView = _other;
     }else {

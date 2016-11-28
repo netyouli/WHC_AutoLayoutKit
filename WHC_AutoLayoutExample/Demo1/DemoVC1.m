@@ -65,7 +65,8 @@
          .whc_Height(150);
     view2.whc_LeftSpaceToView(10,view1)
          .whc_TopSpace(74)
-    .whc_RightSpace(10).whc_heightAuto();
+         .whc_RightSpace(10)
+         .whc_HeightAuto();
  
 }
 

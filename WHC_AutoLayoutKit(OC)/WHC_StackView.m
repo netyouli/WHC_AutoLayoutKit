@@ -44,7 +44,7 @@
     if (self.titleEdgeInsets.left + self.titleEdgeInsets.right != 0) {
         [self whc_Width:[self calcTextSize].width + self.titleEdgeInsets.left + self.titleEdgeInsets.right];
     }else {
-        [super whc_WidthAuto];
+        [super whc_AutoWidth];
     }
 }
 
@@ -52,7 +52,7 @@
     if (self.titleEdgeInsets.top + self.titleEdgeInsets.bottom != 0) {
         [self whc_Height:[self calcTextSize].height + self.titleEdgeInsets.top + self.titleEdgeInsets.bottom];
     }else {
-        [super whc_HeightAuto];
+        [super whc_AutoHeight];
     }
 }
 
@@ -129,25 +129,25 @@
 }
 
 
-- (HeightAuto)whc_heightAuto {
+- (HeightAuto)whc_HeightAuto {
     __weak typeof(self) weakSelf = self;
     return ^() {
         if (weakSelf.whc_TopPadding + weakSelf.whc_BottomPadding != 0) {
             [super whc_Height:[weakSelf calcTextSize].width + weakSelf.whc_TopPadding + weakSelf.whc_BottomPadding + 0.5];
         }else {
-            [super whc_HeightAuto];
+            [super whc_AutoHeight];
         }
         return weakSelf;
     };
 }
 
-- (WidthAuto)whc_widthAuto {
+- (WidthAuto)whc_WidthAuto {
     __weak typeof(self) weakSelf = self;
     return ^() {
         if (weakSelf.whc_LeftPadding + weakSelf.whc_RightPadding != 0) {
             [super whc_Width:[weakSelf calcTextSize].width + weakSelf.whc_LeftPadding + weakSelf.whc_RightPadding + 0.5];
         }else {
-            [super whc_WidthAuto];
+            [super whc_AutoWidth];
         }
         return weakSelf;
     };
@@ -292,7 +292,7 @@
 
 - (NSInteger)whc_SubViewCount {
     if (self.whc_Orientation == All) {
-        return self.subviews.count - _lastRowVacantCount;
+        return MAX(0, self.subviews.count - _lastRowVacantCount);
     }
     return self.subviews.count;
 }
@@ -301,30 +301,30 @@
     return MAX(_whc_Column, 1);
 }
 
-- (void)whc_HeightAuto {
+- (void)whc_AutoHeight {
     [super whc_HeightAuto];
     _autoHeight = YES;
 }
 
-- (HeightAuto)whc_heightAuto {
+- (HeightAuto)whc_HeightAuto {
     _autoHeight = YES;
     __weak typeof(self) weakSelf = self;
     return ^() {
-        [super whc_HeightAuto];
+        [super whc_AutoHeight];
         return weakSelf;
     };
 }
 
-- (void)whc_WidthAuto {
-    [super whc_WidthAuto];
+- (void)whc_AutoWidth {
+    [super whc_AutoWidth];
     _autoWidth = YES;
 }
 
-- (WidthAuto)whc_widthAuto {
+- (WidthAuto)whc_WidthAuto {
     _autoWidth = YES;
     __weak typeof(self) weakSelf = self;
     return ^() {
-        [super whc_WidthAuto];
+        [super whc_AutoWidth];
         return weakSelf;
     };
 }
@@ -343,9 +343,18 @@
     return lineView;
 }
 
-- (void)whc_removeAllSubviews {
+- (void)whc_RemoveAllSubviews {
     [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj removeFromSuperview];
+    }];
+}
+
+- (void)whc_RemoveAllVacntView {
+    _lastRowVacantCount = 0;
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[WHC_VacntView class]]) {
+            [obj removeFromSuperview];
+        }
     }];
 }
 
@@ -649,7 +658,7 @@ WHC_GOTO:
                                     [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
                                 }else {
                                     if (_autoHeight) {
-                                        [view whc_heightAuto];
+                                        [view whc_HeightAuto];
                                     }else {
                                         [view whc_HeightEqualView:nextRowView
                                                             ratio:view.whc_HeightWeight / nextRowView.whc_HeightWeight];
@@ -664,7 +673,7 @@ WHC_GOTO:
                                     [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
                                 }else {
                                     if (_autoHeight) {
-                                        [view whc_heightAuto];
+                                        [view whc_HeightAuto];
                                     }else {
                                         [view whc_BottomSpace:self.whc_Edge.bottom];
                                     }

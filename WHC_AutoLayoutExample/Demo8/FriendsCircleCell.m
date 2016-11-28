@@ -80,9 +80,6 @@
     UIImageView            * _supportImageView;
     UIImageView            * _upArrowImageView;
     
-    NSMutableArray         * _commentLabelArray;
-    NSMutableArray         * _imageViewArray;
-    
     WHC_StackView          * _imageStackView;
     WHC_StackView          * _commentStackView;
     AnswerMenuView         * _menuView;
@@ -97,11 +94,6 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        CGRect cellFrame = self.contentView.frame;
-        cellFrame.size.width = [UIScreen mainScreen].bounds.size.width;
-        self.contentView.frame = cellFrame;
-        _commentLabelArray = [NSMutableArray array];
-        _imageViewArray = [NSMutableArray array];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self initLayout];
     }
@@ -170,18 +162,18 @@
     [_userImageView whc_Frame:10 top:15 width:40 height:40];
     _userNameLabel.whc_TopSpaceEqualView(_userImageView)
                   .whc_LeftSpaceToView(10,_userImageView)
-                  .whc_widthAuto()
+                  .whc_WidthAuto()
                   .whc_Height(20);
     
     _contentLabel.whc_LeftSpaceEqualView(_userNameLabel)
                  .whc_TopSpaceToView(5,_userNameLabel)
                  .whc_RightSpace(10)
-                 .whc_heightAuto();
+                 .whc_HeightAuto();
     
     _imageStackView.whc_TopSpaceToView(5,_contentLabel)
                    .whc_LeftSpaceEqualView(_contentLabel)
                    .whc_RightSpace(10)
-                   .whc_heightAuto();
+                   .whc_HeightAuto();
     
     /// 配置图片展示容器
     _imageStackView.whc_Column = 3;               // 最大3列
@@ -210,7 +202,7 @@
     _commentStackView.whc_TopSpaceToView(0,_supportView)
                      .whc_LeftSpaceEqualView(_timeLabel)
                      .whc_RightSpace(10)
-                     .whc_heightAuto();
+                     .whc_HeightAuto();
     
     /// 配置评论展示容器
     _commentStackView.whc_Edge = UIEdgeInsetsMake(5, 5, 5, 5);  // 内边距为5
@@ -250,11 +242,19 @@
 
 /// 评论StackView和图片StackView视图复用处理
 - (void)resetstackViewWithIsComment:(BOOL)isComment model:(FriendModel *)friendModel {
-    NSInteger oldCount = isComment ? _commentStackView.whc_SubViewCount : _imageStackView.whc_SubViewCount;
-    NSInteger countDiff = isComment ? friendModel.answerArray.count - oldCount : friendModel.imageArray.count - oldCount;
-    if (countDiff < 0) {
+    if (!isComment) {
+        [_imageStackView whc_RemoveAllSubviews];
+    }else {
+        [_commentStackView whc_RemoveAllSubviews];
+    }
+    NSInteger newCount = isComment ? friendModel.answerArray.count : friendModel.imageArray.count;
+    NSInteger oldCount = isComment ? _commentStackView.subviews.count : _imageStackView.subviews.count;
+    NSInteger countDiff = newCount - oldCount;
+    
+    /*
+    if (countDiff < 0) {// 删除多余的
         NSArray * subViewArray = isComment ? _commentStackView.subviews : _imageStackView.subviews;
-        NSArray * removeCommentViewArray = [subViewArray subarrayWithRange:NSMakeRange(oldCount + countDiff, -countDiff)];
+        NSArray * removeCommentViewArray = [subViewArray subarrayWithRange:NSMakeRange(newCount, -countDiff)];
         for (UIView * view in removeCommentViewArray) {
             [view removeFromSuperview];
         }
@@ -273,38 +273,23 @@
                 imageView.image = [UIImage imageNamed:friendModel.imageArray[i]];
             }
         }
-    }
+    }*/
     for(int i = 0; i < countDiff; i++) {
-        BOOL isNew = NO;
         if (isComment) {
-            UILabel * commentLabel = (_commentLabelArray.count > oldCount + i ? _commentLabelArray[oldCount + i] : nil);
-            if (commentLabel == nil) {
-                isNew = YES;
-                commentLabel = [UILabel new];
-                commentLabel.backgroundColor = _commentStackView.backgroundColor;
-                commentLabel.numberOfLines = 0;
-                commentLabel.font = [UIFont systemFontOfSize:14];
-            }
+            UILabel * commentLabel = commentLabel = [UILabel new];
+            commentLabel.backgroundColor = _commentStackView.backgroundColor;
+            commentLabel.numberOfLines = 0;
+            commentLabel.font = [UIFont systemFontOfSize:14];
             Answer * answer = friendModel.answerArray[oldCount + i];
             [self setComment:commentLabel answer:answer userName:friendModel.userName];
-            if (isNew) {
-                [_commentLabelArray addObject:commentLabel];
-            }
             [_commentStackView addSubview:commentLabel];
         }else {
-            UIImageView * imageView = (_imageViewArray.count > oldCount + i ? _imageViewArray[oldCount + i] : nil);
-            if (imageView == nil) {
-                isNew = YES;
-                imageView = [UIImageView new];
-                imageView.userInteractionEnabled = YES;
-            }
+            UIImageView * imageView = imageView = [UIImageView new];
+            imageView.userInteractionEnabled = YES;
             imageView.tag = oldCount + i;
             UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)];
             [imageView addGestureRecognizer:tapGesture];
             imageView.image = [UIImage imageNamed:friendModel.imageArray[i + oldCount]];
-            if(isNew) {
-                [_imageViewArray addObject:imageView];
-            }
             [_imageStackView addSubview:imageView];
         }
     }
@@ -361,8 +346,8 @@
     [self.contentView addSubview:_menuView];
     [_menuView whc_TrailingSpace:2 toView:_answerButton];
     [_menuView whc_CenterY:0 toView:_answerButton];
-    [_menuView layoutIfNeeded];
     [_menuView whc_Size:CGSizeMake(150, 40)];
+    [_menuView layoutIfNeeded];
     [UIView animateWithDuration:0.3 animations:^{
         [_menuView layoutIfNeeded];
         [_menuView whc_StartLayout];

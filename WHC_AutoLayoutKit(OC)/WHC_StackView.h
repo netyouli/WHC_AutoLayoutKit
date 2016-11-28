@@ -43,10 +43,10 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 @interface UILabel (WHC_StackView)
 /************重载父类属性**************/
 /// 自动高度
-@property (nonatomic ,copy , readonly)HeightAuto whc_heightAuto;
+@property (nonatomic ,copy , readonly)HeightAuto whc_HeightAuto;
 
 /// 自动宽度
-@property (nonatomic ,copy , readonly)WidthAuto whc_widthAuto;
+@property (nonatomic ,copy , readonly)WidthAuto whc_WidthAuto;
 @property (nonatomic, assign)CGFloat whc_LeftPadding;
 @property (nonatomic, assign)CGFloat whc_TopPadding;
 @property (nonatomic, assign)CGFloat whc_RightPadding;
@@ -107,23 +107,23 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 
 /************重载父类属性**************/
 /// 自动高度
-@property (nonatomic ,copy , readonly)HeightAuto whc_heightAuto;
+@property (nonatomic ,copy , readonly)HeightAuto whc_HeightAuto;
 
 /// 自动宽度
-@property (nonatomic ,copy , readonly)WidthAuto whc_widthAuto;
+@property (nonatomic ,copy , readonly)WidthAuto whc_WidthAuto;
 
 /************重载父类方法**************/
 /**
  * 说明: 自动宽度
  */
 
-- (void)whc_WidthAuto;
+- (void)whc_AutoWidth;
 
 /**
  * 说明: 自动高度
  */
 
-- (void)whc_HeightAuto;
+- (void)whc_AutoHeight;
 
 /**
  * 说明：开始进行自动布局
@@ -133,5 +133,10 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 /**
  * 说明：清除所有子视图
  */
-- (void)whc_removeAllSubviews;
+- (void)whc_RemoveAllSubviews;
+
+/**
+ 移除所有空白站位视图(仅仅横向垂直混合布局有效)
+ */
+- (void)whc_RemoveAllVacntView;
 @end

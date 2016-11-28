@@ -244,7 +244,7 @@ typedef UIView * (^size)(CGSize size);
 /// 宽度(CGFloat value)
 @property (nonatomic ,copy , readonly)Width whc_Width;
 /// 宽度自动()
-@property (nonatomic ,copy , readonly)WidthAuto whc_widthAuto;
+@property (nonatomic ,copy , readonly)WidthAuto whc_WidthAuto;
 /// 宽度等于视图view(UIView * view)
 @property (nonatomic ,copy , readonly)WidthEqualView whc_WidthEqualView;
 /// 宽度等于视图view 参照比例Ratio(UIView * view ,CGFloat ratio)
@@ -264,7 +264,7 @@ typedef UIView * (^size)(CGSize size);
 /// 高度(CGFloat value)
 @property (nonatomic ,copy , readonly)Height whc_Height;
 /// 高度自动()
-@property (nonatomic ,copy , readonly)HeightAuto whc_heightAuto;
+@property (nonatomic ,copy , readonly)HeightAuto whc_HeightAuto;
 /// 高度等于视图view(UIView * view)
 @property (nonatomic ,copy , readonly)HeightEqualView whc_HeightEqualView;
 /// 高度等于视图view 参照比例Ratio(UIView * view ,CGFloat ratio)
@@ -594,7 +594,7 @@ typedef UIView * (^size)(CGSize size);
  * 说明:设置自动宽度
  */
 
-- (void)whc_WidthAuto;
+- (void)whc_AutoWidth;
 
 /**
  * 说明:设置宽度
@@ -660,7 +660,7 @@ typedef UIView * (^size)(CGSize size);
 /**
  * 说明:设置自动高度
  */
-- (void)whc_HeightAuto;
+- (void)whc_AutoHeight;
 
 /**
  * 说明:设置高度

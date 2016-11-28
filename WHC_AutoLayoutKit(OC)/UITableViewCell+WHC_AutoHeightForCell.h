@@ -29,7 +29,17 @@
 
 #import <UIKit/UIKit.h>
 
+@interface UITableView (WHC_CacheCellHeight)
 
+///// 缓存cell高度字典
+//@property (nonatomic , strong) NSMutableDictionary * whc_CacheHeightDictionary;
+//
+//- (void)screenWillChange:(NSNotification *)notification;
+//
+//- (void)monitorScreenOrientation;
+//
+//- (NSMutableDictionary *)whc_CacheHeightDictionary;
+@end
 ////////////////////////////列表视图//////////////////////////////
 
 @interface UITableViewCell (WHC_AutoHeightForCell)
@@ -46,17 +56,5 @@
 
 /// 自动计算cell高度
 + (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
-@end
-
-@interface UITableView (WHC_CacheCellHeight)
-
-/// 缓存cell高度字典
-@property (nonatomic , strong) NSMutableDictionary * whc_CacheHeightDictionary;
-
-- (void)screenWillChange:(NSNotification *)notification;
-
-- (void)monitorScreenOrientation;
-
-- (NSMutableDictionary *)whc_CacheHeightDictionary;
 @end
 

@@ -425,10 +425,10 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
-- (WidthAuto)whc_widthAuto {
+- (WidthAuto)whc_WidthAuto {
     __weak typeof(self) weakSelf = self;
     return ^() {
-        [weakSelf whc_WidthAuto];
+        [weakSelf whc_AutoWidth];
         return weakSelf;
     };
 }
@@ -497,10 +497,10 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
-- (HeightAuto)whc_heightAuto {
+- (HeightAuto)whc_HeightAuto {
     __weak typeof(self) weakSelf = self;
     return ^() {
-        [weakSelf whc_HeightAuto];
+        [weakSelf whc_AutoHeight];
         return weakSelf;
     };
 }
@@ -969,7 +969,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 }
 
-- (void)whc_WidthAuto {
+- (void)whc_AutoWidth {
     if ([self isKindOfClass:[UILabel class]]) {
         UILabel * selfLabel = (UILabel *)self;
         if (selfLabel.numberOfLines == 0) {
@@ -1034,7 +1034,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                       multiplier:ratio];
 }
 
-- (void)whc_HeightAuto {
+- (void)whc_AutoHeight {
     if ([self isKindOfClass:[UILabel class]]) {
         if (((UILabel *)self).numberOfLines != 0) {
             ((UILabel *)self).numberOfLines = 0;
@@ -1589,7 +1589,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [self whc_AddConstraint:constraint];
                 return;
             }else {
-                [self handleXibConstraint:NSLayoutAttributeHeight];
+                //[self handleXibConstraint:NSLayoutAttributeHeight];
                 switch (constraint.relation) {
                     case NSLayoutRelationEqual: {
                         if (constraint.secondItem == nil) {
@@ -1620,7 +1620,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [self whc_AddConstraint:constraint];
                 return;
             }else {
-                [self handleXibConstraint:NSLayoutAttributeWidth];
+                //[self handleXibConstraint:NSLayoutAttributeWidth];
                 switch (constraint.relation) {
                     case NSLayoutRelationEqual: {
                         if (constraint.secondItem == nil) {

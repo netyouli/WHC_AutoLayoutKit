@@ -38,7 +38,7 @@
     
     _titleLable.whc_TrailingSpaceToView(15,_personView)
     .whc_CenterYToView(0,_personView)
-    .whc_widthAuto()
-    .whc_heightAuto();
+    .whc_WidthAuto()
+    .whc_HeightAuto();
 }
 @end
