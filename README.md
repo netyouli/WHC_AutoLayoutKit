@@ -16,7 +16,7 @@ WHC_AutoLayoutKit
 -  隐式更新约束技术
 -  支持修改约束优先级
 -  支持删除约束
--  Version: 2.6.2
+-  Version: 2.6.3
 -  咨询QQ: 712641411
 -  开发作者: 吴海超
 
@@ -28,7 +28,7 @@ WHC_AutoLayoutKit
 集成
 ==============
 * 使用CocoaPods:
-  -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.2'
+  -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.3'
   -  【Swift2.3】: pod 'WHC_AutoLayoutKit\(Swift2.3\)', '~> 2.6.0'
   -  【Swift3.0】: pod 'WHC_AutoLayoutKit\(Swift\)', '~> 2.6.1'
 * 手工集成:
