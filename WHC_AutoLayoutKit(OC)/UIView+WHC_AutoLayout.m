@@ -455,7 +455,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
-- (WidthAutoKeepRightConstraint)whc_widthAutoKeepRightConstraint {
+- (WidthAutoKeepRightConstraint)whc_WidthAutoKeepRightConstraint {
     __weak typeof(self) weakSelf = self;
     return ^(BOOL isKeep) {
         [weakSelf whc_WidthAutoKeepRightConstraint:isKeep];
@@ -527,7 +527,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
-- (HeightAutoKeepBottomConstraint)whc_heightAutoKeepBottomConstraint {
+- (HeightAutoKeepBottomConstraint)whc_HeightAutoKeepBottomConstraint {
     __weak typeof(self) weakSelf = self;
     return ^(BOOL isKeep) {
         [weakSelf whc_HeightAutoKeepBottomConstraint:isKeep];
@@ -1000,7 +1000,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (void)whc_WidthAutoKeepRightConstraint:(BOOL)isKeep {
     [self setKeepRightConstraint:isKeep];
-    [self whc_WidthAuto];
+    [self whc_AutoWidth];
 }
 
 - (void)whc_WidthHeightRatio:(CGFloat)ratio {
@@ -1065,7 +1065,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (void)whc_HeightAutoKeepBottomConstraint:(BOOL)isKeep {
     [self setKeepBottomConstraint:isKeep];
-    [self whc_HeightAuto];
+    [self whc_AutoHeight];
 }
 
 - (void)whc_HeightWidthRatio:(CGFloat)ratio {
@@ -1575,83 +1575,86 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (void)whc_AddConstraint:(NSLayoutConstraint *)constraint {
-    switch (constraint.firstAttribute) {
-        case NSLayoutAttributeHeight: {
-            if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
-                for (NSLayoutConstraint * selfConstraint in self.constraints) {
-                    if (selfConstraint.firstAttribute == NSLayoutAttributeHeight &&
-                        selfConstraint.relation == constraint.relation && [NSStringFromClass(selfConstraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
-                        return;
-                    }
-                }
-                [self whc_AddConstraint:constraint];
-                return;
-            }else {
-                //[self handleXibConstraint:NSLayoutAttributeHeight];
-                switch (constraint.relation) {
-                    case NSLayoutRelationEqual: {
-                        if (constraint.secondItem == nil) {
-                            [self setSelfHeightConstraint:constraint];
-                        }else {
-                            [constraint.firstItem setEquelHeightConstraint:constraint];
+    NSString * constraintClassString = NSStringFromClass(constraint.class);
+    if ([constraintClassString hasPrefix:@"NS"]) {
+        switch (constraint.firstAttribute) {
+            case NSLayoutAttributeHeight: {
+                if ([constraintClassString isEqualToString:@"NSContentSizeLayoutConstraint"]) {
+                    for (NSLayoutConstraint * selfConstraint in self.constraints) {
+                        if (selfConstraint.firstAttribute == NSLayoutAttributeHeight &&
+                            selfConstraint.relation == constraint.relation && [NSStringFromClass(selfConstraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
+                            return;
                         }
                     }
-                        break;
-                    case NSLayoutRelationGreaterThanOrEqual: {
-                        [self setAutoHeightConstraint:constraint];
+                    [self whc_AddConstraint:constraint];
+                    return;
+                }else {
+                    /*[self handleXibConstraint:NSLayoutAttributeHeight];*/
+                    switch (constraint.relation) {
+                        case NSLayoutRelationEqual: {
+                            if (constraint.secondItem == nil) {
+                                [self setSelfHeightConstraint:constraint];
+                            }else {
+                                [constraint.firstItem setEquelHeightConstraint:constraint];
+                            }
+                        }
+                            break;
+                        case NSLayoutRelationGreaterThanOrEqual: {
+                            [self setAutoHeightConstraint:constraint];
+                        }
+                            break;
+                        default:
+                            break;
                     }
-                        break;
-                    default:
-                        break;
                 }
             }
-        }
-            break;
-        case NSLayoutAttributeWidth: {
-            if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
-                for (NSLayoutConstraint * selfConstraint in self.constraints) {
-                    if (selfConstraint.firstAttribute == NSLayoutAttributeWidth &&
-                        selfConstraint.relation == constraint.relation && [NSStringFromClass(selfConstraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
-                        return;
-                    }
-                }
-                [self whc_AddConstraint:constraint];
-                return;
-            }else {
-                //[self handleXibConstraint:NSLayoutAttributeWidth];
-                switch (constraint.relation) {
-                    case NSLayoutRelationEqual: {
-                        if (constraint.secondItem == nil) {
-                            [self setSelfWidthConstraint:constraint];
-                        }else {
-                            [constraint.firstItem setEquelWidthConstraint:constraint];
+                break;
+            case NSLayoutAttributeWidth: {
+                if ([NSStringFromClass(constraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
+                    for (NSLayoutConstraint * selfConstraint in self.constraints) {
+                        if (selfConstraint.firstAttribute == NSLayoutAttributeWidth &&
+                            selfConstraint.relation == constraint.relation && [NSStringFromClass(selfConstraint.class) isEqualToString:@"NSContentSizeLayoutConstraint"]) {
+                            return;
                         }
                     }
-                        break;
-                    case NSLayoutRelationGreaterThanOrEqual: {
-                        [self setAutoWidthConstraint:constraint];
+                    [self whc_AddConstraint:constraint];
+                    return;
+                }else {
+                    /*[self handleXibConstraint:NSLayoutAttributeWidth];*/
+                    switch (constraint.relation) {
+                        case NSLayoutRelationEqual: {
+                            if (constraint.secondItem == nil) {
+                                [self setSelfWidthConstraint:constraint];
+                            }else {
+                                [constraint.firstItem setEquelWidthConstraint:constraint];
+                            }
+                        }
+                            break;
+                        case NSLayoutRelationGreaterThanOrEqual: {
+                            [self setAutoWidthConstraint:constraint];
+                        }
+                            break;
+                        default:
+                            break;
                     }
-                        break;
-                    default:
-                        break;
                 }
             }
-        }
-            break;
-        case NSLayoutAttributeRight: {
-            if ([constraint.firstItem respondsToSelector:@selector(setRightConstraint:)]) {
-                [constraint.firstItem setRightConstraint:constraint];
+                break;
+            case NSLayoutAttributeRight: {
+                if ([constraint.firstItem respondsToSelector:@selector(setRightConstraint:)]) {
+                    [constraint.firstItem setRightConstraint:constraint];
+                }
             }
-        }
-            break;
-        case NSLayoutAttributeBottom: {
-            if ([constraint.firstItem respondsToSelector:@selector(setBottomConstraint:)]) {
-                [constraint.firstItem setBottomConstraint:constraint];
+                break;
+            case NSLayoutAttributeBottom: {
+                if ([constraint.firstItem respondsToSelector:@selector(setBottomConstraint:)]) {
+                    [constraint.firstItem setBottomConstraint:constraint];
+                }
             }
+                break;
+            default:
+                break;
         }
-            break;
-        default:
-            break;
     }
     [self whc_AddConstraint:constraint];
 }

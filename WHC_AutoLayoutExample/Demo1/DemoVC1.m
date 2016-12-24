@@ -54,7 +54,10 @@
     [self.view addSubview:view3];
     [view2 addSubview:lable];
     
-    btn.whc_BaseLineSpace(10).whc_LeftSpace(0).whc_RightSpace(0).whc_Height(40);
+    btn.whc_BaseLineSpace(10)
+        .whc_LeftSpace(0)
+        .whc_RightSpace(0)
+        .whc_Height(40);
     
     /// 一行代码添加约束
     view1.whc_LeftSpace(10)
@@ -72,9 +75,11 @@
 - (void)clickButton:(UIButton *)sender {
     sender.selected = !sender.selected;
     if (sender.selected) {
-        lable.whc_heightAutoKeepBottomConstraint(YES);
-    }else {
+        /// 高度约束20并且不删除bottom约束
         lable.whc_HeightKeepBottomConstraint(20,YES);
+    }else {
+        /// 自动高度约束并且不删除bottom约束
+        lable.whc_HeightAutoKeepBottomConstraint(YES);
     }
 }
 
@@ -84,8 +89,8 @@
     lable.whc_LeftSpace(10)
         .whc_RightSpace(10)
         .whc_TopSpace(10)
-        .whc_BottomSpace(20)
-        .whc_HeightKeepBottomConstraint(40,YES);
+        .whc_HeightAuto()
+        .whc_BottomSpaceKeepHeightConstraint(10,YES); /// 添加与父视图bottom约束10并且不删除自身自动高度约束
     
 }
 

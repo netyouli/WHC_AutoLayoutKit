@@ -300,7 +300,7 @@
 }
 
 - (void)whc_AutoHeight {
-    [super whc_HeightAuto];
+    [super whc_AutoHeight];
     _autoHeight = YES;
 }
 

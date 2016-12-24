@@ -1159,65 +1159,68 @@ extension UIView {
     }
 
     @objc private func whc_AddConstraint(constraint: NSLayoutConstraint) {
-        switch constraint.firstAttribute {
-        case .Height:
-            if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
-                for selfConstraint in self.constraints {
-                    if selfConstraint.firstAttribute == .Height &&
-                        selfConstraint.relation == constraint.relation &&
-                        NSStringFromClass(selfConstraint.classForCoder) == "NSContentSizeLayoutConstraint" {
-                        return
+        let constraintClassString = NSStringFromClass(constraint.classForCoder)
+        if constraintClassString.hasPrefix("NS") {
+            switch constraint.firstAttribute {
+            case .Height:
+                if constraintClassString == "NSContentSizeLayoutConstraint" {
+                    for selfConstraint in self.constraints {
+                        if selfConstraint.firstAttribute == .Height &&
+                            selfConstraint.relation == constraint.relation &&
+                            NSStringFromClass(selfConstraint.classForCoder) == "NSContentSizeLayoutConstraint" {
+                            return
+                        }
+                    }
+                    self.whc_AddConstraint(constraint)
+                    return
+                }else {
+                    /*handleXibConstraint(NSLayoutAttribute.Height)*/
+                    switch constraint.relation {
+                    case .Equal:
+                        if constraint.secondItem == nil {
+                            self.setSelfHeightConstraint(constraint)
+                        }else {
+                            (constraint.firstItem as! UIView).setEquelHeightConstraint(constraint)
+                        }
+                    case .GreaterThanOrEqual:
+                        self.setAutoHeightConstraint(constraint)
+                    default:
+                        break
                     }
                 }
-                self.whc_AddConstraint(constraint)
-                return
-            }else {
-                handleXibConstraint(NSLayoutAttribute.Height)
-                switch constraint.relation {
-                case .Equal:
-                    if constraint.secondItem == nil {
-                        self.setSelfHeightConstraint(constraint)
-                    }else {
-                        (constraint.firstItem as! UIView).setEquelHeightConstraint(constraint)
+            case .Width:
+                if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
+                    for selfConstraint in self.constraints {
+                        if selfConstraint.firstAttribute == .Width &&
+                            selfConstraint.relation == constraint.relation &&
+                            NSStringFromClass(selfConstraint.classForCoder) == "NSContentSizeLayoutConstraint" {
+                            return
+                        }
                     }
-                case .GreaterThanOrEqual:
-                    self.setAutoHeightConstraint(constraint)
-                default:
-                    break
+                    self.whc_AddConstraint(constraint)
+                    return
+                }else {
+                    /*handleXibConstraint(NSLayoutAttribute.Width)*/
+                    switch constraint.relation {
+                    case .Equal:
+                        if constraint.secondItem == nil {
+                            self.setSelfWidthConstraint(constraint)
+                        }else {
+                            (constraint.firstItem as! UIView).setEquelWidthConstraint(constraint)
+                        }
+                    case .GreaterThanOrEqual:
+                        self.setAutoWidthConstraint(constraint)
+                    default:
+                        break
+                    }
                 }
+            case .Right:
+                (constraint.firstItem as! UIView).setRightConstraint(constraint)
+            case .Bottom:
+                (constraint.firstItem as! UIView).setBottomConstraint(constraint)
+            default:
+                break
             }
-        case .Width:
-            if NSStringFromClass(constraint.classForCoder) == "NSContentSizeLayoutConstraint" {
-                for selfConstraint in self.constraints {
-                    if selfConstraint.firstAttribute == .Width &&
-                        selfConstraint.relation == constraint.relation &&
-                        NSStringFromClass(selfConstraint.classForCoder) == "NSContentSizeLayoutConstraint" {
-                        return
-                    }
-                }
-                self.whc_AddConstraint(constraint)
-                return
-            }else {
-                handleXibConstraint(NSLayoutAttribute.Width)
-                switch constraint.relation {
-                case .Equal:
-                    if constraint.secondItem == nil {
-                        self.setSelfWidthConstraint(constraint)
-                    }else {
-                        (constraint.firstItem as! UIView).setEquelWidthConstraint(constraint)
-                    }
-                case .GreaterThanOrEqual:
-                    self.setAutoWidthConstraint(constraint)
-                default:
-                    break
-                }
-            }
-        case .Right:
-            (constraint.firstItem as! UIView).setRightConstraint(constraint)
-        case .Bottom:
-            (constraint.firstItem as! UIView).setBottomConstraint(constraint)
-        default:
-            break
         }
         self.whc_AddConstraint(constraint)
     }

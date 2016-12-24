@@ -253,7 +253,7 @@ typedef UIView * (^size)(CGSize size);
 /// 宽度是否保留宽度约束(CGFloat value, BOOL isKeep)
 @property (nonatomic ,copy , readonly)WidthKeepRightConstraint whc_WidthKeepRightConstraint;
 /// 宽度自动是否保留宽度约束(BOOL isKeep)
-@property (nonatomic ,copy , readonly)WidthAutoKeepRightConstraint whc_widthAutoKeepRightConstraint;
+@property (nonatomic ,copy , readonly)WidthAutoKeepRightConstraint whc_WidthAutoKeepRightConstraint;
 /// 宽度等于视图view是否保留宽度约束(UIView * view, BOOL isKeep, BOOL isKeep)
 @property (nonatomic ,copy , readonly)WidthEqualViewKeepRightConstraint whc_WidthEqualViewKeepRightConstraint;
 /// 宽度等于视图view 参照比例Ratio是否保留宽度约束(UIView * view ,CGFloat ratio, BOOL isKeep)
@@ -273,7 +273,7 @@ typedef UIView * (^size)(CGSize size);
 /// 高度是否保留高度约束(CGFloat value, BOOL isKeep)
 @property (nonatomic ,copy , readonly)HeightKeepBottomConstraint whc_HeightKeepBottomConstraint;
 /// 高度自动是否保留高度约束(BOOL isKeep)
-@property (nonatomic ,copy , readonly)HeightAutoKeepBottomConstraint whc_heightAutoKeepBottomConstraint;
+@property (nonatomic ,copy , readonly)HeightAutoKeepBottomConstraint whc_HeightAutoKeepBottomConstraint;
 /// 高度等于视图view是否保留高度约束(UIView * view, BOOL isKeep)
 @property (nonatomic ,copy , readonly)HeightEqualViewKeepBottomConstraint whc_HeightEqualViewKeepBottomConstraint;
 /// 高度等于视图view 参照比例Ratio是否保留高度约束(UIView * view ,CGFloat ratio, BOOL isKeep)
