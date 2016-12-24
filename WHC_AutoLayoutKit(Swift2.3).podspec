@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 `echo "2.3" > .swift-version`
   s.name         = "WHC_AutoLayoutKit(Swift2.3)"
   s.version      = "2.6.4"
-  s.summary      = "Swift2.3 Service to update constraints, convenient and quick dynamic UI layout，服务于更新约束方便快捷动态UI的自动布局库，支持Cell高度自动，UILabel,ScrollView,UIView高宽自动"
+  s.summary      = "Swift2.3 Service to update constraints, convenient and quick dynamic UI layout，服务于更新约束方便快捷动态UI构建的自动布局库，支持Cell高度自动，view高宽自动"
 
   s.homepage     = "https://github.com/netyouli/WHC_AutoLayoutKit"
 
