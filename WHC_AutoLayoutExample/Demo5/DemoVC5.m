@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"StockView 垂直横向混合自动布局";
+    self.navigationItem.title = @"StackView 垂直横向混合自动布局";
     self.view.backgroundColor = [UIColor whiteColor];
     // 创建容器视图12
     stackView1 = [WHC_StackView new];
