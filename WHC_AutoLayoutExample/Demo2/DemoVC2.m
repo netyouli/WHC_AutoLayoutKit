@@ -6,12 +6,12 @@
 //  Copyright © 2016年 吴海超. All rights reserved.
 //
 
-/*
- *  qq:712641411
- *  开发作者: 吴海超(WHC)
- *  iOS技术交流群:490149447
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
- */
+
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
+
 #import "DemoVC2.h"
 #import "DemoVC2Cell.h"
 #import "UIView+WHC_AutoLayout.h"
@@ -83,6 +83,14 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [_tableView reloadData];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [_tableView reloadData];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

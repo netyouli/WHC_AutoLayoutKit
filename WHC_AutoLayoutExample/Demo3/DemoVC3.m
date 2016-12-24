@@ -6,12 +6,10 @@
 //  Copyright © 2016年 吴海超. All rights reserved.
 //
 
-/*
- *  qq:712641411
- *  开发作者: 吴海超(WHC)
- *  iOS技术交流群:490149447
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
- */
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
 
 #import "DemoVC3.h"
 #import "UIView+WHC_AutoLayout.h"
@@ -67,7 +65,10 @@
     [stackView1 addSubview:lable4];
     
     // 容器视图2布局 一行代码添加约束
-    stackView2.whc_LeftSpace(0).whc_TopSpaceToView(10,stackView1).whc_RightSpace(0).whc_BottomSpace(10);
+    stackView2.whc_LeftSpace(0)
+        .whc_TopSpaceToView(10,stackView1)
+        .whc_RightSpace(0)
+        .whc_BottomSpace(10);
     
     // 容器视图2配置
     stackView2.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10);

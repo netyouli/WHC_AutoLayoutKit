@@ -6,14 +6,10 @@
 //  Copyright © 2015年 吴海超. All rights reserved.
 //
 
-/*************************************************************
-*                                                           *
-*  qq:712641411                                             *
-*  开发作者: 吴海超(WHC)                                      *
-*  iOS技术交流群:302157745                                    *
-*  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit     *
-*                                                           *
-*************************************************************/
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
 
 
 import UIKit
@@ -42,9 +38,9 @@ class WHC_GestureImageView: UIImageView {
     
     private func layoutUI() {
         self.userInteractionEnabled = true;
-        self.exitTapGesture = UITapGestureRecognizer(target: self, action: Selector("handleExitGesture:"));
+        self.exitTapGesture = UITapGestureRecognizer(target: self, action: #selector(WHC_GestureImageView.handleExitGesture(_:)));
         self.addGestureRecognizer(exitTapGesture);
-        self.tapGesture = UITapGestureRecognizer(target: self, action: Selector("handleTapGesture:"));
+        self.tapGesture = UITapGestureRecognizer(target: self, action: #selector(WHC_GestureImageView.handleTapGesture(_:)));
         self.tapGesture.numberOfTapsRequired = 2;
         self.addGestureRecognizer(tapGesture);
         self.exitTapGesture.requireGestureRecognizerToFail(tapGesture);

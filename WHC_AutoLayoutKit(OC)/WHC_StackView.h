@@ -25,8 +25,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.6)
-
 #import <UIKit/UIKit.h>
 #import "UIView+WHC_AutoLayout.h"
 

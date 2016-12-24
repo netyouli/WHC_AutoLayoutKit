@@ -26,7 +26,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.6)
 
 import UIKit
 
@@ -70,7 +69,7 @@ extension UIView {
         static var kCurrentConstraints     = "kCurrentConstraints"
     }
     
-    open override class func initialize() {
+    override open class func initialize() {
         struct WHC_AutoLayoutLoad {
             static var token: Int = 0
         }

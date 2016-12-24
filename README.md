@@ -5,7 +5,8 @@ WHC_AutoLayoutKit
 [![Pod Platform](http://img.shields.io/cocoapods/p/WHC_AutoLayoutKit.svg?style=flat)](http://cocoadocs.org/docsets/WHC_AutoLayoutKit/)
 [![Pod License](http://img.shields.io/cocoapods/l/WHC_AutoLayoutKit.svg?style=flat)](https://opensource.org/licenses/MIT)
 -  An use the most simple and powerful open source library automatic layout for iOS.
--  iOS 平台使用最简单功能最强大的自动布局开源库。
+-  Service to update constraints, convenient and quick dynamic UI layout.
+-  服务于更新约束方便快捷动态UI的自动布局库，支持Cell高度自动，UILabel,ScrollView,UIView高宽自动
 
 简介
 ==============
@@ -16,7 +17,6 @@ WHC_AutoLayoutKit
 -  隐式更新约束技术
 -  支持修改约束优先级
 -  支持删除约束
--  Version: 2.6.3
 -  咨询QQ: 712641411
 -  开发作者: 吴海超
 
@@ -28,9 +28,9 @@ WHC_AutoLayoutKit
 集成
 ==============
 * 使用CocoaPods:
-  -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.3'
-  -  【Swift2.3】: pod 'WHC_AutoLayoutKit\(Swift2.3\)', '~> 2.6.0'
-  -  【Swift3.0】: pod 'WHC_AutoLayoutKit\(Swift\)', '~> 2.6.1'
+  -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.4'
+  -  【Swift2.3】: pod 'WHC_AutoLayoutKit\(Swift2.3\)', '~> 2.6.4'
+  -  【Swift3.0】: pod 'WHC_AutoLayoutKit\(Swift\)', '~> 2.6.4'
 * 手工集成:
   -  【Objective-C】: 导入文件夹WHC_AutoLayoutKit(OC)
   -  【Swift2.3】: 导入文件夹WHC_AutoLayoutKit(Swift2.3)

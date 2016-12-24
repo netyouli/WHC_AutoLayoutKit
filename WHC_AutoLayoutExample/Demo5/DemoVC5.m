@@ -6,12 +6,10 @@
 //  Copyright © 2016年 吴海超. All rights reserved.
 //
 
-/*
- *  qq:712641411
- *  开发作者: 吴海超(WHC)
- *  iOS技术交流群:490149447
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
- */
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
 
 #import "DemoVC5.h"
 #import "UIView+WHC_AutoLayout.h"

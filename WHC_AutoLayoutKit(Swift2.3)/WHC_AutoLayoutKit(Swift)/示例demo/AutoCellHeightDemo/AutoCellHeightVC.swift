@@ -6,10 +6,10 @@
 //  Copyright © 2016年 WHC. All rights reserved.
 //
 
-/*
- *  iOS技术交流群:490149447
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
- */
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
 
 import UIKit
 
@@ -32,6 +32,14 @@ class AutoCellHeightVC: UIViewController,UITableViewDelegate, UITableViewDataSou
         tableView.whc_AutoSize(left: 0, top: 0, right: 0, bottom: 0)
     }
 
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        tableView.reloadData()
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

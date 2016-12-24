@@ -17,12 +17,11 @@
 #import "DemoVC6.h"
 #import "DemoVC7.h"
 #import "WeiXinFriendsCircleVC.h"
-/*
- *  qq:712641411
- *  开发作者: 吴海超(WHC)
- *  iOS技术交流群:490149447
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
- */
+
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
 
 @interface MainVC () {
     NSArray * _contents;
@@ -56,6 +55,14 @@
         WeiXinFriendsCircleVC * vc = [WeiXinFriendsCircleVC new];
         [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self.tableView reloadData];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

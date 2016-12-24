@@ -6,6 +6,11 @@
 //  Copyright © 2016年 WHC. All rights reserved.
 //
 
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
+
 import UIKit
 
 class ModityXibVC: UIViewController {

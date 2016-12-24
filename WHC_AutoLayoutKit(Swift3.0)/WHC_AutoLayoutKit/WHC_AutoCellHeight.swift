@@ -27,8 +27,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.6)
-
 import UIKit
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -52,19 +50,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 extension UITableView {
-    
-    fileprivate var isMonitorScreen: Bool {
-        set {
-            objc_setAssociatedObject(self, &WHC_AssociatedObjectKey.kIsMonitorScreen, NSNumber(value: newValue as Bool), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-        get {
-            let value = objc_getAssociatedObject(self, &WHC_AssociatedObjectKey.kIsMonitorScreen)
-            if value != nil {
-                return (value as! NSNumber).boolValue
-            }
-            return false
-        }
-    }
     
     fileprivate var cacheHeightDictionary:[Int : [Int: CGFloat]]! {
         set {
@@ -127,69 +112,83 @@ extension UITableView {
     }
     
     @objc fileprivate func whc_ReloadRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation: UITableViewRowAnimation) {
-        for indexPath in indexPaths {
-            let sectionCacheHeightDictionary = cacheHeightDictionary[(indexPath as NSIndexPath).section]
-            if sectionCacheHeightDictionary != nil {
-                cacheHeightDictionary[(indexPath as NSIndexPath).section]!.removeValue(forKey: (indexPath as NSIndexPath).row)
+        if cacheHeightDictionary != nil {
+            for indexPath in indexPaths {
+                let sectionCacheHeightDictionary = cacheHeightDictionary[(indexPath as NSIndexPath).section]
+                if sectionCacheHeightDictionary != nil {
+                    cacheHeightDictionary[(indexPath as NSIndexPath).section]!.removeValue(forKey: (indexPath as NSIndexPath).row)
+                }
             }
         }
         self.whc_ReloadRowsAtIndexPaths(indexPaths, withRowAnimation: withRowAnimation)
     }
     
     @objc fileprivate func whc_ReloadSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-        for (idx,_) in sections.enumerated() {
-            let _ = self.cacheHeightDictionary?.removeValue(forKey: idx)
+        if cacheHeightDictionary != nil {
+            for (idx,_) in sections.enumerated() {
+                let _ = self.cacheHeightDictionary?.removeValue(forKey: idx)
+            }
         }
         self.whc_ReloadSections(sections, withRowAnimation: animation)
     }
     
     @objc fileprivate func whc_DeleteRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableViewRowAnimation) {
-        for indexPath in indexPaths {
-            if cacheHeightDictionary[(indexPath as NSIndexPath).section] != nil {
-                cacheHeightDictionary[(indexPath as NSIndexPath).section]!.removeValue(forKey: (indexPath as NSIndexPath).row)
+        if cacheHeightDictionary != nil {
+            for indexPath in indexPaths {
+                if cacheHeightDictionary[(indexPath as NSIndexPath).section] != nil {
+                    cacheHeightDictionary[(indexPath as NSIndexPath).section]!.removeValue(forKey: (indexPath as NSIndexPath).row)
+                }
             }
         }
         self.whc_DeleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
     }
     
     @objc fileprivate func whc_DeleteSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-        for (idx,_) in sections.enumerated() {
-           let _ = self.cacheHeightDictionary?.removeValue(forKey: idx)
+        if cacheHeightDictionary != nil {
+            for (idx,_) in sections.enumerated() {
+               let _ = self.cacheHeightDictionary?.removeValue(forKey: idx)
+            }
+            handleCacheHeightDictionary()
         }
-        handleCacheHeightDictionary()
         self.whc_DeleteSections(sections, withRowAnimation: animation)
     }
     
     @objc fileprivate func whc_MoveSection(_ section: Int, toSection newSection: Int) {
-        let sectionMap = cacheHeightDictionary[section]
-        cacheHeightDictionary[section] = cacheHeightDictionary[newSection]
-        cacheHeightDictionary[newSection] = sectionMap
+        if cacheHeightDictionary != nil {
+            let sectionMap = cacheHeightDictionary[section]
+            cacheHeightDictionary[section] = cacheHeightDictionary[newSection]
+            cacheHeightDictionary[newSection] = sectionMap
+        }
         self.whc_MoveSection(section, toSection: newSection)
     }
     
     @objc fileprivate func whc_MoveRowAtIndexPath(_ indexPath: IndexPath, toIndexPath newIndexPath: IndexPath) {
-        var indexPathMap = cacheHeightDictionary[(indexPath as NSIndexPath).section]
-        let indexPathHeight = indexPathMap![(indexPath as NSIndexPath).row]
-        
-        var newIndexPathMap = cacheHeightDictionary[(newIndexPath as NSIndexPath).section]
-        let newIndexPathHeight = newIndexPathMap![(newIndexPath as NSIndexPath).row]
-        
-        let _ = indexPathMap?.updateValue(newIndexPathHeight!, forKey: (indexPath as NSIndexPath).row)
-        let _ = newIndexPathMap?.updateValue(indexPathHeight!, forKey: (newIndexPath as NSIndexPath).row)
-        cacheHeightDictionary.updateValue(indexPathMap!, forKey: (indexPath as NSIndexPath).section)
-        cacheHeightDictionary.updateValue(newIndexPathMap!, forKey: (newIndexPath as NSIndexPath).section)
+        if cacheHeightDictionary != nil {
+            var indexPathMap = cacheHeightDictionary[(indexPath as NSIndexPath).section]
+            let indexPathHeight = indexPathMap![(indexPath as NSIndexPath).row]
+            
+            var newIndexPathMap = cacheHeightDictionary[(newIndexPath as NSIndexPath).section]
+            let newIndexPathHeight = newIndexPathMap![(newIndexPath as NSIndexPath).row]
+            
+            let _ = indexPathMap?.updateValue(newIndexPathHeight!, forKey: (indexPath as NSIndexPath).row)
+            let _ = newIndexPathMap?.updateValue(indexPathHeight!, forKey: (newIndexPath as NSIndexPath).row)
+            cacheHeightDictionary.updateValue(indexPathMap!, forKey: (indexPath as NSIndexPath).section)
+            cacheHeightDictionary.updateValue(newIndexPathMap!, forKey: (newIndexPath as NSIndexPath).section)
+        }
         self.whc_MoveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
     }
     
     @objc fileprivate func whc_InsertSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-        let firstSection = sections.first
-        let moveSection = cacheHeightDictionary.count
-        if moveSection > firstSection {
-            for section in firstSection! ..< moveSection {
-                let map = cacheHeightDictionary[section]
-                if map != nil {
-                    cacheHeightDictionary.removeValue(forKey: section)
-                    cacheHeightDictionary.updateValue(map!, forKey: section + sections.count)
+        if cacheHeightDictionary != nil {
+            let firstSection = sections.first
+            let moveSection = cacheHeightDictionary.count
+            if moveSection > firstSection {
+                for section in firstSection! ..< moveSection {
+                    let map = cacheHeightDictionary[section]
+                    if map != nil {
+                        cacheHeightDictionary.removeValue(forKey: section)
+                        cacheHeightDictionary.updateValue(map!, forKey: section + sections.count)
+                    }
                 }
             }
         }
@@ -197,61 +196,52 @@ extension UITableView {
     }
     
     @objc fileprivate func whc_InsertRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableViewRowAnimation) {
-        for indexPath in indexPaths {
-            var sectionMap = cacheHeightDictionary[(indexPath as NSIndexPath).section]
-            if sectionMap != nil {
-                let moveRow = sectionMap!.count
-                if moveRow > (indexPath as NSIndexPath).row {
-                    for index in (indexPath as NSIndexPath).row ..< moveRow {
-                        let height = sectionMap?[index]
-                        if height != nil {
-                            let _ = sectionMap?.removeValue(forKey: index)
-                            let _ = sectionMap?.updateValue(height!, forKey: index + 1)
+        if cacheHeightDictionary != nil {
+            for indexPath in indexPaths {
+                var sectionMap = cacheHeightDictionary[(indexPath as NSIndexPath).section]
+                if sectionMap != nil {
+                    let moveRow = sectionMap!.count
+                    if moveRow > (indexPath as NSIndexPath).row {
+                        for index in (indexPath as NSIndexPath).row ..< moveRow {
+                            let height = sectionMap?[index]
+                            if height != nil {
+                                let _ = sectionMap?.removeValue(forKey: index)
+                                let _ = sectionMap?.updateValue(height!, forKey: index + 1)
+                            }
                         }
+                        cacheHeightDictionary.updateValue(sectionMap!, forKey: (indexPath as NSIndexPath).section)
                     }
-                    cacheHeightDictionary.updateValue(sectionMap!, forKey: (indexPath as NSIndexPath).section)
                 }
             }
         }
         self.whc_InsertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
     }
     
-    @objc fileprivate func screenWillChange(_ notification: Notification) -> Void {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64((0.1 * Double(NSEC_PER_SEC)))) / Double(NSEC_PER_SEC)) {
-            self.reloadData()
-        }
-    }
-    
-    fileprivate func monitorScreenOrientation() {
-        if isMonitorScreen == false {
-            isMonitorScreen = true
-            NotificationCenter.default.addObserver(self, selector: #selector(self.screenWillChange(_:)), name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
-        }
-    }
-    
     fileprivate func handleCacheHeightDictionary() {
-        let allKey = cacheHeightDictionary.keys.sorted{$0 < $1}
-        var frontKey = -1
-        var index = 0
-        for (idx, key) in allKey.enumerated() {
-            if frontKey == -1 {
-                frontKey = key
-            }else {
-                if key - frontKey > 1 {
-                    if index == 0 {
-                        index = frontKey
+        if cacheHeightDictionary != nil {
+            let allKey = cacheHeightDictionary.keys.sorted{$0 < $1}
+            var frontKey = -1
+            var index = 0
+            for (idx, key) in allKey.enumerated() {
+                if frontKey == -1 {
+                    frontKey = key
+                }else {
+                    if key - frontKey > 1 {
+                        if index == 0 {
+                            index = frontKey
+                        }
+                        cacheHeightDictionary.updateValue(cacheHeightDictionary[key]!, forKey: allKey[index] + 1)
+                        cacheHeightDictionary.removeValue(forKey: key)
+                        index = idx
                     }
-                    cacheHeightDictionary.updateValue(cacheHeightDictionary[key]!, forKey: allKey[index] + 1)
-                    cacheHeightDictionary.removeValue(forKey: key)
-                    index = idx
+                    frontKey = key
                 }
-                frontKey = key
             }
         }
     }
 }
 
-extension UITableViewCell {
+public extension UITableViewCell {
     /// cell上最底部的视图
     public var whc_CellBottomView: UIView! {
         set {
@@ -333,7 +323,6 @@ extension UITableViewCell {
         if tableView.cacheHeightDictionary == nil {
             tableView.cacheHeightDictionary = [Int : [Int: CGFloat]]()
         }
-        tableView.monitorScreenOrientation()
         
         var sectionCacheHeightDictionary = tableView.cacheHeightDictionary[(indexPath as NSIndexPath).section]
         if sectionCacheHeightDictionary != nil {

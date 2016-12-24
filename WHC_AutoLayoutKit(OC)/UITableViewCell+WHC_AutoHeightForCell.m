@@ -25,11 +25,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.6)
-
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
 #import "UIView+WHC_AutoLayout.h"
 #import <objc/runtime.h>
+@interface UITableView (WHC_CacheCellHeight)
+@end
 
 @implementation UITableView (WHC_CacheCellHeight)
 
@@ -67,37 +67,6 @@
     });
 }
 
-- (void)screenWillChange:(NSNotification *)notification {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self reloadData];
-    });
-}
-
-- (void)dealloc {
-    if ([self isMonitorScreen]) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-    }
-}
-
-- (void)monitorScreenOrientation {
-    if (![self isMonitorScreen]) {
-        [self setDidMonitorScreen];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenWillChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-    }
-}
-
-- (void)setDidMonitorScreen {
-    objc_setAssociatedObject(self,
-                             @selector(isMonitorScreen),
-                             @(YES),
-                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)isMonitorScreen {
-    id monitor = objc_getAssociatedObject(self, _cmd);
-    return monitor == nil ? NO : [monitor boolValue];
-}
-
 - (void)setWhc_CacheHeightDictionary:(NSMutableDictionary *)whc_CacheHeightDictionary {
     objc_setAssociatedObject(self,
                              @selector(whc_CacheHeightDictionary),
@@ -110,40 +79,42 @@
 }
 
 - (void)handleCacheHeightDictionary {
-    NSArray<NSString *> * allKey = [self.whc_CacheHeightDictionary.allKeys sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
-        return obj1.floatValue < obj2.floatValue;
-    }];
-    __block NSString * frontKey = nil;
-    __block NSInteger  index = 0;
-    [allKey enumerateObjectsUsingBlock:^(NSString * _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (frontKey == nil) {
-            frontKey = key;
-        }else {
-            if (key.integerValue - frontKey.integerValue > 1) {
-                if (index == 0) {
-                    index = frontKey.integerValue;
+    if (self.whc_CacheHeightDictionary) {
+        NSArray<NSString *> * allKey = [self.whc_CacheHeightDictionary.allKeys sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
+            return obj1.floatValue < obj2.floatValue;
+        }];
+        __block NSString * frontKey = nil;
+        __block NSInteger  index = 0;
+        [allKey enumerateObjectsUsingBlock:^(NSString * _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (frontKey == nil) {
+                frontKey = key;
+            }else {
+                if (key.integerValue - frontKey.integerValue > 1) {
+                    if (index == 0) {
+                        index = frontKey.integerValue;
+                    }
+                    [self.whc_CacheHeightDictionary setObject:self.whc_CacheHeightDictionary[key] forKey:@(allKey[index].integerValue + 1).stringValue];
+                    [self.whc_CacheHeightDictionary removeObjectForKey:key];
+                    index = idx;
                 }
-                [self.whc_CacheHeightDictionary setObject:self.whc_CacheHeightDictionary[key] forKey:@(allKey[index].integerValue + 1).stringValue];
-                [self.whc_CacheHeightDictionary removeObjectForKey:key];
-                index = idx;
+                frontKey = key;
             }
-            frontKey = key;
-        }
-    }];
+        }];
+    }
 }
 
 - (void)whc_deleteSections:(NSIndexSet *)sections {
-    if (sections) {
+    if (sections && self.whc_CacheHeightDictionary) {
         [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
             [self.whc_CacheHeightDictionary removeObjectForKey:@(idx).stringValue];
         }];
+        [self handleCacheHeightDictionary];
     }
-    [self handleCacheHeightDictionary];
     [self whc_deleteSections:sections];
 }
 
 - (void)whc_deleteItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
-    if (indexPaths) {
+    if (indexPaths && self.whc_CacheHeightDictionary) {
         [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString * cacheHeightKey = @(indexPath.section).stringValue;
             NSMutableDictionary * sectionCacheHeightDictionary = self.whc_CacheHeightDictionary[cacheHeightKey];
@@ -157,7 +128,7 @@
 
 - (void)whc_ReloadSetion:(NSIndexSet *)sections
         withRowAnimation:(UITableViewRowAnimation)animation {
-    if (sections) {
+    if (sections && self.whc_CacheHeightDictionary) {
         [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
             [self.whc_CacheHeightDictionary removeObjectForKey:@(idx).stringValue];
         }];
@@ -167,7 +138,7 @@
 }
 
 - (void)whc_reloadRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
-    if (indexPaths) {
+    if (indexPaths && self.whc_CacheHeightDictionary) {
         [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString * cacheHeightKey = @(indexPath.section).stringValue;
             NSMutableDictionary * sectionCacheHeightDictionary = self.whc_CacheHeightDictionary[cacheHeightKey];
@@ -187,35 +158,39 @@
 }
 
 - (void)whc_MoveSection:(NSInteger)section toSection:(NSInteger)newSection {
-    NSMutableDictionary * sectionMap = [NSMutableDictionary dictionaryWithDictionary:self.whc_CacheHeightDictionary[@(section).stringValue]];
-    self.whc_CacheHeightDictionary[@(section).stringValue] = self.whc_CacheHeightDictionary[@(newSection).stringValue];
-    self.whc_CacheHeightDictionary[@(newSection).stringValue] = sectionMap;
+    if (self.whc_CacheHeightDictionary) {
+        NSMutableDictionary * sectionMap = [NSMutableDictionary dictionaryWithDictionary:self.whc_CacheHeightDictionary[@(section).stringValue]];
+        self.whc_CacheHeightDictionary[@(section).stringValue] = self.whc_CacheHeightDictionary[@(newSection).stringValue];
+        self.whc_CacheHeightDictionary[@(newSection).stringValue] = sectionMap;
+    }
     [self whc_MoveSection:section toSection:newSection];
 }
 
 - (void)whc_MoveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
-    if (indexPath == nil || newIndexPath) return;
-    NSMutableDictionary * indexPathMap = self.whc_CacheHeightDictionary[@(indexPath.section).stringValue];
-    CGFloat indexPathHeight = [indexPathMap[@(indexPath.row).stringValue] floatValue];
-    
-    NSMutableDictionary * newIndexPathMap = self.whc_CacheHeightDictionary[@(newIndexPath.section).stringValue];
-    CGFloat newIndexPathHeight = [newIndexPathMap[@(newIndexPath.row).stringValue] floatValue];
-    
-    indexPathMap[@(indexPath.row).stringValue] = @(newIndexPathHeight);
-    newIndexPathMap[@(newIndexPath.row).stringValue] = @(indexPathHeight);
+    if (indexPath && newIndexPath && self.whc_CacheHeightDictionary) {
+        NSMutableDictionary * indexPathMap = self.whc_CacheHeightDictionary[@(indexPath.section).stringValue];
+        CGFloat indexPathHeight = [indexPathMap[@(indexPath.row).stringValue] floatValue];
+        
+        NSMutableDictionary * newIndexPathMap = self.whc_CacheHeightDictionary[@(newIndexPath.section).stringValue];
+        CGFloat newIndexPathHeight = [newIndexPathMap[@(newIndexPath.row).stringValue] floatValue];
+        
+        indexPathMap[@(indexPath.row).stringValue] = @(newIndexPathHeight);
+        newIndexPathMap[@(newIndexPath.row).stringValue] = @(indexPathHeight);
+    }
     [self whc_MoveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
 }
 
 - (void)whc_InsertSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation {
-    if (sections == nil) return;
-    NSUInteger firstSection = sections.firstIndex;
-    NSUInteger moveSection = self.whc_CacheHeightDictionary.count;
-    if (moveSection > firstSection) {
-        for (NSInteger section = firstSection; section < moveSection; section++) {
-            NSMutableDictionary * sectionMap = self.whc_CacheHeightDictionary[@(section).stringValue];
-            if (sectionMap != nil) {
-                self.whc_CacheHeightDictionary[@(section + sections.count).stringValue] = sectionMap;
-                [self.whc_CacheHeightDictionary removeObjectForKey:@(section)];
+    if (sections && self.whc_CacheHeightDictionary) {
+        NSUInteger firstSection = sections.firstIndex;
+        NSUInteger moveSection = self.whc_CacheHeightDictionary.count;
+        if (moveSection > firstSection) {
+            for (NSInteger section = firstSection; section < moveSection; section++) {
+                NSMutableDictionary * sectionMap = self.whc_CacheHeightDictionary[@(section).stringValue];
+                if (sectionMap != nil) {
+                    self.whc_CacheHeightDictionary[@(section + sections.count).stringValue] = sectionMap;
+                    [self.whc_CacheHeightDictionary removeObjectForKey:@(section)];
+                }
             }
         }
     }
@@ -223,22 +198,24 @@
 }
 
 - (void)whc_InsertRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
-    if (indexPaths == nil) {return;}
-    [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSMutableDictionary * sectionMap = self.whc_CacheHeightDictionary[@(indexPath.section).stringValue];
-        if (sectionMap != nil) {
-            NSInteger moveRow = sectionMap.count;
-            if (moveRow > indexPath.row) {
-                for (NSInteger index = indexPath.row; index < moveRow; index++) {
-                    id heightObject = sectionMap[@(index).stringValue];
-                    if (heightObject) {
-                        sectionMap[@(index + 1).stringValue] = @([heightObject floatValue]);
-                        [sectionMap removeObjectForKey:@(index).stringValue];
+    if (self.whc_CacheHeightDictionary && indexPaths) {
+        [indexPaths enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSMutableDictionary * sectionMap = self.whc_CacheHeightDictionary[@(indexPath.section).stringValue];
+            if (sectionMap != nil) {
+                NSInteger moveRow = sectionMap.count;
+                if (moveRow > indexPath.row) {
+                    for (NSInteger index = indexPath.row; index < moveRow; index++) {
+                        id heightObject = sectionMap[@(index).stringValue];
+                        if (heightObject) {
+                            sectionMap[@(index + 1).stringValue] = @([heightObject floatValue]);
+                            [sectionMap removeObjectForKey:@(index).stringValue];
+                        }
                     }
                 }
             }
-        }
-    }];
+        }];
+    }
+    [self whc_InsertRowsAtIndexPaths:indexPaths withRowAnimation:animation];
 }
 
 @end
@@ -305,7 +282,6 @@
     if (tableView.whc_CacheHeightDictionary == nil) {
         tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
     }
-    [tableView monitorScreenOrientation];
     NSString * cacheHeightKey = @(indexPath.section).stringValue;
     NSMutableDictionary * sectionCacheHeightDictionary = tableView.whc_CacheHeightDictionary[cacheHeightKey];
     if (sectionCacheHeightDictionary != nil) {

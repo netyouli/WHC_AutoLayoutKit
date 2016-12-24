@@ -6,10 +6,10 @@
 //  Copyright © 2016年 WHC. All rights reserved.
 //
 
-/*
- *  iOS技术交流群:490149447
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
- */
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
 
 import UIKit
 
@@ -80,10 +80,17 @@ class AutoLayoutVC: UIViewController {
     
     func clickStartAnimation(_ sender: UIButton) -> Void {
         // 动态更新约束
-        leftTopLable.whc_Trailing(0).whc_BaseLine(0)
-        rightTopLable.whc_Left(0).whc_BaseLineEqual(leftTopLable)
-        leftBottomLable.whc_TrailingEqual(leftTopLable).whc_Top(64)
-        rightBottomLable.whc_LeftEqual(rightTopLable).whc_TopEqual(leftBottomLable)
+        leftTopLable.whc_Trailing(0)
+            .whc_BaseLine(0)
+        
+        rightTopLable.whc_Left(0)
+            .whc_BaseLineEqual(leftTopLable)
+        
+        leftBottomLable.whc_TrailingEqual(leftTopLable)
+            .whc_Top(64)
+        
+        rightBottomLable.whc_LeftEqual(rightTopLable)
+            .whc_TopEqual(leftBottomLable)
         UIView.animate(withDuration: 1, animations: { 
             self.view.layoutIfNeeded()
         }) 

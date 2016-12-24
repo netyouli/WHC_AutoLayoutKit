@@ -6,12 +6,10 @@
 //  Copyright © 2016年 吴海超. All rights reserved.
 //
 
-/*
- *  qq:712641411
- *  开发作者: 吴海超(WHC)
- *  iOS技术交流群:490149447
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
- */
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
 
 #import "DemoVC1.h"
 #import "UIView+WHC_AutoLayout.h"
@@ -83,7 +81,11 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     /// 一行代码添加约束
-    lable.whc_LeftSpace(10).whc_RightSpace(10).whc_TopSpace(10).whc_BottomSpace(20).whc_HeightKeepBottomConstraint(40,YES);
+    lable.whc_LeftSpace(10)
+        .whc_RightSpace(10)
+        .whc_TopSpace(10)
+        .whc_BottomSpace(20)
+        .whc_HeightKeepBottomConstraint(40,YES);
     
 }
 

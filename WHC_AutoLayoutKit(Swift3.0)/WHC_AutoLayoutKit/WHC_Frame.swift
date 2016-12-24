@@ -25,21 +25,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// VERSION:(2.6)
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     
-    var whc_ScreenWidth: CGFloat {
+    public var whc_ScreenWidth: CGFloat {
         return UIScreen.main.bounds.width
     }
     
-    var whc_ScreenHeight: CGFloat {
+    public var whc_ScreenHeight: CGFloat {
         return UIScreen.main.bounds.height
     }
     
-    var whc_Width: CGFloat {
+    public var whc_Width: CGFloat {
         set {
             var rect = self.frame
             rect.size.width = newValue
@@ -51,7 +50,7 @@ extension UIView {
         }
     }
     
-    var whc_Height: CGFloat {
+    public var whc_Height: CGFloat {
         set {
             var rect = self.frame
             rect.size.height = newValue
@@ -63,7 +62,7 @@ extension UIView {
         }
     }
     
-    var whc_X: CGFloat {
+    public var whc_X: CGFloat {
         set {
             var rect = self.frame
             rect.origin.x = newValue
@@ -75,7 +74,7 @@ extension UIView {
         }
     }
     
-    var whc_Y: CGFloat {
+    public var whc_Y: CGFloat {
         set {
             var rect = self.frame
             rect.origin.y = newValue
@@ -87,7 +86,7 @@ extension UIView {
         }
     }
     
-    var whc_MaxX: CGFloat {
+    public var whc_MaxX: CGFloat {
         set {
             self.whc_Width = newValue - self.whc_X
         }
@@ -97,7 +96,7 @@ extension UIView {
         }
     }
     
-    var whc_MaxY: CGFloat {
+    public var whc_MaxY: CGFloat {
         set {
             self.whc_Height = newValue - self.whc_Y
         }
@@ -107,7 +106,7 @@ extension UIView {
         }
     }
     
-    var whc_MidX: CGFloat {
+    public var whc_MidX: CGFloat {
         set {
             self.whc_Width = newValue * 2
         }
@@ -117,7 +116,7 @@ extension UIView {
         }
     }
     
-    var whc_MidY: CGFloat {
+    public var whc_MidY: CGFloat {
         set {
             self.whc_Height = newValue * 2
         }
@@ -127,7 +126,7 @@ extension UIView {
         }
     }
     
-    var whc_CenterX: CGFloat {
+    public var whc_CenterX: CGFloat {
         set {
             var center = self.center
             center.x = newValue
@@ -139,7 +138,7 @@ extension UIView {
         }
     }
     
-    var whc_CenterY: CGFloat {
+    public var whc_CenterY: CGFloat {
         set {
             var center = self.center
             center.y = newValue
@@ -151,7 +150,7 @@ extension UIView {
         }
     }
     
-    var whc_Xy: CGPoint {
+    public var whc_Xy: CGPoint {
         set {
             var rect = self.frame
             rect.origin = newValue
@@ -163,7 +162,7 @@ extension UIView {
         }
     }
     
-    var whc_Size: CGSize {
+    public var whc_Size: CGSize {
         set {
             var rect = self.frame
             rect.size = newValue

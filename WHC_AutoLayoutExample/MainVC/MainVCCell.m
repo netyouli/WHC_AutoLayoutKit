@@ -6,12 +6,10 @@
 //  Copyright © 2016年 吴海超. All rights reserved.
 //
 
-/*
- *  qq:712641411
- *  开发作者: 吴海超(WHC)
- *  iOS技术交流群:490149447
- *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit
- */
+/*********************************************************
+ *  gitHub:https://github.com/netyouli/WHC_AutoLayoutKit *
+ *  本人其他优秀开源库：https://github.com/netyouli          *
+ *********************************************************/
 
 #import "MainVCCell.h"
 #import "UIView+WHC_AutoLayout.h"
@@ -37,7 +35,7 @@
         [_content whc_LeftSpace:10];
         [_content whc_TopSpace:10 toView:_title];
         [_content whc_RightSpace:10];
-        [_content whc_HeightAuto];
+        [_content whc_AutoHeight];
         self.whc_CellBottomOffset = 10;
         self.whc_CellBottomView = _content;
     }
@@ -46,6 +44,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
