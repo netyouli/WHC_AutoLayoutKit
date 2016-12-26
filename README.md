@@ -1,4 +1,5 @@
 WHC_AutoLayoutKit
+<img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/WHC_AutoLayoutLogo.png" style="text-align:center>
 ==============
 ![Build Status](https://api.travis-ci.org/netyouli/WHC_AutoLayoutKit.svg?branch=master)
 [![Pod Version](http://img.shields.io/cocoapods/v/WHC_AutoLayoutKit.svg?style=flat)](http://cocoadocs.org/docsets/WHC_AutoLayoutKit/)
@@ -7,6 +8,8 @@ WHC_AutoLayoutKit
 -  An use the most simple and powerful open source library automatic layout for iOS.
 -  Service to update constraints, convenient and quick dynamic UI layout.
 -  服务于更新约束方便快捷动态UI的自动布局库，支持Cell高度自动，UILabel,ScrollView,UIView高宽自动
+
+[使用原理详解](https://gold.xitu.io/post/585e087f61ff4b005812eed7)</br>
 
 简介
 ==============

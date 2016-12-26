@@ -40,7 +40,7 @@
     view2.backgroundColor = [UIColor grayColor];
     view3.backgroundColor = [UIColor redColor];
     lable.backgroundColor = [UIColor magentaColor];
-    lable.text = @"dkdlskdlakdlakgjkdjgkajkgjdljidslidgjaldkgakjnvjndsjlagjdjlnsjdkjlsjakdalkdajakfjsalgjaljgasd";
+    lable.text = @"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     
     UIButton * btn = [UIButton new];
     [btn setTitle:@"收起" forState:UIControlStateNormal];
@@ -63,7 +63,9 @@
     view1.whc_LeftSpace(10)
          .whc_TopSpace(74)
          .whc_WidthEqualView(view2)
-         .whc_Height(150);
+         .whc_Height(150)
+    .whc_TrailingSpace(10)
+    .whc_BaseLineSpace;
     view2.whc_LeftSpaceToView(10,view1)
          .whc_TopSpace(74)
          .whc_RightSpace(10)
