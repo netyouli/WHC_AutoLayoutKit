@@ -1,5 +1,4 @@
 # WHC_AutoLayoutKit
-</br>
 <div align=center><img src="https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/WHC_AutoLayoutLogo.png"/></div></br>
 ==============
 ![Build Status](https://api.travis-ci.org/netyouli/WHC_AutoLayoutKit.svg?branch=master)
