@@ -32,12 +32,13 @@
 ==============
 * 使用CocoaPods:
   -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.4'
-  -  【Swift2.3】: pod 'WHC_AutoLayoutKit\(Swift2.3\)', '~> 2.6.4'
-  -  【Swift3.0】: pod 'WHC_AutoLayoutKit\(Swift\)', '~> 2.6.4'
+  -  【Swift3.0】: pod 'WHC_AutoLayoutKit_Swift3', '~> 2.6.5'
+  -  【Swift2.3】: pod 'WHC_AutoLayoutKit_Swift2_3', '~> 2.6.5'
+  
 * 手工集成:
   -  【Objective-C】: 导入文件夹WHC_AutoLayoutKit(OC)
-  -  【Swift2.3】: 导入文件夹WHC_AutoLayoutKit(Swift2.3)
   -  【Swift3.0】: 导入文件夹WHC_AutoLayoutKit(Swift3.0)
+  -  【Swift2.3】: 导入文件夹WHC_AutoLayoutKit(Swift2.3)
 
 使用
 ==============
