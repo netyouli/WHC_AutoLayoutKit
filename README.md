@@ -31,9 +31,9 @@
 集成
 ==============
 * 使用CocoaPods:
-  -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.4'
-  -  【Swift3.0】: pod 'WHC_AutoLayoutKit_Swift3', '~> 2.6.5'
-  -  【Swift2.3】: pod 'WHC_AutoLayoutKit_Swift2_3', '~> 2.6.5'
+  -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.6'
+  -  【Swift3.0】: pod 'WHC_AutoLayoutKit_Swift3', '~> 2.6.6'
+  -  【Swift2.3】: pod 'WHC_AutoLayoutKit_Swift2_3', '~> 2.6.6'
   
 * 手工集成:
   -  【Objective-C】: 导入文件夹WHC_AutoLayoutKit(OC)
@@ -105,16 +105,10 @@ func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSInde
     stackView.whc_VSpace = 10;                             // 子视图垂直间隙
     
     /// 向StackView中添加子视图
-    UIView * view1 = [UIView new];
-    UIView * view2 = [UIView new];
-    UIView * view3 = [UIView new];
-    UIView * view4 = [UIView new];
-
-    [stackView addSubview:view1];
-    [stackView addSubview:view2];
-    [stackView addSubview:view3];
-    [stackView addSubview:view4];
-
+    for (int i = 0; i < 4; i++) {
+        UIView * view = [UIView new];
+        [stackView addSubview:view];        
+    }
     /// 开始进行布局
     [stackView whc_StartLayout];
 }
@@ -141,16 +135,10 @@ override func viewDidLoad() {
     stackView.whc_VSpace = 10                              // 子视图垂直间隙
 
     /// 向StackView中添加子视图
-    let view1 = UIView()
-    let view2 = UIView()
-    let view3 = UIView()
-    let view4 = UIView()
-
-    stackView.addSubview(view1)
-    stackView.addSubview(view2)
-    stackView.addSubview(view3)
-    stackView.addSubview(view4)
-
+    for _ in 0 ..< 4 {
+        let view = UIView()    
+        stackView.addSubview(view)        
+    }
     /// 开始进行布局
     stackView.whc_StartLayout()
 }
