@@ -125,8 +125,10 @@ extension UIView {
         }else {
             for constraint in self.constraints {
                 if constraint.firstAttribute == attribute &&
-                    constraint.firstItem === item  &&
-                    constraint.secondItem === self {
+                    ((constraint.firstItem === item  &&
+                    constraint.secondItem === self) ||
+                    (constraint.firstItem === self  &&
+                    constraint.secondItem === item)) {
                     self.removeConstraint(constraint)
                 }
             }

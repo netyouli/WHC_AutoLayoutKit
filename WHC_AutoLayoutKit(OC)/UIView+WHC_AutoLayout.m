@@ -631,9 +631,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     }else {
         [self.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (obj.firstAttribute == Attribute &&
-                obj.secondItem == self &&
-                obj.firstItem == item) {
-                [self removeConstraint:obj];
+                ((obj.secondItem == item &&
+                  obj.firstItem == self) ||
+                 (obj.secondItem == self &&
+                  obj.firstItem == item)) ) {
+                     [self removeConstraint:obj];
             }
         }];
     }

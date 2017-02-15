@@ -124,6 +124,7 @@ extension UIButton {
         return CGSize.zero
     }
     
+    @discardableResult
     public override func whc_WidthAuto() -> UIView {
         if self.titleEdgeInsets.left + self.titleEdgeInsets.right != 0 {
             return self.whc_Width(calcTextSize().width + self.titleEdgeInsets.left + self.titleEdgeInsets.right + 0.5)
@@ -131,6 +132,7 @@ extension UIButton {
         return super.whc_WidthAuto()
     }
     
+    @discardableResult
     public override func whc_HeightAuto() -> UIView {
         if self.titleEdgeInsets.top + self.titleEdgeInsets.bottom != 0 {
             return self.whc_Height(calcTextSize().height + self.titleEdgeInsets.top + self.titleEdgeInsets.bottom  + 0.5)
@@ -219,6 +221,7 @@ extension UILabel {
         return CGSize.zero
     }
     
+    @discardableResult
     public override func whc_WidthAuto() -> UIView {
         if whc_LeftPadding + whc_RightPadding != 0 {
             return self.whc_Width(calcTextSize().width + whc_LeftPadding + whc_RightPadding + 1)
@@ -226,6 +229,7 @@ extension UILabel {
         return super.whc_WidthAuto()
     }
     
+    @discardableResult
     public override func whc_HeightAuto() -> UIView {
         if whc_TopPadding + whc_BottomPadding != 0 {
             return self.whc_Height(calcTextSize().height + whc_TopPadding + whc_BottomPadding + 1)
@@ -321,14 +325,21 @@ open class WHC_StackView: UIView {
     /// 设置分割线的颜色
     open lazy var whc_SegmentLineColor = UIColor(white: 0.9, alpha: 1.0)
     
+    @discardableResult
     open override func whc_WidthAuto() -> UIView {
         autoWidth = true
         return super.whc_WidthAuto()
     }
     
+    @discardableResult
     open override func whc_HeightAuto() -> UIView {
         autoHeight = true
         return super.whc_HeightAuto()
+    }
+    
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        self.backgroundColor = UIColor.white
     }
     
     override init(frame: CGRect) {
@@ -337,7 +348,7 @@ open class WHC_StackView: UIView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     /// 开始布局
@@ -510,7 +521,7 @@ open class WHC_StackView: UIView {
                             if autoHeight {
                                 view.whc_HeightAuto()
                             }else {
-                                view.whc_WidthEqual(nextView, ratio: view.whc_HeightWeight / nextView.whc_HeightWeight)
+                                view.whc_HeightEqual(nextView, ratio: view.whc_HeightWeight / nextView.whc_HeightWeight)
                             }
                         }
                     }
