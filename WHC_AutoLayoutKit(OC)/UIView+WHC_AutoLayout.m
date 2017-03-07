@@ -1294,6 +1294,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                                  attribute:toAttribute
                                                 multiplier:multiplier
                                                   constant:constant];
+        constraint.priority = 999;
         [superView addConstraint:constraint];
         [self setCurrentConstraint:constraint];
     }else {

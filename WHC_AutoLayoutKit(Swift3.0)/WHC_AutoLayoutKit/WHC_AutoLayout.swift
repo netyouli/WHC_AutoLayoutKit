@@ -1429,6 +1429,7 @@ extension UIView {
                                                 attribute: toAttribute,
                                                 multiplier: multiplier,
                                                 constant: constant)
+            constraint.priority = 999
             currentSuperView?.addConstraint(constraint)
             self.currentConstraint = constraint
         }else {
