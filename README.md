@@ -5,9 +5,9 @@
 [![Pod Version](http://img.shields.io/cocoapods/v/WHC_AutoLayoutKit.svg?style=flat)](http://cocoadocs.org/docsets/WHC_AutoLayoutKit/)
 [![Pod Platform](http://img.shields.io/cocoapods/p/WHC_AutoLayoutKit.svg?style=flat)](http://cocoadocs.org/docsets/WHC_AutoLayoutKit/)
 [![Pod License](http://img.shields.io/cocoapods/l/WHC_AutoLayoutKit.svg?style=flat)](https://opensource.org/licenses/MIT)
--  An use the most simple and powerful open source library automatic layout for iOS.
+-  IOS platforms currently in use the fastest the simplest development to build the UI layout automatically open source library, strong dynamic layout constraint handling capacity
 -  Service to update constraints, convenient and quick dynamic UI layout.
--  服务于更新约束方便快捷动态UI的自动布局库，支持Cell高度自动，UILabel,ScrollView,UIView高宽自动
+-  打造iOS平台极速开发构建动态UI的自动布局库,智能约束冲突识别机制，Api命名清晰易懂，支持Swift和OC。
 
 [使用原理详解](https://gold.xitu.io/post/585e087f61ff4b005812eed7)</br>
 
