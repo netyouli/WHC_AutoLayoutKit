@@ -17,7 +17,7 @@
 -  提供【Objective-C】【Swift2.3】【Swift3.0】三种语言版本库
 -  包含一行代码计算UITableViewCell高度模块
 -  包含WHC_StackView模块(目的替代系统UIStackView)
--  隐式更新约束技术
+-  自动识别冲突约束并更新新约束
 -  支持修改约束优先级
 -  支持删除约束
 -  咨询QQ: 712641411
@@ -31,8 +31,8 @@
 集成
 ==============
 * 使用CocoaPods:
-  -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.6'
-  -  【Swift3.0】: pod 'WHC_AutoLayoutKit_Swift3', '~> 2.6.6'
+  -  【Objective-C】: pod 'WHC_AutoLayoutKit', '~> 2.6.7'
+  -  【Swift3.0】: pod 'WHC_AutoLayoutKit_Swift3', '~> 2.6.7'
   -  【Swift2.3】: pod 'WHC_AutoLayoutKit_Swift2_3', '~> 2.6.6'
   
 * 手工集成:
