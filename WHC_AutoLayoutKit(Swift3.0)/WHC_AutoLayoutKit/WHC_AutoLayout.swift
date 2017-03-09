@@ -155,14 +155,35 @@ extension UIView {
     }
     
     //MARK: - 设置当前约束优先级 -
+    
+    private func whc_HandleConstraints(priority: UILayoutPriority) -> UIView {
+        let constraints = self.currentConstraint
+        if constraints != nil && constraints!.priority == UILayoutPriorityRequired {
+            if constraints!.secondItem == nil ||
+                constraints!.secondAttribute == .notAnAttribute {
+                self.removeConstraint(constraints!)
+                constraints!.priority = priority
+                self.addConstraint(constraints!)
+            }else {
+                if self.superview != nil {
+                    self.superview!.removeConstraint(constraints!)
+                    constraints!.priority = priority
+                    self.superview!.addConstraint(constraints!)
+                }
+            }
+        }else if constraints != nil {
+            constraints!.priority = priority
+        }
+        return self
+    }
+    
     /**
      * 说明:设置当前约束的低优先级
      * @return 返回当前视图
      */
     @discardableResult
     public func whc_PriorityLow() -> UIView {
-        self.currentConstraint?.priority = UILayoutPriorityDefaultLow
-        return self
+        return whc_HandleConstraints(priority: UILayoutPriorityDefaultLow)
     }
     
     /**
@@ -171,8 +192,7 @@ extension UIView {
      */
     @discardableResult
     public func whc_PriorityHigh() -> UIView {
-        self.currentConstraint?.priority = UILayoutPriorityDefaultHigh
-        return self
+        return whc_HandleConstraints(priority: UILayoutPriorityDefaultHigh)
     }
     
     /**
@@ -181,8 +201,7 @@ extension UIView {
      */
     @discardableResult
     public func whc_PriorityRequired() -> UIView {
-        self.currentConstraint?.priority = UILayoutPriorityRequired
-        return self
+        return whc_HandleConstraints(priority: UILayoutPriorityRequired)
     }
     
     /**
@@ -191,8 +210,7 @@ extension UIView {
      */
     @discardableResult
     public func whc_PriorityFitting() -> UIView {
-        self.currentConstraint?.priority = UILayoutPriorityFittingSizeLevel
-        return self
+        return whc_HandleConstraints(priority: UILayoutPriorityFittingSizeLevel)
     }
     
     /**
@@ -202,8 +220,7 @@ extension UIView {
      */
     @discardableResult
     public func whc_Priority(_ value: CGFloat) -> UIView {
-        self.currentConstraint?.priority = Float(value)
-        return self
+        return whc_HandleConstraints(priority: UILayoutPriority(value))
     }
     
     //MARK: -自动布局公开接口api-
@@ -1429,7 +1446,6 @@ extension UIView {
                                                 attribute: toAttribute,
                                                 multiplier: multiplier,
                                                 constant: constant)
-            constraint.priority = 999
             currentSuperView?.addConstraint(constraint)
             self.currentConstraint = constraint
         }else {

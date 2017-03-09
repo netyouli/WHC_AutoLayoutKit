@@ -652,39 +652,44 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 #pragma mark - constraintsPriority api v1.0 -
-- (void)whc_priorityLow {
+- (void)whc_HandleConstraintsPriority:(UILayoutPriority)priority {
     NSLayoutConstraint * constraints = [self currentConstraint];
-    if (constraints) {
-        constraints.priority = UILayoutPriorityDefaultLow;
+    if (constraints && constraints.priority == UILayoutPriorityRequired) {
+        if (!constraints.secondItem ||
+            constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
+            [self removeConstraint:constraints];
+            constraints.priority = priority;
+            [self addConstraint:constraints];
+        }else {
+            if (self.superview) {
+                [self.superview removeConstraint:constraints];
+                constraints.priority = priority;
+                [self.superview addConstraint:constraints];
+            }
+        }
+    }else if (constraints) {
+        constraints.priority = priority;
     }
+}
+
+- (void)whc_priorityLow {
+    [self whc_HandleConstraintsPriority:UILayoutPriorityDefaultLow];
 }
 
 - (void)whc_priorityHigh {
-    NSLayoutConstraint * constraints = [self currentConstraint];
-    if (constraints) {
-        constraints.priority = UILayoutPriorityDefaultHigh;
-    }
+    [self whc_HandleConstraintsPriority:UILayoutPriorityDefaultHigh];
 }
 
 - (void)whc_priorityRequired {
-    NSLayoutConstraint * constraints = [self currentConstraint];
-    if (constraints) {
-        constraints.priority = UILayoutPriorityRequired;
-    }
+    [self whc_HandleConstraintsPriority:UILayoutPriorityRequired];
 }
 
 - (void)whc_priorityFitting {
-    NSLayoutConstraint * constraints = [self currentConstraint];
-    if (constraints) {
-        constraints.priority = UILayoutPriorityFittingSizeLevel;
-    }
+    [self whc_HandleConstraintsPriority:UILayoutPriorityFittingSizeLevel];
 }
 
 - (void)whc_priority:(CGFloat)value {
-    NSLayoutConstraint * constraints = [self currentConstraint];
-    if (constraints) {
-        constraints.priority = value;
-    }
+    [self whc_HandleConstraintsPriority:value];
 }
 
 #pragma mark - api version 1.0 -
@@ -1294,7 +1299,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                                  attribute:toAttribute
                                                 multiplier:multiplier
                                                   constant:constant];
-        constraint.priority = 999;
         [superView addConstraint:constraint];
         [self setCurrentConstraint:constraint];
     }else {
