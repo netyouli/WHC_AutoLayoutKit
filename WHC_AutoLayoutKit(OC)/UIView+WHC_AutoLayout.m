@@ -654,21 +654,23 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 #pragma mark - constraintsPriority api v1.0 -
 - (void)whc_HandleConstraintsPriority:(UILayoutPriority)priority {
     NSLayoutConstraint * constraints = [self currentConstraint];
-    if (constraints && constraints.priority == UILayoutPriorityRequired) {
-        if (!constraints.secondItem ||
-            constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
-            [self removeConstraint:constraints];
-            constraints.priority = priority;
-            [self addConstraint:constraints];
-        }else {
-            if (self.superview) {
-                [self.superview removeConstraint:constraints];
+    if (constraints && constraints.priority != priority) {
+        if (constraints.priority == UILayoutPriorityRequired) {
+            if (!constraints.secondItem ||
+                constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
+                [self removeConstraint:constraints];
                 constraints.priority = priority;
-                [self.superview addConstraint:constraints];
+                [self addConstraint:constraints];
+            }else {
+                if (self.superview) {
+                    [self.superview removeConstraint:constraints];
+                    constraints.priority = priority;
+                    [self.superview addConstraint:constraints];
+                }
             }
+        }else if (constraints) {
+            constraints.priority = priority;
         }
-    }else if (constraints) {
-        constraints.priority = priority;
     }
 }
 

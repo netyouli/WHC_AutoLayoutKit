@@ -158,21 +158,23 @@ extension UIView {
     
     private func whc_HandleConstraints(priority: UILayoutPriority) -> UIView {
         let constraints = self.currentConstraint
-        if constraints != nil && constraints!.priority == UILayoutPriorityRequired {
-            if constraints!.secondItem == nil ||
-                constraints!.secondAttribute == .notAnAttribute {
-                self.removeConstraint(constraints!)
-                constraints!.priority = priority
-                self.addConstraint(constraints!)
-            }else {
-                if self.superview != nil {
-                    self.superview!.removeConstraint(constraints!)
+        if constraints != nil && constraints!.priority != priority {
+            if constraints!.priority == UILayoutPriorityRequired {
+                if constraints!.secondItem == nil ||
+                    constraints!.secondAttribute == .notAnAttribute {
+                    self.removeConstraint(constraints!)
                     constraints!.priority = priority
-                    self.superview!.addConstraint(constraints!)
+                    self.addConstraint(constraints!)
+                }else {
+                    if self.superview != nil {
+                        self.superview!.removeConstraint(constraints!)
+                        constraints!.priority = priority
+                        self.superview!.addConstraint(constraints!)
+                    }
                 }
+            }else if constraints != nil {
+                constraints!.priority = priority
             }
-        }else if constraints != nil {
-            constraints!.priority = priority
         }
         return self
     }
