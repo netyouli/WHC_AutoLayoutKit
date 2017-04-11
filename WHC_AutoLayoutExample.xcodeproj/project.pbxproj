@@ -50,10 +50,10 @@
 		C3F378451C852810003E6462 /* DemoVC6.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F378441C852810003E6462 /* DemoVC6.m */; };
 		C3FEAF451C8697F4008E1E97 /* DemoVC7.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEAF431C8697F4008E1E97 /* DemoVC7.m */; };
 		C3FEAF461C8697F4008E1E97 /* DemoVC7.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */; };
-		FEA91D241DEBD3220096927F /* UITableViewCell+WHC_AutoHeightForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA91D231DEBD3220096927F /* UITableViewCell+WHC_AutoHeightForCell.m */; };
-		FECDAB4F1DC594A900B510AA /* UIView+WHC_Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = FECDAB4E1DC594A900B510AA /* UIView+WHC_Frame.m */; };
-		FEE278511D325BF600FE0B80 /* UIView+WHC_AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2784D1D325BF600FE0B80 /* UIView+WHC_AutoLayout.m */; };
-		FEE278521D325BF600FE0B80 /* WHC_StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2784F1D325BF600FE0B80 /* WHC_StackView.m */; };
+		FEE8F30D1E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE8F3051E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.m */; };
+		FEE8F30E1E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE8F3071E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.m */; };
+		FEE8F30F1E9CA4CF00B39B88 /* UIView+WHC_Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE8F3091E9CA4CF00B39B88 /* UIView+WHC_Frame.m */; };
+		FEE8F3101E9CA4CF00B39B88 /* WHC_StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE8F30C1E9CA4CF00B39B88 /* WHC_StackView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,15 +121,15 @@
 		C3FEAF421C8697F4008E1E97 /* DemoVC7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoVC7.h; sourceTree = "<group>"; };
 		C3FEAF431C8697F4008E1E97 /* DemoVC7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC7.m; sourceTree = "<group>"; };
 		C3FEAF441C8697F4008E1E97 /* DemoVC7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoVC7.xib; sourceTree = "<group>"; };
-		FEA91D221DEBD3220096927F /* UITableViewCell+WHC_AutoHeightForCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+WHC_AutoHeightForCell.h"; sourceTree = "<group>"; };
-		FEA91D231DEBD3220096927F /* UITableViewCell+WHC_AutoHeightForCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+WHC_AutoHeightForCell.m"; sourceTree = "<group>"; };
-		FECDAB4D1DC594A900B510AA /* UIView+WHC_Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WHC_Frame.h"; sourceTree = "<group>"; };
-		FECDAB4E1DC594A900B510AA /* UIView+WHC_Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WHC_Frame.m"; sourceTree = "<group>"; };
-		FEE2784C1D325BF600FE0B80 /* UIView+WHC_AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WHC_AutoLayout.h"; sourceTree = "<group>"; };
-		FEE2784D1D325BF600FE0B80 /* UIView+WHC_AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WHC_AutoLayout.m"; sourceTree = "<group>"; };
-		FEE2784E1D325BF600FE0B80 /* WHC_StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHC_StackView.h; sourceTree = "<group>"; };
-		FEE2784F1D325BF600FE0B80 /* WHC_StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHC_StackView.m; sourceTree = "<group>"; };
-		FEE8F3021E9881AE00B39B88 /* WHC_AutoLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WHC_AutoLayout.h; sourceTree = "<group>"; };
+		FEE8F3041E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+WHC_AutoHeightForCell.h"; sourceTree = "<group>"; };
+		FEE8F3051E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+WHC_AutoHeightForCell.m"; sourceTree = "<group>"; };
+		FEE8F3061E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WHC_AutoLayout.h"; sourceTree = "<group>"; };
+		FEE8F3071E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WHC_AutoLayout.m"; sourceTree = "<group>"; };
+		FEE8F3081E9CA4CF00B39B88 /* UIView+WHC_Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WHC_Frame.h"; sourceTree = "<group>"; };
+		FEE8F3091E9CA4CF00B39B88 /* UIView+WHC_Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WHC_Frame.m"; sourceTree = "<group>"; };
+		FEE8F30A1E9CA4CF00B39B88 /* WHC_AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHC_AutoLayout.h; sourceTree = "<group>"; };
+		FEE8F30B1E9CA4CF00B39B88 /* WHC_StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHC_StackView.h; sourceTree = "<group>"; };
+		FEE8F30C1E9CA4CF00B39B88 /* WHC_StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHC_StackView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,7 +161,7 @@
 			children = (
 				C3FEAF471C86AD37008E1E97 /* Gif */,
 				C3068C0F1C84271300F88455 /* README.md */,
-				FEE278491D325BF600FE0B80 /* WHC_AutoLayoutKit(OC) */,
+				FEE8F3031E9CA4CF00B39B88 /* WHC_AutoLayoutKit */,
 				C3068BCB1C8418F000F88455 /* WHC_AutoLayoutExample */,
 				C3068BCA1C8418F000F88455 /* Products */,
 			);
@@ -342,20 +342,20 @@
 			path = Gif;
 			sourceTree = "<group>";
 		};
-		FEE278491D325BF600FE0B80 /* WHC_AutoLayoutKit(OC) */ = {
+		FEE8F3031E9CA4CF00B39B88 /* WHC_AutoLayoutKit */ = {
 			isa = PBXGroup;
 			children = (
-				FEA91D221DEBD3220096927F /* UITableViewCell+WHC_AutoHeightForCell.h */,
-				FEA91D231DEBD3220096927F /* UITableViewCell+WHC_AutoHeightForCell.m */,
-				FEE2784C1D325BF600FE0B80 /* UIView+WHC_AutoLayout.h */,
-				FEE2784D1D325BF600FE0B80 /* UIView+WHC_AutoLayout.m */,
-				FEE2784E1D325BF600FE0B80 /* WHC_StackView.h */,
-				FEE2784F1D325BF600FE0B80 /* WHC_StackView.m */,
-				FECDAB4D1DC594A900B510AA /* UIView+WHC_Frame.h */,
-				FECDAB4E1DC594A900B510AA /* UIView+WHC_Frame.m */,
-				FEE8F3021E9881AE00B39B88 /* WHC_AutoLayout.h */,
+				FEE8F3041E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.h */,
+				FEE8F3051E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.m */,
+				FEE8F3061E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.h */,
+				FEE8F3071E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.m */,
+				FEE8F3081E9CA4CF00B39B88 /* UIView+WHC_Frame.h */,
+				FEE8F3091E9CA4CF00B39B88 /* UIView+WHC_Frame.m */,
+				FEE8F30A1E9CA4CF00B39B88 /* WHC_AutoLayout.h */,
+				FEE8F30B1E9CA4CF00B39B88 /* WHC_StackView.h */,
+				FEE8F30C1E9CA4CF00B39B88 /* WHC_StackView.m */,
 			);
-			path = "WHC_AutoLayoutKit(OC)";
+			path = WHC_AutoLayoutKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,8 +451,10 @@
 				C350C0201C9906D300A02263 /* WHC_ImageDisplayView.swift in Sources */,
 				C3F378451C852810003E6462 /* DemoVC6.m in Sources */,
 				C301C0541C92A67300996D25 /* WHC_KeyboradHeaderView.m in Sources */,
+				FEE8F3101E9CA4CF00B39B88 /* WHC_StackView.m in Sources */,
 				C307EB371C910314008D974A /* WeiXinFriendsCircleVC.m in Sources */,
 				C307EB3A1C910646008D974A /* FriendsCircleCell.m in Sources */,
+				FEE8F30F1E9CA4CF00B39B88 /* UIView+WHC_Frame.m in Sources */,
 				C3068C071C8420F200F88455 /* DemoVC5.m in Sources */,
 				C3068BF01C8419A400F88455 /* MainVCCell.m in Sources */,
 				C3068BF71C841B5000F88455 /* DemoVC1.m in Sources */,
@@ -460,18 +462,16 @@
 				C307EB901C914863008D974A /* FriendModel.m in Sources */,
 				C3068C101C84271300F88455 /* README.md in Sources */,
 				C3068C001C841D8E00F88455 /* DemoVC3.m in Sources */,
-				FEE278521D325BF600FE0B80 /* WHC_StackView.m in Sources */,
 				C3068C031C84203500F88455 /* DemoVC4.m in Sources */,
-				FECDAB4F1DC594A900B510AA /* UIView+WHC_Frame.m in Sources */,
 				C3068BD11C8418F000F88455 /* AppDelegate.m in Sources */,
 				C3068BFA1C841C4D00F88455 /* DemoVC2.m in Sources */,
 				C350C0231C99070100A02263 /* UIView+WHC_ViewProperty.m in Sources */,
-				FEA91D241DEBD3220096927F /* UITableViewCell+WHC_AutoHeightForCell.m in Sources */,
 				C3068BFD1C841CA800F88455 /* DemoVC2Cell.m in Sources */,
 				C307EB3E1C9106D5008D974A /* PersonImageView.m in Sources */,
-				FEE278511D325BF600FE0B80 /* UIView+WHC_AutoLayout.m in Sources */,
+				FEE8F30E1E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.m in Sources */,
 				C3068BEF1C8419A400F88455 /* MainVC.m in Sources */,
 				C3068BCE1C8418F000F88455 /* main.m in Sources */,
+				FEE8F30D1E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.m in Sources */,
 				C3FEAF451C8697F4008E1E97 /* DemoVC7.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
