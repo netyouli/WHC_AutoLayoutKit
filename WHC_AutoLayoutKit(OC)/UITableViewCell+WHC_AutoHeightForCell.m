@@ -278,6 +278,80 @@
     objc_setAssociatedObject(self, @selector(whc_TableViewWidth), @(whc_TableViewWidth), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
++ (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView identifier:(NSString *)identifier layoutBlock:(void (^)(UITableViewCell * cell))block {
+    if (tableView.whc_CacheHeightDictionary == nil) {
+        tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];
+    }
+    NSString * cacheHeightKey = @(indexPath.section).stringValue;
+    NSMutableDictionary * sectionCacheHeightDictionary = tableView.whc_CacheHeightDictionary[cacheHeightKey];
+    if (sectionCacheHeightDictionary != nil) {
+        NSNumber * cellHeight = sectionCacheHeightDictionary[@(indexPath.row).stringValue];
+        if (cellHeight) {
+            return cellHeight.floatValue;
+        }
+    }else {
+        sectionCacheHeightDictionary = [NSMutableDictionary dictionary];
+        [tableView.whc_CacheHeightDictionary setObject:sectionCacheHeightDictionary forKey:cacheHeightKey];
+    }
+    UITableViewCell * cell = nil;
+    if (identifier && identifier.length > 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (block) {
+            block(cell);
+        }
+        if (!cell) {
+            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        }
+    }else {
+        cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    }
+    if (cell.whc_CellTableView) {
+        [cell.whc_CellTableView whc_Height:cell.whc_CellTableView.contentSize.height];
+    }
+    CGFloat tableViewWidth = cell.whc_TableViewWidth;
+    if (tableViewWidth == 0) {
+        [tableView layoutIfNeeded];
+        tableViewWidth = CGRectGetWidth(tableView.frame);
+    }
+    if (tableViewWidth == 0) return 0;
+    CGRect cellFrame = cell.frame;
+    cellFrame.size.width = tableViewWidth;
+    cell.frame = cellFrame;
+    CGRect contentFrame = cell.contentView.frame;
+    contentFrame.size.width = tableViewWidth;
+    cell.contentView.frame = contentFrame;
+    [cell layoutIfNeeded];
+    UIView * bottomView = nil;
+    if (cell.whc_CellBottomView != nil) {
+        bottomView = cell.whc_CellBottomView;
+    }else if(cell.whc_CellBottomViews != nil && cell.whc_CellBottomViews.count > 0) {
+        bottomView = cell.whc_CellBottomViews[0];
+        for (int i = 1; i < cell.whc_CellBottomViews.count; i++) {
+            UIView * view = cell.whc_CellBottomViews[i];
+            if (CGRectGetMaxY(bottomView.frame) < CGRectGetMaxY(view.frame)) {
+                bottomView = view;
+            }
+        }
+    }else {
+        NSArray * cellSubViews = cell.contentView.subviews;
+        if (cellSubViews.count > 0) {
+            bottomView = cellSubViews[0];
+            for (int i = 1; i < cellSubViews.count; i++) {
+                UIView * view = cellSubViews[i];
+                if (CGRectGetMaxY(bottomView.frame) < CGRectGetMaxY(view.frame)) {
+                    bottomView = view;
+                }
+            }
+        }else {
+            bottomView = cell.contentView;
+        }
+    }
+    
+    CGFloat cacheHeight = CGRectGetMaxY(bottomView.frame) + cell.whc_CellBottomOffset;
+    [sectionCacheHeightDictionary setValue:@(cacheHeight) forKey:@(indexPath.row).stringValue];
+    return cacheHeight;
+}
+
 + (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView {
     if (tableView.whc_CacheHeightDictionary == nil) {
         tableView.whc_CacheHeightDictionary = [NSMutableDictionary dictionary];

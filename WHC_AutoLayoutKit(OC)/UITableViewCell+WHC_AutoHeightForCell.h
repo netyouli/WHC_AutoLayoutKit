@@ -43,5 +43,19 @@
 
 /// 自动计算cell高度
 + (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
+
+
+/**
+ 自动计算cell高度: 重用cell api
+
+ @param indexPath cell index
+ @param tableView 列表
+ @param identifier 重用标示
+ @param block cell 布局回调
+ @return cell高度
+ 
+ @note 改api定要实现block回调才能正确计算cell高度
+ */
++ (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView identifier:(NSString *)identifier layoutBlock:(void (^)(UITableViewCell * cell))block;
 @end
 

@@ -54,9 +54,9 @@
     [self.view addSubview:view3];
     [view2 addSubview:lable];
     
-    btn.whc_BaseLineSpace(10)
-        .whc_LeftSpace(0)
-        .whc_RightSpace(0)
+    btn.whc_TopSpaceToView(5,view2)
+        .whc_LeftSpaceEqualView(view2)
+        .whc_RightSpaceEqualView(view2)
         .whc_Height(40);
     
     /// 一行代码添加约束
@@ -66,9 +66,12 @@
          .whc_Height(150);
 
     view2.whc_LeftSpaceToView(10,view1)
-         .whc_TopSpace(74)
+         .whc_TopSpaceEqualView(view1)
          .whc_RightSpace(10)
          .whc_HeightAuto();
+    
+    
+    view2.whc_RemoveLayoutAttrs(NSLayoutAttributeLeft);
  
 }
 
@@ -77,10 +80,10 @@
     sender.selected = !sender.selected;
     if (sender.selected) {
         /// 高度约束20并且不删除bottom约束
-        lable.whc_HeightKeepBottomConstraint(20,YES);
+        lable.whc_Height(20);
     }else {
         /// 自动高度约束并且不删除bottom约束
-        lable.whc_HeightAutoKeepBottomConstraint(YES);
+        lable.whc_HeightAuto();
     }
 }
 
@@ -91,7 +94,7 @@
         .whc_RightSpace(10)
         .whc_TopSpace(10)
         .whc_HeightAuto()
-        .whc_BottomSpaceKeepHeightConstraint(10,YES); /// 添加与父视图bottom约束10并且不删除自身自动高度约束
+        .whc_BottomSpace(10); /// 添加与父视图bottom约束10并且不删除自身自动高度约束
     
 }
 

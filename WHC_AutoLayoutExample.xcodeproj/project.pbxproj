@@ -129,6 +129,7 @@
 		FEE2784D1D325BF600FE0B80 /* UIView+WHC_AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WHC_AutoLayout.m"; sourceTree = "<group>"; };
 		FEE2784E1D325BF600FE0B80 /* WHC_StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHC_StackView.h; sourceTree = "<group>"; };
 		FEE2784F1D325BF600FE0B80 /* WHC_StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHC_StackView.m; sourceTree = "<group>"; };
+		FEE8F3021E9881AE00B39B88 /* WHC_AutoLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WHC_AutoLayout.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +353,7 @@
 				FEE2784F1D325BF600FE0B80 /* WHC_StackView.m */,
 				FECDAB4D1DC594A900B510AA /* UIView+WHC_Frame.h */,
 				FECDAB4E1DC594A900B510AA /* UIView+WHC_Frame.m */,
+				FEE8F3021E9881AE00B39B88 /* WHC_AutoLayout.h */,
 			);
 			path = "WHC_AutoLayoutKit(OC)";
 			sourceTree = "<group>";

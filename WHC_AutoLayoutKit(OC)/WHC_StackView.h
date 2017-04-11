@@ -58,7 +58,7 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 
 @interface UIView (WHC_StackViewCategory)
 /**
- * 说明: 控件横向和垂直布局宽度或者高度权重比例
+ 控件横向和垂直布局宽度或者高度权重比例
  */
 @property (nonatomic , assign)CGFloat whc_WidthWeight;
 
@@ -112,24 +112,24 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 
 /************重载父类方法**************/
 /**
- * 说明: 自动宽度
+ 自动宽度
  */
 
 - (void)whc_AutoWidth;
 
 /**
- * 说明: 自动高度
+ 自动高度
  */
 
 - (void)whc_AutoHeight;
 
 /**
- * 说明：开始进行自动布局
+ 开始进行自动布局
  */
 - (void)whc_StartLayout;
 
 /**
- * 说明：清除所有子视图
+ 清除所有子视图
  */
 - (void)whc_RemoveAllSubviews;
 

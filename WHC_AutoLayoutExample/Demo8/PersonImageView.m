@@ -31,7 +31,7 @@
     .whc_RightSpace(0);
     
     _personView.whc_TrailingSpace(20)
-    .whc_Size(CGSizeMake(60, 60))
+    .whc_Size(60, 60)
     .whc_TopSpace(200);
     
     _titleLable.whc_TrailingSpaceToView(15,_personView)

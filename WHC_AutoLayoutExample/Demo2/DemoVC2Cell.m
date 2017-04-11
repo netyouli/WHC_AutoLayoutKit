@@ -55,7 +55,10 @@
         
         /// 一行代码添加约束
         [_title whc_AutoWidth:10 top:0 right:10 height:30];
-        _image.whc_LeftSpace(10).whc_TopSpaceToView(10,_title).whc_Size(CGSizeMake(40, 40));
+        _image.whc_LeftSpace(10)
+        .whc_TopSpaceToView(10,_title)
+        .whc_Size(40, 40);
+        
         _content.whc_TopSpaceToView(10,_title)
                 .whc_LeftSpaceToView(10,_image)
                 .whc_RightSpace(10)

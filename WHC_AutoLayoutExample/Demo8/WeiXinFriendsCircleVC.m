@@ -113,7 +113,7 @@ static  NSInteger kDefaultOnePageDataCount = 10;
         /// 一行代码添加约束
         _sendView.whc_LeadingSpace(0)
         .whc_RightSpace(0)
-        .whc_BaseLineSpace(-40)
+        .whc_LastBaseLine(-40)
         .whc_Height(40);
         
         [_sendView whc_StartLayout];
@@ -245,7 +245,9 @@ static  NSInteger kDefaultOnePageDataCount = 10;
 #pragma mark - UITableViewDelegate - 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [UITableViewCell whc_CellHeightForIndexPath:indexPath tableView:tableView];
+    return [UITableViewCell whc_CellHeightForIndexPath:indexPath tableView:tableView identifier:kFirendsCircleCellIdentifier layoutBlock:^(UITableViewCell *cell) {
+        [(FriendsCircleCell *)cell setFriendModel:_friendModelArray[indexPath.row]];
+    }];
 }
 
 #pragma mark - UIScrollViewDelegate -

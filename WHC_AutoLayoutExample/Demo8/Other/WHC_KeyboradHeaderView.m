@@ -153,7 +153,7 @@
     NSValue * animationDurValue = [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
     [animationDurValue getValue:&animationDuration];
-    [headerView whc_BaseLineSpace:kbSize.height];
+    [headerView whc_LastBaseLine:kbSize.height];
     [headerView updateConstraintsIfNeeded];
     [headerView updateConstraints];
     [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -171,7 +171,7 @@
     NSValue * animationDurValue = [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
     [animationDurValue getValue:&animationDuration];
-    [headerView whc_BaseLineSpace:-CGRectGetHeight(headerView.frame)];
+    [headerView whc_LastBaseLine:-CGRectGetHeight(headerView.frame)];
     [headerView updateConstraintsIfNeeded];
     [headerView updateConstraints];
     [UIView animateWithDuration:animationDuration animations:^{

@@ -183,14 +183,14 @@
     
     _timeLabel.whc_TopSpaceToView(10,_imageStackView)
               .whc_LeftSpaceEqualView(_imageStackView)
-              .whc_Size(CGSizeMake(100, 20));
+              .whc_Size(100, 20);
     _answerButton.whc_TopSpaceEqualView(_timeLabel)
                  .whc_TrailingSpace(10)
-                 .whc_Size(CGSizeMake(30, 25));
+                 .whc_Size(30, 25);
     
     _upArrowImageView.whc_TopSpaceToView(5,_timeLabel)
                      .whc_LeftSpaceEqualView(_timeLabel)
-                     .whc_Size(CGSizeMake(60, 20));
+                     .whc_Size(60, 20);
     
     _supportView.whc_TopSpaceToView(10,_timeLabel)
                 .whc_LeftSpaceEqualView(_timeLabel)

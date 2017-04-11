@@ -427,41 +427,37 @@ WHC_GOTO:
                     if (self.whc_SubViewWidth > 0) {
                         [view whc_Width:self.whc_SubViewWidth];
                         if (_autoWidth) {
-                            [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                            [view whc_RightSpace:self.whc_Edge.right];
                         }
                     }else {
                         if (_whc_ElementWidthHeightRatio > 0) {
                             [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
                             if (_autoWidth) {
-                                [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                                [view whc_RightSpace:self.whc_Edge.right];
                             }
                         }else {
                             if (_autoWidth) {
                                 [view whc_WidthAuto];
-                                [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
-                            }else {
-                                [view whc_RightSpace:self.whc_Edge.right];
                             }
+                            [view whc_RightSpace:self.whc_Edge.right];
                         }
                     }
                     if (self.whc_SubViewHeight > 0) {
                         [view whc_Height:self.whc_SubViewHeight];
                         if (_autoHeight) {
-                            [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                            [view whc_BottomSpace:self.whc_Edge.bottom];
                         }
                     }else {
                         if (_whc_ElementHeightWidthRatio > 0) {
                             [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
                             if (_autoHeight) {
-                                [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                                [view whc_BottomSpace:self.whc_Edge.bottom];
                             }
                         }else {
                             if (_autoHeight) {
                                 [view whc_HeightAuto];
-                                [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
-                            }else {
-                                [view whc_BottomSpace:self.whc_Edge.bottom];
                             }
+                            [view whc_BottomSpace:self.whc_Edge.bottom];
                         }
                     }
                 }
@@ -524,41 +520,37 @@ WHC_GOTO:
                     if (self.whc_SubViewWidth > 0) {
                         [view whc_Width:self.whc_SubViewWidth];
                         if (_autoWidth) {
-                            [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                            [view whc_RightSpace:self.whc_Edge.right];
                         }
                     }else {
                         if (_whc_ElementWidthHeightRatio > 0) {
                             [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
                             if (_autoWidth) {
-                                [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
+                                [view whc_RightSpace:self.whc_Edge.right];
                             }
                         }else {
                             if (_autoWidth) {
                                 [view whc_WidthAuto];
-                                [view whc_RightSpace:self.whc_Edge.right keepWidthConstraint:YES];
-                            }else {
-                                [view whc_RightSpace:self.whc_Edge.right];
                             }
+                            [view whc_RightSpace:self.whc_Edge.right];
                         }
                     }
                     if (self.whc_SubViewHeight > 0) {
                         [view whc_Height:self.whc_SubViewHeight];
                         if (_autoHeight) {
-                            [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                            [view whc_BottomSpace:self.whc_Edge.bottom];
                         }
                     }else {
                         if (_whc_ElementHeightWidthRatio > 0) {
                             [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
                             if (_autoHeight) {
-                                [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
+                                [view whc_BottomSpace:self.whc_Edge.bottom];
                             }
                         }else {
                             if (_autoHeight) {
                                 [view whc_HeightAuto];
-                                [view whc_BottomSpace:self.whc_Edge.bottom keepHeightConstraint:YES];
-                            }else {
-                                [view whc_BottomSpace:self.whc_Edge.bottom];
                             }
+                            [view whc_BottomSpace:self.whc_Edge.bottom];
                         }
                     }
                 }
@@ -729,7 +721,7 @@ WHC_GOTO:
                             rowLastColumnViewMaxXView = maxWidthView;
                         }
                     }
-                    [rowLastColumnViewMaxXView whc_RightSpace:_whc_Edge.right keepWidthConstraint:YES];
+                    [rowLastColumnViewMaxXView whc_RightSpace:_whc_Edge.right];
                 }
                 
                 if (_autoHeight) {
@@ -745,7 +737,7 @@ WHC_GOTO:
                             columnLastRowViewMaxYView = maxHeightView;
                         }
                     }
-                    [columnLastRowViewMaxYView whc_BottomSpace:_whc_Edge.bottom keepHeightConstraint:YES];
+                    [columnLastRowViewMaxYView whc_BottomSpace:_whc_Edge.bottom];
                 }
             }
             break;
