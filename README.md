@@ -53,7 +53,7 @@ view.whc_LeftSpace(10)
 ```
 
 ## Update the view constraints
-Separate modify the view to the left from 20 other views
+Modify the view to the left from 20 other views
 ```objective-c
 view.whc_LeftSpace(20);
 // or
