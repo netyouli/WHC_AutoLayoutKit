@@ -42,7 +42,7 @@ view.whc_LeftSpace(10)
     .whc_HeightAuto();
 ```
 
-## Masonry/SnapKit update the constraint way too low
+## Masonry/SnapKit update the constraint way too don't friendly
 ```objective-c
 [view mas_updateConstraints:^(MASConstraintMaker *make) {
     make.top.equalTo(superview.mas_top).with.offset(10); 
@@ -55,6 +55,8 @@ view.whc_LeftSpace(10)
 ## Update the view constraints
 Separate modify the view to the left from 20 other views
 ```objective-c
+view.whc_LeftSpace(20);
+// or
 view.whc_LeftSpaceToView(20,otherView);
 ```
 
