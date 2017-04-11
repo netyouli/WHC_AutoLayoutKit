@@ -166,7 +166,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         va_start(attrs, attributes);
         while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= NSLayoutAttributeCenterYWithinMargins) {
             if (attributes > 0) {
-                [weakSelf whc_SwitchRemoveAttr:attributes view:weakSelf.superview];
+                [weakSelf whc_SwitchRemoveAttr:attributes view:weakSelf.superview removeSelf:YES];
             }
             attributes = va_arg(attrs, NSLayoutAttribute);
         }
@@ -182,7 +182,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         va_start(attrs, attributes);
         while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= NSLayoutAttributeCenterYWithinMargins) {
             if (attributes > 0) {
-                [weakSelf whc_SwitchRemoveAttr:attributes view:view];
+                [weakSelf whc_SwitchRemoveAttr:attributes view:view removeSelf:NO];
             }
             attributes = va_arg(attrs, NSLayoutAttribute);
         }
@@ -783,7 +783,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     }];
 }
 
-- (void)whc_SwitchRemoveAttr:(NSLayoutAttribute)attr view:(UIView *)view {
+- (void)whc_SwitchRemoveAttr:(NSLayoutAttribute)attr view:(UIView *)view removeSelf:(BOOL)removeSelf {
     switch (attr) {
         case NSLayoutAttributeFirstBaseline:
         case NSLayoutAttributeLeftMargin:
@@ -808,7 +808,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             break;
         case NSLayoutAttributeWidth:
         case NSLayoutAttributeHeight:
-            [self whc_CommonRemoveConstraint:attr view:self];
+            if (removeSelf) {
+                [self whc_CommonRemoveConstraint:attr view:self];
+            }
             [self whc_CommonRemoveConstraint:attr view:view];
             break;
         default:
@@ -948,7 +950,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     va_start(attrs, attributes);
     while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= NSLayoutAttributeCenterYWithinMargins) {
         if (attributes > 0) {
-            [self whc_SwitchRemoveAttr:attributes view:view];
+            [self whc_SwitchRemoveAttr:attributes view:view removeSelf:NO];
         }
         attributes = va_arg(attrs, NSLayoutAttribute);
     }
@@ -961,7 +963,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     va_start(attrs, attributes);
     while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= NSLayoutAttributeCenterYWithinMargins) {
         if (attributes > 0) {
-            [self whc_SwitchRemoveAttr:attributes view:self.superview];
+            [self whc_SwitchRemoveAttr:attributes view:self.superview removeSelf:YES];
         }
         attributes = va_arg(attrs, NSLayoutAttribute);
     }
