@@ -37,6 +37,7 @@ Usage
 
 ## Automatic height view
 <img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/autoHeight.gif" width = "89" height = "137">
+
 ```objective-c
 view.whc_LeftSpace(10)
     .whc_TopSpace(10)
@@ -45,7 +46,7 @@ view.whc_LeftSpace(10)
 ```
 
 ## Update the view constraints
-### Modify the view to the left from 20 other views
+* ### Modify the view to the left from 20 other views
 ```objective-c
 view.whc_LeftSpaceToView(20,otherView);
 ```
