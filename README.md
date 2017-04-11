@@ -26,11 +26,7 @@ Require
 
 Install
 ==============
-* CocoaPods:
-  -  pod 'WHC_AutoLayoutKit'
-  
-* Manual:
-  -  Import the folder WHC_AutoLayoutKit(OC)
+* CocoaPods: pod 'WHC_AutoLayoutKit'
 
 Usage
 ==============
