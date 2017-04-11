@@ -10,7 +10,7 @@
 -  Service to update constraints, convenient and quick dynamic UI layout.
 -  打造iOS平台极速开发构建动态UI的自动布局库,智能约束冲突识别机制.
 
-Tntroduce
+Introduce
 ==============
 -  Adopt chain layout Api calls convenient
 -  Include one line of code to calculate UITableViewCell highly module
@@ -78,7 +78,10 @@ view.whc_RightSpace(10)
 * ### Reuse way calculated cell height
 ```objective-c
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [UITableViewCell whc_CellHeightForIndexPath:indexPath tableView:tableView identifier:@"kFirendsCircleCellIdentifier" layoutBlock:^(UITableViewCell *cell) {
+    return [UITableViewCell whc_CellHeightForIndexPath:indexPath 
+                                             tableView:tableView 
+                                            identifier:@"kFirendsCircleCellIdentifier" 
+                                           layoutBlock:^(UITableViewCell *cell) {
          /// use model layout cell
          [(FriendsCircleCell *)cell setFriendModel:_friendModelArray[indexPath.row]];
     }];
@@ -125,18 +128,16 @@ for (int i = 0; i < 4; i++) {
 }
 [stackView whc_StartLayout];
 ```
+Prompt
+==============
+
+- For more UI layout automatically, WHC_StackView components, one line of code to calculate the cell height module, please download this demo to check the specific usage
 
 Part of the WHC_AutoLayoutKit demo show
 ==============
 
 <img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png" width = "375"><img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/g.png" width = "375">
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
-
-
-Prompt
-==============
-
-- For more UI layout automatically, WHC_StackView components, one line of code to calculate the cell height module, please download this demo to check the specific usage
 
 ## Licenses
 All source code is licensed under the MIT License.
