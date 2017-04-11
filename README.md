@@ -42,7 +42,7 @@ view.whc_LeftSpace(10)
     .whc_HeightAuto();
 ```
 
-## Masonry/SnapKit update the constraint way too don't friendly
+## Masonry/SnapKit update the constraint way unfriendly
 ```objective-c
 [view mas_updateConstraints:^(MASConstraintMaker *make) {
     make.top.equalTo(superview.mas_top).with.offset(10); 
