@@ -41,11 +41,28 @@ view.whc_LeftSpace(10)
     .whc_HeightAuto();
 ```
 
-## Update the view constraints
+## Masonry/SnapKit update the constraint way too low
+```objective-c
+[view mas_updateConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(superview.mas_top).with.offset(10); 
+    make.left.equalTo(superview.mas_left).with.offset(20);
+    make.bottom.equalTo(superview.mas_bottom).with.offset(-10);
+    make.right.equalTo(superview.mas_right).with.offset(-10);
+}];
+```
 
-Modify the view to the left from 20 other views
+## Update the view constraints
+Separate modify the view to the left from 20 other views
 ```objective-c
 view.whc_LeftSpaceToView(20,otherView);
+```
+
+## Can be directly modified Xib, constraints on the Storyboard
+If the view of xib leading now amended as left constraints
+```objective-c
+/// First remove the xib view of leading and then add new constraints
+view.whc_RemoveLayoutAttrs(NSLayoutAttributeLeading);
+view.whc_LeftSpace(10)
 ```
 
 ## Remove the constraint
