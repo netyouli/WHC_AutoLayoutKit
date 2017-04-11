@@ -18,6 +18,7 @@ Introduce
 -  Automatic identification of the same type conflict and update the new constraints
 -  Support change constraints priority
 -  Support delete constraints
+-  Automatic covering and modify the conflict with type constraints
 
 Require
 ==============
