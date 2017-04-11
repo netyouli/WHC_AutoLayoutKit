@@ -1721,8 +1721,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     [superView removeConstraint:width];
                 }else {
                     [self removeConstraint:width];
-                    [self setWidthConstraint:nil];
                 }
+                [self setWidthConstraint:nil];
             }
         }
             break;
@@ -1742,8 +1742,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     [superView removeConstraint:height];
                 }else {
                     [self removeConstraint:height];
-                    [self setHeightConstraint:nil];
                 }
+                [self setHeightConstraint:nil];
             }
         }
             break;
