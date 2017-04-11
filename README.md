@@ -8,7 +8,7 @@
 
 -  IOS platforms currently in use the fastest the simplest development to build the UI layout automatically open source library, strong dynamic layout constraint handling capacity
 -  Service to update constraints, convenient and quick dynamic UI layout.
--  打造iOS平台极速开发构建动态UI的自动布局库,智能约束冲突识别机制.
+
 
 Introduce
 ==============
