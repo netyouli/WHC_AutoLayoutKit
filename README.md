@@ -36,7 +36,7 @@ Usage
 ==============
 
 ## Automatic height view
-<img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/autoHeight.gif" width = "89" height = "137">
+![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/autoHeight.gif)
 
 ```objective-c
 view.whc_LeftSpace(10)
@@ -52,30 +52,30 @@ view.whc_LeftSpaceToView(20,otherView);
 ```
 
 ## Remove the constraint
-### Remove all constraints associated with view left
+* ### Remove all constraints associated with view left
 ```objective-c
 view.whc_RemoveLayoutAttrs(NSLayoutAttributeLeft);
 ```
-### To remove multiple constraints associated with view
+* ### To remove multiple constraints associated with view
 ```objective-c
 view.whc_RemoveLayoutAttrs(NSLayoutAttributeLeft,NSLayoutAttributeLeading,NSLayoutAttributeTop);
 ```
 
 ## Modify the view constraint priority
-### Modify the view constraint for low priority right
+* ### Modify the view constraint for low priority right
 ```objective-c
 view.whc_RightSpace(10)
     .whc_PriorityLow();
 ```
 
 ## One line of code calculation cell height
-### No reuse way calculated cell height
+* ### No reuse way calculated cell height
 ```objective-c
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [UITableViewCell whc_CellHeightForIndexPath:indexPath tableView:tableView];
 }
 ```
-### Reuse way calculated cell height
+* ### Reuse way calculated cell height
 ```objective-c
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [UITableViewCell whc_CellHeightForIndexPath:indexPath tableView:tableView identifier:@"kFirendsCircleCellIdentifier" layoutBlock:^(UITableViewCell *cell) {
@@ -86,13 +86,13 @@ view.whc_RightSpace(10)
 ```
 ## Use WHC_StackView
 
-### Create WHC_StackView
+* ### Create WHC_StackView
 ```objective-c
 WHC_StackView * stackView = [WHC_StackView new];
 [self.view addSubview: stackView];
 ```
 
-### Add constraint
+* ### Add constraint
 ```objective-c
 stackView.whc_LeftSpace(10)
          .whc_TopSpace(10)
@@ -100,7 +100,7 @@ stackView.whc_LeftSpace(10)
          .whc_HeightAuto();
 ```
 
-### Configuration stackView
+* ### Configuration stackView
 #### 1. Set the padding
 ```objective-c
 stackView.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10); // 内边距
@@ -126,7 +126,8 @@ for (int i = 0; i < 4; i++) {
 [stackView whc_StartLayout];
 ```
 
-### Part of the WHC_AutoLayoutKit demo show
+Part of the WHC_AutoLayoutKit demo show
+==============
 
 <img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png" width = "375"><img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/g.png" width = "375">
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
