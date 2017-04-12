@@ -25,10 +25,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
-#import <UIKit/UIKit.h>
+#import "WHC_AutoLayoutUtilities.h"
 ////////////////////////////列表视图//////////////////////////////
-
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 @interface UITableViewCell (WHC_AutoHeightForCell)
 /// cell最底部视图
 @property (nonatomic , strong) UIView * whc_CellBottomView;
@@ -58,4 +57,5 @@
  */
 + (CGFloat)whc_CellHeightForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView identifier:(NSString *)identifier layoutBlock:(void (^)(UITableViewCell * cell))block;
 @end
+#endif
 

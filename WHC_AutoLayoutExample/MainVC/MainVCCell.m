@@ -12,7 +12,7 @@
  *********************************************************/
 
 #import "MainVCCell.h"
-#import "UIView+WHC_AutoLayout.h"
+#import "WHC_AutoLayout.h"
 
 @interface MainVCCell () {
     UILabel * _title , * _content;

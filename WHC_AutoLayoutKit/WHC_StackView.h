@@ -24,9 +24,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-#import <UIKit/UIKit.h>
 #import "UIView+WHC_AutoLayout.h"
+
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
     Top = 1 << 0, /// 顶部对齐
@@ -54,9 +54,11 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 @property (nonatomic, assign)WHC_UILabelVerticalAlignment whc_VerticalAlignment;
 @end
 
+#endif
+
 #pragma mark - UI自动布局StackView容器 -
 
-@interface UIView (WHC_StackViewCategory)
+@interface WHC_VIEW (WHC_StackViewCategory)
 /**
  控件横向和垂直布局宽度或者高度权重比例
  */
@@ -65,14 +67,18 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 @property (nonatomic , assign)CGFloat whc_HeightWeight;
 @end
 
-@interface WHC_StackView : UIView
+@interface WHC_StackView : WHC_VIEW
 
 
 
 /// 混合布局(同时垂直和横向)每行多少列
 @property (nonatomic , assign) NSInteger whc_Column;
 /// 容器内边距
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 @property (nonatomic , assign) UIEdgeInsets whc_Edge;
+#elif TARGET_OS_MAC
+@property (nonatomic , assign) NSEdgeInsets whc_Edge;
+#endif
 /// 容器内子控件横向间隙
 @property (nonatomic , assign) CGFloat whc_HSpace;
 /// 容器内子控件垂直间隙
@@ -101,8 +107,7 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 /// 设置分割线内边距
 @property (nonatomic , assign) CGFloat whc_SegmentLinePadding;
 /// 设置分割线的颜色
-@property (nonatomic , strong) UIColor * whc_SegmentLineColor;
-
+@property (nonatomic , strong) WHC_COLOR * whc_SegmentLineColor;
 /************重载父类属性**************/
 /// 自动高度
 @property (nonatomic ,copy , readonly)HeightAuto whc_HeightAuto;
@@ -138,3 +143,4 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
  */
 - (void)whc_RemoveAllVacntView;
 @end
+

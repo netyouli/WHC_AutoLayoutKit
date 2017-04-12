@@ -8,7 +8,7 @@
 
 #import "MainVC.h"
 #import "MainVCCell.h"
-#import "UIView+WHC_AutoLayout.h"
+#import "WHC_AutoLayout.h"
 #import "DemoVC1.h"
 #import "DemoVC2.h"
 #import "DemoVC3.h"

@@ -13,7 +13,7 @@
 
 #import "FriendsCircleCell.h"
 #import "WHC_AutoLayoutExample-Swift.h"
-#import "UIView+WHC_Frame.h"
+#import "WHC_AutoLayout.h"
 
 @implementation AnswerMenuView
 
@@ -184,6 +184,7 @@
     _timeLabel.whc_TopSpaceToView(10,_imageStackView)
               .whc_LeftSpaceEqualView(_imageStackView)
               .whc_Size(100, 20);
+    
     _answerButton.whc_TopSpaceEqualView(_timeLabel)
                  .whc_TrailingSpace(10)
                  .whc_Size(30, 25);

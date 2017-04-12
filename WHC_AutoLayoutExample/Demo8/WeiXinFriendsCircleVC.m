@@ -12,7 +12,7 @@
  *********************************************************/
 
 #import "WeiXinFriendsCircleVC.h"
-#import "UIView+WHC_AutoLayout.h"
+#import "WHC_AutoLayout.h"
 #import "FriendsCircleCell.h"
 #import "PersonImageView.h"
 #import "FriendModel.h"

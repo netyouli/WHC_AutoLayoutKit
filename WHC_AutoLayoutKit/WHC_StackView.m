@@ -26,8 +26,11 @@
 // THE SOFTWARE.
 
 #import "WHC_StackView.h"
-#import "UIView+WHC_Frame.h"
 #import <objc/runtime.h>
+#import "UIView+WHC_Frame.h"
+
+#if TARGET_OS_IPHONE || TARGET_OS_TV
+
 
 @implementation UIButton (WHC_StackView)
 
@@ -193,7 +196,9 @@
 
 @end
 
-@implementation UIView (WHC_StackViewCategory)
+#endif
+
+@implementation WHC_VIEW (WHC_StackViewCategory)
 
 - (void)setWhc_WidthWeight:(CGFloat)whc_WidthWeight {
     objc_setAssociatedObject(self,
@@ -228,7 +233,7 @@
 @end
 
 /// 填充空白视图类
-@interface WHC_VacntView : UIView
+@interface WHC_VacntView : WHC_VIEW
 
 @end
 
@@ -237,7 +242,7 @@
 @end
 
 /// 分割线视图
-@interface WHC_StackViewLineView : UIView
+@interface WHC_StackViewLineView : WHC_VIEW
 
 @end
 
@@ -258,7 +263,11 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        #if TARGET_OS_IPHONE || TARGET_OS_TV
+        self.backgroundColor = [WHC_COLOR whiteColor];
+        #elif TARGET_OS_MAC
+        self.makeBackingLayer.backgroundColor = [WHC_COLOR whiteColor].CGColor;
+        #endif
     }
     return self;
 }
@@ -266,7 +275,11 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        #if TARGET_OS_IPHONE || TARGET_OS_TV
+        self.backgroundColor = [WHC_COLOR whiteColor];
+        #elif TARGET_OS_MAC
+        self.makeBackingLayer.backgroundColor = [WHC_COLOR whiteColor].CGColor;
+        #endif
     }
     return self;
 }
@@ -333,23 +346,31 @@
 
 - (WHC_StackViewLineView *)makeLine {
     WHC_StackViewLineView * lineView = [WHC_StackViewLineView new];
+    #if TARGET_OS_IPHONE || TARGET_OS_TV
     if (self.whc_SegmentLineColor) {
         lineView.backgroundColor = self.whc_SegmentLineColor;
     }else {
         lineView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     }
+    #elif TARGET_OS_MAC
+    if (self.whc_SegmentLineColor) {
+        lineView.makeBackingLayer.backgroundColor = self.whc_SegmentLineColor.CGColor;
+    }else {
+        lineView.makeBackingLayer.backgroundColor = [WHC_COLOR colorWithWhite:0.9 alpha:1.0].CGColor;
+    }
+    #endif
     return lineView;
 }
 
 - (void)whc_RemoveAllSubviews {
-    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof WHC_VIEW * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj removeFromSuperview];
     }];
 }
 
 - (void)whc_RemoveAllVacntView {
     _lastRowVacantCount = 0;
-    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof WHC_VIEW * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[WHC_VacntView class]]) {
             [obj removeFromSuperview];
         }
@@ -357,7 +378,7 @@
 }
 
 - (void)removeAllSegmentLine {
-    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof WHC_VIEW * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[WHC_StackViewLineView class]]) {
             [obj removeFromSuperview];
         }
@@ -371,14 +392,14 @@
     if (count == 0) {
         return;
     }
-    UIView * toView = nil;
+    WHC_VIEW * toView = nil;
     WHC_LayoutOrientationOptions orientation = self.whc_Orientation;
 WHC_GOTO:
     switch (orientation) {
         case Horizontal: {
             for (int i = 0; i < count; i++) {
-                UIView * view = subViews[i];
-                UIView * nextView = i < count - 1 ? subViews[i + 1] : nil;
+                WHC_VIEW * view = subViews[i];
+                WHC_VIEW * nextView = i < count - 1 ? subViews[i + 1] : nil;
                 if (i == 0) {
                     [view whc_LeftSpace:self.whc_Edge.left];
                 }else {
@@ -470,8 +491,8 @@ WHC_GOTO:
         }
         case Vertical: {
             for (int i = 0; i < count; i++) {
-                UIView * view = subViews[i];
-                UIView * nextView = i < count - 1 ? subViews[i + 1] : nil;
+                WHC_VIEW * view = subViews[i];
+                WHC_VIEW * nextView = i < count - 1 ? subViews[i + 1] : nil;
                 if (i == 0) {
                     [view whc_TopSpace:self.whc_Edge.top];
                 }else {
@@ -562,7 +583,7 @@ WHC_GOTO:
             break;
         }
         case All: {
-            for (UIView * view in self.subviews) {
+            for (WHC_VIEW * view in self.subviews) {
                 if ([view isKindOfClass:[WHC_VacntView class]]) {
                     [view removeFromSuperview];
                 }
@@ -578,7 +599,11 @@ WHC_GOTO:
                 _lastRowVacantCount = rowCount * self.whc_Column - count;
                 for (NSInteger i = 0; i < _lastRowVacantCount; i++) {
                     WHC_VacntView * view = [WHC_VacntView new];
-                    view.backgroundColor = [UIColor clearColor];
+#if TARGET_OS_IPHONE || TARGET_OS_TV
+                    view.backgroundColor = [WHC_COLOR clearColor];
+#elif TARGET_OS_MAC
+                    view.makeBackingLayer.backgroundColor = [WHC_COLOR clearColor].CGColor;
+#endif
                     [self addSubview:view];
                 }
                 if (_lastRowVacantCount > 0) {
@@ -586,13 +611,13 @@ WHC_GOTO:
                     subViews = self.subviews;
                     count = subViews.count;
                 }
-                UIView * frontRowView = nil;
-                UIView * frontColumnView = nil;
+                WHC_VIEW * frontRowView = nil;
+                WHC_VIEW * frontColumnView = nil;
                 
                 WHC_StackViewLineView * columnLineView = nil;
                 for (NSInteger row = 0; row < rowCount; row++) {
-                    UIView * nextRowView = nil;
-                    UIView * rowView = subViews[row * self.whc_Column];
+                    WHC_VIEW * nextRowView = nil;
+                    WHC_VIEW * rowView = subViews[row * self.whc_Column];
                     NSInteger nextRow = (row + 1) * self.whc_Column;
                     if (nextRow < count) {
                         nextRowView = subViews[nextRow];
@@ -608,8 +633,8 @@ WHC_GOTO:
                     }
                     for (NSInteger column = 0; column < self.whc_Column; column++) {
                         index = row * self.whc_Column + column;
-                        UIView * view = subViews[index];
-                        UIView * nextColumnView = nil;
+                        WHC_VIEW * view = subViews[index];
+                        WHC_VIEW * nextColumnView = nil;
                         if (column > 0 && self.whc_SegmentLineSize > 0.0) {
                             columnLineView = [self makeLine];
                             [self addSubview:columnLineView];
@@ -709,13 +734,21 @@ WHC_GOTO:
                 }
                 
                 if (_autoWidth) {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
                     [self layoutIfNeeded];
+#elif TARGET_OS_MAC
+                    [self.makeBackingLayer layoutIfNeeded];
+#endif
                     CGFloat rowLastColumnViewMaxX = 0;
-                    UIView * rowLastColumnViewMaxXView;
+                    WHC_VIEW * rowLastColumnViewMaxXView;
                     for (NSInteger r = 1; r <= rowCount; r++) {
                         NSInteger index = r * _whc_Column - 1;
-                        UIView * maxWidthView = self.subviews[index];
+                        WHC_VIEW * maxWidthView = self.subviews[index];
+#if TARGET_OS_IPHONE || TARGET_OS_TV
                         [maxWidthView layoutIfNeeded];
+#elif TARGET_OS_MAC
+                        [maxWidthView.makeBackingLayer layoutIfNeeded];
+#endif
                         if (maxWidthView.whc_maxX > rowLastColumnViewMaxX) {
                             rowLastColumnViewMaxX = maxWidthView.whc_maxX;
                             rowLastColumnViewMaxXView = maxWidthView;
@@ -725,13 +758,21 @@ WHC_GOTO:
                 }
                 
                 if (_autoHeight) {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
                     [self layoutIfNeeded];
+#elif TARGET_OS_MAC
+                    [self.makeBackingLayer layoutIfNeeded];
+#endif
                     CGFloat columnLastRowViewMaxY = 0;
-                    UIView * columnLastRowViewMaxYView;
+                    WHC_VIEW * columnLastRowViewMaxYView;
                     for (NSInteger r = 1; r <= rowCount; r++) {
                         NSInteger index = r * _whc_Column - 1;
-                        UIView * maxHeightView = self.subviews[index];
+                        WHC_VIEW * maxHeightView = self.subviews[index];
+#if TARGET_OS_IPHONE || TARGET_OS_TV
                         [maxHeightView layoutIfNeeded];
+#elif TARGET_OS_MAC
+                        [maxHeightView.makeBackingLayer layoutIfNeeded];
+#endif
                         if (maxHeightView.whc_maxY > columnLastRowViewMaxY) {
                             columnLastRowViewMaxY = maxHeightView.whc_maxY;
                             columnLastRowViewMaxYView = maxHeightView;

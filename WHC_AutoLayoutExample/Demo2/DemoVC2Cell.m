@@ -12,8 +12,7 @@
  *********************************************************/
 
 #import "DemoVC2Cell.h"
-#import "UIView+WHC_AutoLayout.h"
-#import "UIView+WHC_Frame.h"
+#import "WHC_AutoLayout.h"
 
 #define cellName (@"CellName")
 @interface DemoVC2Cell ()<UITableViewDataSource,UITableViewDelegate> {

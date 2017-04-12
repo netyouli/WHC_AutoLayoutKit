@@ -26,8 +26,11 @@
 // THE SOFTWARE.
 
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
-#import "UIView+WHC_AutoLayout.h"
+
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 #import <objc/runtime.h>
+#import "UIView+WHC_AutoLayout.h"
+
 @interface UITableView (WHC_CacheCellHeight)
 @end
 
@@ -416,3 +419,4 @@
 }
 
 @end
+#endif

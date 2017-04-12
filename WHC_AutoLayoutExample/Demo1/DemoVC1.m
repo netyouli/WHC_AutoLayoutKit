@@ -12,8 +12,7 @@
  *********************************************************/
 
 #import "DemoVC1.h"
-#import "UIView+WHC_AutoLayout.h"
-#import "WHC_StackView.h"
+#import "WHC_AutoLayout.h"
 
 @interface DemoVC1 () {
     UIView  * view1, * view2, * view3;
@@ -69,9 +68,6 @@
          .whc_TopSpaceEqualView(view1)
          .whc_RightSpace(10)
          .whc_HeightAuto();
-    
-    
-    view2.whc_RemoveLayoutAttrs(NSLayoutAttributeLeft);
  
 }
 

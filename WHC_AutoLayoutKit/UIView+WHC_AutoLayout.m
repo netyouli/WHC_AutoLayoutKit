@@ -1,5 +1,5 @@
 //
-//  UIView+WHC_AutoLayout.m
+//  WHC_VIEW+WHC_AutoLayout.m
 //  Github <https://github.com/netyouli/WHC_AutoLayoutKit>
 //
 //  Created by 吴海超 on 16/2/17.
@@ -28,6 +28,8 @@
 #import "UIView+WHC_AutoLayout.h"
 #import <objc/runtime.h>
 
+#if TARGET_OS_IPHONE || TARGET_OS_TV
+
 #define kDeprecatedVerticalAdapter (0)
 
 typedef NS_OPTIONS(NSUInteger, WHCNibType) {
@@ -37,13 +39,15 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 #pragma mark - UI自动布局 -
 
-@interface WHC_Line : UIView
+@interface WHC_Line : WHC_VIEW
 @end
 
 @implementation WHC_Line
 @end
 
-@implementation UIView (WHC_AutoLayout)
+#endif
+
+@implementation WHC_VIEW (WHC_AutoLayout)
 
 - (void)setCurrentConstraint:(NSLayoutConstraint *)currentConstraint {
     objc_setAssociatedObject(self, @selector(currentConstraint), currentConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -164,7 +168,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return ^(NSLayoutAttribute attributes, ...) {
         va_list attrs;
         va_start(attrs, attributes);
-        while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= NSLayoutAttributeCenterYWithinMargins) {
+        NSLayoutAttribute maxAttr = [weakSelf whc_GetMaxLayoutAttribute];
+        while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
             if (attributes > 0) {
                 [weakSelf whc_SwitchRemoveAttr:attributes view:weakSelf.superview removeSelf:YES];
             }
@@ -177,10 +182,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (RemoveConstraintFromViewAttribute)whc_RemoveFromLayoutAttrs {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view,NSLayoutAttribute attributes, ...) {
+    return ^(WHC_VIEW * view,NSLayoutAttribute attributes, ...) {
         va_list attrs;
         va_start(attrs, attributes);
-        while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= NSLayoutAttributeCenterYWithinMargins) {
+        NSLayoutAttribute maxAttr = [weakSelf whc_GetMaxLayoutAttribute];
+        while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
             if (attributes > 0) {
                 [weakSelf whc_SwitchRemoveAttr:attributes view:view removeSelf:NO];
             }
@@ -252,7 +258,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (LeftSpaceToView)whc_LeftSpaceToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat space, UIView * toView) {
+    return ^(CGFloat space, WHC_VIEW * toView) {
         [weakSelf whc_LeftSpace:space toView:toView];
         return weakSelf;
     };
@@ -260,7 +266,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (LeftSpaceEqualView)whc_LeftSpaceEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_LeftSpaceEqualView:view];
         return weakSelf;
     };
@@ -268,7 +274,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (LeftSpaceEqualViewOffset)whc_LeftSpaceEqualViewOffset {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view, CGFloat offset) {
+    return ^(WHC_VIEW * view, CGFloat offset) {
         [weakSelf whc_LeftSpaceEqualView:view offset:offset];
         return weakSelf;
     };
@@ -284,7 +290,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (LeadingSpaceToView)whc_LeadingSpaceToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value , UIView * toView) {
+    return ^(CGFloat value , WHC_VIEW * toView) {
         [weakSelf whc_LeadingSpace:value toView:toView];
         return weakSelf;
     };
@@ -292,7 +298,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (LeadingSpaceEqualView)whc_LeadingSpaceEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_LeadingSpaceEqualView:view];
         return weakSelf;
     };
@@ -300,7 +306,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (LeadingSpaceEqualViewOffset)whc_LeadingSpaceEqualViewOffset {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view, CGFloat offset) {
+    return ^(WHC_VIEW * view, CGFloat offset) {
         [weakSelf whc_LeadingSpaceEqualView:view offset:offset];
         return weakSelf;
     };
@@ -316,7 +322,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (TrailingSpaceToView)whc_TrailingSpaceToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value , UIView * toView) {
+    return ^(CGFloat value , WHC_VIEW * toView) {
         [weakSelf whc_TrailingSpace:value toView:toView];
         return weakSelf;
     };
@@ -324,7 +330,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (TrailingSpaceEqualView)whc_TrailingSpaceEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_TrailingSpaceEqualView:view];
         return weakSelf;
     };
@@ -332,12 +338,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (TrailingSpaceEqualViewOffset)whc_TrailingSpaceEqualViewOffset {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view, CGFloat offset) {
+    return ^(WHC_VIEW * view, CGFloat offset) {
         [weakSelf whc_TrailingSpaceEqualView:view offset:offset];
         return weakSelf;
     };
 }
 
+#if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
 - (BaseLineSpace)whc_FirstBaseLine {
     __weak typeof(self) weakSelf = self;
     return ^(CGFloat space) {
@@ -348,7 +355,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BaseLineSpaceToView)whc_FirstBaseLineToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value , UIView * toView) {
+    return ^(CGFloat value , WHC_VIEW * toView) {
         [weakSelf whc_FirstBaseLine:value toView:toView];
         return weakSelf;
     };
@@ -356,7 +363,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BaseLineSpaceEqualView)whc_FirstBaseLineEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_FirstBaseLineEqualView:view];
         return weakSelf;
     };
@@ -364,11 +371,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BaseLineSpaceEqualViewOffset)whc_FirstBaseLineEqualViewOffset {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view, CGFloat offset) {
+    return ^(WHC_VIEW * view, CGFloat offset) {
         [weakSelf whc_FirstBaseLineEqualView:view offset:offset];
         return weakSelf;
     };
 }
+
+#endif
 
 - (BaseLineSpace)whc_LastBaseLine {
     __weak typeof(self) weakSelf = self;
@@ -380,7 +389,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BaseLineSpaceToView)whc_LastBaseLineToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value , UIView * toView) {
+    return ^(CGFloat value , WHC_VIEW * toView) {
         [weakSelf whc_LastBaseLine:value toView:toView];
         return weakSelf;
     };
@@ -388,7 +397,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BaseLineSpaceEqualView)whc_LastBaseLineEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_LastBaseLineEqualView:view];
         return weakSelf;
     };
@@ -396,7 +405,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BaseLineSpaceEqualViewOffset)whc_LastBaseLineEqualViewOffset {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view, CGFloat offset) {
+    return ^(WHC_VIEW * view, CGFloat offset) {
         [weakSelf whc_LastBaseLineEqualView:view offset:offset];
         return weakSelf;
     };
@@ -412,7 +421,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (RightSpaceToView)whc_RightSpaceToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value , UIView * toView) {
+    return ^(CGFloat value , WHC_VIEW * toView) {
         [weakSelf whc_RightSpace:value toView:toView];
         return weakSelf;
     };
@@ -420,7 +429,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (RightSpaceEqualView)whc_RightSpaceEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * toView) {
+    return ^(WHC_VIEW * toView) {
         [weakSelf whc_RightSpaceEqualView:toView];
         return weakSelf;
     };
@@ -428,7 +437,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (RightSpaceEqualViewOffset)whc_RightSpaceEqualViewOffset {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * toView, CGFloat offset) {
+    return ^(WHC_VIEW * toView, CGFloat offset) {
         [weakSelf whc_RightSpaceEqualView:toView offset:offset];
         return weakSelf;
     };
@@ -444,7 +453,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (TopSpaceToView)whc_TopSpaceToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value , UIView * toView) {
+    return ^(CGFloat value , WHC_VIEW * toView) {
         [weakSelf whc_TopSpace:value toView:toView];
         return weakSelf;
     };
@@ -452,7 +461,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (TopSpaceEqualView)whc_TopSpaceEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_TopSpaceEqualView:view];
         return weakSelf;
     };
@@ -460,7 +469,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (TopSpaceEqualViewOffset)whc_TopSpaceEqualViewOffset {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view, CGFloat offset) {
+    return ^(WHC_VIEW * view, CGFloat offset) {
         [weakSelf whc_TopSpaceEqualView:view offset:offset];
         return weakSelf;
     };
@@ -476,7 +485,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BottomSpaceToView)whc_BottomSpaceToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value , UIView * toView) {
+    return ^(CGFloat value , WHC_VIEW * toView) {
         [weakSelf whc_BottomSpace:value toView:toView];
         return weakSelf;
     };
@@ -484,7 +493,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BottomSpaceEqualView)whc_BottomSpaceEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * toView) {
+    return ^(WHC_VIEW * toView) {
         [weakSelf whc_BottomSpaceEqualView:toView];
         return weakSelf;
     };
@@ -492,7 +501,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (BottomSpaceEqualViewOffset)whc_BottomSpaceEqualViewOffset {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * toView, CGFloat offset) {
+    return ^(WHC_VIEW * toView, CGFloat offset) {
         [weakSelf whc_BottomSpaceEqualView:toView offset:offset];
         return weakSelf;
     };
@@ -516,7 +525,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WidthEqualView)whc_WidthEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_WidthEqualView:view];
         return weakSelf;
     };
@@ -524,7 +533,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WidthEqualViewRatio)whc_WidthEqualViewRatio {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view , CGFloat value) {
+    return ^(WHC_VIEW * view , CGFloat value) {
         [weakSelf whc_WidthEqualView:view ratio:value];
         return weakSelf;
     };
@@ -556,7 +565,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (HeightEqualView)whc_HeightEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_HeightEqualView:view];
         return weakSelf;
     };
@@ -564,7 +573,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (HeightEqualViewRatio)whc_HeightEqualViewRatio {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view , CGFloat value) {
+    return ^(WHC_VIEW * view , CGFloat value) {
         [weakSelf whc_HeightEqualView:view ratio:value];
         return weakSelf;
     };
@@ -588,7 +597,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (CenterXToView)whc_CenterXToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value,UIView * toView) {
+    return ^(CGFloat value,WHC_VIEW * toView) {
         [weakSelf whc_CenterX:value toView:toView];
         return weakSelf;
     };
@@ -604,7 +613,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (CenterYToView)whc_CenterYToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGFloat value,UIView * toView) {
+    return ^(CGFloat value,WHC_VIEW * toView) {
         [weakSelf whc_CenterY:value toView:toView];
         return weakSelf;
     };
@@ -620,7 +629,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (CenterToView)whc_CenterToView {
     __weak typeof(self) weakSelf = self;
-    return ^(CGPoint center,UIView * toView) {
+    return ^(CGPoint center,WHC_VIEW * toView) {
         [weakSelf whc_Center:center toView:toView];
         return weakSelf;
     };
@@ -636,7 +645,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (SizeEqual)whc_SizeEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_SizeEqualView:view];
         return weakSelf;
     };
@@ -644,7 +653,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (FrameEqual)whc_FrameEqualView {
     __weak typeof(self) weakSelf = self;
-    return ^(UIView * view) {
+    return ^(WHC_VIEW * view) {
         [weakSelf whc_FrameEqualView:view];
         return weakSelf;
     };
@@ -652,15 +661,35 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 #pragma mark - removeConstraint api v1.0 -
 
-- (UIView *)whc_MainViewConstraint:(NSLayoutConstraint *)constraint {
-    UIView * view = nil;
+- (NSLayoutAttribute)whc_GetMaxLayoutAttribute {
+    NSLayoutAttribute maxAttr = NSLayoutAttributeNotAnAttribute;
+#if TARGET_OS_IPHONE || TARGET_OS_TV
+#if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000)
+    maxAttr = NSLayoutAttributeCenterYWithinMargins;
+#else
+    maxAttr = NSLayoutAttributeLastBaseline;
+#endif
+    
+#elif TARGET_OS_MAC
+#if (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
+    maxAttr = NSLayoutAttributeFirstBaseline;
+#else
+    maxAttr = NSLayoutAttributeLastBaseline;
+#endif
+    
+#endif
+    return maxAttr;
+}
+
+- (WHC_VIEW *)whc_MainViewConstraint:(NSLayoutConstraint *)constraint {
+    WHC_VIEW * view = nil;
     if (constraint) {
         if (constraint.secondAttribute == NSLayoutAttributeNotAnAttribute ||
             constraint.secondItem == nil) {
             view = constraint.firstItem;
         }else {
-            UIView * firstItem = constraint.firstItem;
-            UIView * secondItem = constraint.secondItem;
+            WHC_VIEW * firstItem = constraint.firstItem;
+            WHC_VIEW * secondItem = constraint.secondItem;
             if (firstItem.superview == secondItem.superview) {
                 view = firstItem.superview;
             }else {
@@ -671,10 +700,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return view;
 }
 
-- (void)whc_CommonRemoveConstraint:(NSLayoutAttribute)attribute view:(UIView *)mainView {
+- (void)whc_CommonRemoveConstraint:(NSLayoutAttribute)attribute view:(WHC_VIEW *)mainView {
     NSLayoutConstraint * constraint = nil;
-    UIView * view = nil;
+    WHC_VIEW * view = nil;
     switch (attribute) {
+#if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
         case NSLayoutAttributeFirstBaseline:
             constraint = [self firstBaselineConstraint];
             if (constraint) {
@@ -683,6 +713,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [self setFirstBaselineConstraint:nil];
             }
             break;
+#endif
         case NSLayoutAttributeLastBaseline:
             constraint = [self lastBaselineConstraint];
             if (constraint) {
@@ -783,9 +814,12 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     }];
 }
 
-- (void)whc_SwitchRemoveAttr:(NSLayoutAttribute)attr view:(UIView *)view removeSelf:(BOOL)removeSelf {
+- (void)whc_SwitchRemoveAttr:(NSLayoutAttribute)attr view:(WHC_VIEW *)view removeSelf:(BOOL)removeSelf {
     switch (attr) {
+#if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
         case NSLayoutAttributeFirstBaseline:
+#endif
+#if ((TARGET_OS_IPHONE || TARGET_OS_TV) && (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000))
         case NSLayoutAttributeLeftMargin:
         case NSLayoutAttributeRightMargin:
         case NSLayoutAttributeTopMargin:
@@ -794,7 +828,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeTrailingMargin:
         case NSLayoutAttributeCenterXWithinMargins:
         case NSLayoutAttributeCenterYWithinMargins:
-            
+#endif
         case NSLayoutAttributeLastBaseline:
         case NSLayoutAttributeCenterY:
         case NSLayoutAttributeCenterX:
@@ -818,12 +852,12 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     }
 }
 
-- (UIView *)whc_ResetConstraints {
-    UIView * (^getMainView)(NSLayoutConstraint * constraint) = ^(NSLayoutConstraint * constraint){
-        UIView * view = nil;
+- (WHC_VIEW *)whc_ResetConstraints {
+    WHC_VIEW * (^getMainView)(NSLayoutConstraint * constraint) = ^(NSLayoutConstraint * constraint){
+        WHC_VIEW * view = nil;
         if (constraint && constraint.secondAttribute != NSLayoutAttributeNotAnAttribute && constraint.secondItem != nil) {
-            UIView * firstItem = constraint.firstItem;
-            UIView * secondItem = constraint.secondItem;
+            WHC_VIEW * firstItem = constraint.firstItem;
+            WHC_VIEW * secondItem = constraint.secondItem;
             if (firstItem.superview == secondItem.superview) {
                 view = firstItem.superview;
             }else {
@@ -834,7 +868,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 
     NSLayoutConstraint * constraint = [self firstBaselineConstraint];
-    UIView * mainView = getMainView(constraint);
+    WHC_VIEW * mainView = getMainView(constraint);
     if (mainView) {
         [mainView removeConstraint:constraint];
         [self setFirstBaselineConstraint:nil];
@@ -919,7 +953,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return self;
 }
 
-- (UIView *)whc_ClearLayoutAttrs {
+- (WHC_VIEW *)whc_ClearLayoutAttrs {
     @autoreleasepool {
         NSArray<NSLayoutConstraint *> * constraints = self.constraints;
         if (constraints) {
@@ -930,7 +964,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
             }];
         }
-        UIView * superView = self.superview;
+        WHC_VIEW * superView = self.superview;
         if (superView) {
             constraints = superView.constraints;
             if (constraints) {
@@ -945,10 +979,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return self;
 }
 
-- (UIView *)whc_RemoveFrom:(UIView *)view layoutAttrs:(NSLayoutAttribute)attributes, ... {
+- (WHC_VIEW *)whc_RemoveFrom:(WHC_VIEW *)view layoutAttrs:(NSLayoutAttribute)attributes, ... {
     va_list attrs;
     va_start(attrs, attributes);
-    while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= NSLayoutAttributeCenterYWithinMargins) {
+    NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
+    while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
         if (attributes > 0) {
             [self whc_SwitchRemoveAttr:attributes view:view removeSelf:NO];
         }
@@ -958,10 +993,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return self;
 }
 
-- (UIView *)whc_RemoveLayoutAttr:(NSLayoutAttribute)attributes, ... {
+- (WHC_VIEW *)whc_RemoveLayoutAttr:(NSLayoutAttribute)attributes, ... {
     va_list attrs;
     va_start(attrs, attributes);
-    while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= NSLayoutAttributeCenterYWithinMargins) {
+    NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
+    while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
         if (attributes > 0) {
             [self whc_SwitchRemoveAttr:attributes view:self.superview removeSelf:YES];
         }
@@ -972,10 +1008,15 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 #pragma mark - constraintsPriority api v1.0 -
-- (UIView *)whc_HandleConstraintsPriority:(UILayoutPriority)priority {
+
+- (WHC_VIEW *)whc_HandleConstraintsPriority:(WHC_LayoutPriority)priority {
     NSLayoutConstraint * constraints = [self currentConstraint];
     if (constraints && constraints.priority != priority) {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
         if (constraints.priority == UILayoutPriorityRequired) {
+#elif TARGET_OS_MAC
+        if (constraints.priority == NSLayoutPriorityRequired) {
+#endif
             if (!constraints.secondItem ||
                 constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
                 [self removeConstraint:constraints];
@@ -995,35 +1036,51 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return self;
 }
 
-- (UIView *)whc_priorityLow {
+- (WHC_VIEW *)whc_priorityLow {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     return [self whc_HandleConstraintsPriority:UILayoutPriorityDefaultLow];
+#elif TARGET_OS_MAC
+    return [self whc_HandleConstraintsPriority:NSLayoutPriorityDefaultLow];
+#endif
 }
 
-- (UIView *)whc_priorityHigh {
+- (WHC_VIEW *)whc_priorityHigh {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     return [self whc_HandleConstraintsPriority:UILayoutPriorityDefaultHigh];
+#elif TARGET_OS_MAC
+    return [self whc_HandleConstraintsPriority:NSLayoutPriorityDefaultHigh];
+#endif
 }
 
-- (UIView *)whc_priorityRequired {
+- (WHC_VIEW *)whc_priorityRequired {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     return [self whc_HandleConstraintsPriority:UILayoutPriorityRequired];
+#elif TARGET_OS_MAC
+    return [self whc_HandleConstraintsPriority:NSLayoutPriorityRequired];
+#endif
 }
 
-- (UIView *)whc_priorityFitting {
+- (WHC_VIEW *)whc_priorityFitting {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     return [self whc_HandleConstraintsPriority:UILayoutPriorityFittingSizeLevel];
+#elif TARGET_OS_MAC
+    return [self whc_HandleConstraintsPriority:NSLayoutPriorityFittingSizeCompression];
+#endif
 }
-
-- (UIView *)whc_priority:(CGFloat)value {
+    
+- (WHC_VIEW *)whc_priority:(CGFloat)value {
     return [self whc_HandleConstraintsPriority:value];
 }
 
-#pragma mark - api version 1.0 -
+#pragma mark - api version 1.0
 
-- (UIView *)whc_LeftSpace:(CGFloat)leftSpace {
+- (WHC_VIEW *)whc_LeftSpace:(CGFloat)leftSpace {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeLeft
                         constant:leftSpace];
 }
 
-- (UIView *)whc_LeftSpace:(CGFloat)leftSpace toView:(UIView *)toView {
+- (WHC_VIEW *)whc_LeftSpace:(CGFloat)leftSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeRight;
     if (toView.superview == nil) {
         toAttribute = NSLayoutAttributeLeft;
@@ -1039,11 +1096,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:leftSpace];
 }
 
-- (UIView *)whc_LeftSpaceEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_LeftSpaceEqualView:(WHC_VIEW *)view {
     return [self whc_LeftSpaceEqualView:view offset:0];
 }
 
-- (UIView *)whc_LeftSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
+- (WHC_VIEW *)whc_LeftSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeft
                        relatedBy:NSLayoutRelationEqual
@@ -1053,13 +1110,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:offset];
 }
 
-- (UIView *)whc_RightSpace:(CGFloat)rightSpace {
+- (WHC_VIEW *)whc_RightSpace:(CGFloat)rightSpace {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeRight
                         constant:0.0 - rightSpace];
 }
 
-- (UIView *)whc_RightSpace:(CGFloat)rightSpace toView:(UIView *)toView {
+- (WHC_VIEW *)whc_RightSpace:(CGFloat)rightSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLeft;
     if (toView.superview == nil) {
         toAttribute = NSLayoutAttributeRight;
@@ -1075,11 +1132,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0.0 - rightSpace];
 }
 
-- (UIView *)whc_RightSpaceEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_RightSpaceEqualView:(WHC_VIEW *)view {
     return [self whc_RightSpaceEqualView:view offset:0];
 }
 
-- (UIView *)whc_RightSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
+- (WHC_VIEW *)whc_RightSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeRight
                        relatedBy:NSLayoutRelationEqual
@@ -1089,14 +1146,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0.0 - offset];
 }
 
-- (UIView *)whc_LeadingSpace:(CGFloat)leadingSpace {
+- (WHC_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeLeading
                         constant:leadingSpace];
 }
 
-- (UIView *)whc_LeadingSpace:(CGFloat)leadingSpace
-            toView:(UIView *)toView {
+- (WHC_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace
+            toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeTrailing;
     if (toView.superview == nil) {
         toAttribute = NSLayoutAttributeLeading;
@@ -1112,11 +1169,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:leadingSpace];
 }
 
-- (UIView *)whc_LeadingSpaceEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_LeadingSpaceEqualView:(WHC_VIEW *)view {
     return [self whc_LeadingSpaceEqualView:view offset:0];
 }
 
-- (UIView *)whc_LeadingSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
+- (WHC_VIEW *)whc_LeadingSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeLeading
                        relatedBy:NSLayoutRelationEqual
@@ -1126,14 +1183,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:offset];
 }
 
-- (UIView *)whc_TrailingSpace:(CGFloat)trailingSpace {
+- (WHC_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeTrailing
                         constant:0.0 - trailingSpace];
 }
 
-- (UIView *)whc_TrailingSpace:(CGFloat)trailingSpace
-             toView:(UIView *)toView {
+- (WHC_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace
+             toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLeading;
     if (toView.superview == nil) {
         toAttribute = NSLayoutAttributeTrailing;
@@ -1149,11 +1206,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0.0 - trailingSpace];
 }
 
-- (UIView *)whc_TrailingSpaceEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_TrailingSpaceEqualView:(WHC_VIEW *)view {
     return [self whc_TrailingSpaceEqualView:view offset:0];
 }
 
-- (UIView *)whc_TrailingSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
+- (WHC_VIEW *)whc_TrailingSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeTrailing
                        relatedBy:NSLayoutRelationEqual
@@ -1163,13 +1220,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0.0 - offset];
 }
 
-- (UIView *)whc_TopSpace:(CGFloat)topSpace {
+- (WHC_VIEW *)whc_TopSpace:(CGFloat)topSpace {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeTop
                         constant:topSpace];
 }
 
-- (UIView *)whc_TopSpace:(CGFloat)topSpace toView:(UIView *)toView {
+- (WHC_VIEW *)whc_TopSpace:(CGFloat)topSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeBottom;
     if (toView.superview == nil) {
         toAttribute = NSLayoutAttributeTop;
@@ -1185,11 +1242,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:topSpace];
 }
 
-- (UIView *)whc_TopSpaceEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_TopSpaceEqualView:(WHC_VIEW *)view {
     return [self whc_TopSpaceEqualView:view offset:0];
 }
 
-- (UIView *)whc_TopSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
+- (WHC_VIEW *)whc_TopSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeTop
                        relatedBy:NSLayoutRelationEqual
@@ -1199,13 +1256,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:offset];
 }
 
-- (UIView *)whc_BottomSpace:(CGFloat)bottomSpace {
+- (WHC_VIEW *)whc_BottomSpace:(CGFloat)bottomSpace {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeBottom
                         constant:0.0 - bottomSpace];
 }
 
-- (UIView *)whc_BottomSpace:(CGFloat)bottomSpace toView:(UIView *)toView {
+- (WHC_VIEW *)whc_BottomSpace:(CGFloat)bottomSpace toView:(WHC_VIEW *)toView {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeBottom
                        relatedBy:NSLayoutRelationEqual
@@ -1215,11 +1272,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:bottomSpace];
 }
 
-- (UIView *)whc_BottomSpaceEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_BottomSpaceEqualView:(WHC_VIEW *)view {
     return [self whc_BottomSpaceEqualView:view offset:0];
 }
 
-- (UIView *)whc_BottomSpaceEqualView:(UIView *)view offset:(CGFloat)offset {
+- (WHC_VIEW *)whc_BottomSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeBottom
                        relatedBy:NSLayoutRelationEqual
@@ -1229,7 +1286,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0.0 - offset];
 }
 
-- (UIView *)whc_Width:(CGFloat)width{
+- (WHC_VIEW *)whc_Width:(CGFloat)width{
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeWidth
                        relatedBy:NSLayoutRelationEqual
@@ -1239,13 +1296,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:width];
 }
 
-- (UIView *)whc_WidthEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_WidthEqualView:(WHC_VIEW *)view {
     return [self whc_ConstraintWithItem:view
                        attribute:NSLayoutAttributeWidth
                         constant:0];
 }
 
-- (UIView *)whc_WidthEqualView:(UIView *)view ratio:(CGFloat)ratio {
+- (WHC_VIEW *)whc_WidthEqualView:(WHC_VIEW *)view ratio:(CGFloat)ratio {
     return [self whc_ConstraintWithItem:view
                        attribute:NSLayoutAttributeWidth
                         constant:0
@@ -1253,13 +1310,15 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 }
 
-- (UIView *)whc_AutoWidth {
+- (WHC_VIEW *)whc_AutoWidth {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     if ([self isKindOfClass:[UILabel class]]) {
         UILabel * selfLabel = (UILabel *)self;
         if (selfLabel.numberOfLines == 0) {
             selfLabel.numberOfLines = 1;
         }
     }
+#endif
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeWidth
                        relatedBy:NSLayoutRelationGreaterThanOrEqual
@@ -1269,7 +1328,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0];
 }
 
-- (UIView *)whc_WidthHeightRatio:(CGFloat)ratio {
+- (WHC_VIEW *)whc_WidthHeightRatio:(CGFloat)ratio {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeWidth
                        relatedBy:NSLayoutRelationEqual
@@ -1279,31 +1338,33 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0];
 }
 
-- (UIView *)whc_Height:(CGFloat)height{
+- (WHC_VIEW *)whc_Height:(CGFloat)height{
     return [self whc_ConstraintWithItem:nil
                        attribute:NSLayoutAttributeHeight
                         constant:height];
 }
 
-- (UIView *)whc_HeightEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_HeightEqualView:(WHC_VIEW *)view {
     return [self whc_ConstraintWithItem:view
                        attribute:NSLayoutAttributeHeight
                         constant:0];
 }
 
-- (UIView *)whc_HeightEqualView:(UIView *)view ratio:(CGFloat)ratio {
+- (WHC_VIEW *)whc_HeightEqualView:(WHC_VIEW *)view ratio:(CGFloat)ratio {
     return [self whc_ConstraintWithItem:view
                        attribute:NSLayoutAttributeHeight
                         constant:0
                       multiplier:ratio];
 }
 
-- (UIView *)whc_AutoHeight {
+- (WHC_VIEW *)whc_AutoHeight {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     if ([self isKindOfClass:[UILabel class]]) {
         if (((UILabel *)self).numberOfLines != 0) {
             ((UILabel *)self).numberOfLines = 0;
         }
     }
+#endif
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeHeight
                        relatedBy:NSLayoutRelationGreaterThanOrEqual
@@ -1314,7 +1375,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 }
 
-- (UIView *)whc_HeightWidthRatio:(CGFloat)ratio {
+- (WHC_VIEW *)whc_HeightWidthRatio:(CGFloat)ratio {
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeHeight
                        relatedBy:NSLayoutRelationEqual
@@ -1324,37 +1385,38 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0];
 }
 
-- (UIView *)whc_CenterX:(CGFloat)centerX {
+- (WHC_VIEW *)whc_CenterX:(CGFloat)centerX {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeCenterX
                         constant:centerX];
 }
 
-- (UIView *)whc_CenterX:(CGFloat)centerX toView:(UIView *)toView {
+- (WHC_VIEW *)whc_CenterX:(CGFloat)centerX toView:(WHC_VIEW *)toView {
     return [self whc_ConstraintWithItem:toView
                        attribute:NSLayoutAttributeCenterX
                         constant:centerX];
 }
 
-- (UIView *)whc_CenterY:(CGFloat)centerY {
+- (WHC_VIEW *)whc_CenterY:(CGFloat)centerY {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeCenterY
                         constant:centerY];
 }
 
-- (UIView *)whc_CenterY:(CGFloat)centerY toView:(UIView *)toView {
+- (WHC_VIEW *)whc_CenterY:(CGFloat)centerY toView:(WHC_VIEW *)toView {
     return [self whc_ConstraintWithItem:toView
                        attribute:NSLayoutAttributeCenterY
                         constant:centerY];
 }
 
-- (UIView *)whc_FirstBaseLine:(CGFloat)space {
+#if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
+- (WHC_VIEW *)whc_FirstBaseLine:(CGFloat)space {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeFirstBaseline
                         constant:0.0 - space];
 }
 
-- (UIView *)whc_FirstBaseLine:(CGFloat)space toView:(UIView *)toView {
+- (WHC_VIEW *)whc_FirstBaseLine:(CGFloat)space toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLastBaseline;
     if (toView.superview == nil) {
         toAttribute = NSLayoutAttributeFirstBaseline;
@@ -1370,25 +1432,30 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:space];
 }
 
-- (UIView *)whc_FirstBaseLineEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_FirstBaseLineEqualView:(WHC_VIEW *)view {
     return [self whc_FirstBaseLineEqualView:view offset:0];
 }
 
-- (UIView *)whc_FirstBaseLineEqualView:(UIView *)view offset:(CGFloat)offset {
+- (WHC_VIEW *)whc_FirstBaseLineEqualView:(WHC_VIEW *)view offset:(CGFloat)offset {
     return [self whc_ConstraintWithItem:view
                        attribute:NSLayoutAttributeFirstBaseline
                         constant:0.0 - offset];
 }
 
+#endif
 
-- (UIView *)whc_LastBaseLine:(CGFloat)space {
+- (WHC_VIEW *)whc_LastBaseLine:(CGFloat)space {
     return [self whc_ConstraintWithItem:self.superview
                        attribute:NSLayoutAttributeLastBaseline
                         constant:0.0 - space];
 }
 
-- (UIView *)whc_LastBaseLine:(CGFloat)space toView:(UIView *)toView {
+- (WHC_VIEW *)whc_LastBaseLine:(CGFloat)space toView:(WHC_VIEW *)toView {
+#if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
     NSLayoutAttribute toAttribute = NSLayoutAttributeFirstBaseline;
+#else
+    NSLayoutAttribute toAttribute = NSLayoutAttributeTop;
+#endif
     if (toView.superview == nil) {
         toAttribute = NSLayoutAttributeLastBaseline;
     }else if (self.superview != toView.superview) {
@@ -1403,100 +1470,100 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:0.0 - space];
 }
 
-- (UIView *)whc_LastBaseLineEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_LastBaseLineEqualView:(WHC_VIEW *)view {
     return [self whc_LastBaseLineEqualView:view offset:0];
 }
 
-- (UIView *)whc_LastBaseLineEqualView:(UIView *)view offset:(CGFloat)offset {
+- (WHC_VIEW *)whc_LastBaseLineEqualView:(WHC_VIEW *)view offset:(CGFloat)offset {
     return [self whc_ConstraintWithItem:view
                        attribute:NSLayoutAttributeLastBaseline
                         constant:0.0 - offset];
 }
 
 
-- (UIView *)whc_Center:(CGPoint)center {
+- (WHC_VIEW *)whc_Center:(CGPoint)center {
     [self whc_CenterX:center.x];
     return [self whc_CenterY:center.y];
 }
 
-- (UIView *)whc_Center:(CGPoint)center toView:(UIView *)toView {
+- (WHC_VIEW *)whc_Center:(CGPoint)center toView:(WHC_VIEW *)toView {
     [self whc_CenterX:center.x toView:toView];
     return [self whc_CenterY:center.y toView:toView];
 }
 
-- (UIView *)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height {
+- (WHC_VIEW *)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height {
     [self whc_LeftSpace:left];
     [self whc_TopSpace:top];
     [self whc_Width:width];
     return [self whc_Height:height];
 }
 
-- (UIView *)whc_Size:(CGSize)size {
+- (WHC_VIEW *)whc_Size:(CGSize)size {
     [self whc_Width:size.width];
     return [self whc_Height:size.height];
 }
 
-- (UIView *)whc_SizeEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_SizeEqualView:(WHC_VIEW *)view {
     [self whc_WidthEqualView: view];
     return [self whc_HeightEqualView: view];
 }
 
-- (UIView *)whc_FrameEqualView:(UIView *)view {
+- (WHC_VIEW *)whc_FrameEqualView:(WHC_VIEW *)view {
     [self whc_LeftSpaceEqualView: view];
     [self whc_TopSpaceEqualView: view];
     return [self whc_SizeEqualView:view];
 }
 
-- (UIView *)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height toView:(UIView *)toView {
+- (WHC_VIEW *)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height toView:(WHC_VIEW *)toView {
     [self whc_LeftSpace:left toView:toView];
     [self whc_TopSpace:top toView:toView];
     [self whc_Width:width];
     return [self whc_Height:height];
 }
 
-- (UIView *)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom {
+- (WHC_VIEW *)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom {
     [self whc_LeftSpace:left];
     [self whc_TopSpace:top];
     [self whc_RightSpace:right];
     return [self whc_BottomSpace:bottom];
 }
 
-- (UIView *)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height {
+- (WHC_VIEW *)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height {
     [self whc_LeftSpace:left];
     [self whc_TopSpace:top];
     [self whc_RightSpace:right];
     return [self whc_Height:height];
 }
 
-- (UIView *)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom {
+- (WHC_VIEW *)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom {
     [self whc_LeftSpace:left];
     [self whc_TopSpace:top];
     [self whc_Width:width];
     return [self whc_BottomSpace:bottom];
 }
 
-- (UIView *)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom toView:(UIView *)toView {
+- (WHC_VIEW *)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom toView:(WHC_VIEW *)toView {
     [self whc_LeftSpace:left toView:toView];
     [self whc_TopSpace:top toView:toView];
     [self whc_RightSpace:right toView:toView];
     return [self whc_BottomSpace:bottom toView:toView];
 }
 
-- (UIView *)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height toView:(UIView *)toView {
+- (WHC_VIEW *)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height toView:(WHC_VIEW *)toView {
     [self whc_LeftSpace:left toView:toView];
     [self whc_TopSpace:top toView:toView];
     [self whc_RightSpace:right toView:toView];
     return [self whc_Height:height];
 }
 
-- (UIView *)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom toView:(UIView *)toView {
+- (WHC_VIEW *)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom toView:(WHC_VIEW *)toView {
     [self whc_LeftSpace:left toView:toView];
     [self whc_TopSpace:top toView:toView];
     [self whc_Width:width];
     return [self whc_BottomSpace:bottom toView:toView];
 }
 
-- (UIView *)whc_ConstraintWithItem:(UIView *)item
+- (WHC_VIEW *)whc_ConstraintWithItem:(WHC_VIEW *)item
                      attribute:(NSLayoutAttribute)attribute
                       constant:(CGFloat)constant {
     return [self whc_ConstraintWithItem:self
@@ -1506,7 +1573,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:constant];
 }
 
-- (UIView *)whc_ConstraintWithItem:(UIView *)item
+- (WHC_VIEW *)whc_ConstraintWithItem:(WHC_VIEW *)item
                      attribute:(NSLayoutAttribute)attribute
                       constant:(CGFloat)constant
                     multiplier:(CGFloat)multiplier {
@@ -1518,9 +1585,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                       multiplier:multiplier];
 }
 
-- (UIView *)whc_ConstraintWithItem:(UIView *)item
+- (WHC_VIEW *)whc_ConstraintWithItem:(WHC_VIEW *)item
                      attribute:(NSLayoutAttribute)attribute
-                        toItem:(UIView *)toItem
+                        toItem:(WHC_VIEW *)toItem
                      attribute:(NSLayoutAttribute)toAttribute
                       constant:(CGFloat)constant {
     return [self whc_ConstraintWithItem:item
@@ -1532,9 +1599,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:constant];
 }
 
-- (UIView *)whc_ConstraintWithItem:(UIView *)item
+- (WHC_VIEW *)whc_ConstraintWithItem:(WHC_VIEW *)item
                      attribute:(NSLayoutAttribute)attribute
-                        toItem:(UIView *)toItem
+                        toItem:(WHC_VIEW *)toItem
                      attribute:(NSLayoutAttribute)toAttribute
                       constant:(CGFloat)constant
                     multiplier:(CGFloat)multiplier {
@@ -1547,15 +1614,15 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                         constant:constant];
 }
 
-- (UIView *)whc_ConstraintWithItem:(UIView *)item
+- (WHC_VIEW *)whc_ConstraintWithItem:(WHC_VIEW *)item
                      attribute:(NSLayoutAttribute)attribute
                      relatedBy:(NSLayoutRelation)related
-                        toItem:(UIView *)toItem
+                        toItem:(WHC_VIEW *)toItem
                      attribute:(NSLayoutAttribute)toAttribute
                     multiplier:(CGFloat)multiplier
                       constant:(CGFloat)constant {
     
-    UIView * superView = item.superview;
+    WHC_VIEW * superView = item.superview;
     if (toItem) {
         if (toItem.superview == nil) {
             superView = toItem;
@@ -1803,6 +1870,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             }
         }
             break;
+#if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
         case NSLayoutAttributeFirstBaseline: {
             NSLayoutConstraint * top = [self topConstraint];
             if (top) {
@@ -1825,6 +1893,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             }
         }
             break;
+#endif
         default:
             break;
     }
@@ -1837,9 +1906,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                             multiplier:multiplier
                                               constant:constant];
     switch (attribute) {
+#if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
         case NSLayoutAttributeFirstBaseline:
             [self setFirstBaselineConstraint:constraint];
             break;
+#endif
         case NSLayoutAttributeLastBaseline:
             [self setLastBaselineConstraint:constraint];
             break;
@@ -1881,7 +1952,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return self;
 }
 
-#pragma mark - Xib智能布局模块 -
+#if TARGET_OS_IPHONE || TARGET_OS_TV
+
+#pragma mark - Xib智能布局模块
 
 - (void)whc_AutoXibLayout {
 #if kDeprecatedVerticalAdapter
@@ -1954,7 +2027,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     }
     NSMutableArray  * rowViewArray = [NSMutableArray array];
     for (NSInteger i = 0; i < subViewArray.count; i++) {
-        UIView * subView = subViewArray[i];
+        WHC_VIEW * subView = subViewArray[i];
         if(rowViewArray.count == 0) {
             NSMutableArray * subRowViewArray = [NSMutableArray array];
             [subRowViewArray addObject:subView];
@@ -1965,7 +2038,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 NSMutableArray  * subRowViewArray = rowViewArray[j];
                 BOOL  isAtRow = YES;
                 for (NSInteger w = 0; w < subRowViewArray.count; w++) {
-                    UIView * rowSubView = subRowViewArray[w];
+                    WHC_VIEW * rowSubView = subRowViewArray[w];
                     if(CGRectGetMinY(subView.frame) > rowSubView.center.y ||
                        CGRectGetMaxY(subView.frame) < rowSubView.center.y){
                         isAtRow = NO;
@@ -1992,8 +2065,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         NSInteger columnCount = subRowViewArray.count;
         for (NSInteger column = 0; column < columnCount; column++) {
             for (NSInteger j = column + 1; j < columnCount; j++) {
-                UIView  * view1 = subRowViewArray[column];
-                UIView  * view2 = subRowViewArray[j];
+                WHC_VIEW  * view1 = subRowViewArray[column];
+                WHC_VIEW  * view2 = subRowViewArray[j];
                 if(view1.center.x > view2.center.x){
                     [subRowViewArray exchangeObjectAtIndex:column withObjectAtIndex:j];
                 }
@@ -2001,17 +2074,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         }
     }
 
-    UIView * frontRowView = nil;
-    UIView * nextRowView = nil;
+    WHC_VIEW * frontRowView = nil;
+    WHC_VIEW * nextRowView = nil;
     
     for (NSInteger row = 0; row < rowCount; row++) {
         NSArray * subRowViewArray = rowViewArray[row];
         NSInteger columnCount = subRowViewArray.count;
         for (NSInteger column = 0; column < columnCount; column++) {
-            UIView * view = subRowViewArray[column];
+            WHC_VIEW * view = subRowViewArray[column];
             CGFloat superWidthHalf = CGRectGetWidth(view.superview.frame) / 2;
-            UIView * nextColumnView = nil;
-            UIView * frontColumnView = nil;
+            WHC_VIEW * nextColumnView = nil;
+            WHC_VIEW * frontColumnView = nil;
             frontRowView = nil;
             nextRowView = nil;
             BOOL canFitWidthOrHeight = [self canFitWidthOrHeightWithView:view];
@@ -2082,7 +2155,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [view whc_Height:CGRectGetHeight(view.frame)];
             }
             if ([view isKindOfClass:[UITableViewCell class]] ||
-                (view.subviews.count > 0 && ([NSStringFromClass(view.class) isEqualToString:@"UIView"] ||
+                (view.subviews.count > 0 && ([NSStringFromClass(view.class) isEqualToString:@"WHC_VIEW"] ||
                                              [NSStringFromClass(view.class) isEqualToString:@"UIScrollView"])) ||
                 [NSStringFromClass(view.class) isEqualToString:@"UITableViewCellContentView"]) {
                 [view whc_RunLayoutEngineWithOrientation:orientation layoutType:layoutType nibType:nibType];
@@ -2091,7 +2164,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     }
 }
 
-- (BOOL)canFitWidthOrHeightWithView:(UIView *) view {
+- (BOOL)canFitWidthOrHeightWithView:(WHC_VIEW *) view {
     if ([view isKindOfClass:[UIImageView class]] ||
         (([view isKindOfClass:[UIButton class]] &&
           (((UIButton *)view).layer.cornerRadius == CGRectGetWidth(view.frame) / 2 ||
@@ -2104,13 +2177,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 
-- (UIView *)getFrontRowView:(NSArray *)rowViewArray
-                currentView:(UIView *)currentView {
+- (WHC_VIEW *)getFrontRowView:(NSArray *)rowViewArray
+                currentView:(WHC_VIEW *)currentView {
     if (currentView) {
         NSInteger columnCount = rowViewArray.count;
         NSInteger currentViewY = CGRectGetMinY(currentView.frame);
         for (NSInteger row = 0; row < columnCount; row++) {
-            UIView * view = rowViewArray[row];
+            WHC_VIEW * view = rowViewArray[row];
             if (CGRectContainsPoint(currentView.frame, CGPointMake(CGRectGetMinX(view.frame), currentViewY)) ||
                 CGRectContainsPoint(currentView.frame, CGPointMake(view.center.x, currentViewY)) ||
                 CGRectContainsPoint(currentView.frame, CGPointMake(CGRectGetMaxX(view.frame), currentViewY))) {
@@ -2123,8 +2196,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return rowViewArray[0];
 }
 
-- (UIView *)getNextRowView:(NSArray *)rowViewArray
-               currentView:(UIView *)currentView {
+- (WHC_VIEW *)getNextRowView:(NSArray *)rowViewArray
+               currentView:(WHC_VIEW *)currentView {
     return [self getFrontRowView:rowViewArray currentView:currentView];
 }
 
@@ -2138,7 +2211,7 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
 
 - (WHC_Line *)createLineWithTag:(int)lineTag {
     WHC_Line * line = nil;
-    for (UIView * view in self.subviews) {
+    for (WHC_VIEW * view in self.subviews) {
         if ([view isKindOfClass:[WHC_Line class]] &&
             view.tag == lineTag) {
             line = (WHC_Line *)view;
@@ -2153,11 +2226,11 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color {
+- (WHC_VIEW *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color {
     return [self whc_AddBottomLine:value lineColor:color pading:0];
 }
 
-- (UIView *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
+- (WHC_VIEW *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
     WHC_Line * line = [self createLineWithTag:kBottom_Line_Tag];
     line.backgroundColor = color;
     [line whc_RightSpace:pading];
@@ -2167,11 +2240,11 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color {
+- (WHC_VIEW *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color {
     return [self whc_AddTopLine:value lineColor:color pading:0];
 }
 
-- (UIView *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
+- (WHC_VIEW *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading {
     WHC_Line * line = [self createLineWithTag:kTop_Line_Tag];
     line.backgroundColor = color;
     [line whc_RightSpace:pading];
@@ -2181,7 +2254,7 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
+- (WHC_VIEW *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
 {
     WHC_Line * line = [self createLineWithTag:kLeft_Line_Tag];
     line.backgroundColor = color;
@@ -2192,7 +2265,7 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color {
+- (WHC_VIEW *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color {
     WHC_Line * line = [self createLineWithTag:kLeft_Line_Tag];
     line.backgroundColor = color;
     [line whc_Width:value];
@@ -2202,7 +2275,7 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color {
+- (WHC_VIEW *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color {
     WHC_Line * line = [self createLineWithTag:kRight_Line_Tag];
     line.backgroundColor = color;
     [line whc_Width:value];
@@ -2212,7 +2285,7 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     return line;
 }
 
-- (UIView *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
+- (WHC_VIEW *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding
 {
     WHC_Line * line = [self createLineWithTag:kRight_Line_Tag];
     line.backgroundColor = color;
@@ -2222,11 +2295,6 @@ static const int kBottom_Line_Tag = kTop_Line_Tag + 1;
     [line whc_BottomSpace:padding];
     return line;
 }
-
+#endif
 @end
-
-
-
-
-
 

@@ -13,8 +13,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FriendModel.h"
-#import "UIView+WHC_AutoLayout.h"
-#import "WHC_StackView.h"
+#import "WHC_AutoLayout.h"
 
 @class FriendsCircleCell;
 

@@ -25,12 +25,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef WHC_AutoLayout_h
-#define WHC_AutoLayout_h
+#import <Foundation/Foundation.h>
 
+//! Project version number for WHC_AutoLayout.
+FOUNDATION_EXPORT double WHC_AutoLayoutVersionNumber;
+
+//! Project version string for WHC_AutoLayout.
+FOUNDATION_EXPORT const unsigned char WHC_AutoLayoutVersionString[];
+
+#import "WHC_StackView.h"
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
 #import "UIView+WHC_AutoLayout.h"
-#import "WHC_StackView.h"
 #import "UIView+WHC_Frame.h"
 
-#endif /* WHC_AutoLayout_h */
+

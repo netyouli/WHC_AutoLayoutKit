@@ -14,7 +14,7 @@
 
 #import "DemoVC2.h"
 #import "DemoVC2Cell.h"
-#import "UIView+WHC_AutoLayout.h"
+#import "WHC_AutoLayout.h"
 
 @interface DemoVC2 ()<UITableViewDataSource,UITableViewDelegate> {
     UITableView * _tableView;

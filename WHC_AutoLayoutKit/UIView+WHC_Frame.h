@@ -24,11 +24,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+#import "WHC_AutoLayoutUtilities.h"
 
-
-#import <UIKit/UIKit.h>
-
-@interface UIView (WHC_Frame)
+@interface WHC_VIEW (WHC_Frame)
 /// 获取屏幕宽度
 @property (nonatomic, assign, readonly)CGFloat whc_sw;
 /// 获取屏幕高度
@@ -49,10 +47,12 @@
 @property (nonatomic, assign)CGFloat whc_midX;
 /// 获取视图中间y
 @property (nonatomic, assign)CGFloat whc_midY;
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 /// 获取视图中心x
 @property (nonatomic, assign)CGFloat whc_cx;
 /// 获取视图中心y
 @property (nonatomic, assign)CGFloat whc_cy;
+#endif
 /// 获取视图xy
 @property (nonatomic, assign)CGPoint whc_xy;
 /// 获取视图size

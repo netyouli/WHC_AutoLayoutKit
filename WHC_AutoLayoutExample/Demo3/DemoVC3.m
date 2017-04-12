@@ -12,8 +12,7 @@
  *********************************************************/
 
 #import "DemoVC3.h"
-#import "UIView+WHC_AutoLayout.h"
-#import "WHC_StackView.h"
+#import "WHC_AutoLayout.h"
 
 @interface DemoVC3 (){
     WHC_StackView * stackView1, *stackView2;

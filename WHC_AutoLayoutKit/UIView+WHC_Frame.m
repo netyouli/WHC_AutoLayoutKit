@@ -25,11 +25,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 #import "UIView+WHC_Frame.h"
 
-@implementation UIView (WHC_Frame)
+@implementation WHC_VIEW (WHC_Frame)
 
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 - (CGFloat)whc_sw {
     return CGRectGetWidth([UIScreen mainScreen].bounds);
 }
@@ -38,6 +38,15 @@
     return CGRectGetHeight([UIScreen mainScreen].bounds);
 }
 
+#elif TARGET_OS_MAC
+- (CGFloat)whc_sw {
+    return CGRectGetWidth([NSScreen mainScreen].frame);
+}
+
+- (CGFloat)whc_sh {
+    return CGRectGetHeight([NSScreen mainScreen].frame);
+}
+#endif
 - (void)setWhc_w:(CGFloat)whc_w {
     CGRect rect = self.frame;
     rect.size.width = whc_w;
@@ -110,6 +119,8 @@
     return CGRectGetMinY(self.frame) + CGRectGetHeight(self.frame) / 2;
 }
 
+#if TARGET_OS_IPHONE || TARGET_OS_TV
+
 - (void)setWhc_cx:(CGFloat)whc_cx {
     CGPoint center = self.center;
     center.x = whc_cx;
@@ -130,11 +141,13 @@
     return self.center.y;
 }
 
+#endif
 - (void)setWhc_xy:(CGPoint)whc_xy {
     CGRect rect = self.frame;
     rect.origin = whc_xy;
     self.frame = rect;
 }
+
 
 - (CGPoint)whc_xy {
     return self.frame.origin;

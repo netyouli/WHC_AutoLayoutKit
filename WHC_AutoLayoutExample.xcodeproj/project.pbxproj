@@ -20,7 +20,6 @@
 		C3068C001C841D8E00F88455 /* DemoVC3.m in Sources */ = {isa = PBXBuildFile; fileRef = C3068BFF1C841D8E00F88455 /* DemoVC3.m */; };
 		C3068C031C84203500F88455 /* DemoVC4.m in Sources */ = {isa = PBXBuildFile; fileRef = C3068C021C84203500F88455 /* DemoVC4.m */; };
 		C3068C071C8420F200F88455 /* DemoVC5.m in Sources */ = {isa = PBXBuildFile; fileRef = C3068C061C8420F200F88455 /* DemoVC5.m */; };
-		C3068C101C84271300F88455 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C3068C0F1C84271300F88455 /* README.md */; };
 		C307EB371C910314008D974A /* WeiXinFriendsCircleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C307EB361C910314008D974A /* WeiXinFriendsCircleVC.m */; };
 		C307EB3A1C910646008D974A /* FriendsCircleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C307EB391C910646008D974A /* FriendsCircleCell.m */; };
 		C307EB3E1C9106D5008D974A /* PersonImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C307EB3C1C9106D5008D974A /* PersonImageView.m */; };
@@ -82,7 +81,6 @@
 		C3068C021C84203500F88455 /* DemoVC4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC4.m; sourceTree = "<group>"; };
 		C3068C051C8420F200F88455 /* DemoVC5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoVC5.h; sourceTree = "<group>"; };
 		C3068C061C8420F200F88455 /* DemoVC5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoVC5.m; sourceTree = "<group>"; };
-		C3068C0F1C84271300F88455 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C307EB351C910314008D974A /* WeiXinFriendsCircleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiXinFriendsCircleVC.h; sourceTree = "<group>"; };
 		C307EB361C910314008D974A /* WeiXinFriendsCircleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiXinFriendsCircleVC.m; sourceTree = "<group>"; };
 		C307EB381C910646008D974A /* FriendsCircleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsCircleCell.h; sourceTree = "<group>"; };
@@ -130,6 +128,7 @@
 		FEE8F30A1E9CA4CF00B39B88 /* WHC_AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHC_AutoLayout.h; sourceTree = "<group>"; };
 		FEE8F30B1E9CA4CF00B39B88 /* WHC_StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHC_StackView.h; sourceTree = "<group>"; };
 		FEE8F30C1E9CA4CF00B39B88 /* WHC_StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHC_StackView.m; sourceTree = "<group>"; };
+		FEE8F3C41E9E0B1900B39B88 /* WHC_AutoLayoutUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHC_AutoLayoutUtilities.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,8 +158,6 @@
 		C3068BC01C8418F000F88455 = {
 			isa = PBXGroup;
 			children = (
-				C3FEAF471C86AD37008E1E97 /* Gif */,
-				C3068C0F1C84271300F88455 /* README.md */,
 				FEE8F3031E9CA4CF00B39B88 /* WHC_AutoLayoutKit */,
 				C3068BCB1C8418F000F88455 /* WHC_AutoLayoutExample */,
 				C3068BCA1C8418F000F88455 /* Products */,
@@ -335,25 +332,19 @@
 			path = Demo7;
 			sourceTree = "<group>";
 		};
-		C3FEAF471C86AD37008E1E97 /* Gif */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Gif;
-			sourceTree = "<group>";
-		};
 		FEE8F3031E9CA4CF00B39B88 /* WHC_AutoLayoutKit */ = {
 			isa = PBXGroup;
 			children = (
+				FEE8F3C41E9E0B1900B39B88 /* WHC_AutoLayoutUtilities.h */,
 				FEE8F3041E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.h */,
 				FEE8F3051E9CA4CF00B39B88 /* UITableViewCell+WHC_AutoHeightForCell.m */,
 				FEE8F3061E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.h */,
 				FEE8F3071E9CA4CF00B39B88 /* UIView+WHC_AutoLayout.m */,
 				FEE8F3081E9CA4CF00B39B88 /* UIView+WHC_Frame.h */,
 				FEE8F3091E9CA4CF00B39B88 /* UIView+WHC_Frame.m */,
-				FEE8F30A1E9CA4CF00B39B88 /* WHC_AutoLayout.h */,
 				FEE8F30B1E9CA4CF00B39B88 /* WHC_StackView.h */,
 				FEE8F30C1E9CA4CF00B39B88 /* WHC_StackView.m */,
+				FEE8F30A1E9CA4CF00B39B88 /* WHC_AutoLayout.h */,
 			);
 			path = WHC_AutoLayoutKit;
 			sourceTree = "<group>";
@@ -460,7 +451,6 @@
 				C3068BF71C841B5000F88455 /* DemoVC1.m in Sources */,
 				C3D97A561C9804F300ED74CD /* FooterView.m in Sources */,
 				C307EB901C914863008D974A /* FriendModel.m in Sources */,
-				C3068C101C84271300F88455 /* README.md in Sources */,
 				C3068C001C841D8E00F88455 /* DemoVC3.m in Sources */,
 				C3068C031C84203500F88455 /* DemoVC4.m in Sources */,
 				C3068BD11C8418F000F88455 /* AppDelegate.m in Sources */,
