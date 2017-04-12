@@ -6,7 +6,7 @@
 [![Pod Platform](http://img.shields.io/cocoapods/p/WHC_AutoLayoutKit.svg?style=flat)](http://cocoadocs.org/docsets/WHC_AutoLayoutKit/)
 [![Pod License](http://img.shields.io/cocoapods/l/WHC_AutoLayoutKit.svg?style=flat)](https://opensource.org/licenses/MIT)
 
--  IOS platforms currently in use the fastest the simplest development to build the UI layout automatically open source library, strong dynamic layout constraint handling capacity
+-  iOS and Mac OS X platforms currently in use the fastest the simplest development to build the UI layout automatically open source library, strong dynamic layout constraint handling capacity
 -  Service to update constraints, convenient and quick dynamic UI layout.
 
 
@@ -18,6 +18,7 @@ Introduce
 -  Automatic identification of the same type conflict and update the new constraints
 -  Support change constraints priority
 -  Support delete constraints
+-  Support iOS and Mac OS X
 -  Automatic covering and modify the conflict with type constraints
 
 Require
@@ -60,7 +61,7 @@ view.whc_LeftSpace(20);
 view.whc_LeftSpaceToView(20,otherView);
 ```
 
-## Can be directly modified Xib, constraints on the Storyboard
+## Can be directly modified constraints on the Xib and Storyboard
 If the view of xib leading now amended as left constraints
 ```objective-c
 /// First remove the xib view of leading and then add new constraints
