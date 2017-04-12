@@ -15,14 +15,14 @@
 import UIKit
 
 @objc protocol WHC_GestureImageViewDelegate {
-    optional func WHCGestureImageViewExit();
+    @objc optional func WHCGestureImageViewExit();
 }
 
 class WHC_GestureImageView: UIImageView {
     /// 退出手势
-    private var exitTapGesture: UITapGestureRecognizer!;
+    fileprivate var exitTapGesture: UITapGestureRecognizer!;
     /// 双击手势
-    private var tapGesture: UITapGestureRecognizer!;
+    fileprivate var tapGesture: UITapGestureRecognizer!;
     /// 是否已经放大
     var isZoomBig = false;
     /// 协议
@@ -36,23 +36,23 @@ class WHC_GestureImageView: UIImageView {
         super.init(coder: aDecoder);
     }
     
-    private func layoutUI() {
-        self.userInteractionEnabled = true;
+    fileprivate func layoutUI() {
+        self.isUserInteractionEnabled = true;
         self.exitTapGesture = UITapGestureRecognizer(target: self, action: #selector(WHC_GestureImageView.handleExitGesture(_:)));
         self.addGestureRecognizer(exitTapGesture);
         self.tapGesture = UITapGestureRecognizer(target: self, action: #selector(WHC_GestureImageView.handleTapGesture(_:)));
         self.tapGesture.numberOfTapsRequired = 2;
         self.addGestureRecognizer(tapGesture);
-        self.exitTapGesture.requireGestureRecognizerToFail(tapGesture);
+        self.exitTapGesture.require(toFail: tapGesture);
     }
     
-    func handleExitGesture(sender: UITapGestureRecognizer) {
+    func handleExitGesture(_ sender: UITapGestureRecognizer) {
         let scrollView = self.superview as! UIScrollView;
         scrollView.setZoomScale(1, animated: false);
         self.delegate?.WHCGestureImageViewExit?();
     }
 
-    func handleTapGesture(sender: UITapGestureRecognizer) {
+    func handleTapGesture(_ sender: UITapGestureRecognizer) {
         let scrollView = self.superview as! UIScrollView;
         if self.isZoomBig {
             scrollView.setZoomScale(1, animated: true);
@@ -65,26 +65,26 @@ class WHC_GestureImageView: UIImageView {
 
 class WHC_ImageDisplayView: UIView , UIScrollViewDelegate , WHC_GestureImageViewDelegate{
 
-    private var images: [AnyObject]!;
-    private var scrollView: UIScrollView!;
-    private var index = 0;
-    private var kZoomAniamtionTime = 0.3;
-    private var currentIndex = 0;
-    private var column = 0;
-    private var currentImageView: WHC_GestureImageView!;
-    private let kImageViewTag = 10;
-    private var backView: UIView!;
-    private var rect: CGRect!;
-    private var kShowLabelHeight:CGFloat = 20;
-    private var showLabel: UILabel!;
-    class func show(images: [AnyObject] ,
+    fileprivate var images: [AnyObject]!;
+    fileprivate var scrollView: UIScrollView!;
+    fileprivate var index = 0;
+    fileprivate var kZoomAniamtionTime = 0.3;
+    fileprivate var currentIndex = 0;
+    fileprivate var column = 0;
+    fileprivate var currentImageView: WHC_GestureImageView!;
+    fileprivate let kImageViewTag = 10;
+    fileprivate var backView: UIView!;
+    fileprivate var rect: CGRect!;
+    fileprivate var kShowLabelHeight:CGFloat = 20;
+    fileprivate var showLabel: UILabel!;
+    class func show(_ images: [AnyObject] ,
                     index: Int ,
                     item: UIView ,
                     column: Int) -> WHC_ImageDisplayView {
-        return WHC_ImageDisplayView(frame: UIScreen.mainScreen().bounds,
+        return WHC_ImageDisplayView(frame: UIScreen.main.bounds,
             images: images ,
             index: index,
-            rect: item.convertRect(item.bounds, toView: (UIApplication.sharedApplication().delegate?.window)!),
+            rect: item.convert(item.bounds, to: (UIApplication.shared.delegate?.window)!),
             column: column);
     }
     
@@ -107,21 +107,21 @@ class WHC_ImageDisplayView: UIView , UIScrollViewDelegate , WHC_GestureImageView
     }
     
     
-    private func layoutUI() {
-        self.backView = UIView(frame: UIScreen.mainScreen().bounds);
-        self.backView.backgroundColor = UIColor.blackColor();
+    fileprivate func layoutUI() {
+        self.backView = UIView(frame: UIScreen.main.bounds);
+        self.backView.backgroundColor = UIColor.black;
         self.backView.alpha = 0;
-        UIApplication.sharedApplication().delegate?.window??.addSubview(self.backView);
+        UIApplication.shared.delegate?.window??.addSubview(self.backView);
         
-        self.backgroundColor = UIColor.clearColor();
+        self.backgroundColor = UIColor.clear;
         self.scrollView = UIScrollView(frame: self.bounds);
         self.scrollView.delegate = self;
         self.scrollView.showsHorizontalScrollIndicator = false;
         self.scrollView.showsVerticalScrollIndicator = false;
         self.addSubview(self.scrollView);
         if self.images.count > 0 {
-            for (i , image) in self.images.enumerate() {
-                let imageScrollView = UIScrollView(frame: CGRectMake(CGFloat(i) * self.width(), 0, self.width(), self.height()));
+            for (i , image) in self.images.enumerated() {
+                let imageScrollView = UIScrollView(frame: CGRect(x: CGFloat(i) * self.width(), y: 0, width: self.width(), height: self.height()));
                 let imageView = WHC_GestureImageView(frame: imageScrollView.bounds);
                 imageView.delegate = self;
                 if self.currentIndex == i {
@@ -130,10 +130,10 @@ class WHC_ImageDisplayView: UIView , UIScrollViewDelegate , WHC_GestureImageView
                 imageView.tag = kImageViewTag;
                 imageScrollView.addSubview(imageView);
                 imageScrollView.delegate = self;
-                imageScrollView.multipleTouchEnabled = true;
+                imageScrollView.isMultipleTouchEnabled = true;
                 imageScrollView.minimumZoomScale = 1.0;
                 imageScrollView.maximumZoomScale = 2.5;
-                imageScrollView.backgroundColor = UIColor.clearColor();
+                imageScrollView.backgroundColor = UIColor.clear;
                 imageScrollView.tag = i;
                 self.scrollView.addSubview(imageScrollView);
                 var imageObject: UIImage!;
@@ -149,50 +149,50 @@ class WHC_ImageDisplayView: UIView , UIScrollViewDelegate , WHC_GestureImageView
                 if imageObject.size.height < imageScrollView.height() {
                     imageView.setHeight(imageObject.size.height);
                 }
-                imageView.setXy(CGPointMake((imageScrollView.width() - imageView.width()) / 2.0, (imageScrollView.height() - imageView.height()) / 2.0));
+                imageView.setXy(CGPoint(x: (imageScrollView.width() - imageView.width()) / 2.0, y: (imageScrollView.height() - imageView.height()) / 2.0));
                 imageView.image = imageObject;
             }
-            self.scrollView.pagingEnabled = true;
-            self.scrollView.contentSize = CGSizeMake(CGFloat(self.images.count) * self.scrollView.width(), self.scrollView.height());
-            self.scrollView.setContentOffset(CGPointMake(CGFloat(self.index) * self.width(), 0), animated: false);
+            self.scrollView.isPagingEnabled = true;
+            self.scrollView.contentSize = CGSize(width: CGFloat(self.images.count) * self.scrollView.width(), height: self.scrollView.height());
+            self.scrollView.setContentOffset(CGPoint(x: CGFloat(self.index) * self.width(), y: 0), animated: false);
             
-            self.showLabel = UILabel(frame: CGRectMake(0, self.height() - kShowLabelHeight, self.width(), kShowLabelHeight));
+            self.showLabel = UILabel(frame: CGRect(x: 0, y: self.height() - kShowLabelHeight, width: self.width(), height: kShowLabelHeight));
             self.showLabel.text = "\(self.images.count) / \(self.index + 1)";
-            self.showLabel.textColor = UIColor.whiteColor();
-            self.showLabel.textAlignment = .Center;
+            self.showLabel.textColor = UIColor.white;
+            self.showLabel.textAlignment = .center;
             self.addSubview(self.showLabel);
-            UIApplication.sharedApplication().delegate?.window??.addSubview(self);
+            UIApplication.shared.delegate?.window??.addSubview(self);
             
-            var rc = CGRectMake(0, 0, self.currentImageView.width(), self.currentImageView.height());
-            rc.origin = CGPointMake((self.width() - currentImageView.width()) / 2.0, (self.height() - currentImageView.height()) / 2.0);
+            var rc = CGRect(x: 0, y: 0, width: self.currentImageView.width(), height: self.currentImageView.height());
+            rc.origin = CGPoint(x: (self.width() - currentImageView.width()) / 2.0, y: (self.height() - currentImageView.height()) / 2.0);
             self.currentImageView.frame = self.rect;
-            UIView.animateWithDuration(kZoomAniamtionTime, delay: 0, options: .CurveEaseIn, animations: { () -> Void in
+            UIView.animate(withDuration: kZoomAniamtionTime, delay: 0, options: .curveEaseIn, animations: { () -> Void in
                 self.currentImageView.frame = rc;
                 self.backView.alpha = 1.0;
                 }, completion: nil);
         }
     }
     
-    private func getExitRect() -> CGRect {
-        var rc = CGRectMake(0, 0, CGRectGetWidth(self.rect), CGRectGetHeight(self.rect));
-        var startRect = CGRectMake(0, 0, CGRectGetWidth(self.rect), CGRectGetHeight(self.rect));
+    fileprivate func getExitRect() -> CGRect {
+        var rc = CGRect(x: 0, y: 0, width: self.rect.width, height: self.rect.height);
+        var startRect = CGRect(x: 0, y: 0, width: self.rect.width, height: self.rect.height);
         if self.index < self.column {
-            startRect.origin.x = CGRectGetMinX(self.rect) - CGFloat(self.index) * CGRectGetWidth(self.rect);
-            startRect.origin.y = CGRectGetMinY(self.rect);
+            startRect.origin.x = self.rect.minX - CGFloat(self.index) * self.rect.width;
+            startRect.origin.y = self.rect.minY;
         }else {
             let row = ((self.index + 1) / self.column + ((self.index + 1) % self.column != 0 ? 1 : 0) - 1);
             let col = ((self.index + 1) % self.column == 0 ? self.column : (self.index + 1) % self.column) - 1;
-            startRect.origin.x = CGRectGetMinX(self.rect) - CGFloat(col) * CGRectGetWidth(self.rect);
-            startRect.origin.y = CGRectGetMinY(self.rect) - CGFloat(row) * CGRectGetHeight(self.rect);
+            startRect.origin.x = self.rect.minX - CGFloat(col) * self.rect.width;
+            startRect.origin.y = self.rect.minY - CGFloat(row) * self.rect.height;
         }
         if self.currentIndex < self.column {
-            rc.origin.x = CGRectGetMinX(startRect) + CGFloat(self.currentIndex) * CGRectGetWidth(self.rect);
-            rc.origin.y = CGRectGetMinY(startRect);
+            rc.origin.x = startRect.minX + CGFloat(self.currentIndex) * self.rect.width;
+            rc.origin.y = startRect.minY;
         }else {
             let row = ((self.currentIndex + 1) / self.column + ((self.currentIndex + 1) % self.column != 0 ? 1 : 0) - 1);
             let col = ((self.currentIndex + 1) % self.column == 0 ? self.column : (self.currentIndex + 1) % self.column) - 1;
-            rc.origin.x = CGRectGetMinX(startRect) + CGFloat(col) * CGRectGetWidth(self.rect);
-            rc.origin.y = CGRectGetMinY(startRect) + CGFloat(row) * CGRectGetHeight(self.rect);
+            rc.origin.x = startRect.minX + CGFloat(col) * self.rect.width;
+            rc.origin.y = startRect.minY + CGFloat(row) * self.rect.height;
         }
         return rc;
     }
@@ -202,7 +202,7 @@ class WHC_ImageDisplayView: UIView , UIScrollViewDelegate , WHC_GestureImageView
         let subView = self.scrollView.viewWithTag(self.currentIndex)!;
         self.currentImageView = subView.viewWithTag(kImageViewTag) as! WHC_GestureImageView;
         let rc = self.getExitRect();
-        UIView.animateWithDuration(kZoomAniamtionTime, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: kZoomAniamtionTime, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
             self.backView.alpha = 0;
             self.currentImageView.frame = rc;
             }) { (finish) -> Void in
@@ -213,7 +213,7 @@ class WHC_ImageDisplayView: UIView , UIScrollViewDelegate , WHC_GestureImageView
     
     //MARK: - UIScrollViewDelegate
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if self.scrollView === scrollView {
             self.currentIndex = Int(floor((scrollView.contentOffset.x - scrollView.width() / 2.0) / scrollView.width())) + 1;
             if self.currentIndex < 0 {
@@ -225,18 +225,18 @@ class WHC_ImageDisplayView: UIView , UIScrollViewDelegate , WHC_GestureImageView
         }
     }
     
-    func scrollViewDidZoom(scrollView: UIScrollView) {
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
         if scrollView !== self.scrollView {
             let offsetX = (scrollView.width() > scrollView.contentSize.width) ?
             (scrollView.width() - scrollView.contentSize.width) / 2.0 : 0.0;
             let offsetY = (scrollView.height() > scrollView.contentSize.height) ?
             (scrollView.height() - scrollView.contentSize.height) / 2.0 : 0.0;
-            self.currentImageView.center = CGPointMake(scrollView.contentSize.width / 2.0 + offsetX,
-            scrollView.contentSize.height / 2.0 + offsetY);
+            self.currentImageView.center = CGPoint(x: scrollView.contentSize.width / 2.0 + offsetX,
+            y: scrollView.contentSize.height / 2.0 + offsetY);
         }
     }
     
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         if scale <= 1 {
             self.currentImageView.isZoomBig = false;
         }else {
@@ -244,7 +244,7 @@ class WHC_ImageDisplayView: UIView , UIScrollViewDelegate , WHC_GestureImageView
         }
     }
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         if scrollView !== self.scrollView {
             let subView = self.scrollView.viewWithTag(self.currentIndex)!;
             self.currentImageView = subView.viewWithTag(kImageViewTag) as! WHC_GestureImageView;
