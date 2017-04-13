@@ -8,6 +8,7 @@
 -  iOS and Mac OS X platforms currently in use the fastest the simplest development to build the UI layout automatically open source library, strong dynamic layout constraint handling capacity
 -  Service to update constraints, convenient and quick dynamic UI layout.
 
+**Swift3.0+ version** 👉 [WHC_Layout](https://github.com/netyouli/WHC_Layout)
 
 Introduce
 ==============
@@ -64,8 +65,8 @@ view.whc_LeftSpaceToView(20,otherView);
 If the view of xib leading now amended as left constraints
 ```objective-c
 /// First remove the xib view of leading and then add new constraints
-view.whc_RemoveLayoutAttrs(NSLayoutAttributeLeading);
-view.whc_LeftSpace(10)
+view.whc_RemoveLayoutAttrs(NSLayoutAttributeLeading)
+    .whc_LeftSpace(10);
 ```
 
 ## Remove the constraint
@@ -152,14 +153,14 @@ for (int i = 0; i < 4; i++) {
 Prompt
 ==============
 
-- For more UI layout automatically, WHC_StackView components, one line of code to calculate the cell height module, please download this demo to check the specific usage
+For more UI layout automatically, WHC_StackView components, one line of code to calculate the cell height module, please download this demo to check the specific usage
 
 Part of the WHC_AutoLayoutKit demo show
 ==============
-
 <img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/c.png" width = "375"><img src = "https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/g.png" width = "375">
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/f.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/a.gif)![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/swiftb.gif)![image](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/d.png)
 
-## Licenses
+Licenses
+==============
 All source code is licensed under the MIT License.
 

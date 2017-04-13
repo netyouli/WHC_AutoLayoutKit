@@ -709,7 +709,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self firstBaselineConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setFirstBaselineConstraint:nil];
             }
             break;
@@ -718,7 +718,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self lastBaselineConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setLastBaselineConstraint:nil];
             }
             break;
@@ -726,7 +726,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self centerYConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setCenterYConstraint:nil];
             }
             break;
@@ -734,7 +734,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self centerXConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setCenterXConstraint:nil];
             }
             break;
@@ -742,7 +742,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self trailingConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setTrailingConstraint:nil];
             }
             break;
@@ -750,7 +750,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self leadingConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setLeadingConstraint:nil];
             }
             break;
@@ -758,7 +758,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self bottomConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setBottomConstraint:nil];
             }
             break;
@@ -766,7 +766,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self topConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setTopConstraint:nil];
             }
             break;
@@ -774,7 +774,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self rightConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setRightConstraint:nil];
             }
             break;
@@ -782,7 +782,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self leftConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setLeftConstraint:nil];
             }
             break;
@@ -790,7 +790,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self widthConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setWidthConstraint:nil];
             }
             break;
@@ -798,20 +798,22 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraint = [self heightConstraint];
             if (constraint) {
                 view = [self whc_MainViewConstraint:constraint];
-                [view removeConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
                 [self setHeightConstraint:nil];
             }
             break;
         default:
             break;
     }
-    NSArray<NSLayoutConstraint *> * constraints = mainView.constraints;
-    [constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.firstItem == self &&
-            obj.firstAttribute == attribute) {
-            [mainView removeConstraint:obj];
-        }
-    }];
+    if (mainView) {
+        NSArray<NSLayoutConstraint *> * constraints = mainView.constraints;
+        [constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.firstItem == self &&
+                obj.firstAttribute == attribute) {
+                [mainView removeConstraint:obj];
+            }
+        }];
+    }
 }
 
 - (void)whc_SwitchRemoveAttr:(NSLayoutAttribute)attr view:(WHC_VIEW *)view removeSelf:(BOOL)removeSelf {
