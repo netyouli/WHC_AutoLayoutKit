@@ -126,23 +126,23 @@ stackView.whc_LeftSpace(10)
 ```
 
 Configuration stackView
-#### 1. Set the padding
+**1.** Set the padding
 ```objective-c
 stackView.whc_Edge = UIEdgeInsetsMake(10, 10, 10, 10); // 内边距
 ```
-#### 2. Set the layout direction
+**2.** Set the layout direction
 ```objective-c
 stackView.whc_Orientation = Vertical;                  // 自动垂直布局
 ```
-#### 3. Set the child views lateral clearance
+**3.** Set the child views lateral clearance
 ```objective-c
 stackView.whc_HSpace = 10;                             // 子视图横向间隙
 ```
-#### 4. Set the child views vertical clearance
+**4.** Set the child views vertical clearance
 ```objective-c
 stackView.whc_VSpace = 10;                             // 子视图垂直间隙
 ```
-#### 5. Add subview and start the layout 
+**5.** Add subview and start the layout 
 ```objective-c
 for (int i = 0; i < 4; i++) {
     UIView * view = [UIView new];
