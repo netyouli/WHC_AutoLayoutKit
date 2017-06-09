@@ -36,6 +36,14 @@ typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
 
 @interface UIButton (WHC_StackView)
 
+
+/**
+ 获取按钮文字size
+
+ @return size
+ */
+- (CGSize)whc_TextSize;
+
 @end
 
 @interface UILabel (WHC_StackView)

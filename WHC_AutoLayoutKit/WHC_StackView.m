@@ -34,27 +34,11 @@
 
 @implementation UIButton (WHC_StackView)
 
-- (CGSize)calcTextSize {
+- (CGSize)whc_TextSize {
     if (self.titleLabel.text != nil) {
         return [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: self.titleLabel.font}];
     }
     return CGSizeZero;
-}
-
-- (void)whc_WidthAuto {
-    if (self.titleEdgeInsets.left + self.titleEdgeInsets.right != 0) {
-        [self whc_Width:[self calcTextSize].width + self.titleEdgeInsets.left + self.titleEdgeInsets.right];
-    }else {
-        [super whc_AutoWidth];
-    }
-}
-
-- (void)whc_HeightAuto {
-    if (self.titleEdgeInsets.top + self.titleEdgeInsets.bottom != 0) {
-        [self whc_Height:[self calcTextSize].height + self.titleEdgeInsets.top + self.titleEdgeInsets.bottom];
-    }else {
-        [super whc_AutoHeight];
-    }
 }
 
 @end
@@ -424,7 +408,7 @@ WHC_GOTO:
                             [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
                         }else {
                             if (_autoWidth) {
-                                [view whc_WidthAuto];
+                                [view whc_AutoWidth];
                             }else {
                                 [view whc_WidthEqualView:nextView
                                                    ratio:view.whc_WidthWeight / nextView.whc_WidthWeight];
@@ -438,7 +422,7 @@ WHC_GOTO:
                             [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
                         }else {
                             if (_autoHeight) {
-                                [view whc_HeightAuto];
+                                [view whc_AutoHeight];
                             }else {
                                 [view whc_BottomSpace:self.whc_Edge.bottom];
                             }
@@ -458,7 +442,7 @@ WHC_GOTO:
                             }
                         }else {
                             if (_autoWidth) {
-                                [view whc_WidthAuto];
+                                [view whc_AutoWidth];
                             }
                             [view whc_RightSpace:self.whc_Edge.right];
                         }
@@ -476,7 +460,7 @@ WHC_GOTO:
                             }
                         }else {
                             if (_autoHeight) {
-                                [view whc_HeightAuto];
+                                [view whc_AutoHeight];
                             }
                             [view whc_BottomSpace:self.whc_Edge.bottom];
                         }
@@ -517,7 +501,7 @@ WHC_GOTO:
                             [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
                         }else {
                             if (_autoWidth) {
-                                [view whc_WidthAuto];
+                                [view whc_AutoWidth];
                             }else {
                                 [view whc_RightSpace:self.whc_Edge.right];
                             }
@@ -530,7 +514,7 @@ WHC_GOTO:
                             [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
                         }else {
                             if (_autoHeight) {
-                                [view whc_HeightAuto];
+                                [view whc_AutoHeight];
                             }else {
                                 [view whc_HeightEqualView:nextView
                                                     ratio:view.whc_HeightWeight / nextView.whc_HeightWeight];
@@ -551,7 +535,7 @@ WHC_GOTO:
                             }
                         }else {
                             if (_autoWidth) {
-                                [view whc_WidthAuto];
+                                [view whc_AutoWidth];
                             }
                             [view whc_RightSpace:self.whc_Edge.right];
                         }
@@ -569,7 +553,7 @@ WHC_GOTO:
                             }
                         }else {
                             if (_autoHeight) {
-                                [view whc_HeightAuto];
+                                [view whc_AutoHeight];
                             }
                             [view whc_BottomSpace:self.whc_Edge.bottom];
                         }
@@ -673,7 +657,7 @@ WHC_GOTO:
                                     [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
                                 }else {
                                     if (_autoHeight) {
-                                        [view whc_HeightAuto];
+                                        [view whc_AutoHeight];
                                     }else {
                                         [view whc_HeightEqualView:nextRowView
                                                             ratio:view.whc_HeightWeight / nextRowView.whc_HeightWeight];
@@ -688,7 +672,7 @@ WHC_GOTO:
                                     [view whc_HeightWidthRatio:_whc_ElementHeightWidthRatio];
                                 }else {
                                     if (_autoHeight) {
-                                        [view whc_HeightAuto];
+                                        [view whc_AutoHeight];
                                     }else {
                                         [view whc_BottomSpace:self.whc_Edge.bottom];
                                     }
@@ -703,7 +687,7 @@ WHC_GOTO:
                                     [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
                                 }else {
                                     if (_autoWidth) {
-                                        [view whc_WidthAuto];
+                                        [view whc_AutoWidth];
                                     }else {
                                         [view whc_WidthEqualView:nextColumnView
                                                        ratio:view.whc_WidthWeight / nextColumnView.whc_WidthWeight];
@@ -718,7 +702,7 @@ WHC_GOTO:
                                     [view whc_WidthHeightRatio:_whc_ElementWidthHeightRatio];
                                 }else {
                                     if (_autoWidth) {
-                                        [view whc_WidthAuto];
+                                        [view whc_AutoWidth];
                                     }else {
                                         [view whc_RightSpace:self.whc_Edge.right];
                                     }

@@ -288,6 +288,14 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
 
 
 /**
+ 移除一个单个属性
+
+ @param attribute 约束类型
+ @return 返回当前视图
+ */
+- (WHC_VIEW *)whc_RemoveLayoutOneAttr:(NSLayoutAttribute)attribute;
+
+/**
  移除一个或者一组约束从指定的视图上
 
  @param view 指定视图
@@ -295,6 +303,16 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 - (WHC_VIEW *)whc_RemoveFrom:(WHC_VIEW *)view layoutAttrs:(NSLayoutAttribute)attributes, ...;
+
+
+/**
+ 移除一个约束从指定的视图上
+
+ @param view 指定视图
+ @param attribute 约束类型
+ @return 返回当前视图
+ */
+- (WHC_VIEW *)whc_RemoveFrom:(WHC_VIEW *)view layoutAttr:(NSLayoutAttribute)attribute;
 
 /**
  设置当前约束的低优先级

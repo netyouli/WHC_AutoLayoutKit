@@ -995,6 +995,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return self;
 }
 
+- (WHC_VIEW *)whc_RemoveFrom:(WHC_VIEW *)view layoutAttr:(NSLayoutAttribute)attribute {
+    NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
+    if (attribute > NSLayoutAttributeNotAnAttribute && attribute <= maxAttr) {
+        [self whc_SwitchRemoveAttr:attribute view:view removeSelf:NO];
+    }
+    return self;
+}
+
 - (WHC_VIEW *)whc_RemoveLayoutAttr:(NSLayoutAttribute)attributes, ... {
     va_list attrs;
     va_start(attrs, attributes);
@@ -1006,6 +1014,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         attributes = va_arg(attrs, NSLayoutAttribute);
     }
     va_end(attrs);
+    return self;
+}
+
+- (WHC_VIEW *)whc_RemoveLayoutOneAttr:(NSLayoutAttribute)attribute {
+    NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
+    if (attribute > NSLayoutAttributeNotAnAttribute && attribute <= maxAttr) {
+        [self whc_SwitchRemoveAttr:attribute view:self.superview removeSelf:YES];
+    }
     return self;
 }
 
