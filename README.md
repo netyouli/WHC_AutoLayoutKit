@@ -43,6 +43,12 @@ view.whc_LeftSpace(10)
     .whc_HeightAuto();
 ```
 
+## Use lessEqual or greaterEqual (width <= 100 && width >= 20)
+```objective-c
+view.whc_Width(100).whc_LessOrEqual()
+    .whc_Width(20).whc_GreaterOrEqual()
+```
+
 ## Masonry/SnapKit update the constraint way unfriendly
 ```objective-c
 [view mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -78,6 +84,8 @@ view.whc_RemoveLayoutAttrs(NSLayoutAttributeLeft);
 To remove multiple constraints associated with view
 ```objective-c
 view.whc_RemoveLayoutAttrs(NSLayoutAttributeLeft,NSLayoutAttributeLeading,NSLayoutAttributeTop);
+// or 
+view.whc_RemoveTo(linkView, attrs: NSLayoutAttributeLeft ...);
 ```
 
 ## Modify the view constraint priority
