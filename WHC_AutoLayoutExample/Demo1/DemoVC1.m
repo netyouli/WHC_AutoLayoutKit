@@ -19,7 +19,13 @@
     UILabel * lable;
     UILabel * lable1,*lable2,*lable3;
     CGFloat width , height;
+    
+    UILabel * txt;
 }
+
+@property (weak, nonatomic) IBOutlet UILabel *l1;
+@property (weak, nonatomic) IBOutlet UILabel *l2;
+
 @end
 
 @implementation DemoVC1
@@ -34,6 +40,10 @@
     view2 = [UIView new];
     view3 = [UIView new];
     lable = [UILabel new];
+    txt = [UILabel new];
+    
+    [self.view addSubview:txt];
+    txt.backgroundColor = [UIColor grayColor];
     
     view1.backgroundColor = [UIColor orangeColor];
     view2.backgroundColor = [UIColor grayColor];
@@ -68,6 +78,19 @@
          .whc_TopSpaceEqualView(view1)
          .whc_RightSpace(10)
          .whc_HeightAuto();
+    
+    
+    [_l2 whc_ClearLayoutAttrs];
+    
+    txt.whc_LeftSpace(0)
+    .whc_TopSpaceToView(10, btn)
+    .whc_Height(40)
+    .whc_Width(100)
+    .whc_LessOrEqual()
+    .whc_Width(10)
+    .whc_GreaterOrEqual();
+    
+    txt.text = @"gal";
  
 }
 

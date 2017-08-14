@@ -45,11 +45,13 @@ typedef NS_OPTIONS(NSUInteger, WHC_LayoutTypeOptions) {
     /// 左右类型
     LeftRightType = 1 << 1,
 };
-
+typedef WHC_VIEW * (^LessOrEqual)();
+typedef WHC_VIEW * (^GreaterOrEqual)();
 typedef WHC_VIEW * (^ResetConstraintAttribute)();
 typedef WHC_VIEW * (^ClearConstraintAttribute)();
 typedef WHC_VIEW * (^RemoveConstraintAttribute)(NSLayoutAttribute attributes, ...);
 typedef WHC_VIEW * (^RemoveConstraintFromViewAttribute)(WHC_VIEW * view, NSLayoutAttribute attributes, ...);
+typedef WHC_VIEW * (^RemoveConstraintToViewAttribute)(WHC_VIEW * toView, NSLayoutAttribute attributes, ...);
 
 typedef WHC_VIEW * (^PriorityLow)();
 typedef WHC_VIEW * (^PriorityHigh)();
@@ -124,6 +126,10 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
 
 #pragma mark - api version ~ 2.0 -
 
+/// 当前约束小于等于
+@property (nonatomic ,copy , readonly)LessOrEqual whc_LessOrEqual;
+/// 当前约束大于等于
+@property (nonatomic ,copy , readonly)GreaterOrEqual whc_GreaterOrEqual;
 /// 重置缓存约束
 @property (nonatomic ,copy , readonly)ResetConstraintAttribute whc_ResetConstraint;
 /// 清除所有约束
@@ -132,6 +138,8 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
 @property (nonatomic ,copy , readonly)RemoveConstraintAttribute whc_RemoveLayoutAttrs;
 /// 移除约束从指定视图上(WHC_VIEW * view, NSLayoutAttribute attributes, ...)
 @property (nonatomic ,copy , readonly)RemoveConstraintFromViewAttribute whc_RemoveFromLayoutAttrs;
+/// 移除约束从关联视图上(WHC_VIEW * toView, NSLayoutAttribute attributes, ...)
+@property (nonatomic ,copy , readonly)RemoveConstraintToViewAttribute whc_RemoveToLayoutAttrs;
 
 /// 设置当前约束的低优先级
 @property (nonatomic ,copy , readonly)PriorityLow whc_PriorityLow;
@@ -313,6 +321,26 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 - (WHC_VIEW *)whc_RemoveFrom:(WHC_VIEW *)view layoutAttr:(NSLayoutAttribute)attribute;
+
+
+/**
+ 移除一个约束从关联的视图
+
+ @param view 关联的视图
+ @param attribute 移除的约束
+ @return 当前视图
+ */
+- (WHC_VIEW *)whc_RemoveTo:(WHC_VIEW *)view attr:(NSLayoutAttribute)attribute;
+
+/**
+ 移除多个约束从关联的视图
+ 
+ @param view 关联的视图
+ @param attribute 移除的约束
+ @return 当前视图
+ */
+
+- (WHC_VIEW *)whc_RemoveTo:(WHC_VIEW *)view layoutAttrs:(NSLayoutAttribute)attributes, ... ;
 
 /**
  设置当前约束的低优先级

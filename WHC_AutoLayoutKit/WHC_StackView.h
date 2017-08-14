@@ -26,44 +26,6 @@
 // THE SOFTWARE.
 #import "UIView+WHC_AutoLayout.h"
 
-#if TARGET_OS_IPHONE || TARGET_OS_TV
-
-typedef NS_OPTIONS(NSUInteger, WHC_UILabelVerticalAlignment) {
-    Top = 1 << 0, /// 顶部对齐
-    Middle = 1 << 1, /// 居中对齐
-    Bottom = 1 << 2, /// 底部对齐
-};
-
-@interface UIButton (WHC_StackView)
-
-
-/**
- 获取按钮文字size
-
- @return size
- */
-- (CGSize)whc_TextSize;
-
-@end
-
-@interface UILabel (WHC_StackView)
-/************重载父类属性**************/
-/// 自动高度
-@property (nonatomic ,copy , readonly)HeightAuto whc_HeightAuto;
-
-/// 自动宽度
-@property (nonatomic ,copy , readonly)WidthAuto whc_WidthAuto;
-@property (nonatomic, assign)CGFloat whc_LeftPadding;
-@property (nonatomic, assign)CGFloat whc_TopPadding;
-@property (nonatomic, assign)CGFloat whc_RightPadding;
-@property (nonatomic, assign)CGFloat whc_BottomPadding;
-
-/// 设置标签垂直方向对齐方式
-@property (nonatomic, assign)WHC_UILabelVerticalAlignment whc_VerticalAlignment;
-@end
-
-#endif
-
 #pragma mark - UI自动布局StackView容器 -
 
 @interface WHC_VIEW (WHC_StackViewCategory)

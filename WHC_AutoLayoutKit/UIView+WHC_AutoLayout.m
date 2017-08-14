@@ -57,12 +57,77 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+
+- (void)setLeftConstraint:(NSLayoutConstraint *)leftConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setLeftLessConstraint:leftConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setLeftGreaterConstraint:leftConstraint];
+        default:
+            [self setLeftConstraint:leftConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)leftConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self leftGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self leftLessConstraint];
+        default:
+            return [self leftConstraint];
+    }
+}
+
 - (void)setLeftConstraint:(NSLayoutConstraint *)leftConstraint {
     objc_setAssociatedObject(self, @selector(leftConstraint), leftConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)leftConstraint {
     return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setLeftLessConstraint:(NSLayoutConstraint *)leftConstraint {
+    objc_setAssociatedObject(self, @selector(leftLessConstraint), leftConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)leftLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setLeftGreaterConstraint:(NSLayoutConstraint *)leftConstraint {
+    objc_setAssociatedObject(self, @selector(leftGreaterConstraint), leftConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)leftGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setRightConstraint:(NSLayoutConstraint *)rightConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setRightLessConstraint:rightConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setRightGreaterConstraint:rightConstraint];
+        default:
+            [self setRightConstraint:rightConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)rightConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self rightGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self rightLessConstraint];
+        default:
+            return [self rightConstraint];
+    }
 }
 
 - (void)setRightConstraint:(NSLayoutConstraint *)rightConstraint {
@@ -73,6 +138,46 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)setRightLessConstraint:(NSLayoutConstraint *)rightConstraint {
+    objc_setAssociatedObject(self, @selector(rightLessConstraint), rightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)rightLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setRightGreaterConstraint:(NSLayoutConstraint *)rightConstraint {
+    objc_setAssociatedObject(self, @selector(rightGreaterConstraint), rightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)rightGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setTopConstraint:(NSLayoutConstraint *)topConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setTopLessConstraint:topConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setTopGreaterConstraint:topConstraint];
+        default:
+            [self setTopConstraint:topConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)topConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self topGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self topLessConstraint];
+        default:
+            return [self topConstraint];
+    }
+}
+
 - (void)setTopConstraint:(NSLayoutConstraint *)topConstraint {
     objc_setAssociatedObject(self, @selector(topConstraint), topConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -81,12 +186,94 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)setTopLessConstraint:(NSLayoutConstraint *)topConstraint {
+    objc_setAssociatedObject(self, @selector(topLessConstraint), topConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)topLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setTopGreaterConstraint:(NSLayoutConstraint *)topConstraint {
+    objc_setAssociatedObject(self, @selector(topGreaterConstraint), topConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)topGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+
+- (void)setBottomConstraint:(NSLayoutConstraint *)bottomConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setBottomLessConstraint:bottomConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setBottomGreaterConstraint:bottomConstraint];
+        default:
+            [self setBottomConstraint:bottomConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)bottomConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self bottomGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self bottomLessConstraint];
+        default:
+            return [self bottomConstraint];
+    }
+}
+
+
 - (void)setBottomConstraint:(NSLayoutConstraint *)bottomConstraint {
     objc_setAssociatedObject(self, @selector(bottomConstraint), bottomConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)bottomConstraint {
     return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setBottomLessConstraint:(NSLayoutConstraint *)bottomConstraint {
+    objc_setAssociatedObject(self, @selector(bottomLessConstraint), bottomConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)bottomLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setBottomGreaterConstraint:(NSLayoutConstraint *)bottomConstraint {
+    objc_setAssociatedObject(self, @selector(bottomGreaterConstraint), bottomConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)bottomGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setLeadingConstraint:(NSLayoutConstraint *)leadingConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setLeadingLessConstraint:leadingConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setLeadingGreaterConstraint:leadingConstraint];
+        default:
+            [self setLeadingConstraint:leadingConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)leadingConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self leadingGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self leadingLessConstraint];
+        default:
+            return [self leadingConstraint];
+    }
 }
 
 - (void)setLeadingConstraint:(NSLayoutConstraint *)leadingConstraint {
@@ -97,6 +284,46 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)setLeadingLessConstraint:(NSLayoutConstraint *)leadingConstraint {
+    objc_setAssociatedObject(self, @selector(leadingLessConstraint), leadingConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)leadingLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setLeadingGreaterConstraint:(NSLayoutConstraint *)leadingConstraint {
+    objc_setAssociatedObject(self, @selector(leadingGreaterConstraint), leadingConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)leadingGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setTrailingConstraint:(NSLayoutConstraint *)trailingConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setTrailingLessConstraint:trailingConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setTrailingGreaterConstraint:trailingConstraint];
+        default:
+            [self setTrailingConstraint:trailingConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)trailingConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self trailingGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self trailingLessConstraint];
+        default:
+            return [self trailingConstraint];
+    }
+}
+
 - (void)setTrailingConstraint:(NSLayoutConstraint *)trailingConstraint {
     objc_setAssociatedObject(self, @selector(trailingConstraint), trailingConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -105,12 +332,93 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)setTrailingLessConstraint:(NSLayoutConstraint *)trailingConstraint {
+    objc_setAssociatedObject(self, @selector(trailingLessConstraint), trailingConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)trailingLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setTrailingGreaterConstraint:(NSLayoutConstraint *)trailingConstraint {
+    objc_setAssociatedObject(self, @selector(trailingGreaterConstraint), trailingConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)trailingGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setWidthConstraint:(NSLayoutConstraint *)widthConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setWidthLessConstraint:widthConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setWidthGreaterConstraint:widthConstraint];
+        default:
+            [self setWidthConstraint:widthConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)widthConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self widthGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self widthLessConstraint];
+        default:
+            return [self widthConstraint];
+    }
+}
+
+
 - (void)setWidthConstraint:(NSLayoutConstraint *)widthConstraint {
     objc_setAssociatedObject(self, @selector(widthConstraint), widthConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)widthConstraint {
     return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setWidthLessConstraint:(NSLayoutConstraint *)widthConstraint {
+    objc_setAssociatedObject(self, @selector(widthLessConstraint), widthConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)widthLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setWidthGreaterConstraint:(NSLayoutConstraint *)widthConstraint {
+    objc_setAssociatedObject(self, @selector(widthGreaterConstraint), widthConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)widthGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setHeightConstraint:(NSLayoutConstraint *)heightConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setHeightLessConstraint:heightConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setHeightGreaterConstraint:heightConstraint];
+        default:
+            [self setHeightConstraint:heightConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)heightConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self heightGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self heightLessConstraint];
+        default:
+            return [self heightConstraint];
+    }
 }
 
 - (void)setHeightConstraint:(NSLayoutConstraint *)heightConstraint {
@@ -121,12 +429,93 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)setHeightLessConstraint:(NSLayoutConstraint *)heightConstraint {
+    objc_setAssociatedObject(self, @selector(heightLessConstraint), heightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)heightLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setHeightGreaterConstraint:(NSLayoutConstraint *)heightConstraint {
+    objc_setAssociatedObject(self, @selector(heightGreaterConstraint), heightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)heightGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCenterXConstraint:(NSLayoutConstraint *)centerXConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setCenterXLessConstraint:centerXConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setCenterXGreaterConstraint:centerXConstraint];
+        default:
+            [self setCenterXConstraint:centerXConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)centerXConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self centerXGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self centerXLessConstraint];
+        default:
+            return [self centerXConstraint];
+    }
+}
+
+
 - (void)setCenterXConstraint:(NSLayoutConstraint *)centerXConstraint {
     objc_setAssociatedObject(self, @selector(centerXConstraint), centerXConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)centerXConstraint {
     return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCenterXLessConstraint:(NSLayoutConstraint *)centerXConstraint {
+    objc_setAssociatedObject(self, @selector(centerXLessConstraint), centerXConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)centerXLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCenterXGreaterConstraint:(NSLayoutConstraint *)centerXConstraint {
+    objc_setAssociatedObject(self, @selector(centerXGreaterConstraint), centerXConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)centerXGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCenterYConstraint:(NSLayoutConstraint *)centerYConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setCenterYLessConstraint:centerYConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setCenterYGreaterConstraint:centerYConstraint];
+        default:
+            [self setCenterYConstraint:centerYConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)centerYConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self centerYGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self centerYLessConstraint];
+        default:
+            return [self centerYConstraint];
+    }
 }
 
 - (void)setCenterYConstraint:(NSLayoutConstraint *)centerYConstraint {
@@ -137,12 +526,93 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)setCenterYLessConstraint:(NSLayoutConstraint *)centerYConstraint {
+    objc_setAssociatedObject(self, @selector(centerYLessConstraint), centerYConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)centerYLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCenterYGreaterConstraint:(NSLayoutConstraint *)centerYConstraint {
+    objc_setAssociatedObject(self, @selector(centerYGreaterConstraint), centerYConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)centerYGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setLastBaselineConstraint:(NSLayoutConstraint *)lastBaselineConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setLastBaselineLessConstraint:lastBaselineConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setLastBaselineGreaterConstraint:lastBaselineConstraint];
+        default:
+            [self setLastBaselineConstraint:lastBaselineConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)lastBaselineConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self lastBaselineGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self lastBaselineLessConstraint];
+        default:
+            return [self lastBaselineConstraint];
+    }
+}
+
+
 - (void)setLastBaselineConstraint:(NSLayoutConstraint *)lastBaselineConstraint {
     objc_setAssociatedObject(self, @selector(lastBaselineConstraint), lastBaselineConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSLayoutConstraint *)lastBaselineConstraint {
     return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setLastBaselineLessConstraint:(NSLayoutConstraint *)lastBaselineConstraint {
+    objc_setAssociatedObject(self, @selector(lastBaselineLessConstraint), lastBaselineConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)lastBaselineLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setLastBaselineGreaterConstraint:(NSLayoutConstraint *)lastBaselineConstraint {
+    objc_setAssociatedObject(self, @selector(lastBaselineGreaterConstraint), lastBaselineConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)lastBaselineGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setFirstBaselineConstraint:(NSLayoutConstraint *)firstBaselineConstraint relation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationLessThanOrEqual:
+            [self setFirstBaselineLessConstraint:firstBaselineConstraint];
+            break;
+        case NSLayoutRelationGreaterThanOrEqual:
+            [self setFirstBaselineGreaterConstraint:firstBaselineConstraint];
+        default:
+            [self setFirstBaselineConstraint:firstBaselineConstraint];
+            break;
+    }
+}
+
+- (NSLayoutConstraint *)firstBaselineConstraintRelation:(NSLayoutRelation)relation {
+    switch (relation) {
+        case NSLayoutRelationGreaterThanOrEqual:
+            return [self firstBaselineGreaterConstraint];
+        case NSLayoutRelationLessThanOrEqual:
+            return [self firstBaselineLessConstraint];
+        default:
+            return [self firstBaselineConstraint];
+    }
 }
 
 - (void)setFirstBaselineConstraint:(NSLayoutConstraint *)firstBaselineConstraint {
@@ -153,7 +623,39 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)setFirstBaselineLessConstraint:(NSLayoutConstraint *)firstBaselineConstraint {
+    objc_setAssociatedObject(self, @selector(firstBaselineLessConstraint), firstBaselineConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)firstBaselineLessConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setFirstBaselineGreaterConstraint:(NSLayoutConstraint *)firstBaselineConstraint {
+    objc_setAssociatedObject(self, @selector(firstBaselineGreaterConstraint), firstBaselineConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSLayoutConstraint *)firstBaselineGreaterConstraint {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
 #pragma mark - removeConstraint api v2.0 -
+
+- (LessOrEqual)whc_LessOrEqual {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [weakSelf whc_HandleConstraintsRelation:NSLayoutRelationLessThanOrEqual];
+        return weakSelf;
+    };
+}
+
+- (GreaterOrEqual)whc_GreaterOrEqual {
+    __weak typeof(self) weakSelf = self;
+    return ^() {
+        [weakSelf whc_HandleConstraintsRelation:NSLayoutRelationGreaterThanOrEqual];
+        return weakSelf;
+    };
+}
 
 - (ResetConstraintAttribute)whc_ResetConstraint {
     __weak typeof(self) weakSelf = self;
@@ -171,7 +673,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         NSLayoutAttribute maxAttr = [weakSelf whc_GetMaxLayoutAttribute];
         while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
             if (attributes > 0) {
-                [weakSelf whc_SwitchRemoveAttr:attributes view:weakSelf.superview removeSelf:YES];
+                [weakSelf whc_SwitchRemoveAttr:attributes view:weakSelf.superview to:nil removeSelf:YES];
             }
             attributes = va_arg(attrs, NSLayoutAttribute);
         }
@@ -188,7 +690,24 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         NSLayoutAttribute maxAttr = [weakSelf whc_GetMaxLayoutAttribute];
         while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
             if (attributes > 0) {
-                [weakSelf whc_SwitchRemoveAttr:attributes view:view removeSelf:NO];
+                [weakSelf whc_SwitchRemoveAttr:attributes view:view to:nil removeSelf:NO];
+            }
+            attributes = va_arg(attrs, NSLayoutAttribute);
+        }
+        va_end(attrs);
+        return weakSelf;
+    };
+}
+
+- (RemoveConstraintToViewAttribute)whc_RemoveToLayoutAttrs {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHC_VIEW * toView,NSLayoutAttribute attributes, ...) {
+        va_list attrs;
+        va_start(attrs, attributes);
+        NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
+        while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
+            if (attributes > 0) {
+                [self whc_SwitchRemoveAttr:attributes view:self.superview to:toView removeSelf:NO];
             }
             attributes = va_arg(attrs, NSLayoutAttribute);
         }
@@ -700,7 +1219,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return view;
 }
 
-- (void)whc_CommonRemoveConstraint:(NSLayoutAttribute)attribute view:(WHC_VIEW *)mainView {
+- (void)whc_CommonRemoveConstraint:(NSLayoutAttribute)attribute view:(WHC_VIEW *)mainView to:(WHC_VIEW *)toView {
     NSLayoutConstraint * constraint = nil;
     WHC_VIEW * view = nil;
     switch (attribute) {
@@ -712,6 +1231,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 if (view) [view removeConstraint:constraint];
                 [self setFirstBaselineConstraint:nil];
             }
+            constraint = [self firstBaselineLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setFirstBaselineLessConstraint:nil];
+            }
+            constraint = [self firstBaselineGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setFirstBaselineGreaterConstraint:nil];
+            }
             break;
 #endif
         case NSLayoutAttributeLastBaseline:
@@ -721,6 +1252,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 if (view) [view removeConstraint:constraint];
                 [self setLastBaselineConstraint:nil];
             }
+            constraint = [self lastBaselineLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setLastBaselineLessConstraint:nil];
+            }
+            constraint = [self lastBaselineGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setLastBaselineGreaterConstraint:nil];
+            }
             break;
         case NSLayoutAttributeCenterY:
             constraint = [self centerYConstraint];
@@ -728,6 +1271,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 view = [self whc_MainViewConstraint:constraint];
                 if (view) [view removeConstraint:constraint];
                 [self setCenterYConstraint:nil];
+            }
+            constraint = [self centerYLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setCenterYLessConstraint:nil];
+            }
+            constraint = [self centerYGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setCenterYGreaterConstraint:nil];
             }
             break;
         case NSLayoutAttributeCenterX:
@@ -737,6 +1292,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 if (view) [view removeConstraint:constraint];
                 [self setCenterXConstraint:nil];
             }
+            constraint = [self centerXLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setCenterXLessConstraint:nil];
+            }
+            constraint = [self centerXGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setCenterXGreaterConstraint:nil];
+            }
             break;
         case NSLayoutAttributeTrailing:
             constraint = [self trailingConstraint];
@@ -744,6 +1311,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 view = [self whc_MainViewConstraint:constraint];
                 if (view) [view removeConstraint:constraint];
                 [self setTrailingConstraint:nil];
+            }
+            constraint = [self trailingLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setTrailingLessConstraint:nil];
+            }
+            constraint = [self trailingGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setTrailingGreaterConstraint:nil];
             }
             break;
         case NSLayoutAttributeLeading:
@@ -753,6 +1332,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 if (view) [view removeConstraint:constraint];
                 [self setLeadingConstraint:nil];
             }
+            constraint = [self leadingLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setLeadingLessConstraint:nil];
+            }
+            constraint = [self leadingGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setLeadingGreaterConstraint:nil];
+            }
             break;
         case NSLayoutAttributeBottom:
             constraint = [self bottomConstraint];
@@ -760,6 +1351,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 view = [self whc_MainViewConstraint:constraint];
                 if (view) [view removeConstraint:constraint];
                 [self setBottomConstraint:nil];
+            }
+            constraint = [self bottomLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setBottomLessConstraint:nil];
+            }
+            constraint = [self bottomGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setBottomGreaterConstraint:nil];
             }
             break;
         case NSLayoutAttributeTop:
@@ -769,6 +1372,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 if (view) [view removeConstraint:constraint];
                 [self setTopConstraint:nil];
             }
+            constraint = [self topLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setTopLessConstraint:nil];
+            }
+            constraint = [self topGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setTopGreaterConstraint:nil];
+            }
             break;
         case NSLayoutAttributeRight:
             constraint = [self rightConstraint];
@@ -776,6 +1391,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 view = [self whc_MainViewConstraint:constraint];
                 if (view) [view removeConstraint:constraint];
                 [self setRightConstraint:nil];
+            }
+            constraint = [self rightLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setRightLessConstraint:nil];
+            }
+            constraint = [self rightGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setRightGreaterConstraint:nil];
             }
             break;
         case NSLayoutAttributeLeft:
@@ -785,6 +1412,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 if (view) [view removeConstraint:constraint];
                 [self setLeftConstraint:nil];
             }
+            constraint = [self leftLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setLeftLessConstraint:nil];
+            }
+            constraint = [self leftGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setLeftGreaterConstraint:nil];
+            }
             break;
         case NSLayoutAttributeWidth:
             constraint = [self widthConstraint];
@@ -792,6 +1431,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 view = [self whc_MainViewConstraint:constraint];
                 if (view) [view removeConstraint:constraint];
                 [self setWidthConstraint:nil];
+            }
+            constraint = [self widthLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setWidthLessConstraint:nil];
+            }
+            constraint = [self widthGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setWidthGreaterConstraint:nil];
             }
             break;
         case NSLayoutAttributeHeight:
@@ -801,6 +1452,18 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 if (view) [view removeConstraint:constraint];
                 [self setHeightConstraint:nil];
             }
+            constraint = [self heightLessConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setHeightLessConstraint:nil];
+            }
+            constraint = [self heightGreaterConstraint];
+            if (constraint) {
+                view = [self whc_MainViewConstraint:constraint];
+                if (view) [view removeConstraint:constraint];
+                [self setHeightGreaterConstraint:nil];
+            }
             break;
         default:
             break;
@@ -808,15 +1471,20 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     if (mainView) {
         NSArray<NSLayoutConstraint *> * constraints = mainView.constraints;
         [constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj.firstItem == self &&
-                obj.firstAttribute == attribute) {
-                [mainView removeConstraint:obj];
-            }
+            WHC_VIEW * linkView = (toView != nil ? toView : mainView);
+            if ((obj.firstItem == self &&
+                 obj.firstAttribute == attribute &&
+                 (obj.secondItem == linkView || obj.secondItem == nil)) ||
+                (obj.firstItem == linkView &&
+                 obj.secondItem == self &&
+                 obj.secondAttribute == attribute)) {
+                    [mainView removeConstraint:obj];
+                }
         }];
     }
 }
 
-- (void)whc_SwitchRemoveAttr:(NSLayoutAttribute)attr view:(WHC_VIEW *)view removeSelf:(BOOL)removeSelf {
+- (void)whc_SwitchRemoveAttr:(NSLayoutAttribute)attr view:(WHC_VIEW *)view to:(WHC_VIEW *)toView removeSelf:(BOOL)removeSelf {
     switch (attr) {
 #if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
         case NSLayoutAttributeFirstBaseline:
@@ -840,14 +1508,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeTop:
         case NSLayoutAttributeRight:
         case NSLayoutAttributeLeft:
-            [self whc_CommonRemoveConstraint:attr view:view];
+            [self whc_CommonRemoveConstraint:attr view:view to:toView];
             break;
         case NSLayoutAttributeWidth:
         case NSLayoutAttributeHeight:
             if (removeSelf) {
-                [self whc_CommonRemoveConstraint:attr view:self];
+                [self whc_CommonRemoveConstraint:attr view:self to:toView];
             }
-            [self whc_CommonRemoveConstraint:attr view:view];
+            [self whc_CommonRemoveConstraint:attr view:view to:toView];
             break;
         default:
             break;
@@ -876,11 +1544,39 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         [self setFirstBaselineConstraint:nil];
     }
     
+    constraint = [self firstBaselineLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setFirstBaselineLessConstraint:nil];
+    }
+    
+    constraint = [self firstBaselineGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setFirstBaselineGreaterConstraint:nil];
+    }
+    
     constraint = [self lastBaselineConstraint];
     mainView = getMainView(constraint);
     if (mainView) {
         [mainView removeConstraint:constraint];
         [self setLastBaselineConstraint:nil];
+    }
+    
+    constraint = [self lastBaselineLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setLastBaselineLessConstraint:nil];
+    }
+    
+    constraint = [self lastBaselineGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setLastBaselineGreaterConstraint:nil];
     }
     
     constraint = [self centerYConstraint];
@@ -890,11 +1586,39 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         [self setCenterYConstraint:nil];
     }
     
+    constraint = [self centerYLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setCenterYLessConstraint:nil];
+    }
+    
+    constraint = [self centerYGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setCenterYGreaterConstraint:nil];
+    }
+    
     constraint = [self centerXConstraint];
     mainView = getMainView(constraint);
     if (mainView) {
         [mainView removeConstraint:constraint];
         [self setCenterXConstraint:nil];
+    }
+    
+    constraint = [self centerXLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setCenterXLessConstraint:nil];
+    }
+    
+    constraint = [self centerXGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setCenterXGreaterConstraint:nil];
     }
     
     constraint = [self trailingConstraint];
@@ -904,6 +1628,20 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         [self setTrailingConstraint:nil];
     }
 
+    constraint = [self trailingLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setTrailingLessConstraint:nil];
+    }
+    
+    constraint = [self trailingGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setTrailingGreaterConstraint:nil];
+    }
+    
     constraint = [self leadingConstraint];
     mainView = getMainView(constraint);
     if (mainView) {
@@ -911,11 +1649,39 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         [self setLeadingConstraint:nil];
     }
 
+    constraint = [self leadingLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setLeadingLessConstraint:nil];
+    }
+    
+    constraint = [self leadingGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setLeadingGreaterConstraint:nil];
+    }
+    
     constraint = [self bottomConstraint];
     mainView = getMainView(constraint);
     if (mainView) {
         [mainView removeConstraint:constraint];
         [self setBottomConstraint:nil];
+    }
+    
+    constraint = [self bottomLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setBottomLessConstraint:nil];
+    }
+    
+    constraint = [self bottomGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setBottomGreaterConstraint:nil];
     }
     
     constraint = [self topConstraint];
@@ -924,12 +1690,40 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         [mainView removeConstraint:constraint];
         [self setTopConstraint:nil];
     }
+    
+    constraint = [self topLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setTopLessConstraint:nil];
+    }
+    
+    constraint = [self topGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setTopGreaterConstraint:nil];
+    }
 
     constraint = [self rightConstraint];
     mainView = getMainView(constraint);
     if (mainView) {
         [mainView removeConstraint:constraint];
         [self setRightConstraint:nil];
+    }
+    
+    constraint = [self rightLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setRightLessConstraint:nil];
+    }
+    
+    constraint = [self rightGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setRightGreaterConstraint:nil];
     }
 
     constraint = [self leftConstraint];
@@ -939,11 +1733,39 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         [self setLeftConstraint:nil];
     }
 
+    constraint = [self leftLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setLeftLessConstraint:nil];
+    }
+    
+    constraint = [self leftGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setLeftGreaterConstraint:nil];
+    }
+    
     constraint = [self widthConstraint];
     mainView = getMainView(constraint);
     if (mainView) {
         [mainView removeConstraint:constraint];
         [self setWidthConstraint:nil];
+    }
+    
+    constraint = [self widthLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setWidthLessConstraint:nil];
+    }
+    
+    constraint = [self widthGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setWidthGreaterConstraint:nil];
     }
     
     constraint = [self heightConstraint];
@@ -952,6 +1774,21 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         [mainView removeConstraint:constraint];
         [self setHeightConstraint:nil];
     }
+    
+    constraint = [self heightLessConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setHeightLessConstraint:nil];
+    }
+    
+    constraint = [self heightGreaterConstraint];
+    mainView = getMainView(constraint);
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+        [self setHeightGreaterConstraint:nil];
+    }
+    
     return self;
 }
 
@@ -971,12 +1808,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             constraints = superView.constraints;
             if (constraints) {
                 [constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if (obj.firstItem == self) {
+                    if (obj.firstItem == self || obj.secondItem == self) {
                         [superView removeConstraint:obj];
                     }
                 }];
             }
         }
+        [self whc_ResetConstraints];
     }
     return self;
 }
@@ -987,7 +1825,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
     while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
         if (attributes > 0) {
-            [self whc_SwitchRemoveAttr:attributes view:view removeSelf:NO];
+            [self whc_SwitchRemoveAttr:attributes view:view to:nil removeSelf:NO];
         }
         attributes = va_arg(attrs, NSLayoutAttribute);
     }
@@ -998,7 +1836,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 - (WHC_VIEW *)whc_RemoveFrom:(WHC_VIEW *)view layoutAttr:(NSLayoutAttribute)attribute {
     NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
     if (attribute > NSLayoutAttributeNotAnAttribute && attribute <= maxAttr) {
-        [self whc_SwitchRemoveAttr:attribute view:view removeSelf:NO];
+        [self whc_SwitchRemoveAttr:attribute view:view to:nil removeSelf:NO];
     }
     return self;
 }
@@ -1009,7 +1847,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
     while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
         if (attributes > 0) {
-            [self whc_SwitchRemoveAttr:attributes view:self.superview removeSelf:YES];
+            [self whc_SwitchRemoveAttr:attributes view:self.superview to:nil removeSelf:YES];
         }
         attributes = va_arg(attrs, NSLayoutAttribute);
     }
@@ -1020,12 +1858,55 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 - (WHC_VIEW *)whc_RemoveLayoutOneAttr:(NSLayoutAttribute)attribute {
     NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
     if (attribute > NSLayoutAttributeNotAnAttribute && attribute <= maxAttr) {
-        [self whc_SwitchRemoveAttr:attribute view:self.superview removeSelf:YES];
+        [self whc_SwitchRemoveAttr:attribute view:self.superview to:nil removeSelf:YES];
     }
     return self;
 }
 
+- (WHC_VIEW *)whc_RemoveTo:(WHC_VIEW *)view attr:(NSLayoutAttribute)attribute {
+    if (attribute > 0 && attribute <= [self whc_GetMaxLayoutAttribute]) {
+        [self whc_SwitchRemoveAttr:attribute view:self.superview to:view removeSelf:NO];
+    }
+    return self;
+}
+
+- (WHC_VIEW *)whc_RemoveTo:(WHC_VIEW *)view layoutAttrs:(NSLayoutAttribute)attributes, ... {
+    va_list attrs;
+    va_start(attrs, attributes);
+    NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
+    while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
+        if (attributes > 0) {
+            [self whc_SwitchRemoveAttr:attributes view:self.superview to:view removeSelf:NO];
+        }
+        attributes = va_arg(attrs, NSLayoutAttribute);
+    }
+    va_end(attrs);
+    return self;
+}
+
 #pragma mark - constraintsPriority api v1.0 -
+
+- (WHC_VIEW *)whc_HandleConstraintsRelation:(NSLayoutRelation)relation {
+    NSLayoutConstraint * constraints = [self currentConstraint];
+    if (constraints && constraints.relation != relation) {
+        NSLayoutConstraint * tmpConstraints = [NSLayoutConstraint constraintWithItem:constraints.firstItem attribute:constraints.firstAttribute relatedBy:relation toItem:constraints.secondItem attribute:constraints.secondAttribute multiplier:constraints.multiplier constant:constraints.constant];
+        if (!constraints.secondItem ||
+            constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
+            [self removeConstraint:constraints];
+            [self addConstraint:tmpConstraints];
+            [self setCacheConstraint:tmpConstraints attribute:constraints.firstAttribute];
+            [self setCurrentConstraint:tmpConstraints];
+        }else {
+            if (self.superview) {
+                [self.superview removeConstraint:constraints];
+                [self.superview addConstraint:tmpConstraints];
+                [self setCacheConstraint:tmpConstraints attribute:constraints.firstAttribute];
+                [self setCurrentConstraint:tmpConstraints];
+            }
+        }
+    }
+    return self;
+}
 
 - (WHC_VIEW *)whc_HandleConstraintsPriority:(WHC_LayoutPriority)priority {
     NSLayoutConstraint * constraints = [self currentConstraint];
@@ -1664,7 +2545,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [superView removeConstraint:leading];
                 [self setLeadingConstraint:nil];
             }
-            NSLayoutConstraint * left = [self leftConstraint];
+            leading = [self leadingLessConstraint];
+            if (leading) {
+                [superView removeConstraint:leading];
+                [self setLeadingLessConstraint:nil];
+            }
+            leading = [self leadingGreaterConstraint];
+            if (leading) {
+                [superView removeConstraint:leading];
+                [self setLeadingGreaterConstraint:nil];
+            }
+            NSLayoutConstraint * left = [self leftConstraintRelation:related];
             if (left) {
                 if (left.firstAttribute == attribute &&
                     left.secondAttribute == toAttribute &&
@@ -1676,7 +2567,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:left];
-                [self setLeftConstraint:nil];
+                [self setLeftConstraint:nil relation:related];
             }
         }
             break;
@@ -1686,7 +2577,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [superView removeConstraint:trailing];
                 [self setTrailingConstraint:nil];
             }
-            NSLayoutConstraint * right = [self rightConstraint];
+            trailing = [self trailingLessConstraint];
+            if (trailing) {
+                [superView removeConstraint:trailing];
+                [self setTrailingLessConstraint:nil];
+            }
+            trailing = [self trailingGreaterConstraint];
+            if (trailing) {
+                [superView removeConstraint:trailing];
+                [self setTrailingGreaterConstraint:nil];
+            }
+            NSLayoutConstraint * right = [self rightConstraintRelation:related];
             if (right) {
                 if (right.firstAttribute == attribute &&
                     right.secondAttribute == toAttribute &&
@@ -1698,7 +2599,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:right];
-                [self setRightConstraint:nil];
+                [self setRightConstraint:nil relation:related];
             }
         }
             break;
@@ -1708,7 +2609,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [superView removeConstraint:firstBaseline];
                 [self setFirstBaselineConstraint:nil];
             }
-            NSLayoutConstraint * top = [self topConstraint];
+            firstBaseline = [self firstBaselineLessConstraint];
+            if (firstBaseline) {
+                [superView removeConstraint:firstBaseline];
+                [self setFirstBaselineLessConstraint:nil];
+            }
+            firstBaseline = [self firstBaselineGreaterConstraint];
+            if (firstBaseline) {
+                [superView removeConstraint:firstBaseline];
+                [self setFirstBaselineGreaterConstraint:nil];
+            }
+            NSLayoutConstraint * top = [self topConstraintRelation:related];
             if (top) {
                 if (top.firstAttribute == attribute &&
                     top.secondAttribute == toAttribute &&
@@ -1720,7 +2631,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:top];
-                [self setTopConstraint:nil];
+                [self setTopConstraint:nil relation:related];
             }
         }
             break;
@@ -1730,7 +2641,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [superView removeConstraint:lastBaseline];
                 [self setLastBaselineConstraint:nil];
             }
-            NSLayoutConstraint * bottom = [self bottomConstraint];
+            lastBaseline = [self lastBaselineLessConstraint];
+            if (lastBaseline) {
+                [superView removeConstraint:lastBaseline];
+                [self setLastBaselineLessConstraint:nil];
+            }
+            lastBaseline = [self lastBaselineGreaterConstraint];
+            if (lastBaseline) {
+                [superView removeConstraint:lastBaseline];
+                [self setLastBaselineGreaterConstraint:nil];
+            }
+            NSLayoutConstraint * bottom = [self bottomConstraintRelation:related];
             if (bottom) {
                 if (bottom.firstAttribute == attribute &&
                     bottom.secondAttribute == toAttribute &&
@@ -1742,7 +2663,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:bottom];
-                [self setBottomConstraint:nil];
+                [self setBottomConstraint:nil relation:related];
             }
         }
             break;
@@ -1752,7 +2673,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [superView removeConstraint:left];
                 [self setLeftConstraint:nil];
             }
-            NSLayoutConstraint * leading = [self leadingConstraint];
+            left = [self leftLessConstraint];
+            if (left) {
+                [superView removeConstraint:left];
+                [self setLeftLessConstraint:nil];
+            }
+            left = [self leftGreaterConstraint];
+            if (left) {
+                [superView removeConstraint:left];
+                [self setLeftGreaterConstraint:nil];
+            }
+            NSLayoutConstraint * leading = [self leadingConstraintRelation:related];
             if (leading) {
                 if (leading.firstAttribute == attribute &&
                     leading.secondAttribute == toAttribute &&
@@ -1764,7 +2695,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:leading];
-                [self setLeadingConstraint:nil];
+                [self setLeadingConstraint:nil relation:related];
             }
         }
             break;
@@ -1774,7 +2705,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [superView removeConstraint:right];
                 [self setRightConstraint:nil];
             }
-            NSLayoutConstraint * trailing = [self trailingConstraint];
+            right = [self rightLessConstraint];
+            if (right) {
+                [superView removeConstraint:right];
+                [self setRightLessConstraint:nil];
+            }
+            right = [self rightGreaterConstraint];
+            if (right) {
+                [superView removeConstraint:right];
+                [self setRightGreaterConstraint:nil];
+            }
+            NSLayoutConstraint * trailing = [self trailingConstraintRelation:related];
             if (trailing) {
                 if (trailing.firstAttribute == attribute &&
                     trailing.secondAttribute == toAttribute &&
@@ -1786,12 +2727,79 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:trailing];
-                [self setTrailingConstraint:nil];
+                [self setTrailingConstraint:nil relation:related];
             }
         }
             break;
         case NSLayoutAttributeWidth: {
-            NSLayoutConstraint * width = [self widthConstraint];
+            void (^removeOtherWidthCache)(NSLayoutRelation related) = ^(NSLayoutRelation related){
+                switch (related) {
+                    case NSLayoutRelationEqual: {
+                        NSLayoutConstraint * cacheWidth = [self widthLessConstraint];
+                        if (cacheWidth) {
+                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheWidth];
+                            }else {
+                                [self removeConstraint:cacheWidth];
+                            }
+                            [self setWidthLessConstraint:nil];
+                        }
+                        cacheWidth = [self widthGreaterConstraint];
+                        if (cacheWidth) {
+                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheWidth];
+                            }else {
+                                [self removeConstraint:cacheWidth];
+                            }
+                            [self setWidthGreaterConstraint:nil];
+                        }
+                    }
+                        break;
+                    case NSLayoutRelationLessThanOrEqual: {
+                        NSLayoutConstraint * cacheWidth = [self widthConstraint];
+                        if (cacheWidth) {
+                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheWidth];
+                            }else {
+                                [self removeConstraint:cacheWidth];
+                            }
+                            [self setWidthConstraint:nil];
+                        }
+                        cacheWidth = [self widthGreaterConstraint];
+                        if (cacheWidth) {
+                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheWidth];
+                            }else {
+                                [self removeConstraint:cacheWidth];
+                            }
+                            [self setWidthGreaterConstraint:nil];
+                        }
+                    }
+                        break;
+                    default: {
+                        NSLayoutConstraint * cacheWidth = [self widthConstraint];
+                        if (cacheWidth) {
+                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheWidth];
+                            }else {
+                                [self removeConstraint:cacheWidth];
+                            }
+                            [self setWidthConstraint:nil];
+                        }
+                        cacheWidth = [self widthLessConstraint];
+                        if (cacheWidth) {
+                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheWidth];
+                            }else {
+                                [self removeConstraint:cacheWidth];
+                            }
+                            [self setWidthLessConstraint:nil];
+                        }
+                    }
+                        break;
+                }
+            };
+            NSLayoutConstraint * width = [self widthConstraintRelation:related];
             if (width) {
                 if (width.firstAttribute == attribute &&
                     width.secondAttribute == toAttribute &&
@@ -1800,6 +2808,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     width.relation == related &&
                     width.multiplier == multiplier) {
                     width.constant = constant;
+                    removeOtherWidthCache(related);
                     return self;
                 }
                 if (width.secondAttribute != NSLayoutAttributeNotAnAttribute) {
@@ -1807,12 +2816,80 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }else {
                     [self removeConstraint:width];
                 }
-                [self setWidthConstraint:nil];
+                [self setWidthConstraint:nil relation:related];
             }
+            removeOtherWidthCache(related);
         }
             break;
         case NSLayoutAttributeHeight: {
-            NSLayoutConstraint * height = [self heightConstraint];
+            void (^removeOtherHeightCache)(NSLayoutRelation related) = ^(NSLayoutRelation related){
+                switch (related) {
+                    case NSLayoutRelationEqual: {
+                        NSLayoutConstraint * cacheHeight = [self heightLessConstraint];
+                        if (cacheHeight) {
+                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheHeight];
+                            }else {
+                                [self removeConstraint:cacheHeight];
+                            }
+                            [self setHeightLessConstraint:nil];
+                        }
+                        cacheHeight = [self heightGreaterConstraint];
+                        if (cacheHeight) {
+                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheHeight];
+                            }else {
+                                [self removeConstraint:cacheHeight];
+                            }
+                            [self setHeightGreaterConstraint:nil];
+                        }
+                    }
+                        break;
+                    case NSLayoutRelationLessThanOrEqual: {
+                        NSLayoutConstraint * cacheHeight = [self heightConstraint];
+                        if (cacheHeight) {
+                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheHeight];
+                            }else {
+                                [self removeConstraint:cacheHeight];
+                            }
+                            [self setHeightConstraint:nil];
+                        }
+                        cacheHeight = [self heightGreaterConstraint];
+                        if (cacheHeight) {
+                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheHeight];
+                            }else {
+                                [self removeConstraint:cacheHeight];
+                            }
+                            [self setHeightGreaterConstraint:nil];
+                        }
+                    }
+                        break;
+                    default: {
+                        NSLayoutConstraint * cacheHeight = [self heightConstraint];
+                        if (cacheHeight) {
+                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheHeight];
+                            }else {
+                                [self removeConstraint:cacheHeight];
+                            }
+                            [self setHeightConstraint:nil];
+                        }
+                        cacheHeight = [self heightLessConstraint];
+                        if (cacheHeight) {
+                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
+                                [superView removeConstraint:cacheHeight];
+                            }else {
+                                [self removeConstraint:cacheHeight];
+                            }
+                            [self setHeightLessConstraint:nil];
+                        }
+                    }
+                        break;
+                }
+            };
+            NSLayoutConstraint * height = [self heightConstraintRelation:related];
             if (height) {
                 if (height.firstAttribute == attribute &&
                     height.secondAttribute == toAttribute &&
@@ -1821,6 +2898,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     height.relation == related &&
                     height.multiplier == multiplier) {
                     height.constant = constant;
+                    removeOtherHeightCache(related);
                     return self;
                 }
                 if (height.secondAttribute != NSLayoutAttributeNotAnAttribute) {
@@ -1828,12 +2906,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }else {
                     [self removeConstraint:height];
                 }
-                [self setHeightConstraint:nil];
+                [self setHeightConstraint:nil relation:related];
             }
+            removeOtherHeightCache(related);
         }
             break;
         case NSLayoutAttributeCenterX: {
-            NSLayoutConstraint * centerX = [self centerXConstraint];
+            NSLayoutConstraint * centerX = [self centerXConstraintRelation:related];
             if (centerX) {
                 if (centerX.firstAttribute == attribute &&
                     centerX.secondAttribute == toAttribute &&
@@ -1845,12 +2924,12 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:centerX];
-                [self setCenterXConstraint:nil];
+                [self setCenterXConstraint:nil relation:related];
             }
         }
             break;
         case NSLayoutAttributeCenterY: {
-            NSLayoutConstraint * centerY = [self centerYConstraint];
+            NSLayoutConstraint * centerY = [self centerYConstraintRelation:related];
             if (centerY) {
                 if (centerY.firstAttribute == attribute &&
                     centerY.secondAttribute == toAttribute &&
@@ -1862,7 +2941,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:centerY];
-                [self setCenterYConstraint:nil];
+                [self setCenterYConstraint:nil relation:related];
             }
         }
             break;
@@ -1872,7 +2951,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [superView removeConstraint:bottom];
                 [self setBottomConstraint:nil];
             }
-            NSLayoutConstraint * lastBaseline = [self lastBaselineConstraint];
+            bottom = [self bottomLessConstraint];
+            if (bottom) {
+                [superView removeConstraint:bottom];
+                [self setBottomLessConstraint:nil];
+            }
+            bottom = [self bottomGreaterConstraint];
+            if (bottom) {
+                [superView removeConstraint:bottom];
+                [self setBottomGreaterConstraint:nil];
+            }
+            NSLayoutConstraint * lastBaseline = [self lastBaselineConstraintRelation:related];
             if (lastBaseline) {
                 if (lastBaseline.firstAttribute == attribute &&
                     lastBaseline.secondAttribute == toAttribute &&
@@ -1884,7 +2973,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:lastBaseline];
-                [self setLastBaselineConstraint:nil];
+                [self setLastBaselineConstraint:nil relation:related];
             }
         }
             break;
@@ -1895,7 +2984,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 [superView removeConstraint:top];
                 [self setTopConstraint:nil];
             }
-            NSLayoutConstraint * firstBaseline = [self firstBaselineConstraint];
+            top = [self topLessConstraint];
+            if (top) {
+                [superView removeConstraint:top];
+                [self setTopLessConstraint:nil];
+            }
+            top = [self topGreaterConstraint];
+            if (top) {
+                [superView removeConstraint:top];
+                [self setTopGreaterConstraint:nil];
+            }
+            NSLayoutConstraint * firstBaseline = [self firstBaselineConstraintRelation:related];
             if (firstBaseline) {
                 if (firstBaseline.firstAttribute == attribute &&
                     firstBaseline.secondAttribute == toAttribute &&
@@ -1907,7 +3006,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     return self;
                 }
                 [superView removeConstraint:firstBaseline];
-                [self setFirstBaselineConstraint:nil];
+                [self setFirstBaselineConstraint:nil relation:related];
             }
         }
             break;
@@ -1923,51 +3022,56 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                              attribute:toAttribute
                                             multiplier:multiplier
                                               constant:constant];
+    [self setCacheConstraint:constraint attribute:attribute];
+    [superView addConstraint:constraint];
+    [self setCurrentConstraint:constraint];
+    return self;
+}
+  
+- (void)setCacheConstraint:(NSLayoutConstraint *)constraint attribute:(NSLayoutAttribute) attribute {
+    NSLayoutRelation relation = constraint.relation;
     switch (attribute) {
 #if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
         case NSLayoutAttributeFirstBaseline:
-            [self setFirstBaselineConstraint:constraint];
+            [self setFirstBaselineConstraint:constraint relation:relation];
             break;
 #endif
         case NSLayoutAttributeLastBaseline:
-            [self setLastBaselineConstraint:constraint];
+            [self setLastBaselineConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeCenterY:
-            [self setCenterYConstraint:constraint];
+            [self setCenterYConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeCenterX:
-            [self setCenterXConstraint:constraint];
+            [self setCenterXConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeTrailing:
-            [self setTrailingConstraint:constraint];
+            [self setTrailingConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeLeading:
-            [self setLeadingConstraint:constraint];
+            [self setLeadingConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeBottom:
-            [self setBottomConstraint:constraint];
+            [self setBottomConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeTop:
-            [self setTopConstraint:constraint];
+            [self setTopConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeRight:
-            [self setRightConstraint:constraint];
+            [self setRightConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeLeft:
-            [self setLeftConstraint:constraint];
+            [self setLeftConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeWidth:
-            [self setWidthConstraint:constraint];
+            [self setWidthConstraint:constraint relation:relation];
             break;
         case NSLayoutAttributeHeight:
-            [self setHeightConstraint:constraint];
+            [self setHeightConstraint:constraint relation:relation];
             break;
         default:
             break;
     }
-    [superView addConstraint:constraint];
-    [self setCurrentConstraint:constraint];
-    return self;
 }
 
 #if TARGET_OS_IPHONE || TARGET_OS_TV
