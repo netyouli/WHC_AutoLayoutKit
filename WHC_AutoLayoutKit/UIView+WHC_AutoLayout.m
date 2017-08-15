@@ -1893,14 +1893,16 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         if (!constraints.secondItem ||
             constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
             [self removeConstraint:constraints];
+            [self setCacheConstraint:nil attribute:constraints.firstAttribute];
             [self addConstraint:tmpConstraints];
-            [self setCacheConstraint:tmpConstraints attribute:constraints.firstAttribute];
+            [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute];
             [self setCurrentConstraint:tmpConstraints];
         }else {
             if (self.superview) {
                 [self.superview removeConstraint:constraints];
+                [self setCacheConstraint:nil attribute:constraints.firstAttribute];
                 [self.superview addConstraint:tmpConstraints];
-                [self setCacheConstraint:tmpConstraints attribute:constraints.firstAttribute];
+                [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute];
                 [self setCurrentConstraint:tmpConstraints];
             }
         }
