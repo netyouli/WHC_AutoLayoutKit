@@ -90,9 +90,7 @@
     .whc_Width(10)
     .whc_GreaterOrEqual();
     
-    [txt whc_RemoveLayoutAttr:NSLayoutAttributeWidth];
-    txt.whc_Width(20).whc_LessOrEqual();
-    
+    /// 宽度小于等于100并且大于等于10 约束演示
     txt.text = @"whc_LessOrEqual";
  
 }
