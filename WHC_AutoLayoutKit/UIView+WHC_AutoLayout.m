@@ -1893,16 +1893,16 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         if (!constraints.secondItem ||
             constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
             [self removeConstraint:constraints];
-            [self setCacheConstraint:nil attribute:constraints.firstAttribute];
+            [self setCacheConstraint:nil attribute:constraints.firstAttribute relation:constraints.relation];
             [self addConstraint:tmpConstraints];
-            [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute];
+            [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute relation:tmpConstraints.relation];
             [self setCurrentConstraint:tmpConstraints];
         }else {
             if (self.superview) {
                 [self.superview removeConstraint:constraints];
-                [self setCacheConstraint:nil attribute:constraints.firstAttribute];
+                [self setCacheConstraint:nil attribute:constraints.firstAttribute relation:constraints.relation];
                 [self.superview addConstraint:tmpConstraints];
-                [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute];
+                [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute relation:tmpConstraints.relation];
                 [self setCurrentConstraint:tmpConstraints];
             }
         }
@@ -2896,14 +2896,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                                              attribute:toAttribute
                                             multiplier:multiplier
                                               constant:constant];
-    [self setCacheConstraint:constraint attribute:attribute];
+    [self setCacheConstraint:constraint attribute:attribute relation:related];
     [superView addConstraint:constraint];
     [self setCurrentConstraint:constraint];
     return self;
 }
   
-- (void)setCacheConstraint:(NSLayoutConstraint *)constraint attribute:(NSLayoutAttribute) attribute {
-    NSLayoutRelation relation = constraint.relation;
+- (void)setCacheConstraint:(NSLayoutConstraint *)constraint attribute:(NSLayoutAttribute) attribute relation:(NSLayoutRelation)relation {
     switch (attribute) {
 #if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
         case NSLayoutAttributeFirstBaseline:
