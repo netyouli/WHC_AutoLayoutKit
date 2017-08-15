@@ -133,10 +133,7 @@
 }
 
 - (NSInteger)whc_SubViewCount {
-    if (self.whc_Orientation == All) {
-        return MAX(0, self.subviews.count - _lastRowVacantCount);
-    }
-    return self.subviews.count;
+    return self.whc_Subviews.count;
 }
 
 - (NSInteger)whc_Column {
@@ -171,6 +168,17 @@
     };
 }
 
+- (NSArray<WHC_VIEW *> *)whc_Subviews {
+    NSMutableArray * subViews = [NSMutableArray array];
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![obj isKindOfClass:WHC_VacntView.self] &&
+            ![obj isKindOfClass:WHC_StackViewLineView.self]) {
+            [subViews addObject:obj];
+        }
+    }];
+    return subViews;
+}
+
 - (void)whc_StartLayout {
     [self runStackLayoutEngine];
 }
@@ -196,6 +204,7 @@
 - (void)whc_RemoveAllSubviews {
     [self.subviews enumerateObjectsUsingBlock:^(__kindof WHC_VIEW * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj removeFromSuperview];
+        [obj whc_ResetConstraints];
     }];
 }
 
@@ -204,6 +213,7 @@
     [self.subviews enumerateObjectsUsingBlock:^(__kindof WHC_VIEW * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[WHC_VacntView class]]) {
             [obj removeFromSuperview];
+            [obj whc_ResetConstraints];
         }
     }];
 }
@@ -212,6 +222,7 @@
     [self.subviews enumerateObjectsUsingBlock:^(__kindof WHC_VIEW * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[WHC_StackViewLineView class]]) {
             [obj removeFromSuperview];
+            [obj whc_ResetConstraints];
         }
     }];
 }
@@ -417,6 +428,7 @@ WHC_GOTO:
             for (WHC_VIEW * view in self.subviews) {
                 if ([view isKindOfClass:[WHC_VacntView class]]) {
                     [view removeFromSuperview];
+                    [view whc_ResetConstraints];
                 }
             }
             subViews = self.subviews;

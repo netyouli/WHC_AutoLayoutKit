@@ -2218,6 +2218,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         }
     }
 #endif
+    if ([self widthConstraint] != nil ||
+        [self widthLessConstraint] != nil ||
+        [self widthGreaterConstraint] != nil) {
+        return self.whc_Width(0).whc_GreaterOrEqual();
+    }
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeWidth
                        relatedBy:NSLayoutRelationGreaterThanOrEqual
@@ -2264,6 +2269,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         }
     }
 #endif
+    if ([self heightConstraint] != nil ||
+        [self heightLessConstraint] != nil ||
+        [self heightGreaterConstraint] != nil) {
+        return self.whc_Height(0).whc_GreaterOrEqual();
+    }
     return [self whc_ConstraintWithItem:self
                        attribute:NSLayoutAttributeHeight
                        relatedBy:NSLayoutRelationGreaterThanOrEqual
@@ -2732,73 +2742,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         }
             break;
         case NSLayoutAttributeWidth: {
-            void (^removeOtherWidthCache)(NSLayoutRelation related) = ^(NSLayoutRelation related){
-                switch (related) {
-                    case NSLayoutRelationEqual: {
-                        NSLayoutConstraint * cacheWidth = [self widthLessConstraint];
-                        if (cacheWidth) {
-                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheWidth];
-                            }else {
-                                [self removeConstraint:cacheWidth];
-                            }
-                            [self setWidthLessConstraint:nil];
-                        }
-                        cacheWidth = [self widthGreaterConstraint];
-                        if (cacheWidth) {
-                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheWidth];
-                            }else {
-                                [self removeConstraint:cacheWidth];
-                            }
-                            [self setWidthGreaterConstraint:nil];
-                        }
-                    }
-                        break;
-                    case NSLayoutRelationLessThanOrEqual: {
-                        NSLayoutConstraint * cacheWidth = [self widthConstraint];
-                        if (cacheWidth) {
-                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheWidth];
-                            }else {
-                                [self removeConstraint:cacheWidth];
-                            }
-                            [self setWidthConstraint:nil];
-                        }
-                        cacheWidth = [self widthGreaterConstraint];
-                        if (cacheWidth) {
-                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheWidth];
-                            }else {
-                                [self removeConstraint:cacheWidth];
-                            }
-                            [self setWidthGreaterConstraint:nil];
-                        }
-                    }
-                        break;
-                    default: {
-                        NSLayoutConstraint * cacheWidth = [self widthConstraint];
-                        if (cacheWidth) {
-                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheWidth];
-                            }else {
-                                [self removeConstraint:cacheWidth];
-                            }
-                            [self setWidthConstraint:nil];
-                        }
-                        cacheWidth = [self widthLessConstraint];
-                        if (cacheWidth) {
-                            if (cacheWidth.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheWidth];
-                            }else {
-                                [self removeConstraint:cacheWidth];
-                            }
-                            [self setWidthLessConstraint:nil];
-                        }
-                    }
-                        break;
-                }
-            };
             NSLayoutConstraint * width = [self widthConstraintRelation:related];
             if (width) {
                 if (width.firstAttribute == attribute &&
@@ -2808,7 +2751,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     width.relation == related &&
                     width.multiplier == multiplier) {
                     width.constant = constant;
-                    removeOtherWidthCache(related);
                     return self;
                 }
                 if (width.secondAttribute != NSLayoutAttributeNotAnAttribute) {
@@ -2818,77 +2760,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
                 [self setWidthConstraint:nil relation:related];
             }
-            removeOtherWidthCache(related);
         }
             break;
         case NSLayoutAttributeHeight: {
-            void (^removeOtherHeightCache)(NSLayoutRelation related) = ^(NSLayoutRelation related){
-                switch (related) {
-                    case NSLayoutRelationEqual: {
-                        NSLayoutConstraint * cacheHeight = [self heightLessConstraint];
-                        if (cacheHeight) {
-                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheHeight];
-                            }else {
-                                [self removeConstraint:cacheHeight];
-                            }
-                            [self setHeightLessConstraint:nil];
-                        }
-                        cacheHeight = [self heightGreaterConstraint];
-                        if (cacheHeight) {
-                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheHeight];
-                            }else {
-                                [self removeConstraint:cacheHeight];
-                            }
-                            [self setHeightGreaterConstraint:nil];
-                        }
-                    }
-                        break;
-                    case NSLayoutRelationLessThanOrEqual: {
-                        NSLayoutConstraint * cacheHeight = [self heightConstraint];
-                        if (cacheHeight) {
-                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheHeight];
-                            }else {
-                                [self removeConstraint:cacheHeight];
-                            }
-                            [self setHeightConstraint:nil];
-                        }
-                        cacheHeight = [self heightGreaterConstraint];
-                        if (cacheHeight) {
-                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheHeight];
-                            }else {
-                                [self removeConstraint:cacheHeight];
-                            }
-                            [self setHeightGreaterConstraint:nil];
-                        }
-                    }
-                        break;
-                    default: {
-                        NSLayoutConstraint * cacheHeight = [self heightConstraint];
-                        if (cacheHeight) {
-                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheHeight];
-                            }else {
-                                [self removeConstraint:cacheHeight];
-                            }
-                            [self setHeightConstraint:nil];
-                        }
-                        cacheHeight = [self heightLessConstraint];
-                        if (cacheHeight) {
-                            if (cacheHeight.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                                [superView removeConstraint:cacheHeight];
-                            }else {
-                                [self removeConstraint:cacheHeight];
-                            }
-                            [self setHeightLessConstraint:nil];
-                        }
-                    }
-                        break;
-                }
-            };
             NSLayoutConstraint * height = [self heightConstraintRelation:related];
             if (height) {
                 if (height.firstAttribute == attribute &&
@@ -2898,7 +2772,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     height.relation == related &&
                     height.multiplier == multiplier) {
                     height.constant = constant;
-                    removeOtherHeightCache(related);
                     return self;
                 }
                 if (height.secondAttribute != NSLayoutAttributeNotAnAttribute) {
@@ -2908,7 +2781,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                 }
                 [self setHeightConstraint:nil relation:related];
             }
-            removeOtherHeightCache(related);
         }
             break;
         case NSLayoutAttributeCenterX: {

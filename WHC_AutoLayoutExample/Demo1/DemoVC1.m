@@ -90,7 +90,10 @@
     .whc_Width(10)
     .whc_GreaterOrEqual();
     
-    txt.text = @"gal";
+    [txt whc_RemoveLayoutAttr:NSLayoutAttributeWidth];
+    txt.whc_Width(20).whc_LessOrEqual();
+    
+    txt.text = @"whc_LessOrEqual";
  
 }
 

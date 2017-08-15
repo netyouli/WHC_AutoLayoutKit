@@ -85,6 +85,9 @@
 /// 自动宽度
 @property (nonatomic ,copy , readonly)WidthAuto whc_WidthAuto;
 
+/// 元素集合
+@property (nonatomic, strong, readonly)NSArray<WHC_VIEW *> * whc_Subviews;
+
 /************重载父类方法**************/
 /**
  自动宽度
