@@ -211,18 +211,18 @@
 - (void)whc_RemoveAllVacntView {
     _lastRowVacantCount = 0;
     [self.subviews enumerateObjectsUsingBlock:^(__kindof WHC_VIEW * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj whc_ResetConstraints];
         if ([obj isKindOfClass:[WHC_VacntView class]]) {
             [obj removeFromSuperview];
-            [obj whc_ResetConstraints];
         }
     }];
 }
 
 - (void)removeAllSegmentLine {
     [self.subviews enumerateObjectsUsingBlock:^(__kindof WHC_VIEW * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj whc_ResetConstraints];
         if ([obj isKindOfClass:[WHC_StackViewLineView class]]) {
             [obj removeFromSuperview];
-            [obj whc_ResetConstraints];
         }
     }];
 }
@@ -426,9 +426,9 @@ WHC_GOTO:
         }
         case All: {
             for (WHC_VIEW * view in self.subviews) {
+                [view whc_ResetConstraints];
                 if ([view isKindOfClass:[WHC_VacntView class]]) {
                     [view removeFromSuperview];
-                    [view whc_ResetConstraints];
                 }
             }
             subViews = self.subviews;

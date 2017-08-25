@@ -2221,8 +2221,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     }
 #endif
     if ([self widthConstraint] != nil ||
-        [self widthLessConstraint] != nil ||
-        [self widthGreaterConstraint] != nil) {
+        [self widthLessConstraint] != nil) {
         return self.whc_Width(0).whc_GreaterOrEqual();
     }
     return [self whc_ConstraintWithItem:self
@@ -2272,8 +2271,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     }
 #endif
     if ([self heightConstraint] != nil ||
-        [self heightLessConstraint] != nil ||
-        [self heightGreaterConstraint] != nil) {
+        [self heightLessConstraint] != nil) {
         return self.whc_Height(0).whc_GreaterOrEqual();
     }
     return [self whc_ConstraintWithItem:self
