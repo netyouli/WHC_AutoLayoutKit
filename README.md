@@ -28,7 +28,7 @@ Require
 
 Note
 ==============
-- When the view call removeFromSuperview  the view must call whc_ResetConstraints to clear the cache constraint
+- When the view call **removeFromSuperview**  the view must call **whc_ResetConstraints** to clear the cache constraint
 
 Install
 ==============
