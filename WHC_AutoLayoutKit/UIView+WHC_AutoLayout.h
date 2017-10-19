@@ -336,7 +336,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  移除多个约束从关联的视图
  
  @param view 关联的视图
- @param attribute 移除的约束
+ @param attributes 移除的约束
  @return 当前视图
  */
 
