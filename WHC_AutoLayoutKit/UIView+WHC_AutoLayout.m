@@ -1209,8 +1209,9 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         }else {
             WHC_VIEW * firstItem = constraint.firstItem;
             WHC_VIEW * secondItem = constraint.secondItem;
-            if (firstItem.superview == secondItem.superview) {
-                view = firstItem.superview;
+            WHC_VIEW * sameSuperView = [self sameSuperviewWithView1:firstItem view2:secondItem];
+            if (sameSuperView) {
+                view = sameSuperView;
             }else {
                 view = secondItem;
             }
@@ -1983,9 +1984,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)whc_LeftSpace:(CGFloat)leftSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeRight;
-    if (toView.superview == nil) {
-        toAttribute = NSLayoutAttributeLeft;
-    }else if (self.superview != toView.superview) {
+    if (![self sameSuperviewWithView1:toView view2:self]) {
         toAttribute = NSLayoutAttributeLeft;
     }
     return [self whc_ConstraintWithItem:self
@@ -2019,9 +2018,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)whc_RightSpace:(CGFloat)rightSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLeft;
-    if (toView.superview == nil) {
-        toAttribute = NSLayoutAttributeRight;
-    }else if (self.superview != toView.superview) {
+    if (![self sameSuperviewWithView1:toView view2:self]) {
         toAttribute = NSLayoutAttributeRight;
     }
     return [self whc_ConstraintWithItem:self
@@ -2056,9 +2053,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 - (WHC_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace
             toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeTrailing;
-    if (toView.superview == nil) {
-        toAttribute = NSLayoutAttributeLeading;
-    }else if (self.superview != toView.superview) {
+    if (![self sameSuperviewWithView1:toView view2:self]) {
         toAttribute = NSLayoutAttributeLeading;
     }
     return [self whc_ConstraintWithItem:self
@@ -2093,9 +2088,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 - (WHC_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace
              toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLeading;
-    if (toView.superview == nil) {
-        toAttribute = NSLayoutAttributeTrailing;
-    }else if (self.superview != toView.superview) {
+    if (![self sameSuperviewWithView1:toView view2:self]) {
         toAttribute = NSLayoutAttributeTrailing;
     }
     return [self whc_ConstraintWithItem:self
@@ -2129,9 +2122,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)whc_TopSpace:(CGFloat)topSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeBottom;
-    if (toView.superview == nil) {
-        toAttribute = NSLayoutAttributeTop;
-    }else if (self.superview != toView.superview) {
+    if (![self sameSuperviewWithView1:toView view2:self]) {
         toAttribute = NSLayoutAttributeTop;
     }
     return [self whc_ConstraintWithItem:self
@@ -2327,9 +2318,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)whc_FirstBaseLine:(CGFloat)space toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLastBaseline;
-    if (toView.superview == nil) {
-        toAttribute = NSLayoutAttributeFirstBaseline;
-    }else if (self.superview != toView.superview) {
+    if (![self sameSuperviewWithView1:toView view2:self]) {
         toAttribute = NSLayoutAttributeFirstBaseline;
     }
     return [self whc_ConstraintWithItem:self
@@ -2365,9 +2354,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 #else
     NSLayoutAttribute toAttribute = NSLayoutAttributeTop;
 #endif
-    if (toView.superview == nil) {
-        toAttribute = NSLayoutAttributeLastBaseline;
-    }else if (self.superview != toView.superview) {
+    if (![self sameSuperviewWithView1:toView view2:self]) {
         toAttribute = NSLayoutAttributeLastBaseline;
     }
     return [self whc_ConstraintWithItem:self
@@ -2535,8 +2522,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     if (toItem) {
         if (toItem.superview == nil) {
             superView = toItem;
-        }else if (toItem.superview != item.superview) {
-            superView = toItem;
+        }else {
+            WHC_VIEW * sameSuperview = [self sameSuperviewWithView1:toItem view2:item];
+            if (sameSuperview) {
+                superView = sameSuperview;
+            }else {
+                superView = toItem;
+            }
         }
     }else {
         superView = item;
@@ -2899,7 +2891,63 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     [self setCurrentConstraint:constraint];
     return self;
 }
-  
+
+- (WHC_VIEW *)sameSuperviewWithView1:(WHC_VIEW *)view1 view2:(WHC_VIEW *)view2 {
+    WHC_VIEW * sameSuperview = nil;
+    WHC_VIEW * tempToItem = view1;
+    WHC_VIEW * tempItem = view2;
+    if (tempToItem && tempItem) {
+        if (tempToItem.superview && tempToItem.superview == tempItem) {
+            return sameSuperview;
+        }
+        if (tempItem.superview && tempItem.superview == tempToItem) {
+            return sameSuperview;
+        }
+    }
+    BOOL (^checkSameSuperview)(WHC_VIEW *, WHC_VIEW *) = ^(WHC_VIEW * tmpSuperview, WHC_VIEW * singleView) {
+        WHC_VIEW * tmpSingleView = singleView;
+        if (tmpSingleView) {
+            WHC_VIEW * tempSingleSuperview = tmpSingleView.superview;
+            while (tempSingleSuperview) {
+                if (tmpSuperview == tempSingleSuperview) {
+                    return YES;
+                }else {
+                    tempSingleSuperview = tempSingleSuperview.superview;
+                }
+            }
+        }
+        return NO;
+    };
+    if (tempToItem && tempItem) {
+        WHC_VIEW * toItemSuperview = tempToItem.superview;
+        WHC_VIEW * itemSuperview = tempItem.superview;
+        while (toItemSuperview && itemSuperview) {
+            if (toItemSuperview == itemSuperview) {
+                sameSuperview = toItemSuperview;
+                break;
+            }else {
+                tempToItem = toItemSuperview;
+                tempItem = itemSuperview;
+                if (!tempToItem.superview && tempItem.superview) {
+                    if (checkSameSuperview(tempToItem, tempItem)) {
+                        sameSuperview = tempToItem;
+                        break;
+                    }
+                }else if (tempToItem.superview && !tempItem.superview) {
+                    if (checkSameSuperview(tempItem, tempToItem)) {
+                        sameSuperview = tempItem;
+                        break;
+                    }
+                }else {
+                    toItemSuperview = toItemSuperview.superview;
+                    itemSuperview = itemSuperview.superview;
+                }
+            }
+        }
+    }
+    return sameSuperview;
+}
+
 - (void)setCacheConstraint:(NSLayoutConstraint *)constraint attribute:(NSLayoutAttribute) attribute relation:(NSLayoutRelation)relation {
     switch (attribute) {
 #if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
