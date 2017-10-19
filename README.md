@@ -10,6 +10,8 @@
 
 **Swift4.0 version** 👉 [WHC_Layout](https://github.com/netyouli/WHC_Layout)
 
+**最新bug修复：修复孙子层视图之间约束报错bug**
+
 Introduce
 ==============
 -  Adopt chain layout Api calls convenient
