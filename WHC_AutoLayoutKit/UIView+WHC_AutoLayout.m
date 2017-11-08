@@ -1891,21 +1891,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     NSLayoutConstraint * constraints = [self currentConstraint];
     if (constraints && constraints.relation != relation) {
         NSLayoutConstraint * tmpConstraints = [NSLayoutConstraint constraintWithItem:constraints.firstItem attribute:constraints.firstAttribute relatedBy:relation toItem:constraints.secondItem attribute:constraints.secondAttribute multiplier:constraints.multiplier constant:constraints.constant];
-        if (!constraints.secondItem ||
-            constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
-            [self removeConstraint:constraints];
+        WHC_VIEW * mainView = [self whc_MainViewConstraint:constraints];
+        if (mainView) {
+            [mainView removeConstraint:constraints];
             [self setCacheConstraint:nil attribute:constraints.firstAttribute relation:constraints.relation];
-            [self addConstraint:tmpConstraints];
+            [mainView addConstraint:tmpConstraints];
             [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute relation:tmpConstraints.relation];
             [self setCurrentConstraint:tmpConstraints];
-        }else {
-            if (self.superview) {
-                [self.superview removeConstraint:constraints];
-                [self setCacheConstraint:nil attribute:constraints.firstAttribute relation:constraints.relation];
-                [self.superview addConstraint:tmpConstraints];
-                [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute relation:tmpConstraints.relation];
-                [self setCurrentConstraint:tmpConstraints];
-            }
         }
     }
     return self;
@@ -1919,17 +1911,15 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 #elif TARGET_OS_MAC
         if (constraints.priority == NSLayoutPriorityRequired) {
 #endif
-            if (!constraints.secondItem ||
-                constraints.secondAttribute == NSLayoutAttributeNotAnAttribute) {
-                [self removeConstraint:constraints];
-                constraints.priority = priority;
-                [self addConstraint:constraints];
-            }else {
-                if (self.superview) {
-                    [self.superview removeConstraint:constraints];
-                    constraints.priority = priority;
-                    [self.superview addConstraint:constraints];
-                }
+            WHC_VIEW * mainView = [self whc_MainViewConstraint:constraints];
+            if (mainView) {
+                NSLayoutConstraint * tmpConstraints = [NSLayoutConstraint constraintWithItem:constraints.firstItem attribute:constraints.firstAttribute relatedBy:constraints.relation toItem:constraints.secondItem attribute:constraints.secondAttribute multiplier:constraints.multiplier constant:constraints.constant];
+                tmpConstraints.priority = priority;
+                [self setCacheConstraint:nil attribute:constraints.firstAttribute relation:constraints.relation];
+                [mainView removeConstraint:constraints];
+                [mainView addConstraint:tmpConstraints];
+                [self setCacheConstraint:tmpConstraints attribute:tmpConstraints.firstAttribute relation:tmpConstraints.relation];
+                [self setCurrentConstraint:tmpConstraints];
             }
         }else if (constraints) {
             constraints.priority = priority;
