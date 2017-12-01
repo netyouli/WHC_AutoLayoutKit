@@ -2888,10 +2888,10 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     WHC_VIEW * tempItem = view2;
     if (tempToItem && tempItem) {
         if (tempToItem.superview && tempToItem.superview == tempItem) {
-            return sameSuperview;
+            return tempItem;
         }
         if (tempItem.superview && tempItem.superview == tempToItem) {
-            return sameSuperview;
+            return tempToItem;
         }
     }
     BOOL (^checkSameSuperview)(WHC_VIEW *, WHC_VIEW *) = ^(WHC_VIEW * tmpSuperview, WHC_VIEW * singleView) {

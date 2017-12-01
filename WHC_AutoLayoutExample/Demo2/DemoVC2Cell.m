@@ -66,7 +66,7 @@
         _tableView.whc_TopSpaceToView(10,_content)
                   .whc_LeftSpaceEqualView(_image)
                   .whc_RightSpace(10)
-                  .whc_Height(44);
+                  .whc_Height(50);
         self.whc_CellBottomOffset = 10;
         self.whc_CellTableView = _tableView;
         self.whc_TableViewWidth = self.whc_sw;
@@ -77,6 +77,7 @@
 - (void)setContent:(NSString *)content index:(NSInteger)index {
     _content.text = content;
     _image.text = @(index).stringValue;
+    [_tableView whc_Height:MAXFLOAT];
     [_tableView reloadData];
     [_tableView whc_Height:_tableView.contentSize.height];
     if (index < 5) {
