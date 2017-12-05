@@ -45,6 +45,7 @@
                   @"一行代码智能对Xib上所有控件智能横向布局",
                   @"微信朋友圈演示",
                   @"Mp3播放列表"];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView registerClass:[MainVCCell class] forCellReuseIdentifier:NSStringFromClass([MainVCCell class])];
 }
 

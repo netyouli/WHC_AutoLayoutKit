@@ -45,6 +45,14 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 @implementation WHC_Line
 @end
 
+@interface WHC_Data: NSObject
+@property (nonatomic, assign) BOOL isSameSuper;
+@property (nonatomic, strong) WHC_VIEW * superView;
+@end
+
+@implementation WHC_Data
+@end
+
 #endif
 
 @implementation WHC_VIEW (WHC_AutoLayout)
@@ -1206,14 +1214,15 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         if (constraint.secondAttribute == NSLayoutAttributeNotAnAttribute ||
             constraint.secondItem == nil) {
             view = constraint.firstItem;
+        }else if (constraint.firstAttribute == NSLayoutAttributeNotAnAttribute ||
+                  constraint.firstItem == nil){
+            view = constraint.firstItem;
         }else {
             WHC_VIEW * firstItem = constraint.firstItem;
             WHC_VIEW * secondItem = constraint.secondItem;
-            WHC_VIEW * sameSuperView = [self sameSuperviewWithView1:firstItem view2:secondItem];
-            if (sameSuperView) {
-                view = sameSuperView;
-            }else {
-                view = secondItem;
+            view = [self mainSuperView:secondItem view2:firstItem];
+            if (!view) {
+                view = [self mainSuperView:firstItem view2:secondItem];
             }
         }
     }
@@ -1524,272 +1533,198 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 }
 
 - (WHC_VIEW *)whc_ResetConstraints {
-    WHC_VIEW * (^getMainView)(NSLayoutConstraint * constraint) = ^(NSLayoutConstraint * constraint){
-        WHC_VIEW * view = nil;
-        if (constraint && constraint.secondAttribute != NSLayoutAttributeNotAnAttribute && constraint.secondItem != nil) {
-            WHC_VIEW * firstItem = constraint.firstItem;
-            WHC_VIEW * secondItem = constraint.secondItem;
-            if (firstItem.superview == secondItem.superview) {
-                view = firstItem.superview;
-            }else {
-                view = secondItem;
-            }
-        }
-        return view;
-    };
 
     NSLayoutConstraint * constraint = [self firstBaselineConstraint];
-    WHC_VIEW * mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setFirstBaselineConstraint:nil];
     }
-    
     constraint = [self firstBaselineLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setFirstBaselineLessConstraint:nil];
     }
-    
     constraint = [self firstBaselineGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setFirstBaselineGreaterConstraint:nil];
     }
     
     constraint = [self lastBaselineConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLastBaselineConstraint:nil];
     }
-    
     constraint = [self lastBaselineLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLastBaselineLessConstraint:nil];
     }
-    
     constraint = [self lastBaselineGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLastBaselineGreaterConstraint:nil];
     }
     
     constraint = [self centerYConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setCenterYConstraint:nil];
     }
-    
     constraint = [self centerYLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setCenterYLessConstraint:nil];
     }
-    
     constraint = [self centerYGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setCenterYGreaterConstraint:nil];
     }
     
     constraint = [self centerXConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setCenterXConstraint:nil];
     }
-    
     constraint = [self centerXLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setCenterXLessConstraint:nil];
     }
-    
     constraint = [self centerXGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setCenterXGreaterConstraint:nil];
     }
     
     constraint = [self trailingConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setTrailingConstraint:nil];
     }
-
     constraint = [self trailingLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setTrailingLessConstraint:nil];
     }
-    
     constraint = [self trailingGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setTrailingGreaterConstraint:nil];
     }
     
     constraint = [self leadingConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLeadingConstraint:nil];
     }
-
     constraint = [self leadingLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLeadingLessConstraint:nil];
     }
-    
     constraint = [self leadingGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLeadingGreaterConstraint:nil];
     }
     
     constraint = [self bottomConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setBottomConstraint:nil];
     }
-    
     constraint = [self bottomLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setBottomLessConstraint:nil];
     }
-    
     constraint = [self bottomGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setBottomGreaterConstraint:nil];
     }
     
     constraint = [self topConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setTopConstraint:nil];
     }
-    
     constraint = [self topLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setTopLessConstraint:nil];
     }
-    
     constraint = [self topGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setTopGreaterConstraint:nil];
     }
 
     constraint = [self rightConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setRightConstraint:nil];
     }
-    
     constraint = [self rightLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setRightLessConstraint:nil];
     }
-    
     constraint = [self rightGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setRightGreaterConstraint:nil];
     }
 
     constraint = [self leftConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLeftConstraint:nil];
     }
-
     constraint = [self leftLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLeftLessConstraint:nil];
     }
-    
     constraint = [self leftGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setLeftGreaterConstraint:nil];
     }
     
     constraint = [self widthConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setWidthConstraint:nil];
     }
-    
     constraint = [self widthLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setWidthLessConstraint:nil];
     }
-    
     constraint = [self widthGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setWidthGreaterConstraint:nil];
     }
     
     constraint = [self heightConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setHeightConstraint:nil];
     }
-    
     constraint = [self heightLessConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setHeightLessConstraint:nil];
     }
-    
     constraint = [self heightGreaterConstraint];
-    mainView = getMainView(constraint);
-    if (mainView) {
-        [mainView removeConstraint:constraint];
+    if (constraint) {
+        [self removeCacheConstraint:constraint];
         [self setHeightGreaterConstraint:nil];
     }
-    
     return self;
 }
 
@@ -1974,7 +1909,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)whc_LeftSpace:(CGFloat)leftSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeRight;
-    if (![self sameSuperviewWithView1:toView view2:self]) {
+    WHC_Data * data = [self sameSuperviewWithView1:toView view2:self];
+    if (!data.isSameSuper) {
         toAttribute = NSLayoutAttributeLeft;
     }
     return [self whc_ConstraintWithItem:self
@@ -2008,7 +1944,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)whc_RightSpace:(CGFloat)rightSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLeft;
-    if (![self sameSuperviewWithView1:toView view2:self]) {
+    WHC_Data * data = [self sameSuperviewWithView1:toView view2:self];
+    if (!data.isSameSuper) {
         toAttribute = NSLayoutAttributeRight;
     }
     return [self whc_ConstraintWithItem:self
@@ -2043,7 +1980,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 - (WHC_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace
             toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeTrailing;
-    if (![self sameSuperviewWithView1:toView view2:self]) {
+    WHC_Data * data = [self sameSuperviewWithView1:toView view2:self];
+    if (!data.isSameSuper) {
         toAttribute = NSLayoutAttributeLeading;
     }
     return [self whc_ConstraintWithItem:self
@@ -2078,7 +2016,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 - (WHC_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace
              toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLeading;
-    if (![self sameSuperviewWithView1:toView view2:self]) {
+    WHC_Data * data = [self sameSuperviewWithView1:toView view2:self];
+    if (!data.isSameSuper) {
         toAttribute = NSLayoutAttributeTrailing;
     }
     return [self whc_ConstraintWithItem:self
@@ -2112,7 +2051,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)whc_TopSpace:(CGFloat)topSpace toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeBottom;
-    if (![self sameSuperviewWithView1:toView view2:self]) {
+    WHC_Data * data = [self sameSuperviewWithView1:toView view2:self];
+    if (!data.isSameSuper) {
         toAttribute = NSLayoutAttributeTop;
     }
     return [self whc_ConstraintWithItem:self
@@ -2308,7 +2248,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)whc_FirstBaseLine:(CGFloat)space toView:(WHC_VIEW *)toView {
     NSLayoutAttribute toAttribute = NSLayoutAttributeLastBaseline;
-    if (![self sameSuperviewWithView1:toView view2:self]) {
+    WHC_Data * data = [self sameSuperviewWithView1:toView view2:self];
+    if (!data.isSameSuper) {
         toAttribute = NSLayoutAttributeFirstBaseline;
     }
     return [self whc_ConstraintWithItem:self
@@ -2344,7 +2285,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 #else
     NSLayoutAttribute toAttribute = NSLayoutAttributeTop;
 #endif
-    if (![self sameSuperviewWithView1:toView view2:self]) {
+    WHC_Data * data = [self sameSuperviewWithView1:toView view2:self];
+    if (!data.isSameSuper) {
         toAttribute = NSLayoutAttributeLastBaseline;
     }
     return [self whc_ConstraintWithItem:self
@@ -2507,23 +2449,11 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                      attribute:(NSLayoutAttribute)toAttribute
                     multiplier:(CGFloat)multiplier
                       constant:(CGFloat)constant {
-    
-    WHC_VIEW * superView = item.superview;
-    if (toItem) {
-        if (toItem.superview == nil) {
-            superView = toItem;
-        }else {
-            WHC_VIEW * sameSuperview = [self sameSuperviewWithView1:toItem view2:item];
-            if (sameSuperview) {
-                superView = sameSuperview;
-            }else {
-                superView = toItem;
-            }
-        }
-    }else {
-        superView = item;
-        toAttribute = NSLayoutAttributeNotAnAttribute;
-    }
+                          
+    WHC_VIEW * superView = [self mainSuperView:toItem view2:item];
+    if (!superView) return self;
+    if (!toItem) toAttribute = NSLayoutAttributeNotAnAttribute;
+    if (!item) attribute = NSLayoutAttributeNotAnAttribute;
     if (self.translatesAutoresizingMaskIntoConstraints) {
         self.translatesAutoresizingMaskIntoConstraints = NO;
     }
@@ -2534,17 +2464,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeLeft: {
             NSLayoutConstraint * leading = [self leadingConstraint];
             if (leading) {
-                [superView removeConstraint:leading];
+                [self removeCacheConstraint:leading];
                 [self setLeadingConstraint:nil];
             }
             leading = [self leadingLessConstraint];
             if (leading) {
-                [superView removeConstraint:leading];
+                [self removeCacheConstraint:leading];
                 [self setLeadingLessConstraint:nil];
             }
             leading = [self leadingGreaterConstraint];
             if (leading) {
-                [superView removeConstraint:leading];
+                [self removeCacheConstraint:leading];
                 [self setLeadingGreaterConstraint:nil];
             }
             NSLayoutConstraint * left = [self leftConstraintRelation:related];
@@ -2558,7 +2488,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     left.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:left];
+                [self removeCacheConstraint:left];
                 [self setLeftConstraint:nil relation:related];
             }
         }
@@ -2566,17 +2496,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeRight: {
             NSLayoutConstraint * trailing = [self trailingConstraint];
             if (trailing) {
-                [superView removeConstraint:trailing];
+                [self removeCacheConstraint:trailing];
                 [self setTrailingConstraint:nil];
             }
             trailing = [self trailingLessConstraint];
             if (trailing) {
-                [superView removeConstraint:trailing];
+                [self removeCacheConstraint:trailing];
                 [self setTrailingLessConstraint:nil];
             }
             trailing = [self trailingGreaterConstraint];
             if (trailing) {
-                [superView removeConstraint:trailing];
+                [self removeCacheConstraint:trailing];
                 [self setTrailingGreaterConstraint:nil];
             }
             NSLayoutConstraint * right = [self rightConstraintRelation:related];
@@ -2590,7 +2520,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     right.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:right];
+                [self removeCacheConstraint:right];
                 [self setRightConstraint:nil relation:related];
             }
         }
@@ -2598,17 +2528,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeTop: {
             NSLayoutConstraint * firstBaseline = [self firstBaselineConstraint];
             if (firstBaseline) {
-                [superView removeConstraint:firstBaseline];
+                [self removeCacheConstraint:firstBaseline];
                 [self setFirstBaselineConstraint:nil];
             }
             firstBaseline = [self firstBaselineLessConstraint];
             if (firstBaseline) {
-                [superView removeConstraint:firstBaseline];
+                [self removeCacheConstraint:firstBaseline];
                 [self setFirstBaselineLessConstraint:nil];
             }
             firstBaseline = [self firstBaselineGreaterConstraint];
             if (firstBaseline) {
-                [superView removeConstraint:firstBaseline];
+                [self removeCacheConstraint:firstBaseline];
                 [self setFirstBaselineGreaterConstraint:nil];
             }
             NSLayoutConstraint * top = [self topConstraintRelation:related];
@@ -2622,7 +2552,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     top.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:top];
+                [self removeCacheConstraint:top];
                 [self setTopConstraint:nil relation:related];
             }
         }
@@ -2630,17 +2560,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeBottom: {
             NSLayoutConstraint * lastBaseline = [self lastBaselineConstraint];
             if (lastBaseline) {
-                [superView removeConstraint:lastBaseline];
+                [self removeCacheConstraint:lastBaseline];
                 [self setLastBaselineConstraint:nil];
             }
             lastBaseline = [self lastBaselineLessConstraint];
             if (lastBaseline) {
-                [superView removeConstraint:lastBaseline];
+                [self removeCacheConstraint:lastBaseline];
                 [self setLastBaselineLessConstraint:nil];
             }
             lastBaseline = [self lastBaselineGreaterConstraint];
             if (lastBaseline) {
-                [superView removeConstraint:lastBaseline];
+                [self removeCacheConstraint:lastBaseline];
                 [self setLastBaselineGreaterConstraint:nil];
             }
             NSLayoutConstraint * bottom = [self bottomConstraintRelation:related];
@@ -2654,7 +2584,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     bottom.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:bottom];
+                [self removeCacheConstraint:bottom];
                 [self setBottomConstraint:nil relation:related];
             }
         }
@@ -2662,17 +2592,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeLeading: {
             NSLayoutConstraint * left = [self leftConstraint];
             if (left) {
-                [superView removeConstraint:left];
+                [self removeCacheConstraint:left];
                 [self setLeftConstraint:nil];
             }
             left = [self leftLessConstraint];
             if (left) {
-                [superView removeConstraint:left];
+                [self removeCacheConstraint:left];
                 [self setLeftLessConstraint:nil];
             }
             left = [self leftGreaterConstraint];
             if (left) {
-                [superView removeConstraint:left];
+                [self removeCacheConstraint:left];
                 [self setLeftGreaterConstraint:nil];
             }
             NSLayoutConstraint * leading = [self leadingConstraintRelation:related];
@@ -2686,7 +2616,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     leading.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:leading];
+                [self removeCacheConstraint:leading];
                 [self setLeadingConstraint:nil relation:related];
             }
         }
@@ -2694,17 +2624,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeTrailing: {
             NSLayoutConstraint * right = [self rightConstraint];
             if (right) {
-                [superView removeConstraint:right];
+                [self removeCacheConstraint:right];
                 [self setRightConstraint:nil];
             }
             right = [self rightLessConstraint];
             if (right) {
-                [superView removeConstraint:right];
+                [self removeCacheConstraint:right];
                 [self setRightLessConstraint:nil];
             }
             right = [self rightGreaterConstraint];
             if (right) {
-                [superView removeConstraint:right];
+                [self removeCacheConstraint:right];
                 [self setRightGreaterConstraint:nil];
             }
             NSLayoutConstraint * trailing = [self trailingConstraintRelation:related];
@@ -2718,7 +2648,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     trailing.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:trailing];
+                [self removeCacheConstraint:trailing];
                 [self setTrailingConstraint:nil relation:related];
             }
         }
@@ -2735,11 +2665,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     width.constant = constant;
                     return self;
                 }
-                if (width.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                    [superView removeConstraint:width];
-                }else {
-                    [self removeConstraint:width];
-                }
+                [self removeCacheConstraint:width];
                 [self setWidthConstraint:nil relation:related];
             }
         }
@@ -2756,11 +2682,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     height.constant = constant;
                     return self;
                 }
-                if (height.secondAttribute != NSLayoutAttributeNotAnAttribute) {
-                    [superView removeConstraint:height];
-                }else {
-                    [self removeConstraint:height];
-                }
+                [self removeCacheConstraint:height];
                 [self setHeightConstraint:nil relation:related];
             }
         }
@@ -2777,7 +2699,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     centerX.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:centerX];
+                [self removeCacheConstraint:centerX];
                 [self setCenterXConstraint:nil relation:related];
             }
         }
@@ -2794,7 +2716,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     centerY.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:centerY];
+                [self removeCacheConstraint:centerY];
                 [self setCenterYConstraint:nil relation:related];
             }
         }
@@ -2802,17 +2724,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeLastBaseline: {
             NSLayoutConstraint * bottom = [self bottomConstraint];
             if (bottom) {
-                [superView removeConstraint:bottom];
+                [self removeCacheConstraint:bottom];
                 [self setBottomConstraint:nil];
             }
             bottom = [self bottomLessConstraint];
             if (bottom) {
-                [superView removeConstraint:bottom];
+                [self removeCacheConstraint:bottom];
                 [self setBottomLessConstraint:nil];
             }
             bottom = [self bottomGreaterConstraint];
             if (bottom) {
-                [superView removeConstraint:bottom];
+                [self removeCacheConstraint:bottom];
                 [self setBottomGreaterConstraint:nil];
             }
             NSLayoutConstraint * lastBaseline = [self lastBaselineConstraintRelation:related];
@@ -2826,7 +2748,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     lastBaseline.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:lastBaseline];
+                [self removeCacheConstraint:lastBaseline];
                 [self setLastBaselineConstraint:nil relation:related];
             }
         }
@@ -2835,17 +2757,17 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         case NSLayoutAttributeFirstBaseline: {
             NSLayoutConstraint * top = [self topConstraint];
             if (top) {
-                [superView removeConstraint:top];
+                [self removeCacheConstraint:top];
                 [self setTopConstraint:nil];
             }
             top = [self topLessConstraint];
             if (top) {
-                [superView removeConstraint:top];
+                [self removeCacheConstraint:top];
                 [self setTopLessConstraint:nil];
             }
             top = [self topGreaterConstraint];
             if (top) {
-                [superView removeConstraint:top];
+                [self removeCacheConstraint:top];
                 [self setTopGreaterConstraint:nil];
             }
             NSLayoutConstraint * firstBaseline = [self firstBaselineConstraintRelation:related];
@@ -2859,7 +2781,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     firstBaseline.constant = constant;
                     return self;
                 }
-                [superView removeConstraint:firstBaseline];
+                [self removeCacheConstraint:firstBaseline];
                 [self setFirstBaselineConstraint:nil relation:related];
             }
         }
@@ -2882,16 +2804,81 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     return self;
 }
 
-- (WHC_VIEW *)sameSuperviewWithView1:(WHC_VIEW *)view1 view2:(WHC_VIEW *)view2 {
-    WHC_VIEW * sameSuperview = nil;
+- (void)removeCacheConstraint:(NSLayoutConstraint *)constraint {
+    WHC_VIEW * mainView = [self whc_MainViewConstraint:constraint];
+    if (mainView) {
+        [mainView removeConstraint:constraint];
+    }
+}
+
+- (WHC_VIEW *)mainSuperView:(WHC_VIEW *)view1 view2:(WHC_VIEW *)view2 {
+    if (!view1 && view2) {
+        return view2;
+    }
+    if (view1 && !view2) {
+        return view1;
+    }
+    if (view1.superview && !view2.superview) {
+        return view2;
+    }
+    if (!view1.superview && view2.superview) {
+        return view1;
+    }
+    WHC_Data * data = [self sameSuperviewWithView1:view1 view2:view2];
+    if (data && data.superView) {
+        return data.superView;
+    }
+    data = [self sameSuperviewWithView1:view2 view2:view1];
+    if (data && data.superView) {
+        return data.superView;
+    }
+    return nil;
+}
+
+- (WHC_VIEW *)checkSubSuperView:(WHC_VIEW *)superv subv:(WHC_VIEW *)subv {
+    WHC_VIEW * superView;
+    if (superv && subv) {
+        WHC_VIEW * (^__block scanSubv)(NSArray<WHC_VIEW *> *) = ^WHC_VIEW * (NSArray<WHC_VIEW *> * subvs) {
+            __block WHC_VIEW * superView;
+            if (subvs && subvs.count > 0) {
+                [subvs enumerateObjectsUsingBlock:^(WHC_VIEW * _Nonnull sbvspv, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if (sbvspv == subv) {
+                        superView = sbvspv;
+                        *stop = YES;
+                    }
+                }];
+                if (!superView) {
+                    NSMutableArray<WHC_VIEW *> * sumSubv = [NSMutableArray array];
+                    [subvs enumerateObjectsUsingBlock:^(WHC_VIEW * _Nonnull sv, NSUInteger idx, BOOL * _Nonnull stop) {
+                        [sumSubv addObjectsFromArray:sv.subviews];
+                    }];
+                    superView = scanSubv(sumSubv);
+                }
+            }
+            return superView;
+        };
+        if (scanSubv(@[superv])) {
+            superView = superv;
+        }
+    }
+    return superView;
+}
+    
+- (WHC_Data *)sameSuperviewWithView1:(WHC_VIEW *)view1 view2:(WHC_VIEW *)view2 {
     WHC_VIEW * tempToItem = view1;
     WHC_VIEW * tempItem = view2;
+    WHC_Data * data = [WHC_Data new];
+    data.isSameSuper = YES;
     if (tempToItem && tempItem) {
-        if (tempToItem.superview && tempToItem.superview == tempItem) {
-            return tempItem;
+        if ([self checkSubSuperView:view1 subv:view2]) {
+            data.superView = view1;
+            data.isSameSuper = NO;
+            return data;
         }
-        if (tempItem.superview && tempItem.superview == tempToItem) {
-            return tempToItem;
+        if ([self checkSubSuperView:view2 subv:view1]) {
+            data.superView = view2;
+            data.isSameSuper = NO;
+            return data;
         }
     }
     BOOL (^checkSameSuperview)(WHC_VIEW *, WHC_VIEW *) = ^(WHC_VIEW * tmpSuperview, WHC_VIEW * singleView) {
@@ -2913,19 +2900,19 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         WHC_VIEW * itemSuperview = tempItem.superview;
         while (toItemSuperview && itemSuperview) {
             if (toItemSuperview == itemSuperview) {
-                sameSuperview = toItemSuperview;
+                data.superView = toItemSuperview;
                 break;
             }else {
                 tempToItem = toItemSuperview;
                 tempItem = itemSuperview;
                 if (!tempToItem.superview && tempItem.superview) {
                     if (checkSameSuperview(tempToItem, tempItem)) {
-                        sameSuperview = tempToItem;
+                        data.superView = tempToItem;
                         break;
                     }
                 }else if (tempToItem.superview && !tempItem.superview) {
                     if (checkSameSuperview(tempItem, tempToItem)) {
-                        sameSuperview = tempItem;
+                        data.superView = tempItem;
                         break;
                     }
                 }else {
@@ -2935,7 +2922,7 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             }
         }
     }
-    return sameSuperview;
+    return data;
 }
 
 - (void)setCacheConstraint:(NSLayoutConstraint *)constraint attribute:(NSLayoutAttribute) attribute relation:(NSLayoutRelation)relation {

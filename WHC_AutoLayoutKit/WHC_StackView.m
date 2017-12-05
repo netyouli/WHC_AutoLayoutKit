@@ -94,11 +94,12 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        /*  去掉默认设置背景颜色
         #if TARGET_OS_IPHONE || TARGET_OS_TV
         self.backgroundColor = [WHC_COLOR whiteColor];
         #elif TARGET_OS_MAC
         self.makeBackingLayer.backgroundColor = [WHC_COLOR whiteColor].CGColor;
-        #endif
+        #endif*/
     }
     return self;
 }
@@ -106,13 +107,18 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        /* 去掉默认设置背景颜色
         #if TARGET_OS_IPHONE || TARGET_OS_TV
         self.backgroundColor = [WHC_COLOR whiteColor];
         #elif TARGET_OS_MAC
         self.makeBackingLayer.backgroundColor = [WHC_COLOR whiteColor].CGColor;
-        #endif
+        #endif*/
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
 }
 
 - (void)setWhc_WidthWeight:(CGFloat)whc_WidthWeight {

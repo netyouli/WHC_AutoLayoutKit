@@ -82,15 +82,15 @@
     
     [_l2 whc_ClearLayoutAttrs];
     
-    txt.whc_LeftSpace(0)
-    .whc_TopSpaceToView(10, btn)
+    txt.whc_LeftSpace(10)
+    .whc_TopSpaceToView(10, view1)
     .whc_Height(40)
-    .whc_Width(100)
+    .whc_Width(200)
     .whc_LessOrEqual()
     .whc_Width(10)
     .whc_GreaterOrEqual();
     
-    /// 宽度小于等于100并且大于等于10 约束演示
+    /// 宽度小于等于200并且大于等于10 约束演示
     txt.text = @"whc_LessOrEqual";
  
 }
@@ -105,6 +105,9 @@
         /// 自动高度约束并且不删除bottom约束
         lable.whc_HeightAuto();
     }
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -114,7 +117,11 @@
         .whc_RightSpace(10)
         .whc_TopSpace(10)
         .whc_HeightAuto()
-        .whc_BottomSpace(10); /// 添加与父视图bottom约束10并且不删除自身自动高度约束
+        .whc_BottomSpace(10);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view layoutIfNeeded];
+    }];
     
 }
 
