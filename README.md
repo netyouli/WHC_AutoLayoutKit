@@ -10,9 +10,7 @@
 
 **Swift4.0 version** 👉 [WHC_Layout](https://github.com/netyouli/WHC_Layout)
 
-**最新bug修复: 修改约束优先级ios11崩溃 **
-
-**最新bug修复：修复孙子层视图之间约束报错bug**
+**重构布局核心升级基于二叉树层遍历算法搜索约束主视图,对于自动处理跨视图层复杂约束关系更健壮可靠**
 
 Introduce
 ==============
