@@ -2450,8 +2450,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     multiplier:(CGFloat)multiplier
                       constant:(CGFloat)constant {
                           
-    WHC_VIEW * superView = [self mainSuperView:toItem view2:item];
-    if (!superView) return self;
     if (!toItem) toAttribute = NSLayoutAttributeNotAnAttribute;
     if (!item) attribute = NSLayoutAttributeNotAnAttribute;
     if (self.translatesAutoresizingMaskIntoConstraints) {
@@ -2790,7 +2788,8 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
         default:
             break;
     }
-    
+    WHC_VIEW * superView = [self mainSuperView:toItem view2:item];
+    if (!superView) return self;
     NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:item
                                              attribute:attribute
                                              relatedBy:related
@@ -2837,28 +2836,28 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
 
 - (WHC_VIEW *)checkSubSuperView:(WHC_VIEW *)superv subv:(WHC_VIEW *)subv {
     WHC_VIEW * superView;
-    if (superv && subv) {
-        WHC_VIEW * (^__block scanSubv)(NSArray<WHC_VIEW *> *) = ^WHC_VIEW * (NSArray<WHC_VIEW *> * subvs) {
-            __block WHC_VIEW * superView;
-            if (subvs && subvs.count > 0) {
-                [subvs enumerateObjectsUsingBlock:^(WHC_VIEW * _Nonnull sbvspv, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if (sbvspv == subv) {
+    if (superv && subv && subv != superv) {
+        WHC_VIEW * sbvspv = subv.superview;
+        if (sbvspv) {
+            WHC_VIEW * (^__block scanSubv)(NSArray<WHC_VIEW *> *) = ^WHC_VIEW * (NSArray<WHC_VIEW *> * subvs) {
+                __block WHC_VIEW * superView;
+                if (subvs && subvs.count > 0) {
+                    if ([subvs containsObject:sbvspv]) {
                         superView = sbvspv;
-                        *stop = YES;
                     }
-                }];
-                if (!superView) {
-                    NSMutableArray<WHC_VIEW *> * sumSubv = [NSMutableArray array];
-                    [subvs enumerateObjectsUsingBlock:^(WHC_VIEW * _Nonnull sv, NSUInteger idx, BOOL * _Nonnull stop) {
-                        [sumSubv addObjectsFromArray:sv.subviews];
-                    }];
-                    superView = scanSubv(sumSubv);
+                    if (!superView) {
+                        NSMutableArray<WHC_VIEW *> * sumSubv = [NSMutableArray array];
+                        [subvs enumerateObjectsUsingBlock:^(WHC_VIEW * _Nonnull sv, NSUInteger idx, BOOL * _Nonnull stop) {
+                            [sumSubv addObjectsFromArray:sv.subviews];
+                        }];
+                        superView = scanSubv(sumSubv);
+                    }
                 }
+                return superView;
+            };
+            if (scanSubv(@[superv])) {
+                superView = superv;
             }
-            return superView;
-        };
-        if (scanSubv(@[superv])) {
-            superView = superv;
         }
     }
     return superView;
