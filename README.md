@@ -12,6 +12,8 @@
 
 **重构布局核心升级基于二叉树层遍历算法搜索约束主视图,对于自动处理跨视图层复杂约束关系更健壮可靠**
 
+**封装集成抗拉伸抗压缩api**
+
 Introduce
 ==============
 -  Adopt chain layout Api calls convenient
@@ -100,6 +102,16 @@ Modify the view constraint for low priority right
 ```objective-c
 view.whc_RightSpace(10)
     .whc_PriorityLow();
+```
+
+```objective-c
+// The higher the priority, the less likely to be stretched
+// 设置抗拉伸优先级,优先级越高越不容易被拉伸
+label.whc_ContentHuggingPriority(UILayoutPriorityDefaultLow, UILayoutConstraintAxisHorizontal);
+
+// 设置抗压缩优先级,优先级越高越不容易被压缩
+// Compression priority, the higher the priority the less easy to be compressed
+label.whc_ContentCompressionResistancePriority(UILayoutPriorityDefaultLow, UILayoutConstraintAxisHorizontal);
 ```
 
 ## One line of code calculation cell height
