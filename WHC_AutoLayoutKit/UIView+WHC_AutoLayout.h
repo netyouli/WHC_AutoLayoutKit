@@ -59,6 +59,9 @@ typedef WHC_VIEW * (^PriorityRequired)();
 typedef WHC_VIEW * (^PriorityFitting)();
 typedef WHC_VIEW * (^PriorityValue)(CGFloat value);
 
+typedef WHC_VIEW * (^ContentHuggingPriority)(WHC_LayoutPriority, WHC_ConstraintAxis);
+typedef WHC_VIEW * (^ContentCompressionResistancePriority)(WHC_LayoutPriority, WHC_ConstraintAxis);
+
 typedef WHC_VIEW * (^LeftSpace)(CGFloat value);
 typedef WHC_VIEW * (^LeftSpaceToView)(CGFloat value , WHC_VIEW * toView);
 typedef WHC_VIEW * (^LeftSpaceEqualView)(WHC_VIEW * view);
@@ -151,6 +154,11 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
 @property (nonatomic ,copy , readonly)PriorityFitting whc_PriorityFitting;
 /// 设置当前约束的优先级 (CGFloat value): 优先级大小(0-1000)
 @property (nonatomic ,copy , readonly)PriorityValue whc_Priority;
+
+/// 设置视图抗拉伸优先级,优先级越高越不容易被拉伸(UILayoutPriority, UILayoutConstraintAxis)
+@property (nonatomic ,copy, readonly)ContentHuggingPriority whc_ContentHuggingPriority;
+/// 设置视图抗压缩优先级,优先级越高越不容易被压缩(UILayoutPriority, UILayoutConstraintAxis)
+@property (nonatomic ,copy, readonly)ContentCompressionResistancePriority whc_ContentCompressionResistancePriority;
 
 /// 与父视图左边间距(CGFloat value)
 @property (nonatomic ,copy , readonly)LeftSpace whc_LeftSpace;

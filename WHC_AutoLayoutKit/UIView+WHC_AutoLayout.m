@@ -774,6 +774,30 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
     };
 }
 
+- (ContentCompressionResistancePriority)whc_ContentCompressionResistancePriority {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHC_LayoutPriority priority, WHC_ConstraintAxis axis) {
+        #if TARGET_OS_IPHONE || TARGET_OS_TV
+        [weakSelf setContentCompressionResistancePriority:priority forAxis:axis];
+        #elif TARGET_OS_MAC
+        [weakSelf setContentCompressionResistancePriority:priority forOrientation:axis];
+        #endif
+        return weakSelf;
+    };
+}
+
+- (ContentHuggingPriority)whc_ContentHuggingPriority {
+    __weak typeof(self) weakSelf = self;
+    return ^(WHC_LayoutPriority priority, WHC_ConstraintAxis axis) {
+        #if TARGET_OS_IPHONE || TARGET_OS_TV
+        [weakSelf setContentHuggingPriority:priority forAxis:axis];
+        #elif TARGET_OS_MAC
+        [weakSelf setContentHuggingPriority:priority forOrientation:axis];
+        #endif
+        return weakSelf;
+    };
+}
+
 #pragma mark - api version 2.0 -
 - (LeftSpace)whc_LeftSpace {
     __weak typeof(self) weakSelf = self;
@@ -2874,11 +2898,6 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
             data.isSameSuper = NO;
             return data;
         }
-        if ([self checkSubSuperView:view2 subv:view1]) {
-            data.superView = view2;
-            data.isSameSuper = NO;
-            return data;
-        }
     }
     BOOL (^checkSameSuperview)(WHC_VIEW *, WHC_VIEW *) = ^(WHC_VIEW * tmpSuperview, WHC_VIEW * singleView) {
         WHC_VIEW * tmpSingleView = singleView;
@@ -2919,6 +2938,13 @@ typedef NS_OPTIONS(NSUInteger, WHCNibType) {
                     itemSuperview = itemSuperview.superview;
                 }
             }
+        }
+    }
+    if (tempToItem && tempItem) {
+        if ([self checkSubSuperView:view2 subv:view1]) {
+            data.superView = view2;
+            data.isSameSuper = NO;
+            return data;
         }
     }
     return data;

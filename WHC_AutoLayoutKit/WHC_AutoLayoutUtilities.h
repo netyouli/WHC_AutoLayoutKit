@@ -11,6 +11,7 @@
 
 #define WHC_VIEW UIView
 #define WHC_LayoutPriority UILayoutPriority
+#define WHC_ConstraintAxis UILayoutConstraintAxis
 #define WHC_COLOR UIColor
 #import <UIKit/UIKit.h>
 
@@ -18,6 +19,7 @@
 
 #define WHC_VIEW NSView
 #define WHC_LayoutPriority NSLayoutPriority
+#define WHC_ConstraintAxis NSLayoutConstraintOrientation
 #define WHC_COLOR NSColor
 #import <AppKit/AppKit.h>
 
