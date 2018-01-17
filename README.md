@@ -12,7 +12,9 @@
 
 **重构布局核心升级基于二叉树层遍历算法搜索约束主视图,对于自动处理跨视图层复杂约束关系更健壮可靠**
 
-**封装集成抗拉和伸抗压缩api支持链式调用**
+**添加抗拉伸和抗压缩api支持链式调用**
+
+**添加UILayoutGuide，safeAreaLayoutGuide约束支持**
 
 Introduce
 ==============
@@ -40,6 +42,23 @@ Install
 
 Usage
 ==============
+
+## UILayoutGuide，safeAreaLayoutGuide
+```objective-c
+UILayoutGuide * guide = UILayoutGuide.new;
+UIView * view = UIView.new;
+
+guide.whc_LeftSpace(10)
+.whc_TopSpaceToView(0, self.view.safeAreaLayoutGuide)
+.whc_RightSpace(10)
+.whc_Height(30);
+
+view.whc_LeftSpace(10)
+.whc_RightSpace(10)
+.whc_TopSpaceToView(0, guide)
+.whc_Height(50);
+
+```
 
 ## Automatic height view
 ![](https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/autoHeight.gif)

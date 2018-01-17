@@ -12,10 +12,17 @@
  *********************************************************/
 
 #import "DemoVC7.h"
-#import "UIView+WHC_AutoLayout.h"
+#import "WHC_AutoLayout.h"
 
 @interface DemoVC7 ()
 
+@property (nonatomic, strong) UIView * view1;
+@property (nonatomic, strong) UIView * view2;
+@property (nonatomic, strong) UIView * view3;
+
+@property (nonatomic, strong) UILayoutGuide * guide1;
+@property (nonatomic, strong) UILayoutGuide * guide2;
+@property (nonatomic, strong) UILayoutGuide * guide3;
 @end
 
 @implementation DemoVC7
@@ -23,18 +30,40 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title =
-    @"一行代码智能对Xib上所有控件智能横向布局";
-    /**
-     * WHC_AutoLayoutKit 2.0 简介
-     * 开发者：吴海超(WHC)
-     * 智能识别xib上所有UI控件之间约束关系
-       来自动给xib上所有控件进行自动添加相
-       应约束关系
-     */
+    self.navigationItem.title = @"safeAreaLayoutGuide";
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self make];
     
-    /// 对xib上所有控件横向进行智能布局
-    [self.view whc_AutoXibHorizontalLayout];
+    _guide1.whc_LeftSpace(10)
+    .whc_TopSpaceToView(0, self.view.safeAreaLayoutGuide)
+    .whc_RightSpace(10)
+    .whc_Height(30);
+    
+    _view1.whc_LeftSpace(10)
+    .whc_RightSpace(10)
+    .whc_TopSpaceToView(0, _guide1)
+    .whc_Height(50);
+    
+    _guide2.whc_LeftSpace(10)
+    .whc_TopSpaceToView(0, _view1)
+    .whc_RightSpace(10)
+    .whc_HeightEqualView(_guide1);
+    
+    _view2.whc_LeftSpace(10)
+    .whc_RightSpace(10)
+    .whc_TopSpaceToView(0, _guide2)
+    .whc_HeightEqualView(_view1);
+    
+    _guide3.whc_LeftSpace(10)
+    .whc_TopSpaceToView(0, _view2)
+    .whc_RightSpace(10)
+    .whc_HeightEqualView(_guide2);
+    
+    _view3.whc_LeftSpace(10)
+    .whc_RightSpace(10)
+    .whc_TopSpaceToView(0, _guide3)
+    .whc_HeightEqualView(_view2);
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,5 +71,30 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)make {
+    _view1 = [UIView new];
+    _view1.translatesAutoresizingMaskIntoConstraints = NO;
+    _view1.backgroundColor = [UIColor redColor];
+    [self.view addSubview:_view1];
+    
+    _view2 = [UIView new];
+    _view2.translatesAutoresizingMaskIntoConstraints = NO;
+    _view2.backgroundColor = [UIColor grayColor];
+    [self.view addSubview:_view2];
+    
+    _view3 = [UIView new];
+    _view3.translatesAutoresizingMaskIntoConstraints = NO;
+    _view3.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:_view3];
+    
+    _guide1 = [UILayoutGuide new];
+    [self.view addLayoutGuide:_guide1];
+    _guide2 = [UILayoutGuide new];
+    [self.view addLayoutGuide:_guide2];
+    _guide3 = [UILayoutGuide new];
+    [self.view addLayoutGuide:_guide3];
+}
+
 
 @end
+

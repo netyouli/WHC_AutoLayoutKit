@@ -79,6 +79,8 @@
          .whc_RightSpace(10)
          .whc_HeightAuto();
     
+    
+    
     [_l2 whc_ClearLayoutAttrs];
     
     txt.whc_LeftSpace(10)

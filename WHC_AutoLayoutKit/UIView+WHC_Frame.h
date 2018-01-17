@@ -26,7 +26,8 @@
 // THE SOFTWARE.
 #import "WHC_AutoLayoutUtilities.h"
 
-@interface WHC_VIEW (WHC_Frame)
+@interface WHC_CLASS_VIEW (WHC_Frame)
+
 /// 获取屏幕宽度
 @property (nonatomic, assign, readonly)CGFloat whc_sw;
 /// 获取屏幕高度

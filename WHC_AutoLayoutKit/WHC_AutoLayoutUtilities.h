@@ -9,7 +9,10 @@
 #import <Foundation/Foundation.h>
 #if TARGET_OS_IPHONE || TARGET_OS_TV
 
-#define WHC_VIEW UIView
+#define WHC_CLASS_VIEW UIView
+#define WHC_CLASS_LGUIDE UILayoutGuide
+
+#define WHC_VIEW NSObject
 #define WHC_LayoutPriority UILayoutPriority
 #define WHC_ConstraintAxis UILayoutConstraintAxis
 #define WHC_COLOR UIColor
@@ -17,7 +20,10 @@
 
 #elif TARGET_OS_MAC
 
-#define WHC_VIEW NSView
+#define WHC_CLASS_VIEW NSView
+#define WHC_CLASS_LGUIDE NSLayoutGuide
+
+#define WHC_VIEW NSObject
 #define WHC_LayoutPriority NSLayoutPriority
 #define WHC_ConstraintAxis NSLayoutConstraintOrientation
 #define WHC_COLOR NSColor

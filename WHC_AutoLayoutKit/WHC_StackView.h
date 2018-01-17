@@ -26,9 +26,19 @@
 // THE SOFTWARE.
 #import "UIView+WHC_AutoLayout.h"
 
+/// 布局方向
+typedef NS_OPTIONS(NSUInteger, WHC_LayoutOrientationOptions) {
+    /// 垂直布局
+    Vertical = 1 << 0,
+    /// 横向布局
+    Horizontal = 1 << 1,
+    /// 垂直布局和横向布局
+    All = 1 << 2
+};
+
 #pragma mark - UI自动布局StackView容器 -
 
-@interface WHC_VIEW (WHC_StackViewCategory)
+@interface WHC_CLASS_VIEW (WHC_StackViewCategory)
 /**
  控件横向和垂直布局宽度或者高度权重比例
  */
@@ -37,7 +47,7 @@
 @property (nonatomic , assign)CGFloat whc_HeightWeight;
 @end
 
-@interface WHC_StackView : WHC_VIEW
+@interface WHC_StackView : WHC_CLASS_VIEW
 
 
 
@@ -86,7 +96,7 @@
 @property (nonatomic ,copy , readonly)WidthAuto whc_WidthAuto;
 
 /// 元素集合
-@property (nonatomic, strong, readonly)NSArray<WHC_VIEW *> * whc_Subviews;
+@property (nonatomic, strong, readonly)NSArray<WHC_CLASS_VIEW *> * whc_Subviews;
 
 /************重载父类方法**************/
 /**

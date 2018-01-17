@@ -28,104 +28,87 @@
 
 #import "WHC_AutoLayoutUtilities.h"
 
-/// 布局方向
-typedef NS_OPTIONS(NSUInteger, WHC_LayoutOrientationOptions) {
-    /// 垂直布局
-    Vertical = 1 << 0,
-    /// 横向布局
-    Horizontal = 1 << 1,
-    /// 垂直布局和横向布局
-    All = 1 << 2
-};
+typedef WHC_CLASS_VIEW * (^LessOrEqual)();
+typedef WHC_CLASS_VIEW * (^GreaterOrEqual)();
+typedef WHC_CLASS_VIEW * (^ResetConstraintAttribute)();
+typedef WHC_CLASS_VIEW * (^ClearConstraintAttribute)();
+typedef WHC_CLASS_VIEW * (^RemoveConstraintAttribute)(NSLayoutAttribute attributes, ...);
+typedef WHC_CLASS_VIEW * (^RemoveConstraintFromViewAttribute)(WHC_CLASS_VIEW * view, NSLayoutAttribute attributes, ...);
+typedef WHC_CLASS_VIEW * (^RemoveConstraintToViewAttribute)(WHC_VIEW * toView, NSLayoutAttribute attributes, ...);
 
-/// 布局类型
-typedef NS_OPTIONS(NSUInteger, WHC_LayoutTypeOptions) {
-    /// 默认类型
-    DefaultType = 1 << 0,
-    /// 左右类型
-    LeftRightType = 1 << 1,
-};
-typedef WHC_VIEW * (^LessOrEqual)();
-typedef WHC_VIEW * (^GreaterOrEqual)();
-typedef WHC_VIEW * (^ResetConstraintAttribute)();
-typedef WHC_VIEW * (^ClearConstraintAttribute)();
-typedef WHC_VIEW * (^RemoveConstraintAttribute)(NSLayoutAttribute attributes, ...);
-typedef WHC_VIEW * (^RemoveConstraintFromViewAttribute)(WHC_VIEW * view, NSLayoutAttribute attributes, ...);
-typedef WHC_VIEW * (^RemoveConstraintToViewAttribute)(WHC_VIEW * toView, NSLayoutAttribute attributes, ...);
+typedef WHC_CLASS_VIEW * (^PriorityLow)();
+typedef WHC_CLASS_VIEW * (^PriorityHigh)();
+typedef WHC_CLASS_VIEW * (^PriorityRequired)();
+typedef WHC_CLASS_VIEW * (^PriorityFitting)();
+typedef WHC_CLASS_VIEW * (^PriorityValue)(CGFloat value);
 
-typedef WHC_VIEW * (^PriorityLow)();
-typedef WHC_VIEW * (^PriorityHigh)();
-typedef WHC_VIEW * (^PriorityRequired)();
-typedef WHC_VIEW * (^PriorityFitting)();
-typedef WHC_VIEW * (^PriorityValue)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^ContentHuggingPriority)(WHC_LayoutPriority, WHC_ConstraintAxis);
+typedef WHC_CLASS_VIEW * (^ContentCompressionResistancePriority)(WHC_LayoutPriority, WHC_ConstraintAxis);
 
-typedef WHC_VIEW * (^ContentHuggingPriority)(WHC_LayoutPriority, WHC_ConstraintAxis);
-typedef WHC_VIEW * (^ContentCompressionResistancePriority)(WHC_LayoutPriority, WHC_ConstraintAxis);
+typedef WHC_CLASS_VIEW * (^LeftSpace)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^LeftSpaceToView)(CGFloat value , WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^LeftSpaceEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^LeftSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
-typedef WHC_VIEW * (^LeftSpace)(CGFloat value);
-typedef WHC_VIEW * (^LeftSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_VIEW * (^LeftSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^LeftSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_VIEW * (^LeadingSpace)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^LeadingSpaceToView)(CGFloat value , WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^LeadingSpaceEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^LeadingSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
-typedef WHC_VIEW * (^LeadingSpace)(CGFloat value);
-typedef WHC_VIEW * (^LeadingSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_VIEW * (^LeadingSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^LeadingSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_VIEW * (^TrailingSpace)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^TrailingSpaceToView)(CGFloat value , WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^TrailingSpaceEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^TrailingSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
-typedef WHC_VIEW * (^TrailingSpace)(CGFloat value);
-typedef WHC_VIEW * (^TrailingSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_VIEW * (^TrailingSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^TrailingSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_VIEW * (^BaseLineSpace)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^BaseLineSpaceToView)(CGFloat value , WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^BaseLineSpaceEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^BaseLineSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
-typedef WHC_VIEW * (^BaseLineSpace)(CGFloat value);
-typedef WHC_VIEW * (^BaseLineSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_VIEW * (^BaseLineSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^BaseLineSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_VIEW * (^RightSpace)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^RightSpaceToView)(CGFloat value , WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^RightSpaceEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^RightSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
-typedef WHC_VIEW * (^RightSpace)(CGFloat value);
-typedef WHC_VIEW * (^RightSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_VIEW * (^RightSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^RightSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_VIEW * (^TopSpace)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^TopSpaceToView)(CGFloat value , WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^TopSpaceEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^TopSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
-typedef WHC_VIEW * (^TopSpace)(CGFloat value);
-typedef WHC_VIEW * (^TopSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_VIEW * (^TopSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^TopSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_VIEW * (^BottomSpace)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^BottomSpaceToView)(CGFloat value , WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^BottomSpaceEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^BottomSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
-typedef WHC_VIEW * (^BottomSpace)(CGFloat value);
-typedef WHC_VIEW * (^BottomSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_VIEW * (^BottomSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^BottomSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_VIEW * (^Width)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^WidthAuto)();
+typedef WHC_CLASS_VIEW * (^WidthEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^WidthEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
+typedef WHC_CLASS_VIEW * (^WidthHeightRatio)(CGFloat ratio);
 
-typedef WHC_VIEW * (^Width)(CGFloat value);
-typedef WHC_VIEW * (^WidthAuto)();
-typedef WHC_VIEW * (^WidthEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^WidthEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
-typedef WHC_VIEW * (^WidthHeightRatio)(CGFloat ratio);
+typedef WHC_CLASS_VIEW * (^Height)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^HeightAuto)();
+typedef WHC_CLASS_VIEW * (^HeightEqualView)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^HeightEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
+typedef WHC_CLASS_VIEW * (^HeightWidthRatio)(CGFloat ratio);
 
-typedef WHC_VIEW * (^Height)(CGFloat value);
-typedef WHC_VIEW * (^HeightAuto)();
-typedef WHC_VIEW * (^HeightEqualView)(WHC_VIEW * view);
-typedef WHC_VIEW * (^HeightEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
-typedef WHC_VIEW * (^HeightWidthRatio)(CGFloat ratio);
+typedef WHC_CLASS_VIEW * (^CenterX)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^CenterXToView)(CGFloat value, WHC_VIEW * toView);
 
-typedef WHC_VIEW * (^CenterX)(CGFloat value);
-typedef WHC_VIEW * (^CenterXToView)(CGFloat value, WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^CenterY)(CGFloat value);
+typedef WHC_CLASS_VIEW * (^CenterYToView)(CGFloat value, WHC_VIEW * toView);
 
-typedef WHC_VIEW * (^CenterY)(CGFloat value);
-typedef WHC_VIEW * (^CenterYToView)(CGFloat value, WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^Center)(CGFloat x, CGFloat y);
+typedef WHC_CLASS_VIEW * (^CenterToView)(CGPoint center, WHC_VIEW * toView);
 
-typedef WHC_VIEW * (^Center)(CGFloat x, CGFloat y);
-typedef WHC_VIEW * (^CenterToView)(CGPoint center, WHC_VIEW * toView);
+typedef WHC_CLASS_VIEW * (^size)(CGFloat width, CGFloat height);
+typedef WHC_CLASS_VIEW * (^SizeEqual)(WHC_VIEW * view);
 
-typedef WHC_VIEW * (^size)(CGFloat width, CGFloat height);
-typedef WHC_VIEW * (^SizeEqual)(WHC_VIEW * view);
-
-typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
+typedef WHC_CLASS_VIEW * (^FrameEqual)(WHC_VIEW * view);
 
 #pragma mark - UI自动布局 -
 
-@interface WHC_VIEW (WHC_AutoLayout)
+@interface WHC_CLASS_VIEW (WHC_AutoLayout)
 
 #pragma mark - api version ~ 2.0 -
 
@@ -285,14 +268,14 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_ResetConstraints;
+- (WHC_CLASS_VIEW *)whc_ResetConstraints;
 
 /**
  清除所有布局属性
  
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_ClearLayoutAttrs;
+- (WHC_CLASS_VIEW *)whc_ClearLayoutAttrs;
 
 /**
  移除一个或者一组约束
@@ -300,7 +283,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param attributes 约束类型（可变参数）
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_RemoveLayoutAttr:(NSLayoutAttribute)attributes, ...;
+- (WHC_CLASS_VIEW *)whc_RemoveLayoutAttr:(NSLayoutAttribute)attributes, ...;
 
 
 /**
@@ -309,7 +292,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param attribute 约束类型
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_RemoveLayoutOneAttr:(NSLayoutAttribute)attribute;
+- (WHC_CLASS_VIEW *)whc_RemoveLayoutOneAttr:(NSLayoutAttribute)attribute;
 
 /**
  移除一个或者一组约束从指定的视图上
@@ -318,7 +301,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param attributes 约束类型（可变参数）
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_RemoveFrom:(WHC_VIEW *)view layoutAttrs:(NSLayoutAttribute)attributes, ...;
+- (WHC_CLASS_VIEW *)whc_RemoveFrom:(WHC_CLASS_VIEW *)view layoutAttrs:(NSLayoutAttribute)attributes, ...;
 
 
 /**
@@ -328,7 +311,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param attribute 约束类型
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_RemoveFrom:(WHC_VIEW *)view layoutAttr:(NSLayoutAttribute)attribute;
+- (WHC_CLASS_VIEW *)whc_RemoveFrom:(WHC_CLASS_VIEW *)view layoutAttr:(NSLayoutAttribute)attribute;
 
 
 /**
@@ -338,7 +321,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param attribute 移除的约束
  @return 当前视图
  */
-- (WHC_VIEW *)whc_RemoveTo:(WHC_VIEW *)view attr:(NSLayoutAttribute)attribute;
+- (WHC_CLASS_VIEW *)whc_RemoveTo:(WHC_VIEW *)view attr:(NSLayoutAttribute)attribute;
 
 /**
  移除多个约束从关联的视图
@@ -348,35 +331,35 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 当前视图
  */
 
-- (WHC_VIEW *)whc_RemoveTo:(WHC_VIEW *)view layoutAttrs:(NSLayoutAttribute)attributes, ... ;
+- (WHC_CLASS_VIEW *)whc_RemoveTo:(WHC_VIEW *)view layoutAttrs:(NSLayoutAttribute)attributes, ... ;
 
 /**
  设置当前约束的低优先级
 
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_priorityLow;
+- (WHC_CLASS_VIEW *)whc_priorityLow;
 
 /**
  设置当前约束的高优先级
 
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_priorityHigh;
+- (WHC_CLASS_VIEW *)whc_priorityHigh;
 
 /**
  设置当前约束的默认优先级
 
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_priorityRequired;
+- (WHC_CLASS_VIEW *)whc_priorityRequired;
 
 /**
  设置当前约束的合适优先级
 
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_priorityFitting;
+- (WHC_CLASS_VIEW *)whc_priorityFitting;
 
 /**
  设置当前约束的优先级
@@ -384,7 +367,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param value 优先级大小(0-1000)
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_priority:(CGFloat)value;
+- (WHC_CLASS_VIEW *)whc_priority:(CGFloat)value;
 
 /**
  设置左边距(默认相对父视图)
@@ -392,7 +375,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param leftSpace 左边距
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LeftSpace:(CGFloat)leftSpace;
+- (WHC_CLASS_VIEW *)whc_LeftSpace:(CGFloat)leftSpace;
 
 
 /**
@@ -402,7 +385,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LeftSpace:(CGFloat)leftSpace toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_LeftSpace:(CGFloat)leftSpace toView:(WHC_VIEW *)toView;
 
 /**
  设置左边距与视图view左边距相等
@@ -410,7 +393,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LeftSpaceEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_LeftSpaceEqualView:(WHC_VIEW *)view;
 
 /**
  设置左边距与视图view左边距相等并偏移offset
@@ -419,7 +402,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param offset 偏移量
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LeftSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
+- (WHC_CLASS_VIEW *)whc_LeftSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
 
 /**
  设置右边距(默认相对父视图)
@@ -427,7 +410,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param rightSpace 右边距
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_RightSpace:(CGFloat)rightSpace;
+- (WHC_CLASS_VIEW *)whc_RightSpace:(CGFloat)rightSpace;
 
 /**
  设置右边距
@@ -436,7 +419,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_RightSpace:(CGFloat)rightSpace toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_RightSpace:(CGFloat)rightSpace toView:(WHC_VIEW *)toView;
 
 /**
  设置右边距与视图view左对齐边距相等
@@ -444,7 +427,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_RightSpaceEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_RightSpaceEqualView:(WHC_VIEW *)view;
 
 /**
  设置右边距与视图view左对齐边距相等并偏移offset
@@ -453,7 +436,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param offset 偏移量
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_RightSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
+- (WHC_CLASS_VIEW *)whc_RightSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
 
 /**
  设置左对齐(默认相对父视图)
@@ -461,7 +444,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param leadingSpace 左边距
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace;
+- (WHC_CLASS_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace;
 
 /**
  设置左对齐
@@ -471,7 +454,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace toView:(WHC_VIEW *)toView;
 
 /**
  设置左对齐边距与某视图左对齐边距相等
@@ -479,7 +462,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LeadingSpaceEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_LeadingSpaceEqualView:(WHC_VIEW *)view;
 
 /**
  设置左对齐边距与某视图左对齐边距相等并偏移offset
@@ -488,7 +471,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param offset 偏移量
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LeadingSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
+- (WHC_CLASS_VIEW *)whc_LeadingSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
 
 /**
  设置右对齐(默认相对父视图)
@@ -496,7 +479,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param trailingSpace 右边距
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace;
+- (WHC_CLASS_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace;
 
 /**
  设置右对齐
@@ -505,7 +488,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace toView:(WHC_VIEW *)toView;
 
 /**
  设置右对齐边距与某视图右对齐边距相等
@@ -513,7 +496,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_TrailingSpaceEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_TrailingSpaceEqualView:(WHC_VIEW *)view;
 
 /**
  设置右对齐边距与某视图右对齐边距相等并偏移offset
@@ -522,7 +505,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param offset 偏移量
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_TrailingSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
+- (WHC_CLASS_VIEW *)whc_TrailingSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
 
 /**
  设置顶边距(默认相对父视图)
@@ -530,7 +513,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param topSpace 顶边距
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_TopSpace:(CGFloat)topSpace;
+- (WHC_CLASS_VIEW *)whc_TopSpace:(CGFloat)topSpace;
 
 /**
  设置顶边距
@@ -539,7 +522,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_TopSpace:(CGFloat)topSpace toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_TopSpace:(CGFloat)topSpace toView:(WHC_VIEW *)toView;
 
 /**
  设置顶边距与视图view顶边距相等
@@ -547,7 +530,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_TopSpaceEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_TopSpaceEqualView:(WHC_VIEW *)view;
 
 /**
  设置顶边距与视图view顶边距相等并偏移offset
@@ -556,7 +539,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param offset 偏移量
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_TopSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
+- (WHC_CLASS_VIEW *)whc_TopSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
 
 /**
  设置底边距(默认相对父视图)
@@ -564,7 +547,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param bottomSpace 底边距
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_BottomSpace:(CGFloat)bottomSpace;
+- (WHC_CLASS_VIEW *)whc_BottomSpace:(CGFloat)bottomSpace;
 
 /**
  设置底边距
@@ -573,7 +556,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_BottomSpace:(CGFloat)bottomSpace toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_BottomSpace:(CGFloat)bottomSpace toView:(WHC_VIEW *)toView;
 
 /**
  设置底边距与视图view底边距相等
@@ -581,7 +564,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_BottomSpaceEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_BottomSpaceEqualView:(WHC_VIEW *)view;
 
 /**
  设置底边距与视图view底边距相等并偏移offset
@@ -590,7 +573,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param offset 偏移量
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_BottomSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
+- (WHC_CLASS_VIEW *)whc_BottomSpaceEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
 
 /**
  设置宽度
@@ -598,7 +581,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param width 宽度
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_Width:(CGFloat)width;
+- (WHC_CLASS_VIEW *)whc_Width:(CGFloat)width;
 
 /**
  设置宽度与某个视图相等
@@ -606,7 +589,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_WidthEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_WidthEqualView:(WHC_VIEW *)view;
 
 /**
  设置宽度与视图view相等
@@ -615,14 +598,14 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param ratio 比例
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_WidthEqualView:(WHC_VIEW *)view ratio:(CGFloat)ratio;
+- (WHC_CLASS_VIEW *)whc_WidthEqualView:(WHC_VIEW *)view ratio:(CGFloat)ratio;
 
 /**
  设置自动宽度
 
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_AutoWidth;
+- (WHC_CLASS_VIEW *)whc_AutoWidth;
 
 /**
  设置视图自身宽度与高度的比
@@ -630,7 +613,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param ratio 比例
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_WidthHeightRatio:(CGFloat)ratio;
+- (WHC_CLASS_VIEW *)whc_WidthHeightRatio:(CGFloat)ratio;
 
 /**
  设置高度
@@ -638,7 +621,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param height 高度
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_Height:(CGFloat)height;
+- (WHC_CLASS_VIEW *)whc_Height:(CGFloat)height;
 
 /**
  设置高度与视图view相等
@@ -646,7 +629,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_HeightEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_HeightEqualView:(WHC_VIEW *)view;
 
 /**
  设置高度与视图view相等
@@ -655,14 +638,14 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param ratio 比例
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_HeightEqualView:(WHC_VIEW *)view ratio:(CGFloat)ratio;
+- (WHC_CLASS_VIEW *)whc_HeightEqualView:(WHC_VIEW *)view ratio:(CGFloat)ratio;
 
 /**
  设置自动高度
 
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_AutoHeight;
+- (WHC_CLASS_VIEW *)whc_AutoHeight;
 
 /**
  设置视图自身高度与宽度的比
@@ -670,7 +653,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param ratio 比例
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_HeightWidthRatio:(CGFloat)ratio;
+- (WHC_CLASS_VIEW *)whc_HeightWidthRatio:(CGFloat)ratio;
 
 /**
  设置中心x与父视图中心的偏移 centerX = 0 与父视图中心x重合
@@ -678,7 +661,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param centerX 中心x坐标偏移
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_CenterX:(CGFloat)centerX;
+- (WHC_CLASS_VIEW *)whc_CenterX:(CGFloat)centerX;
 
 /**
  设置中心x与相对视图中心的偏移 centerX = 0 与相对视图中心x重合
@@ -687,7 +670,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_CenterX:(CGFloat)centerX toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_CenterX:(CGFloat)centerX toView:(WHC_VIEW *)toView;
 
 /**
  设置中心y与父视图中心的偏移 centerY = 0 与父视图中心y重合
@@ -695,7 +678,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param centerY 中心y坐标偏移
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_CenterY:(CGFloat)centerY;
+- (WHC_CLASS_VIEW *)whc_CenterY:(CGFloat)centerY;
 
 /**
  设置中心y与相对视图中心的偏移 centerY = 0 与相对视图中心y重合
@@ -704,7 +687,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_CenterY:(CGFloat)centerY toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_CenterY:(CGFloat)centerY toView:(WHC_VIEW *)toView;
 
 #if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 80000) || (__TV_OS_VERSION_MIN_REQUIRED >= 9000) || (__MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
 /**
@@ -713,7 +696,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param space 间隙
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_FirstBaseLine:(CGFloat)space;
+- (WHC_CLASS_VIEW *)whc_FirstBaseLine:(CGFloat)space;
 
 /**
  设置顶部基线与对象视图底部基线偏移
@@ -722,7 +705,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_FirstBaseLine:(CGFloat)space toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_FirstBaseLine:(CGFloat)space toView:(WHC_VIEW *)toView;
 
 /**
  设置顶部基线与相对视图顶部基线相等
@@ -730,7 +713,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_FirstBaseLineEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_FirstBaseLineEqualView:(WHC_VIEW *)view;
 
 /**
  设置顶部基线与相对视图顶部基线相等并偏移offset
@@ -739,7 +722,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param offset 偏移量
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_FirstBaseLineEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
+- (WHC_CLASS_VIEW *)whc_FirstBaseLineEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
 
 #endif
 
@@ -749,7 +732,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param space 间隙
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LastBaseLine:(CGFloat)space;
+- (WHC_CLASS_VIEW *)whc_LastBaseLine:(CGFloat)space;
 
 /**
  设置底部基线与对象视图顶部基线偏移
@@ -758,7 +741,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LastBaseLine:(CGFloat)space toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_LastBaseLine:(CGFloat)space toView:(WHC_VIEW *)toView;
 
 /**
  设置底部基线与相对视图底部基线相等
@@ -766,7 +749,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LastBaseLineEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_LastBaseLineEqualView:(WHC_VIEW *)view;
 
 /**
  设置底部基线与相对视图底部基线相等并偏移offset
@@ -775,7 +758,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param offset 偏移量
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_LastBaseLineEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
+- (WHC_CLASS_VIEW *)whc_LastBaseLineEqualView:(WHC_VIEW *)view offset:(CGFloat)offset;
 
 
 /**
@@ -784,7 +767,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param center 中心偏移xy
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_Center:(CGPoint)center;
+- (WHC_CLASS_VIEW *)whc_Center:(CGPoint)center;
 
 /**
  设置中心偏移(默认相对父视图)center = CGPointZero 与父视图中心重合
@@ -793,7 +776,8 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param toView 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_Center:(CGPoint)center toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_Center:(CGPoint)center toView:(WHC_VIEW *)toView;
+
 
 /**
  设置frame(默认相对父视图)
@@ -804,7 +788,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param height 高度
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height;
+- (WHC_CLASS_VIEW *)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height;
 
 /**
  设置frame (默认相对父视图)
@@ -816,7 +800,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom;
+- (WHC_CLASS_VIEW *)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom;
 
 /**
  设置frame
@@ -829,7 +813,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_Frame:(CGFloat)left top:(CGFloat)top width:(CGFloat)width height:(CGFloat)height toView:(WHC_VIEW *)toView;
 
 /**
  设置frame (默认相对父视图)
@@ -841,7 +825,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height;
+- (WHC_CLASS_VIEW *)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height;
 
 /**
  设置frame (默认相对父视图)
@@ -853,7 +837,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom;
+- (WHC_CLASS_VIEW *)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom;
 
 /**
  设置frame
@@ -866,7 +850,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_AutoSize:(CGFloat)left top:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom toView:(WHC_VIEW *)toView;
 
 /**
  设置frame
@@ -879,7 +863,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_AutoWidth:(CGFloat)left top:(CGFloat)top right:(CGFloat)right height:(CGFloat)height toView:(WHC_VIEW *)toView;
 
 /**
  设置frame (默认相对父视图)
@@ -891,7 +875,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom toView:(WHC_VIEW *)toView;
+- (WHC_CLASS_VIEW *)whc_AutoHeight:(CGFloat)left top:(CGFloat)top width:(CGFloat)width bottom:(CGFloat)bottom toView:(WHC_VIEW *)toView;
 
 /**
  设置视图显示宽高
@@ -900,7 +884,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回当前视图
  */
 
-- (WHC_VIEW *)whc_Size:(CGSize)size;
+- (WHC_CLASS_VIEW *)whc_Size:(CGSize)size;
 
 /**
  设置视图size等于view
@@ -908,66 +892,16 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_SizeEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_SizeEqualView:(WHC_VIEW *)view;
 
 /**
  设置视图frame等于view
  @param view 相对视图
  @return 返回当前视图
  */
-- (WHC_VIEW *)whc_FrameEqualView:(WHC_VIEW *)view;
+- (WHC_CLASS_VIEW *)whc_FrameEqualView:(WHC_VIEW *)view;
 
 #if TARGET_OS_IPHONE || TARGET_OS_TV
-
-#pragma mark - Xib智能布局模块 -
-
-/**
- 对整个Xib(使用3.5寸xib)上UI控件垂直和横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
- */
-
-- (void)whc_AutoXibLayout;
-
-/**
- 对整个Xib(使用3.5寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
- */
-
-- (void)whc_AutoXibLayoutType:(WHC_LayoutTypeOptions)type;
-
-/**
- 对整个storyboard(使用4.7寸xib)上UI控件垂直和横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
- */
-
-- (void)whc_AutoSBLayout;
-
-/**
- 对整个storyboard(使用4.7寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
- */
-
-- (void)whc_AutoSBLayoutType:(WHC_LayoutTypeOptions)type;
-
-/**
- 对整个Xib(使用3.5寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
- */
-
-- (void)whc_AutoXibHorizontalLayout;
-
-/**
- 对整个Xib(使用3.5寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
- */
-
-- (void)whc_AutoXibHorizontalLayoutType:(WHC_LayoutTypeOptions)type;
-
-/**
- 对整个storyboard(使用4.7寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
- */
-
-- (void)whc_AutoSBHorizontalLayout;
-
-/**
- 对整个storyboard(使用4.7寸xib)上UI控件横向智能添加约束进行布局(从此告别xib上拖拽添加约束方式)
- */
-
-- (void)whc_AutoSBHorizontalLayoutType:(WHC_LayoutTypeOptions)type;
 
 #pragma mark - 自动加边线模块 -
 
@@ -979,7 +913,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回线视图
  */
 
-- (WHC_VIEW *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color;
+- (WHC_CLASS_VIEW *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
  对视图底部加线
@@ -990,7 +924,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回线视图
  */
 
-- (WHC_VIEW *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading;
+- (WHC_CLASS_VIEW *)whc_AddBottomLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading;
 
 /**
  对视图顶部加线
@@ -1000,7 +934,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回线视图
  */
 
-- (WHC_VIEW *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color;
+- (WHC_CLASS_VIEW *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
  对视图顶部加线
@@ -1011,7 +945,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回线视图
  */
 
-- (WHC_VIEW *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading;
+- (WHC_CLASS_VIEW *)whc_AddTopLine:(CGFloat)value lineColor:(UIColor *)color pading:(CGFloat)pading;
 
 /**
  对视图左边加线
@@ -1022,7 +956,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  */
 
 
-- (WHC_VIEW *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color;
+- (WHC_CLASS_VIEW *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
  对视图左边加线
@@ -1032,7 +966,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @param padding 边距
  @return 返回线视图
  */
-- (WHC_VIEW *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
+- (WHC_CLASS_VIEW *)whc_AddLeftLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
 
 /**
  对视图右边加线
@@ -1042,7 +976,7 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回线视图
  */
 
-- (WHC_VIEW *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color;
+- (WHC_CLASS_VIEW *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color;
 
 /**
  对视图右边加线
@@ -1053,6 +987,6 @@ typedef WHC_VIEW * (^FrameEqual)(WHC_VIEW * view);
  @return 返回线视图
  */
 
-- (WHC_VIEW *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
+- (WHC_CLASS_VIEW *)whc_AddRightLine:(CGFloat)value lineColor:(UIColor *)color padding:(CGFloat)padding;
 #endif
 @end

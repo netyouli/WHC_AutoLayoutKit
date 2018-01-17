@@ -36,13 +36,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"自动布局库";
-    _contents = @[@"宽度高度自动拉伸布局\n宽度高度自动拉伸布局\n宽度高度自动拉伸布局",
+    _contents = @[@"UILayoutGuide, safeAreaLayoutGuide演示",
+                  @"宽度高度自动拉伸布局\n宽度高度自动拉伸布局\n宽度高度自动拉伸布局",
                   @"列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局\n列表自动布局自动计算cell高度布局",
                   @"stackView 自动横向布局和横向嵌套布局\nstackView 自动横向布局和横向嵌套布局\nstackView 自动横向布局和横向嵌套布局\nstackView 自动横向布局和横向嵌套布局",
                   @"stackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局\nstackView 自动垂直布局和垂直嵌套布局",
                   @"stackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局\nstackView 自动垂直横向混合布局和垂直横向混合嵌套布局",
                   @"WHC_StackView支持分割线设置",
-                  @"一行代码智能对Xib上所有控件智能横向布局",
                   @"微信朋友圈演示",
                   @"Mp3播放列表"];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -94,37 +94,37 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     switch (indexPath.row) {
         case 0: {
-            DemoVC1 * vc = [DemoVC1 new];
+            DemoVC7 * vc = [DemoVC7 new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 1: {
-            DemoVC2 * vc = [DemoVC2 new];
+            DemoVC1 * vc = [DemoVC1 new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 2: {
-            DemoVC3 * vc = [DemoVC3 new];
+            DemoVC2 * vc = [DemoVC2 new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 3: {
-            DemoVC4 * vc = [DemoVC4 new];
+            DemoVC3 * vc = [DemoVC3 new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 4: {
-            DemoVC5 * vc = [DemoVC5 new];
+            DemoVC4 * vc = [DemoVC4 new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 5: {
-            DemoVC6 * vc = [DemoVC6 new];
+            DemoVC5 * vc = [DemoVC5 new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 6: {
-            DemoVC7 * vc = [DemoVC7 new];
+            DemoVC6 * vc = [DemoVC6 new];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;

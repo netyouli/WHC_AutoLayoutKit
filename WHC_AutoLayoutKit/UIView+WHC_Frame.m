@@ -27,7 +27,7 @@
 
 #import "UIView+WHC_Frame.h"
 
-@implementation WHC_VIEW (WHC_Frame)
+@implementation WHC_CLASS_VIEW (WHC_Frame)
 
 #if TARGET_OS_IPHONE || TARGET_OS_TV
 - (CGFloat)whc_sw {
