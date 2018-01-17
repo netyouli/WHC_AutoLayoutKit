@@ -3014,7 +3014,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
                 }else {
                     if (s_view.superview == guide1.owningView) {
                         #if TARGET_OS_IPHONE || TARGET_OS_TV
-                        if (@available(iOS 11.0, *)) {
+                        if (@available(iOS 11.0, tvOS 11.0, *)) {
                             data.isSameSuper = s_view.superview.safeAreaLayoutGuide != guide1;
                         } else {
                             data.isSameSuper = YES;
@@ -3041,7 +3041,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
                 }else {
                     if (s_view.superview == guide1.owningView) {
                         #if TARGET_OS_IPHONE || TARGET_OS_TV
-                        if (@available(iOS 11.0, *)) {
+                        if (@available(iOS 11.0, tvOS 11.0, *)) {
                             data.isSameSuper = s_view.superview.safeAreaLayoutGuide != guide1;
                         } else {
                             data.isSameSuper = YES;
@@ -3062,7 +3062,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
             if (owningView(view1) == owningView(view2)) {
                 data.superView = owningView(view1);
                 #if TARGET_OS_IPHONE || TARGET_OS_TV
-                if (@available(iOS 11.0, *)) {
+                if (@available(iOS 11.0, tvOS 11.0, *)) {
                     data.isSameSuper = !(owningView(view1).safeAreaLayoutGuide == layout_guide(view2) || owningView(view2).safeAreaLayoutGuide == layout_guide(view1));
                 } else {
                     data.isSameSuper = YES;
