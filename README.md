@@ -10,11 +10,11 @@
 
 **Swift4.0 version** 👉 [WHC_Layout](https://github.com/netyouli/WHC_Layout)
 
+**添加UILayoutGuide，safeAreaLayoutGuide约束支持**
+
 **重构布局核心升级基于二叉树层遍历算法搜索约束主视图,对于自动处理跨视图层复杂约束关系更健壮可靠**
 
 **添加抗拉伸和抗压缩api支持链式调用**
-
-**添加UILayoutGuide，safeAreaLayoutGuide约束支持**
 
 Introduce
 ==============
