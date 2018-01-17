@@ -37,6 +37,7 @@ FOUNDATION_EXPORT const unsigned char WHC_AutoLayoutVersionString[];
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
 #import "UIView+WHC_AutoLayout.h"
 #import "UIView+WHC_Frame.h"
+#import "CALayer+WHC_Frame.h"
 #import "UILayoutGuide+WHC_AutoLayout.h"
 
 

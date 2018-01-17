@@ -15,11 +15,41 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/netyouli/WHC_AutoLayoutKit.git", :tag => "2.8.0"}
 
-  s.source_files  = "WHC_AutoLayoutKit/*.{h,m}"
+  s.source_files  = "WHC_AutoLayoutKit/*.h"
+  s.public_header_files = 'WHC_AutoLayoutKit/*.h'
 
-  # s.public_header_files = "Classes/**/*.h"
+  s.ios.frameworks = 'Foundation', 'UIKit'
+  s.tvos.frameworks = 'Foundation', 'UIKit'
+  s.osx.frameworks = 'Foundation', 'AppKit'
 
+  s.ios.deployment_target = '6.0' 
+  s.osx.deployment_target = '10.7' 
+  s.tvos.deployment_target = '9.0' 
 
+  s.subspec 'View' do |ss|
+    ss.source_files = 'WHC_AutoLayoutKit/View/*.{h,m}'
+    ss.public_header_files = 'WHC_AutoLayoutKit/View/*.h'
+  end
+
+  s.subspec 'StackView' do |ss|
+    ss.source_files = 'WHC_AutoLayoutKit/StackView/*.{h,m}'
+    ss.public_header_files = 'WHC_AutoLayoutKit/StackView/*.h'
+  end
+
+  s.subspec 'LayoutGuide' do |ss|
+    ss.source_files = 'WHC_AutoLayoutKit/LayoutGuide/*.{h,m}'
+    ss.public_header_files = 'WHC_AutoLayoutKit/LayoutGuide/*.h'
+  end
+
+  s.subspec 'Frame' do |ss|
+    ss.source_files = 'WHC_AutoLayoutKit/Frame/*.{h,m}'
+    ss.public_header_files = 'WHC_AutoLayoutKit/Frame/*.h'
+  end
+
+  s.subspec 'AutoCellHeight' do |ss|
+    ss.source_files = 'WHC_AutoLayoutKit/AutoCellHeight/*.{h,m}'
+    ss.public_header_files = 'WHC_AutoLayoutKit/AutoCellHeight/*.h'
+  end
   s.requires_arc = true
 
 

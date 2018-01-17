@@ -370,6 +370,7 @@
 		FE5E2709200F64F900B6B5E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FEE8F3C41E9E0B1900B39B88 /* WHC_AutoLayoutUtilities.h */,
 				FE5E270A200F64F900B6B5E7 /* UIView+WHC_AutoLayout.h */,
 				FE5E270B200F64F900B6B5E7 /* UIView+WHC_AutoLayout.m */,
 			);
@@ -393,7 +394,6 @@
 				FE5E270C200F64F900B6B5E7 /* LayoutGuide */,
 				FE5E2703200F64F900B6B5E7 /* StackView */,
 				FE5E2709200F64F900B6B5E7 /* View */,
-				FEE8F3C41E9E0B1900B39B88 /* WHC_AutoLayoutUtilities.h */,
 				FEE8F30A1E9CA4CF00B39B88 /* WHC_AutoLayout.h */,
 			);
 			path = WHC_AutoLayoutKit;
