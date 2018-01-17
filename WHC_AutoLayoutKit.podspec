@@ -10,9 +10,6 @@ Pod::Spec.new do |s|
 
   s.author             = { "吴海超(WHC)" => "712641411@qq.com" }
 
-  s.platform     = :ios
-  s.platform     = :ios, "8.0"
-
   s.source       = { :git => "https://github.com/netyouli/WHC_AutoLayoutKit.git", :tag => "2.8.0"}
 
   s.source_files  = "WHC_AutoLayoutKit/*.h"
