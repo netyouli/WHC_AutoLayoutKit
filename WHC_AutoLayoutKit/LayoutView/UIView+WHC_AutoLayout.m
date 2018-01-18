@@ -2982,25 +2982,30 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
             while (toItemSuperview && itemSuperview) {
                 if (toItemSuperview == itemSuperview) {
                     data.superView = toItemSuperview;
-                    break;
+                    return data;
                 }else {
                     tempToItem = toItemSuperview;
                     tempItem = itemSuperview;
                     if (!tempToItem.superview && tempItem.superview) {
                         if (checkSameSuperview(tempToItem, tempItem)) {
                             data.superView = tempToItem;
-                            break;
+                            return data;
                         }
                     }else if (tempToItem.superview && !tempItem.superview) {
                         if (checkSameSuperview(tempItem, tempToItem)) {
                             data.superView = tempItem;
-                            break;
+                            return data;
                         }
                     }else {
                         toItemSuperview = toItemSuperview.superview;
                         itemSuperview = itemSuperview.superview;
                     }
                 }
+            }
+            if ([self checkSubSuperView:view(view2) subv:view(view1)]) {
+                data.superView = view(view2);
+                data.isSameSuper = NO;
+                return data;
             }
         }
     }else {
