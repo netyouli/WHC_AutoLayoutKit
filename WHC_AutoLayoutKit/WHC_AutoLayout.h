@@ -33,11 +33,27 @@ FOUNDATION_EXPORT double WHC_AutoLayoutVersionNumber;
 //! Project version string for WHC_AutoLayout.
 FOUNDATION_EXPORT const unsigned char WHC_AutoLayoutVersionString[];
 
+#define WHC_AutoLayoutKitRelease 0
+
+#if WHC_AutoLayoutKitRelease
+
+#import <WHC_AutoLayoutKit/WHC_StackView.h>
+#import <WHC_AutoLayoutKit/UITableViewCell+WHC_AutoHeightForCell.h>
+#import <WHC_AutoLayoutKit/UIView+WHC_AutoLayout.h>
+#import <WHC_AutoLayoutKit/UIView+WHC_Frame.h>
+#import <WHC_AutoLayoutKit/CALayer+WHC_Frame.h>
+#import <WHC_AutoLayoutKit/UILayoutGuide+WHC_AutoLayout.h>
+
+#else
+
 #import "WHC_StackView.h"
 #import "UITableViewCell+WHC_AutoHeightForCell.h"
 #import "UIView+WHC_AutoLayout.h"
 #import "UIView+WHC_Frame.h"
 #import "CALayer+WHC_Frame.h"
 #import "UILayoutGuide+WHC_AutoLayout.h"
+
+#endif
+
 
 
