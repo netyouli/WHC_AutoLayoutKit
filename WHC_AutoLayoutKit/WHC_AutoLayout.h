@@ -33,7 +33,7 @@ FOUNDATION_EXPORT double WHC_AutoLayoutVersionNumber;
 //! Project version string for WHC_AutoLayout.
 FOUNDATION_EXPORT const unsigned char WHC_AutoLayoutVersionString[];
 
-#define WHC_AutoLayoutKitRelease 1
+#define WHC_AutoLayoutKitRelease 0
 
 #if WHC_AutoLayoutKitRelease
 
