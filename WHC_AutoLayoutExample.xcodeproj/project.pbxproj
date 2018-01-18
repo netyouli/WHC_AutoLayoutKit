@@ -367,13 +367,13 @@
 			path = AutoCellHeight;
 			sourceTree = "<group>";
 		};
-		FE5E2709200F64F900B6B5E7 /* View */ = {
+		FE5E2709200F64F900B6B5E7 /* LayoutView */ = {
 			isa = PBXGroup;
 			children = (
 				FE5E270A200F64F900B6B5E7 /* UIView+WHC_AutoLayout.h */,
 				FE5E270B200F64F900B6B5E7 /* UIView+WHC_AutoLayout.m */,
 			);
-			path = View;
+			path = LayoutView;
 			sourceTree = "<group>";
 		};
 		FE5E270C200F64F900B6B5E7 /* LayoutGuide */ = {
@@ -385,16 +385,24 @@
 			path = LayoutGuide;
 			sourceTree = "<group>";
 		};
+		FE5E2715201035C500B6B5E7 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				FEE8F3C41E9E0B1900B39B88 /* WHC_AutoLayoutUtilities.h */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		FEE8F3031E9CA4CF00B39B88 /* WHC_AutoLayoutKit */ = {
 			isa = PBXGroup;
 			children = (
+				FE5E2715201035C500B6B5E7 /* Util */,
 				FE5E2706200F64F900B6B5E7 /* AutoCellHeight */,
 				FE5E26FE200F64F900B6B5E7 /* Frame */,
 				FE5E270C200F64F900B6B5E7 /* LayoutGuide */,
 				FE5E2703200F64F900B6B5E7 /* StackView */,
-				FE5E2709200F64F900B6B5E7 /* View */,
+				FE5E2709200F64F900B6B5E7 /* LayoutView */,
 				FEE8F30A1E9CA4CF00B39B88 /* WHC_AutoLayout.h */,
-				FEE8F3C41E9E0B1900B39B88 /* WHC_AutoLayoutUtilities.h */,
 			);
 			path = WHC_AutoLayoutKit;
 			sourceTree = "<group>";
