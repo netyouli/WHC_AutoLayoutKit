@@ -2,6 +2,7 @@
 <div align=center><img src="https://github.com/netyouli/WHC_AutoLayoutKit/blob/master/Gif/WHC_AutoLayoutLogo.png" width = "319.5" height = "129"/></div></br>
 
 ![Build Status](https://api.travis-ci.org/netyouli/WHC_AutoLayoutKit.svg?branch=master)
+[![Platform](https://img.shields.io/cocoapods/p/WHC_AutoLayoutKit.svg?style=flat)](https://github.com/netyouli/WHC_AutoLayoutKit)
 [![Pod Version](http://img.shields.io/cocoapods/v/WHC_AutoLayoutKit.svg?style=flat)](http://cocoadocs.org/docsets/WHC_AutoLayoutKit/)
 [![Pod License](http://img.shields.io/cocoapods/l/WHC_AutoLayoutKit.svg?style=flat)](https://opensource.org/licenses/MIT)
 
