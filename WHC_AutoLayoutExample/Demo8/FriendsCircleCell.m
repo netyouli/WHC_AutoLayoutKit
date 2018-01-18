@@ -357,6 +357,7 @@
 #pragma mark - AnswerMenuViewDelegate -
 
 - (void)answerMenuView:(AnswerMenuView *)menuView isClickSupper:(BOOL)isSupper {
+    menuView.whc_ResetConstraint();
     [menuView removeFromSuperview];
     if (isSupper) {
         _model.isSupper = !_model.isSupper;
