@@ -439,7 +439,7 @@
 					C3068BC81C8418F000F88455 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = QTG6US7F39;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0920;
 					};
 				};
 			};
@@ -634,7 +634,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WHC_AutoLayoutExample/Demo8/Other/WHC_AutoLayoutExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -650,7 +651,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "---.WHC-AutoLayoutExample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WHC_AutoLayoutExample/Demo8/Other/WHC_AutoLayoutExample-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

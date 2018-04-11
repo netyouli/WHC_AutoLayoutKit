@@ -28,18 +28,18 @@
 
 #import "WHC_AutoLayoutUtilities.h"
 
-typedef WHC_CLASS_VIEW * (^LessOrEqual)();
-typedef WHC_CLASS_VIEW * (^GreaterOrEqual)();
-typedef WHC_CLASS_VIEW * (^ResetConstraintAttribute)();
-typedef WHC_CLASS_VIEW * (^ClearConstraintAttribute)();
+typedef WHC_CLASS_VIEW * (^LessOrEqual)(void);
+typedef WHC_CLASS_VIEW * (^GreaterOrEqual)(void);
+typedef WHC_CLASS_VIEW * (^ResetConstraintAttribute)(void);
+typedef WHC_CLASS_VIEW * (^ClearConstraintAttribute)(void);
 typedef WHC_CLASS_VIEW * (^RemoveConstraintAttribute)(NSLayoutAttribute attributes, ...);
 typedef WHC_CLASS_VIEW * (^RemoveConstraintFromViewAttribute)(WHC_CLASS_VIEW * view, NSLayoutAttribute attributes, ...);
 typedef WHC_CLASS_VIEW * (^RemoveConstraintToViewAttribute)(WHC_VIEW * toView, NSLayoutAttribute attributes, ...);
 
-typedef WHC_CLASS_VIEW * (^PriorityLow)();
-typedef WHC_CLASS_VIEW * (^PriorityHigh)();
-typedef WHC_CLASS_VIEW * (^PriorityRequired)();
-typedef WHC_CLASS_VIEW * (^PriorityFitting)();
+typedef WHC_CLASS_VIEW * (^PriorityLow)(void);
+typedef WHC_CLASS_VIEW * (^PriorityHigh)(void);
+typedef WHC_CLASS_VIEW * (^PriorityRequired)(void);
+typedef WHC_CLASS_VIEW * (^PriorityFitting)(void);
 typedef WHC_CLASS_VIEW * (^PriorityValue)(CGFloat value);
 
 typedef WHC_CLASS_VIEW * (^ContentHuggingPriority)(WHC_LayoutPriority, WHC_ConstraintAxis);
@@ -81,13 +81,13 @@ typedef WHC_CLASS_VIEW * (^BottomSpaceEqualView)(WHC_VIEW * view);
 typedef WHC_CLASS_VIEW * (^BottomSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
 typedef WHC_CLASS_VIEW * (^Width)(CGFloat value);
-typedef WHC_CLASS_VIEW * (^WidthAuto)();
+typedef WHC_CLASS_VIEW * (^WidthAuto)(void);
 typedef WHC_CLASS_VIEW * (^WidthEqualView)(WHC_VIEW * view);
 typedef WHC_CLASS_VIEW * (^WidthEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
 typedef WHC_CLASS_VIEW * (^WidthHeightRatio)(CGFloat ratio);
 
 typedef WHC_CLASS_VIEW * (^Height)(CGFloat value);
-typedef WHC_CLASS_VIEW * (^HeightAuto)();
+typedef WHC_CLASS_VIEW * (^HeightAuto)(void);
 typedef WHC_CLASS_VIEW * (^HeightEqualView)(WHC_VIEW * view);
 typedef WHC_CLASS_VIEW * (^HeightEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
 typedef WHC_CLASS_VIEW * (^HeightWidthRatio)(CGFloat ratio);

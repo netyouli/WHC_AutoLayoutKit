@@ -36,6 +36,7 @@
     self.navigationItem.title = @"普通高度宽度自动布局";
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
     view1 = [UIView new];
     view2 = [UIView new];
     view3 = [UIView new];
@@ -119,7 +120,7 @@
         .whc_TopSpace(10)
         .whc_HeightAuto()
         .whc_BottomSpace(10);
-    
+
     [UIView animateWithDuration:0.5 animations:^{
         [self.view layoutIfNeeded];
     }];

@@ -28,18 +28,18 @@
 
 #import "WHC_AutoLayoutUtilities.h"
 
-typedef WHC_CLASS_LGUIDE * (^LGLessOrEqual)();
-typedef WHC_CLASS_LGUIDE * (^LGGreaterOrEqual)();
-typedef WHC_CLASS_LGUIDE * (^LGResetConstraintAttribute)();
-typedef WHC_CLASS_LGUIDE * (^LGClearConstraintAttribute)();
+typedef WHC_CLASS_LGUIDE * (^LGLessOrEqual)(void);
+typedef WHC_CLASS_LGUIDE * (^LGGreaterOrEqual)(void);
+typedef WHC_CLASS_LGUIDE * (^LGResetConstraintAttribute)(void);
+typedef WHC_CLASS_LGUIDE * (^LGClearConstraintAttribute)(void);
 typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintAttribute)(NSLayoutAttribute attributes, ...);
 typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintFromViewAttribute)(WHC_CLASS_VIEW * view, NSLayoutAttribute attributes, ...);
 typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintToViewAttribute)(WHC_VIEW * toView, NSLayoutAttribute attributes, ...);
 
-typedef WHC_CLASS_LGUIDE * (^LGPriorityLow)();
-typedef WHC_CLASS_LGUIDE * (^LGPriorityHigh)();
-typedef WHC_CLASS_LGUIDE * (^LGPriorityRequired)();
-typedef WHC_CLASS_LGUIDE * (^LGPriorityFitting)();
+typedef WHC_CLASS_LGUIDE * (^LGPriorityLow)(void);
+typedef WHC_CLASS_LGUIDE * (^LGPriorityHigh)(void);
+typedef WHC_CLASS_LGUIDE * (^LGPriorityRequired)(void);
+typedef WHC_CLASS_LGUIDE * (^LGPriorityFitting)(void);
 typedef WHC_CLASS_LGUIDE * (^LGPriorityValue)(CGFloat value);
 
 typedef WHC_CLASS_LGUIDE * (^LGLeftSpace)(CGFloat value);
@@ -78,13 +78,13 @@ typedef WHC_CLASS_LGUIDE * (^LGBottomSpaceEqualView)(WHC_VIEW * view);
 typedef WHC_CLASS_LGUIDE * (^LGBottomSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
 
 typedef WHC_CLASS_LGUIDE * (^LGWidth)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGWidthAuto)();
+typedef WHC_CLASS_LGUIDE * (^LGWidthAuto)(void);
 typedef WHC_CLASS_LGUIDE * (^LGWidthEqualView)(WHC_VIEW * view);
 typedef WHC_CLASS_LGUIDE * (^LGWidthEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
 typedef WHC_CLASS_LGUIDE * (^LGWidthHeightRatio)(CGFloat ratio);
 
 typedef WHC_CLASS_LGUIDE * (^LGHeight)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGHeightAuto)();
+typedef WHC_CLASS_LGUIDE * (^LGHeightAuto)(void);
 typedef WHC_CLASS_LGUIDE * (^LGHeightEqualView)(WHC_VIEW * view);
 typedef WHC_CLASS_LGUIDE * (^LGHeightEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
 typedef WHC_CLASS_LGUIDE * (^LGHeightWidthRatio)(CGFloat ratio);

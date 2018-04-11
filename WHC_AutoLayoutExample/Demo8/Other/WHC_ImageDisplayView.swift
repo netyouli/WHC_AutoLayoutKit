@@ -46,13 +46,13 @@ class WHC_GestureImageView: UIImageView {
         self.exitTapGesture.require(toFail: tapGesture);
     }
     
-    func handleExitGesture(_ sender: UITapGestureRecognizer) {
+    @objc func handleExitGesture(_ sender: UITapGestureRecognizer) {
         let scrollView = self.superview as! UIScrollView;
         scrollView.setZoomScale(1, animated: false);
         self.delegate?.WHCGestureImageViewExit?();
     }
 
-    func handleTapGesture(_ sender: UITapGestureRecognizer) {
+    @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
         let scrollView = self.superview as! UIScrollView;
         if self.isZoomBig {
             scrollView.setZoomScale(1, animated: true);
