@@ -9,7 +9,9 @@
 -  iOS and Mac OS X platforms currently in use the fastest the simplest development to build the UI layout automatically open source library, strong dynamic layout constraint handling capacity
 -  Service to update constraints, convenient and quick dynamic UI layout.
 
-**Swift4.0 version** 👉 [WHC_Layout](https://github.com/netyouli/WHC_Layout)
+**Swift4.+ version** 👉 [WHC_Layout](https://github.com/netyouli/WHC_Layout)
+
+**api自动支持兼容处理头部齐刘海和底部黑线**
 
 **添加UILayoutGuide，safeAreaLayoutGuide约束支持**
 
