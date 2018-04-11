@@ -11,7 +11,7 @@
 
 **Swift4.+ version** 👉 [WHC_Layout](https://github.com/netyouli/WHC_Layout)
 
-**约束api自动支持兼容处理头部齐刘海和底部黑线**
+**布局api内部自动支持兼容处理iphonex头部齐刘海和底部黑线**
 
 **添加UILayoutGuide，safeAreaLayoutGuide约束支持**
 
