@@ -2819,8 +2819,9 @@ return [self whc_ConstraintWithItem:self
 #if TARGET_OS_IPHONE
     if (@available(iOS 11.0, *)) {
         if (self.owningView &&
-            self.owningView.superview &&
-            [NSStringFromClass(self.owningView.superview.class) isEqualToString:@"UIViewControllerWrapperView"]) {
+            (!self.owningView.superview ||
+             (self.owningView.superview &&
+            [NSStringFromClass(self.owningView.superview.class) isEqualToString:@"UIViewControllerWrapperView"]))) {
             sview = self.owningView.safeAreaLayoutGuide;
         }
     }

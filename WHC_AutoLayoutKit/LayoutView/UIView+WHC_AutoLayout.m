@@ -2851,8 +2851,9 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
 #if TARGET_OS_IPHONE
     if (@available(iOS 11.0, *)) {
         if (self.superview &&
-            self.superview.superview &&
-            [NSStringFromClass(self.superview.superview.class) isEqualToString:@"UIViewControllerWrapperView"]) {
+            (!self.superview.superview ||
+             (self.superview.superview &&
+            [NSStringFromClass(self.superview.superview.class) isEqualToString:@"UIViewControllerWrapperView"]))) {
             sview = self.superview.safeAreaLayoutGuide;
         }
     }

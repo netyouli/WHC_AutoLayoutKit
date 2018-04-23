@@ -35,7 +35,7 @@
     [self make];
     
     _guide1.whc_LeftSpace(10)
-    .whc_TopSpaceToView(0, self.view.safeAreaLayoutGuide)
+    .whc_TopSpace(0)
     .whc_RightSpace(10)
     .whc_Height(30);
     
