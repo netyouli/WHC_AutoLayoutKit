@@ -1936,12 +1936,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
 
 
 - (WHC_CLASS_VIEW *)whc_LeftSpace:(CGFloat)leftSpace {
-    #if TARGET_OS_IPHONE
-    if (@available(iOS 11.0, *)) {
-        return [self whc_LeftSpaceEqualView:self.superview.safeAreaLayoutGuide offset:leftSpace];
-    }
-    #endif
-    return [self whc_ConstraintWithItem:self.superview
+    return [self whc_ConstraintWithItem:[self getSview]
                        attribute:NSLayoutAttributeLeft
                         constant:leftSpace];
 }
@@ -1976,12 +1971,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
 }
 
 - (WHC_CLASS_VIEW *)whc_RightSpace:(CGFloat)rightSpace {
-    #if TARGET_OS_IPHONE
-    if (@available(iOS 11.0, *)) {
-        return [self whc_RightSpaceEqualView:self.superview.safeAreaLayoutGuide offset:rightSpace];
-    }
-    #endif
-    return [self whc_ConstraintWithItem:self.superview
+    return [self whc_ConstraintWithItem:[self getSview]
                        attribute:NSLayoutAttributeRight
                         constant:0.0 - rightSpace];
 }
@@ -2016,12 +2006,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
 }
 
 - (WHC_CLASS_VIEW *)whc_LeadingSpace:(CGFloat)leadingSpace {
-    #if TARGET_OS_IPHONE
-    if (@available(iOS 11.0, *)) {
-        return [self whc_LeadingSpaceEqualView:self.superview.safeAreaLayoutGuide offset:leadingSpace];
-    }
-    #endif
-    return [self whc_ConstraintWithItem:self.superview
+    return [self whc_ConstraintWithItem:[self getSview]
                        attribute:NSLayoutAttributeLeading
                         constant:leadingSpace];
 }
@@ -2057,12 +2042,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
 }
 
 - (WHC_CLASS_VIEW *)whc_TrailingSpace:(CGFloat)trailingSpace {
-    #if TARGET_OS_IPHONE
-    if (@available(iOS 11.0, *)) {
-        return [self whc_TrailingSpaceEqualView:self.superview.safeAreaLayoutGuide offset:trailingSpace];
-    }
-    #endif
-    return [self whc_ConstraintWithItem:self.superview
+    return [self whc_ConstraintWithItem:[self getSview]
                        attribute:NSLayoutAttributeTrailing
                         constant:0.0 - trailingSpace];
 }
@@ -2098,12 +2078,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
 }
 
 - (WHC_CLASS_VIEW *)whc_TopSpace:(CGFloat)topSpace {
-    #if TARGET_OS_IPHONE
-    if (@available(iOS 11.0, *)) {
-        return [self whc_TopSpaceEqualView:self.superview.safeAreaLayoutGuide offset:topSpace];
-    }
-    #endif
-    return [self whc_ConstraintWithItem:self.superview
+    return [self whc_ConstraintWithItem:[self getSview]
                        attribute:NSLayoutAttributeTop
                         constant:topSpace];
 }
@@ -2138,12 +2113,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
 }
 
 - (WHC_CLASS_VIEW *)whc_BottomSpace:(CGFloat)bottomSpace {
-    #if TARGET_OS_IPHONE
-    if (@available(iOS 11.0, *)) {
-        return [self whc_BottomSpaceEqualView:self.superview.safeAreaLayoutGuide offset:bottomSpace];
-    }
-    #endif
-    return [self whc_ConstraintWithItem:self.superview
+    return [self whc_ConstraintWithItem:[self getSview]
                        attribute:NSLayoutAttributeBottom
                         constant:0.0 - bottomSpace];
 }
@@ -2874,6 +2844,20 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
     if (mainView) {
         [mainView removeConstraint:constraint];
     }
+}
+    
+- (NSObject *)getSview {
+    id sview = self.superview;
+#if TARGET_OS_IPHONE
+    if (@available(iOS 11.0, *)) {
+        if (self.superview &&
+            self.superview.superview &&
+            [NSStringFromClass(self.superview.superview.class) isEqualToString:@"UIViewControllerWrapperView"]) {
+            sview = self.superview.safeAreaLayoutGuide;
+        }
+    }
+#endif
+    return sview;
 }
 
 - (WHC_CLASS_VIEW *)mainSuperView:(WHC_VIEW *)view1 view2:(WHC_VIEW *)view2 {
