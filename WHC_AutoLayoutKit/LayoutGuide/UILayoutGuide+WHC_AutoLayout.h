@@ -28,84 +28,84 @@
 
 #import "WHC_AutoLayoutUtilities.h"
 
-typedef WHC_CLASS_LGUIDE * (^LGLessOrEqual)(void);
-typedef WHC_CLASS_LGUIDE * (^LGGreaterOrEqual)(void);
-typedef WHC_CLASS_LGUIDE * (^LGResetConstraintAttribute)(void);
-typedef WHC_CLASS_LGUIDE * (^LGClearConstraintAttribute)(void);
-typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintAttribute)(NSLayoutAttribute attributes, ...);
-typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintFromViewAttribute)(WHC_CLASS_VIEW * view, NSLayoutAttribute attributes, ...);
-typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintToViewAttribute)(WHC_VIEW * toView, NSLayoutAttribute attributes, ...);
+typedef WHC_CLASS_LGUIDE * (^LGLessOrEqual)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGGreaterOrEqual)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGResetConstraintAttribute)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGClearConstraintAttribute)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintAttribute)(NSLayoutAttribute attributes, ...) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintFromViewAttribute)(WHC_CLASS_VIEW * view, NSLayoutAttribute attributes, ...) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGRemoveConstraintToViewAttribute)(WHC_VIEW * toView, NSLayoutAttribute attributes, ...) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGPriorityLow)(void);
-typedef WHC_CLASS_LGUIDE * (^LGPriorityHigh)(void);
-typedef WHC_CLASS_LGUIDE * (^LGPriorityRequired)(void);
-typedef WHC_CLASS_LGUIDE * (^LGPriorityFitting)(void);
-typedef WHC_CLASS_LGUIDE * (^LGPriorityValue)(CGFloat value);
+typedef WHC_CLASS_LGUIDE * (^LGPriorityLow)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGPriorityHigh)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGPriorityRequired)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGPriorityFitting)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGPriorityValue)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGLeftSpace)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGLeftSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_CLASS_LGUIDE * (^LGLeftSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGLeftSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_LGUIDE * (^LGLeftSpace)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGLeftSpaceToView)(CGFloat value , WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGLeftSpaceEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGLeftSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGLeadingSpace)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGLeadingSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_CLASS_LGUIDE * (^LGLeadingSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGLeadingSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_LGUIDE * (^LGLeadingSpace)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGLeadingSpaceToView)(CGFloat value , WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGLeadingSpaceEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGLeadingSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGTrailingSpace)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGTrailingSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_CLASS_LGUIDE * (^LGTrailingSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGTrailingSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_LGUIDE * (^LGTrailingSpace)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGTrailingSpaceToView)(CGFloat value , WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGTrailingSpaceEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGTrailingSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGBaseLineSpace)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGBaseLineSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_CLASS_LGUIDE * (^LGBaseLineSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGBaseLineSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_LGUIDE * (^LGBaseLineSpace)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGBaseLineSpaceToView)(CGFloat value , WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGBaseLineSpaceEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGBaseLineSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGRightSpace)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGRightSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_CLASS_LGUIDE * (^LGRightSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGRightSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_LGUIDE * (^LGRightSpace)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGRightSpaceToView)(CGFloat value , WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGRightSpaceEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGRightSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGTopSpace)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGTopSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_CLASS_LGUIDE * (^LGTopSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGTopSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_LGUIDE * (^LGTopSpace)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGTopSpaceToView)(CGFloat value , WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGTopSpaceEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGTopSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGBottomSpace)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGBottomSpaceToView)(CGFloat value , WHC_VIEW * toView);
-typedef WHC_CLASS_LGUIDE * (^LGBottomSpaceEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGBottomSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset);
+typedef WHC_CLASS_LGUIDE * (^LGBottomSpace)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGBottomSpaceToView)(CGFloat value , WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGBottomSpaceEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGBottomSpaceEqualViewOffset)(WHC_VIEW * view, CGFloat offset) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGWidth)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGWidthAuto)(void);
-typedef WHC_CLASS_LGUIDE * (^LGWidthEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGWidthEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
-typedef WHC_CLASS_LGUIDE * (^LGWidthHeightRatio)(CGFloat ratio);
+typedef WHC_CLASS_LGUIDE * (^LGWidth)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGWidthAuto)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGWidthEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGWidthEqualViewRatio)(WHC_VIEW * view, CGFloat ratio) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGWidthHeightRatio)(CGFloat ratio) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGHeight)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGHeightAuto)(void);
-typedef WHC_CLASS_LGUIDE * (^LGHeightEqualView)(WHC_VIEW * view);
-typedef WHC_CLASS_LGUIDE * (^LGHeightEqualViewRatio)(WHC_VIEW * view, CGFloat ratio);
+typedef WHC_CLASS_LGUIDE * (^LGHeight)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGHeightAuto)(void) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGHeightEqualView)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGHeightEqualViewRatio)(WHC_VIEW * view, CGFloat ratio) NS_AVAILABLE(10_11, 9_0);
 typedef WHC_CLASS_LGUIDE * (^LGHeightWidthRatio)(CGFloat ratio);
 
-typedef WHC_CLASS_LGUIDE * (^LGCenterX)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGCenterXToView)(CGFloat value, WHC_VIEW * toView);
+typedef WHC_CLASS_LGUIDE * (^LGCenterX)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGCenterXToView)(CGFloat value, WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGCenterY)(CGFloat value);
-typedef WHC_CLASS_LGUIDE * (^LGCenterYToView)(CGFloat value, WHC_VIEW * toView);
+typedef WHC_CLASS_LGUIDE * (^LGCenterY)(CGFloat value) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGCenterYToView)(CGFloat value, WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGCenter)(CGFloat x, CGFloat y);
-typedef WHC_CLASS_LGUIDE * (^LGCenterToView)(CGPoint center, WHC_VIEW * toView);
+typedef WHC_CLASS_LGUIDE * (^LGCenter)(CGFloat x, CGFloat y) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGCenterToView)(CGPoint center, WHC_VIEW * toView) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGsize)(CGFloat width, CGFloat height);
-typedef WHC_CLASS_LGUIDE * (^LGSizeEqual)(WHC_VIEW * view);
+typedef WHC_CLASS_LGUIDE * (^LGsize)(CGFloat width, CGFloat height) NS_AVAILABLE(10_11, 9_0);
+typedef WHC_CLASS_LGUIDE * (^LGSizeEqual)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
 
-typedef WHC_CLASS_LGUIDE * (^LGFrameEqual)(WHC_VIEW * view);
+typedef WHC_CLASS_LGUIDE * (^LGFrameEqual)(WHC_VIEW * view) NS_AVAILABLE(10_11, 9_0);
 
 #pragma mark - UI自动布局 -
 
-NS_CLASS_AVAILABLE_IOS(9_0)
+NS_AVAILABLE(10_11, 9_0)
 @interface WHC_CLASS_LGUIDE (WHC_AutoLayout)
 
 #pragma mark - api version ~ 2.0 -

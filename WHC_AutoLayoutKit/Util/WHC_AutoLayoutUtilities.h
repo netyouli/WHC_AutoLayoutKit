@@ -19,7 +19,6 @@
 #import <UIKit/UIKit.h>
 
 #elif TARGET_OS_MAC
-
 #define WHC_CLASS_VIEW NSView
 #define WHC_CLASS_LGUIDE NSLayoutGuide
 
