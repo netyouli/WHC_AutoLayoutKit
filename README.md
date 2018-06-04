@@ -11,6 +11,7 @@
 
 **Swift4.+ version** 👉 [WHC_Layout](https://github.com/netyouli/WHC_Layout)
 
+**修改ios11安全布局机制增加whc_IsSafe控制api**
 **布局api内部自动支持兼容处理iphonex头部齐刘海和底部黑线**
 
 **添加UILayoutGuide，safeAreaLayoutGuide约束支持**
