@@ -64,7 +64,8 @@
     [self.view addSubview:view3];
     [view2 addSubview:lable];
     
-    btn.whc_TopSpaceToView(5,view2)
+    btn.whc_IsSafe(YES)
+        .whc_TopSpaceToView(5,view2)
         .whc_LeftSpaceEqualView(view2)
         .whc_RightSpaceEqualView(view2)
         .whc_Height(40);

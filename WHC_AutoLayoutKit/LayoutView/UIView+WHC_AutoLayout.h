@@ -28,6 +28,8 @@
 
 #import "WHC_AutoLayoutUtilities.h"
 
+typedef WHC_CLASS_VIEW * (^IsSafe)(BOOL);
+
 typedef WHC_CLASS_VIEW * (^LessOrEqual)(void);
 typedef WHC_CLASS_VIEW * (^GreaterOrEqual)(void);
 typedef WHC_CLASS_VIEW * (^ResetConstraintAttribute)(void);
@@ -111,6 +113,9 @@ typedef WHC_CLASS_VIEW * (^FrameEqual)(WHC_VIEW * view);
 @interface WHC_CLASS_VIEW (WHC_AutoLayout)
 
 #pragma mark - api version ~ 2.0 -
+
+/// 是否安全布局
+@property (nonatomic ,copy , readonly)IsSafe whc_IsSafe;
 
 /// 当前约束小于等于
 @property (nonatomic ,copy , readonly)LessOrEqual whc_LessOrEqual;
@@ -261,6 +266,15 @@ typedef WHC_CLASS_VIEW * (^FrameEqual)(WHC_VIEW * view);
 /// frame设置(WHC_VIEW * view)
 @property (nonatomic ,copy , readonly)FrameEqual whc_FrameEqualView;
 #pragma mark - api version ~ 1.0 -
+
+
+/**
+ 是否进行安全布局
+
+ @param safe 是否安全
+ @return 返回当前视图
+ */
+- (WHC_CLASS_VIEW *)whc_IsSafe:(BOOL)safe;
 
 
 /**

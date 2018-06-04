@@ -662,7 +662,27 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
     return objc_getAssociatedObject(self, _cmd);
 }
 
+- (void)setSafe:(BOOL)safe {
+    objc_setAssociatedObject(self, @selector(isSafe), @(safe), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)isSafe {
+    NSNumber * value = objc_getAssociatedObject(self, _cmd);
+    if (value) {
+        return value.boolValue;
+    }
+    return NO;
+}
+
 #pragma mark - removeConstraint api v2.0 -
+
+- (IsSafe)whc_IsSafe {
+    __weak typeof(self) weakSelf = self;
+    return ^(BOOL safe) {
+        [weakSelf setSafe:safe];
+        return weakSelf;
+    };
+}
 
 - (LessOrEqual)whc_LessOrEqual {
     __weak typeof(self) weakSelf = self;
@@ -1226,6 +1246,11 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
 }
 
 #pragma mark - removeConstraint api v1.0 -
+
+- (WHC_CLASS_VIEW *)whc_IsSafe:(BOOL)safe {
+    [self setSafe:safe];
+    return self;
+}
 
 - (NSLayoutAttribute)whc_GetMaxLayoutAttribute {
     NSLayoutAttribute maxAttr = NSLayoutAttributeNotAnAttribute;
@@ -2850,10 +2875,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
     id sview = self.superview;
 #if TARGET_OS_IPHONE
     if (@available(iOS 11.0, *)) {
-        if (self.superview &&
-            (!self.superview.superview ||
-             (self.superview.superview &&
-            [NSStringFromClass(self.superview.superview.class) isEqualToString:@"UIViewControllerWrapperView"]))) {
+        if ([self isSafe] && self.superview) {
             sview = self.superview.safeAreaLayoutGuide;
         }
     }
