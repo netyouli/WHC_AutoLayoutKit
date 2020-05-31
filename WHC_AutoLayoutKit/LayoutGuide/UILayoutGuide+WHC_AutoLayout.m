@@ -722,7 +722,7 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
     return ^(WHC_VIEW * toView, NSLayoutAttribute attributes, ...) {
         va_list attrs;
         va_start(attrs, attributes);
-        NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
+        NSLayoutAttribute maxAttr = [weakSelf whc_GetMaxLayoutAttribute];
         while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
             if (attributes > 0) {
                 [weakSelf whc_SwitchRemoveAttr:attributes view:owningView(weakSelf) to:toView removeSelf:NO];

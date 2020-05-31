@@ -325,8 +325,9 @@ WHC_GOTO:
                         }else {
                             if (_autoHeight) {
                                 [view whc_AutoHeight];
+                            }else {
+                                [view whc_BottomSpace:self.whc_Edge.bottom];
                             }
-                            [view whc_BottomSpace:self.whc_Edge.bottom];
                         }
                     }
                 }
@@ -400,8 +401,9 @@ WHC_GOTO:
                         }else {
                             if (_autoWidth) {
                                 [view whc_AutoWidth];
+                            }else {
+                                [view whc_RightSpace:self.whc_Edge.right];
                             }
-                            [view whc_RightSpace:self.whc_Edge.right];
                         }
                     }
                     if (self.whc_SubViewHeight > 0) {
@@ -581,62 +583,62 @@ WHC_GOTO:
                     }
                     frontRowView = rowView;
                 }
-                
-                if (_autoWidth) {
-                    NSInteger subCount = self.subviews.count;
-#if TARGET_OS_IPHONE || TARGET_OS_TV
-                    [self layoutIfNeeded];
-#elif TARGET_OS_MAC
-                    [self.makeBackingLayer layoutIfNeeded];
-#endif
-                    CGFloat rowLastColumnViewMaxX = 0;
-                    WHC_CLASS_VIEW * rowLastColumnViewMaxXView;
-                    for (NSInteger r = 0; r < subCount; r++) {
-                        NSInteger index = r;
-                        WHC_CLASS_VIEW * maxWidthView = self.subviews[index];
-#if TARGET_OS_IPHONE || TARGET_OS_TV
-                        [maxWidthView layoutIfNeeded];
-#elif TARGET_OS_MAC
-                        [maxWidthView.makeBackingLayer layoutIfNeeded];
-#endif
-                        if (maxWidthView.whc_maxX > rowLastColumnViewMaxX) {
-                            rowLastColumnViewMaxX = maxWidthView.whc_maxX;
-                            rowLastColumnViewMaxXView = maxWidthView;
-                        }
-                    }
-                    [rowLastColumnViewMaxXView whc_RightSpace:_whc_Edge.right];
-                }
-                
-                if (_autoHeight) {
-                    NSInteger subCount = self.subviews.count;
-#if TARGET_OS_IPHONE || TARGET_OS_TV
-                    [self layoutIfNeeded];
-#elif TARGET_OS_MAC
-                    [self.makeBackingLayer layoutIfNeeded];
-#endif
-                    CGFloat columnLastRowViewMaxY = 0;
-                    WHC_CLASS_VIEW * columnLastRowViewMaxYView;
-                    for (NSInteger r = 0; r < subCount; r++) {
-                        NSInteger index = r;
-                        WHC_CLASS_VIEW * maxHeightView = self.subviews[index];
-#if TARGET_OS_IPHONE || TARGET_OS_TV
-                        [maxHeightView layoutIfNeeded];
-#elif TARGET_OS_MAC
-                        [maxHeightView.makeBackingLayer layoutIfNeeded];
-#endif
-                        if (maxHeightView.whc_maxY > columnLastRowViewMaxY) {
-                            columnLastRowViewMaxY = maxHeightView.whc_maxY;
-                            columnLastRowViewMaxYView = maxHeightView;
-                        }
-                    }
-                    [columnLastRowViewMaxYView whc_BottomSpace:_whc_Edge.bottom];
-                }
             }
             break;
         }
+            
         default:
             break;
     }
+    if (_autoWidth && _whc_Orientation != Horizontal) {
+                        NSInteger subCount = self.subviews.count;
+    #if TARGET_OS_IPHONE || TARGET_OS_TV
+                        [self layoutIfNeeded];
+    #elif TARGET_OS_MAC
+                        [self.makeBackingLayer layoutIfNeeded];
+    #endif
+                        CGFloat rowLastColumnViewMaxX = 0;
+                        WHC_CLASS_VIEW * rowLastColumnViewMaxXView;
+                        for (NSInteger r = 0; r < subCount; r++) {
+                            NSInteger index = r;
+                            WHC_CLASS_VIEW * maxWidthView = self.subviews[index];
+    #if TARGET_OS_IPHONE || TARGET_OS_TV
+                            [maxWidthView layoutIfNeeded];
+    #elif TARGET_OS_MAC
+                            [maxWidthView.makeBackingLayer layoutIfNeeded];
+    #endif
+                            if (maxWidthView.whc_maxX > rowLastColumnViewMaxX) {
+                                rowLastColumnViewMaxX = maxWidthView.whc_maxX;
+                                rowLastColumnViewMaxXView = maxWidthView;
+                            }
+                        }
+                        [rowLastColumnViewMaxXView whc_RightSpace:_whc_Edge.right];
+                    }
+                    
+                    if (_autoHeight && _whc_Orientation != Vertical) {
+                        NSInteger subCount = self.subviews.count;
+    #if TARGET_OS_IPHONE || TARGET_OS_TV
+                        [self layoutIfNeeded];
+    #elif TARGET_OS_MAC
+                        [self.makeBackingLayer layoutIfNeeded];
+    #endif
+                        CGFloat columnLastRowViewMaxY = 0;
+                        WHC_CLASS_VIEW * columnLastRowViewMaxYView;
+                        for (NSInteger r = 0; r < subCount; r++) {
+                            NSInteger index = r;
+                            WHC_CLASS_VIEW * maxHeightView = self.subviews[index];
+    #if TARGET_OS_IPHONE || TARGET_OS_TV
+                            [maxHeightView layoutIfNeeded];
+    #elif TARGET_OS_MAC
+                            [maxHeightView.makeBackingLayer layoutIfNeeded];
+    #endif
+                            if (maxHeightView.whc_maxY > columnLastRowViewMaxY) {
+                                columnLastRowViewMaxY = maxHeightView.whc_maxY;
+                                columnLastRowViewMaxYView = maxHeightView;
+                            }
+                        }
+                        [columnLastRowViewMaxYView whc_BottomSpace:_whc_Edge.bottom];
+                    }
 }
 
 

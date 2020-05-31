@@ -747,10 +747,10 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
     return ^(WHC_VIEW * toView, NSLayoutAttribute attributes, ...) {
         va_list attrs;
         va_start(attrs, attributes);
-        NSLayoutAttribute maxAttr = [self whc_GetMaxLayoutAttribute];
+        NSLayoutAttribute maxAttr = [weakSelf whc_GetMaxLayoutAttribute];
         while(attributes > NSLayoutAttributeNotAnAttribute && attributes <= maxAttr) {
             if (attributes > 0) {
-                [weakSelf whc_SwitchRemoveAttr:attributes view:self.superview to:toView removeSelf:NO];
+                [weakSelf whc_SwitchRemoveAttr:attributes view:weakSelf.superview to:toView removeSelf:NO];
             }
             attributes = va_arg(attrs, NSLayoutAttribute);
         }
@@ -2954,28 +2954,52 @@ static inline WHC_CLASS_VIEW * owningView(WHC_VIEW * view) {
     return nil;
 }
 
+    - (WHC_CLASS_VIEW *)scanSubv:(NSArray<WHC_CLASS_VIEW *> *)subvs sbvspv:(WHC_CLASS_VIEW *)sbvspv {
+        WHC_CLASS_VIEW * tempSuperView;
+        if (subvs && subvs.count > 0) {
+            if ([subvs containsObject:sbvspv]) {
+                tempSuperView = sbvspv;
+            }
+            if (!tempSuperView) {
+                NSMutableArray<WHC_CLASS_VIEW *> * sumSubv = [NSMutableArray array];
+                [subvs enumerateObjectsUsingBlock:^(WHC_CLASS_VIEW * _Nonnull sv, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [sumSubv addObjectsFromArray:sv.subviews];
+                }];
+                tempSuperView = [self scanSubv:sumSubv sbvspv:sbvspv];
+            }
+        }
+        return tempSuperView;
+    }
+    
 - (WHC_CLASS_VIEW *)checkSubSuperView:(WHC_CLASS_VIEW *)superv subv:(WHC_CLASS_VIEW *)subv {
     WHC_CLASS_VIEW * superView;
     if (superv && subv && subv != superv) {
         WHC_CLASS_VIEW * sbvspv = subv.superview;
         if (sbvspv) {
-            WHC_CLASS_VIEW * (^__block scanSubv)(NSArray<WHC_CLASS_VIEW *> *) = ^WHC_CLASS_VIEW * (NSArray<WHC_CLASS_VIEW *> * subvs) {
-                __block WHC_CLASS_VIEW * superView;
+            /*
+            __weak typeof(sbvspv) weak_sbvspv = sbvspv;
+            WHC_CLASS_VIEW * (^__block scanSubv)(NSArray<WHC_CLASS_VIEW *> *) = ^ WHC_CLASS_VIEW * (NSArray<WHC_CLASS_VIEW *> * subvs) {
+                __strong typeof(weak_sbvspv) strong_sbvspv = weak_sbvspv;
+                WHC_CLASS_VIEW * tempSuperView;
                 if (subvs && subvs.count > 0) {
-                    if ([subvs containsObject:sbvspv]) {
-                        superView = sbvspv;
+                    if ([subvs containsObject:strong_sbvspv]) {
+                        tempSuperView = strong_sbvspv;
                     }
-                    if (!superView) {
+                    if (!tempSuperView) {
                         NSMutableArray<WHC_CLASS_VIEW *> * sumSubv = [NSMutableArray array];
                         [subvs enumerateObjectsUsingBlock:^(WHC_CLASS_VIEW * _Nonnull sv, NSUInteger idx, BOOL * _Nonnull stop) {
                             [sumSubv addObjectsFromArray:sv.subviews];
                         }];
-                        superView = scanSubv(sumSubv);
+                        tempSuperView = scanSubv(sumSubv);
                     }
                 }
-                return superView;
+                return tempSuperView;
             };
             if (scanSubv(@[superv])) {
+                superView = superv;
+            }
+             */
+            if ([self scanSubv:@[superv] sbvspv:sbvspv]) {
                 superView = superv;
             }
         }

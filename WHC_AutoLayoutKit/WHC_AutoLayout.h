@@ -38,7 +38,6 @@ FOUNDATION_EXPORT const unsigned char WHC_AutoLayoutVersionString[];
 #if WHC_AutoLayoutKitRelease
 
 #import <WHC_AutoLayoutKit/WHC_StackView.h>
-#import <WHC_AutoLayoutKit/UITableViewCell+WHC_AutoHeightForCell.h>
 #import <WHC_AutoLayoutKit/UIView+WHC_AutoLayout.h>
 #import <WHC_AutoLayoutKit/UIView+WHC_Frame.h>
 #import <WHC_AutoLayoutKit/CALayer+WHC_Frame.h>
@@ -47,7 +46,6 @@ FOUNDATION_EXPORT const unsigned char WHC_AutoLayoutVersionString[];
 #else
 
 #import "WHC_StackView.h"
-#import "UITableViewCell+WHC_AutoHeightForCell.h"
 #import "UIView+WHC_AutoLayout.h"
 #import "UIView+WHC_Frame.h"
 #import "CALayer+WHC_Frame.h"
